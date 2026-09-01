@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cántame · Sesión 12</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+</head>
+<body>
+<style>
+  :root {
+    --ground: #E9E9E1;
+    --tablet: #F4F4EE;
+    --surface: #FFFFFF;
+    --surface-2: #EAEBE3;
+    --ink: #1C2740;
+    --ink-2: #3D4660;
+    --muted: #6B7285;
+    --line: #D3D5CC;
+    --blue: #1F5FA8;
+    --blue-soft: #DCE7F5;
+    --rosa: #C8156F;
+    --rosa-soft: #F9DCEB;
+    --marigold: #D98E12;
+    --marigold-soft: #FBEBC9;
+    --bezel: #2A2F3A;
+    --child-ground: #FBFAF4;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0F131C; --tablet: #171D2A; --surface: #1F2737; --surface-2: #263043;
+      --ink: #EDEEF3; --ink-2: #C9CEDC; --muted: #9AA3B8; --line: #34405A;
+      --blue: #7FB0EE; --blue-soft: #1F3352; --rosa: #F26FB4; --rosa-soft: #4A1F38;
+      --marigold: #F2B84B; --marigold-soft: #4A3A16; --bezel: #05070B; --child-ground: #1C2230;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0F131C; --tablet: #171D2A; --surface: #1F2737; --surface-2: #263043;
+    --ink: #EDEEF3; --ink-2: #C9CEDC; --muted: #9AA3B8; --line: #34405A;
+    --blue: #7FB0EE; --blue-soft: #1F3352; --rosa: #F26FB4; --rosa-soft: #4A1F38;
+    --marigold: #F2B84B; --marigold-soft: #4A3A16; --bezel: #05070B; --child-ground: #1C2230;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: "Alegreya Sans", "Segoe UI", system-ui, sans-serif; font-size: 16px; line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    display: flex; flex-direction: column; align-items: center; padding: 1.2rem 1rem 2rem; gap: 0.9rem;
+  }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  button:focus-visible { outline: 2px solid var(--rosa); outline-offset: 2px; }
+
+  .intro { max-width: 1024px; width: 100%; font-size: 0.9rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; justify-content: space-between; align-items: baseline; }
+  .intro b { color: var(--ink); font-family: "Alegreya", Georgia, serif; font-weight: 500; font-size: 1.05rem; }
+  .intro p { margin: 0; max-width: 70ch; }
+
+  /* tablet frame */
+  .device { width: 100%; max-width: 1064px; background: var(--bezel); border-radius: 26px; padding: 20px; box-shadow: 0 30px 60px -30px rgba(0,0,0,.45); }
+  .screen { position: relative; background: var(--tablet); border-radius: 10px; overflow: hidden; aspect-ratio: 4 / 3; display: grid; grid-template-columns: 220px 1fr; grid-template-rows: 1fr auto; container-type: inline-size; }
+  @media (max-width: 720px) {
+    body { padding: 0; }
+    .intro { padding: 1rem; }
+    .device { border-radius: 0; padding: 0; box-shadow: none; }
+    .screen { border-radius: 0; aspect-ratio: auto; min-height: 100vh; grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; }
+  }
+
+  /* rail */
+  .rail { grid-row: 1 / span 2; border-right: 1px solid var(--line); padding: 1.1rem 0 1rem 1.1rem; display: flex; flex-direction: column; gap: 0.2rem; }
+  @media (max-width: 720px) { .rail { grid-row: auto; border-right: 0; border-bottom: 1px solid var(--line); flex-direction: row; overflow-x: auto; padding: 0.6rem 0.8rem; gap: 0.4rem; } }
+  .brand { font-family: "Alegreya", Georgia, serif; font-style: italic; font-size: 1.5rem; margin-bottom: 0.2rem; }
+  .brand small { display: block; font-family: "Alegreya Sans", system-ui, sans-serif; font-style: normal; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-top: 0.1rem; }
+  .steps { list-style: none; margin: 0.8rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0; }
+  @media (max-width: 720px) { .steps { flex-direction: row; margin: 0; gap: 0.4rem; } }
+  .steps li { position: relative; display: grid; grid-template-columns: 2.2rem 1fr; gap: 0.5rem; align-items: baseline; padding: 0.55rem 0.9rem 0.55rem 0; border-left: 3px solid transparent; margin-left: -1.1rem; padding-left: 1.1rem; color: var(--muted); }
+  .steps li .m { font-family: "Alegreya", Georgia, serif; font-size: 1.1rem; font-variant-numeric: tabular-nums; }
+  .steps li .n { font-weight: 500; font-size: 0.95rem; }
+  .steps li .n small { display: block; font-weight: 400; font-size: 0.78rem; color: var(--muted); }
+  .steps li.done { color: var(--ink-2); }
+  .steps li.done .m::after { content: " ✓"; font-size: 0.75rem; color: var(--blue); }
+  .steps li.now { color: var(--ink); border-left-color: var(--marigold); background: linear-gradient(90deg, var(--marigold-soft), transparent 80%); }
+  .steps li button { all: unset; position: absolute; inset: 0; cursor: pointer; }
+  @media (max-width: 720px) { .steps li { margin-left: 0; padding: 0.3rem 0.6rem; border-left: 0; border-bottom: 3px solid transparent; grid-template-columns: auto 1fr; } .steps li.now { border-bottom-color: var(--marigold); background: none; } .steps li .n small { display: none; } }
+  .rail .spacer { flex: 1; }
+  .rail .quiet { font-size: 0.78rem; color: var(--muted); padding-right: 1rem; line-height: 1.4; }
+  @media (max-width: 720px) { .rail .quiet, .rail .spacer, .rail .brand small { display: none; } }
+
+  /* main */
+  .main { padding: 1.3rem 1.6rem 0.6rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.9rem; min-height: 0; }
+  .head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .head h2 { font-family: "Alegreya", Georgia, serif; font-weight: 500; font-size: 1.7rem; margin: 0; line-height: 1.1; }
+  .head h2 small { display: block; font-family: "Alegreya Sans", system-ui, sans-serif; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 0.3rem; font-weight: 700; }
+  .tag { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 2px; }
+  .tag.lit { background: var(--blue-soft); color: var(--blue); }
+  .tag.cul { background: var(--rosa-soft); color: var(--rosa); }
+  .tag.att { background: var(--marigold-soft); color: var(--marigold); }
+  .tags { display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: flex-end; }
+
+  .say { font-family: "Alegreya", Georgia, serif; font-size: 1.35rem; line-height: 1.45; margin: 0; max-width: 34em; }
+  .say i { color: var(--muted); font-size: 0.9em; }
+  .say .w { border-bottom: 2px solid var(--blue); }
+  .say .r { border-bottom: 2px solid var(--rosa); }
+  .note { font-size: 0.88rem; color: var(--muted); margin: 0; max-width: 62ch; }
+  .note b { color: var(--ink-2); font-weight: 700; }
+  .stack { display: flex; flex-direction: column; gap: 0.75rem; }
+  .row { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 0.9rem 1.1rem; }
+  .card.soft { background: var(--surface-2); border-color: transparent; }
+  .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; color: var(--muted); margin: 0 0 0.35rem; }
+  .btn { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 0.55rem 1rem; font-weight: 500; }
+  .btn:hover { border-color: var(--ink-2); }
+  .btn.primary { background: var(--ink); color: var(--tablet); border-color: var(--ink); }
+  .btn.ghost { background: transparent; }
+  .btn[aria-pressed="true"] { background: var(--marigold-soft); border-color: var(--marigold); }
+  .btn.primary[aria-pressed="true"] { color: var(--ink); }
+  .btn:disabled { opacity: 0.45; cursor: default; }
+
+  /* bottom bar */
+  .bar { grid-column: 2; border-top: 1px solid var(--line); padding: 0.7rem 1.4rem; display: flex; align-items: center; gap: 1rem; background: var(--tablet); white-space: nowrap; }
+  .bar .bpm { white-space: nowrap; }
+  @media (max-width: 720px) { .bar { grid-column: 1; padding: 0.7rem 0.9rem; position: sticky; bottom: 0; } }
+  .clock { font-family: "Alegreya", Georgia, serif; font-size: 1.5rem; font-variant-numeric: tabular-nums; min-width: 4.2rem; }
+  .clock small { display: block; font-family: "Alegreya Sans", system-ui, sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+  .stepclock { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 0.9rem; white-space: nowrap; }
+  .stepclock b { color: var(--ink); font-weight: 500; font-family: "Alegreya", Georgia, serif; font-size: 1.15rem; }
+  .pulse { display: flex; align-items: center; gap: 0.6rem; }
+  .dot { width: 18px; height: 18px; border-radius: 50%; background: var(--marigold); opacity: 0.35; transition: transform 90ms ease-out, opacity 90ms ease-out; }
+  .dot.on { transform: scale(1.35); opacity: 1; }
+  .pulse .bpm { font-size: 0.8rem; color: var(--muted); }
+  .pulse .bpm b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .bar .grow { flex: 1; }
+
+  /* breath */
+  .breath { display: grid; place-items: center; height: 190px; position: relative; }
+  .breath .ring { width: 90px; height: 90px; border-radius: 50%; background: var(--blue-soft); border: 2px solid var(--blue); transition: transform 4s ease-in-out; }
+  .breath .ring.in { transform: scale(1.9); }
+  .breath .word { position: absolute; bottom: 0.3rem; font-family: "Alegreya", Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .breath .count { position: absolute; top: 0.2rem; right: 0.6rem; font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  @media (prefers-reduced-motion: reduce) { .breath .ring { transition: none; } .dot { transition: none; } }
+
+  /* lyrics */
+  .lyrics { font-family: "Alegreya", Georgia, serif; font-size: 1.3rem; line-height: 1.55; margin: 0; column-gap: 2rem; }
+  .lyrics .st { margin-bottom: 0.6rem; break-inside: avoid; }
+  .lyrics .echo { color: var(--rosa); }
+  .lyrics .echo::before { content: "eco · "; font-family: "Alegreya Sans", system-ui, sans-serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; vertical-align: middle; }
+  .lyrics .stress { text-decoration: underline; text-decoration-color: var(--marigold); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  .lyrics .light { color: var(--muted); }
+  .lyrics .line.hot { background: var(--marigold-soft); border-radius: 3px; }
+
+  /* reveal chips */
+  .reveal { display: inline-flex; align-items: baseline; gap: 0.5rem; }
+  .reveal .ans { font-family: "Alegreya", Georgia, serif; font-size: 1.2rem; color: var(--rosa); min-width: 4.5rem; }
+  .reveal .ans[hidden] { display: none; }
+  .syll { display: flex; gap: 0.5rem; align-items: stretch; }
+  .syll button { font-family: "Alegreya", Georgia, serif; font-size: 1.6rem; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 0.45rem 0.9rem; min-width: 3.4rem; }
+  .syll button[aria-pressed="true"] { border-color: var(--marigold); background: var(--marigold-soft); font-weight: 500; }
+  .letter { display: grid; grid-template-columns: auto 1fr; gap: 1.2rem; align-items: center; }
+  .letter .big { font-family: "Alegreya", Georgia, serif; font-size: 5rem; line-height: 1; color: var(--blue); padding: 0.2rem 0.9rem; border: 2px solid var(--blue); border-radius: 8px; }
+  .letter .fam { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .letter .fam span { font-family: "Alegreya", Georgia, serif; font-size: 1.5rem; padding: 0.2rem 0.7rem; background: var(--surface-2); border-radius: 6px; }
+  .build { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+  .build .slot { min-width: 3.4rem; height: 3rem; border: 2px dashed var(--line); border-radius: 6px; display: grid; place-items: center; font-family: "Alegreya", Georgia, serif; font-size: 1.6rem; }
+  .build .slot.filled { border-style: solid; border-color: var(--blue); background: var(--blue-soft); }
+  .build .word { font-family: "Alegreya", Georgia, serif; font-size: 1.6rem; color: var(--blue); margin-left: 0.6rem; min-width: 5rem; }
+  .cards { display: flex; gap: 0.5rem; }
+  .cards button { font-family: "Alegreya", Georgia, serif; font-size: 1.4rem; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 0.35rem 0.8rem; }
+  .cards button:disabled { opacity: 0.3; }
+
+  /* child view */
+  .child { position: absolute; inset: 0; background: var(--child-ground); display: none; flex-direction: column; padding: 2rem 2.4rem; z-index: 5; }
+  .child.show { display: flex; }
+  .child .page { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; align-content: center; }
+  .child .song { font-family: "Alegreya", Georgia, serif; font-size: 2.1rem; line-height: 1.6; margin: 0; }
+  .child .song .light { color: var(--muted); }
+  .child .verse { font-family: "Alegreya", Georgia, serif; font-size: 2.4rem; line-height: 1.7; margin: 0; padding-left: 1.2rem; border-left: 4px solid var(--marigold); }
+  .child .verse b { font-weight: 500; border-bottom: 3px solid var(--rosa); }
+  .child .foot { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 0.85rem; }
+  .child .foot .title { font-family: "Alegreya", Georgia, serif; font-style: italic; font-size: 1.1rem; color: var(--ink); }
+  .child .plabel { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); font-weight: 700; margin-bottom: 0.6rem; }
+  @media (max-width: 720px) { .child .page { grid-template-columns: 1fr; } .child .song { font-size: 1.4rem; } .child .verse { font-size: 1.8rem; } }
+
+  .readings { display: flex; gap: 0.5rem; }
+  .readings button { width: 2.6rem; height: 2.6rem; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); font-family: "Alegreya", Georgia, serif; font-size: 1.1rem; }
+  .readings button[aria-pressed="true"] { background: var(--blue); color: var(--tablet); border-color: var(--blue); }
+
+  /* silence */
+  .silence { display: grid; grid-template-columns: auto 1fr; gap: 1.4rem; align-items: center; }
+  .silence svg { width: 120px; height: 120px; }
+  .silence .arc { fill: none; stroke: var(--marigold); stroke-width: 6; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; transition: stroke-dashoffset 100ms linear; }
+  .silence .track { fill: none; stroke: var(--line); stroke-width: 6; }
+  .silence .num { font-family: "Alegreya", Georgia, serif; font-size: 1.6rem; fill: var(--ink); }
+  .silence .state { font-family: "Alegreya", Georgia, serif; font-size: 1.3rem; }
+  .silence .state small { display: block; font-family: "Alegreya Sans", system-ui, sans-serif; font-size: 0.85rem; color: var(--muted); }
+  .taps { display: flex; gap: 0.6rem; align-items: center; }
+  .taps .t { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--marigold); }
+  .taps .t.on { background: var(--marigold); }
+
+  /* summary */
+  .sum { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.8rem; }
+  .sum .k { font-family: "Alegreya", Georgia, serif; font-size: 1.8rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .sum .k small { display: block; font-family: "Alegreya Sans", system-ui, sans-serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-top: 0.25rem; }
+  .hide { display: none !important; }
+  .lyrics .sy.hot { background: var(--marigold-soft); border-radius: 3px; box-shadow: 0 0 0 2px var(--marigold-soft); }
+  .lyrics .line.hot { background: none; }
+  .play { display: inline-flex; align-items: center; gap: 0.5rem; }
+  .play .ico { width: 0; height: 0; border-left: 10px solid currentColor; border-top: 6px solid transparent; border-bottom: 6px solid transparent; display: inline-block; }
+  .play[aria-pressed="true"] .ico { border: 0; width: 10px; height: 12px; background: currentColor; }
+  .voice { font-size: 0.8rem; color: var(--muted); display: flex; gap: 0.4rem; align-items: center; }
+  .voice input[type=range] { width: 70px; accent-color: var(--marigold); }
+</style>
+
+<div class="intro">
+  <b>Cántame · demo of one session</b>
+  <p>This is the <em>adult's</em> tablet, propped face-up beside the songbook. The child sees paper, not a screen, except in step 4, when the tablet is turned to stand in for the printed <em>cancionero</em>. The tablet can hum the tune with a soft synthesized voice, the way an adult would learn it before the child sits down; there is no recorded singer and no backing track, by design. Unit 1, session 12, <em>Los pollitos dicen</em>, letter of the day <em>t</em>.</p>
+</div>
+
+<div class="device">
+<div class="screen" id="screen">
+
+  <nav class="rail" aria-label="Pasos de la sesión">
+    <div class="brand">Cántame<small>Unidad 1 · Sesión 12 · Letra t</small></div>
+    <ol class="steps" id="steps"></ol>
+    <div class="spacer"></div>
+    <div class="quiet">Una voz. Sin pista. Nada en la mesa más que el cancionero y las tarjetas. Si se distrae, baja la voz.</div>
+  </nav>
+
+  <main class="main" id="main" aria-live="polite"></main>
+
+  <div class="bar">
+    <div class="clock"><span id="total">0:00</span><small>de 15:00</small></div>
+    <div class="stepclock">paso <b id="stepleft">1:00</b></div>
+    <div class="pulse"><div class="dot" id="dot"></div><div class="bpm"><b id="bpm">76</b> pulsos/min <button class="btn ghost" id="pulseToggle" style="padding:0.15rem 0.5rem;font-size:0.8rem;margin-left:0.3rem" aria-pressed="true">pulso</button> <button class="btn ghost" id="tickToggle" style="padding:0.15rem 0.5rem;font-size:0.8rem" aria-pressed="false" title="tic suave en cada pulso">tic</button></div></div>
+    <div class="voice"><span>voz</span><input type="range" id="vol" min="0" max="100" value="55" aria-label="volumen de la voz"></div>
+    <div class="grow"></div>
+    <button class="btn ghost" id="back">Atrás</button>
+    <button class="btn primary" id="next">Siguiente</button>
+  </div>
+
+  <!-- child-facing view for step 4 -->
+  <section class="child" id="child" aria-label="Vista del cancionero para el niño">
+    <div class="page">
+      <div>
+        <div class="plabel">Los pollitos dicen · estrofa 3</div>
+        <p class="song"><span class="light">Bajo</span> sus <span class="light">dos</span> alas,<br><span class="light">acurrucaditos</span>,<br><span class="light">hasta</span> el <span class="light">otro día</span><br><span class="light">duermen</span> los <span class="light">pollitos</span>.</p>
+      </div>
+      <div>
+        <div class="plabel">Mi versito</div>
+        <p class="verse">Pío, pío, pío.<br>Mi mamá me <b>tapa</b>.<br>Sus alas son mi manta.</p>
+      </div>
+    </div>
+    <div class="foot">
+      <span class="title">El cancionero de Lupe</span>
+      <button class="btn" id="childBack">Voltear hacia mí</button>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<script>
+(function(){
+  // ---------------- song data ----------------
+  // Melody of "Los pollitos dicen" (traditional tune; solfège from recorder tutorials): each line = 4 eighths + 2 quarters.
+  //   Los po-lli-tos di-cen   do re mi fa | sol sol
+  //   pí-o pí-o pí-o          la la la la | sol sol
+  //   cuan-do tie-nen ham-bre fa fa fa fa | mi  mi
+  //   cuan-do tie-nen frí-o   re re re re | do  do
+  const DEG = { do:0, re:2, mi:4, fa:5, sol:7, la:9 };
+  const LINE_NOTES = [
+    ['do','re','mi','fa','sol','sol'],
+    ['la','la','la','la','sol','sol'],
+    ['fa','fa','fa','fa','mi','mi'],
+    ['re','re','re','re','do','do'],
+  ];
+  const DUR = [0.5,0.5,0.5,0.5,1,1]; // in beats
+  // syllables, 6 per line, elisions joined
+  const STANZAS = [
+    [ ['Los','po','-lli','-tos','di','-cen'], ['pí','-o','pí','-o','pí','-o'], ['cuan','-do','tie','-nen','ham','-bre'], ['cuan','-do','tie','-nen','frí','-o'] ],
+    [ ['La','ga','-lli','-na','bus','-ca'], ['el','ma','-íz','y el','tri','-go'], ['les','da','la','co','-mi','-da'], ['y','les','pres','-ta a','bri','-go'] ],
+    [ ['Ba','-jo','sus','dos','a','-las'], ['a','-cu','-rru','-ca','-di','-tos'], ['has','-ta el','o','-tro','dí','-a'], ['duer','-men','los','po','-lli','-tos'] ],
+  ];
+  const PUNCT = { '0-0':',', '0-1':',', '0-2':',', '0-3':'.', '1-0':'', '1-1':',', '1-2':'', '1-3':'.', '2-0':',', '2-1':',', '2-2':'', '2-3':'.' };
+  const STRESS = new Set(['0-0-2','0-1-0','0-1-2','0-1-4','0-3-4']); // po-LLI-tos, pí-, frí-
+
+  // ---------------- audio: a hummed voice ----------------
+  let ctx = null, master = null, tickGain = null;
+  const volEl = document.getElementById('vol');
+  function audio(){
+    if(ctx) return ctx;
+    ctx = new (window.AudioContext||window.webkitAudioContext)();
+    master = ctx.createGain(); master.gain.value = volEl.value/100 * 0.5; master.connect(ctx.destination);
+    tickGain = ctx.createGain(); tickGain.gain.value = 0.25; tickGain.connect(ctx.destination);
+    return ctx;
+  }
+  volEl.addEventListener('input', ()=>{ if(master) master.gain.setTargetAtTime(volEl.value/100*0.5, ctx.currentTime, 0.02); });
+
+  // one note of the "voice": sine + soft 2nd harmonic through a lowpass, slow attack, tiny vibrato
+  function note(freq, t0, dur, opts={}){
+    const c = audio();
+    const g = c.createGain(); g.gain.setValueAtTime(0.0001, t0);
+    const a = Math.min(0.08, dur*0.25), r = Math.min(0.12, dur*0.3);
+    g.gain.exponentialRampToValueAtTime(opts.level||0.9, t0+a);
+    g.gain.setValueAtTime(opts.level||0.9, t0+dur-r);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0+dur);
+    const lp = c.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value = opts.hum ? 700 : 1400; lp.Q.value = 0.7;
+    const o1 = c.createOscillator(); o1.type='sine'; o1.frequency.value=freq;
+    const o2 = c.createOscillator(); o2.type='triangle'; o2.frequency.value=freq*2; const g2=c.createGain(); g2.gain.value = opts.hum ? 0.06 : 0.16;
+    const lfo = c.createOscillator(); lfo.frequency.value = 5.2; const lg = c.createGain(); lg.gain.value = freq*0.004; lfo.connect(lg); lg.connect(o1.frequency); lg.connect(o2.frequency);
+    o1.connect(lp); o2.connect(g2); g2.connect(lp); lp.connect(g); g.connect(master);
+    o1.start(t0); o2.start(t0); lfo.start(t0); const end=t0+dur+0.05; o1.stop(end); o2.stop(end); lfo.stop(end);
+  }
+  function tick(t0){ const c=audio(); const o=c.createOscillator(); o.type='sine'; o.frequency.value=1800; const g=c.createGain(); g.gain.setValueAtTime(0.5,t0); g.gain.exponentialRampToValueAtTime(0.0001,t0+0.03); o.connect(g); g.connect(tickGain); o.start(t0); o.stop(t0+0.04); }
+
+  // schedule a performance; returns a controller. events: onSyl(st,ln,sy), onBeat(), onPause(sec), onEnd()
+  let current = null;
+  function perform({ stanzas, bpm, base=293.66, hum=false, pauseAfter=null, pauseSec=0, tickOn=false, onSyl, onBeat, onPause, onEnd }){
+    stop();
+    const c = audio(); if(c.state==='suspended') c.resume();
+    const beat = 60/bpm; let t = c.currentTime + 0.15; const timers=[]; const t0wall = performance.now();
+    const at = (when, fn)=>timers.push(setTimeout(fn, Math.max(0,(when - c.currentTime)*1000)));
+    let beatCount = 0;
+    stanzas.forEach(si=>{
+      for(let li=0; li<4; li++){
+        for(let k=0;k<6;k++){
+          const f = base * Math.pow(2, DEG[LINE_NOTES[li][k]]/12) * (hum?0.5:1);
+          const d = DUR[k]*beat;
+          note(f, t, d*0.95, {hum, level: hum?0.7:0.9});
+          if(onSyl) at(t, ()=>onSyl(si,li,k));
+          if(k===0||k===2||k===4||k===5){ if(onBeat) at(t, onBeat); if(tickOn) tick(t); }
+          t += d;
+        }
+        if(pauseAfter && pauseAfter[0]===si && pauseAfter[1]===li){ if(onPause) at(t, ()=>onPause(pauseSec)); t += pauseSec; }
+      }
+    });
+    at(t+0.1, ()=>{ current=null; if(onEnd) onEnd(); });
+    current = { cancel(){ timers.forEach(clearTimeout); } };
+    return current;
+  }
+  function stop(){ if(current){ current.cancel(); current=null; } if(ctx){ // fade out anything sounding
+      master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.03);
+      setTimeout(()=>{ if(master) master.gain.setTargetAtTime(volEl.value/100*0.5, ctx.currentTime, 0.02); }, 150); } }
+
+  // ---------------- session state ----------------
+  const STEPS = [
+    { id:'arrullo', n:'Arrullo', en:'settle', min:1, tags:['att'] },
+    { id:'cancion', n:'La canción', en:'the song', min:3, tags:['cul','att'] },
+    { id:'sonidos', n:'Los sonidos', en:'the sounds', min:4, tags:['lit'] },
+    { id:'leer', n:'Leer la canción', en:'read the song', min:3, tags:['lit'] },
+    { id:'dentro', n:'Por dentro', en:'inside', min:2, tags:['att'] },
+    { id:'cierre', n:'Cierre y para la casa', en:'close', min:2, tags:['cul'] },
+  ];
+  const TAGNAME = { lit:'Literacy', cul:'Cultura', att:'Atención' };
+  const state = { i:0, total:0, stepStart:0, log:{ breaths:0, rhyme:false, stress:false, built:false, readings:[false,false,false], silence:[], taps:0, home:false }, done:false };
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const stepsEl = document.getElementById('steps');
+  function renderRail(){
+    stepsEl.innerHTML = STEPS.map((s,k)=>`<li class="${(k<state.i||state.done)?'done':''} ${k===state.i&&!state.done?'now':''}"><span class="m">${s.min}</span><span class="n">${s.n}<small>${s.en} · ${s.min} min</small></span><button aria-label="Ir a ${s.n}" data-k="${k}"></button></li>`).join('');
+  }
+  stepsEl.addEventListener('click', e=>{ const b=e.target.closest('button'); if(b){ go(+b.dataset.k); } });
+
+  const totalEl = document.getElementById('total'), leftEl = document.getElementById('stepleft');
+  function fmt(s){ s=Math.max(0,Math.round(s)); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
+  setInterval(()=>{ if(state.done) return; state.total += 1; totalEl.textContent = fmt(state.total);
+    const left = STEPS[state.i].min*60 - (state.total - state.stepStart); leftEl.textContent = fmt(left); leftEl.style.color = left<0 ? 'var(--rosa)' : ''; }, 1000);
+
+  // pulse (visual; syncs to playback while singing)
+  const dot = document.getElementById('dot'), bpmEl = document.getElementById('bpm'), pulseBtn = document.getElementById('pulseToggle'), tickBtn=document.getElementById('tickToggle');
+  let bpm = 76, pulseOn = true, pulseTimer = null, tickOn=false;
+  function flash(){ dot.classList.add('on'); setTimeout(()=>dot.classList.remove('on'), reduced?0:120); }
+  function setPulse(b){ bpm=b; bpmEl.textContent=b; startPulse(); }
+  function startPulse(){ clearInterval(pulseTimer); if(!pulseOn) { dot.classList.remove('on'); return; } pulseTimer = setInterval(()=>{ if(current) return; flash(); }, 60000/bpm); }
+  pulseBtn.addEventListener('click', ()=>{ pulseOn=!pulseOn; pulseBtn.setAttribute('aria-pressed', pulseOn); startPulse(); });
+  tickBtn.addEventListener('click', ()=>{ tickOn=!tickOn; tickBtn.setAttribute('aria-pressed', tickOn); });
+  startPulse();
+
+  // ---------------- renderers ----------------
+  const main = document.getElementById('main');
+  const head = (s)=>`<div class="head"><h2><small>Paso ${state.i+1} de 6 · ${s.min} min</small>${s.n}</h2><div class="tags">${s.tags.map(t=>`<span class="tag ${t}">${TAGNAME[t]}</span>`).join('')}</div></div>`;
+  const playBtn = (id, label, cls='btn') => `<button class="${cls} play" id="${id}" aria-pressed="false"><span class="ico"></span><span class="lbl">${label}</span></button>`;
+
+  function lyricsHTML(which, echoStanza){
+    return `<div class="lyrics" id="lyrics">${which.map(si=>`<div class="st">${STANZAS[si].map((ln,li)=>`<div class="line ${echoStanza===si?'echo':''}" data-l="${si}-${li}">${ln.map((sy,k)=>`${k>0&&!sy.startsWith('-')?' ':''}<span class="sy ${STRESS.has(si+'-'+li+'-'+k)?'stress':''}" data-s="${si}-${li}-${k}">${sy.replace(/^-/,'')}</span>`).join('')}${PUNCT[si+'-'+li]||''}</div>`).join('')}</div>`).join('')}</div>`;
+  }
+  function wirePlay(btnId, opts){
+    const b=document.getElementById(btnId); if(!b) return;
+    const lbl=b.querySelector('.lbl'), orig=lbl.textContent;
+    b.onclick=()=>{
+      if(b.getAttribute('aria-pressed')==='true'){ stop(); reset(); return; }
+      document.querySelectorAll('.play[aria-pressed="true"]').forEach(x=>{ x.setAttribute('aria-pressed','false'); x.querySelector('.lbl').textContent = x.dataset.orig||x.querySelector('.lbl').textContent; });
+      b.dataset.orig = orig; b.setAttribute('aria-pressed','true'); lbl.textContent='Detener';
+      perform(Object.assign({ tickOn, onBeat: flash,
+        onSyl:(si,li,k)=>{ document.querySelectorAll('#lyrics .sy.hot').forEach(x=>x.classList.remove('hot')); const el=document.querySelector(`#lyrics .sy[data-s="${si}-${li}-${k}"]`); if(el) el.classList.add('hot'); },
+        onEnd: reset }, opts));
+    };
+    function reset(){ b.setAttribute('aria-pressed','false'); lbl.textContent=orig; document.querySelectorAll('#lyrics .sy.hot').forEach(x=>x.classList.remove('hot')); if(opts.after) opts.after(); }
+  }
+
+  const R = {};
+
+  R.arrullo = (s)=>`
+    ${head(s)}
+    <p class="say"><i>(Tararea el arrullo con los labios cerrados, despacio. Después de una frase, abre una mano sobre la mesa, con la palma hacia arriba. Deja que el niño ponga la suya. Dos frases más.)</i></p>
+    <div class="row">${playBtn('humBtn','Oír el arrullo tarareado')}<span class="note">En esta demo la tablet tararea la propia melodía de la unidad, una octava más baja y a 56 pulsos, una estrofa. En el programa, el adulto tararea <i>A la rorro niño</i>.</span></div>
+    <p class="say">Tres respiraciones con la canción.</p>
+    <div class="card soft">
+      <div class="breath"><span class="count" id="bcount">0 de 3</span><div class="ring" id="ring"></div><span class="word" id="bword">toca para empezar</span></div>
+      <div class="row"><button class="btn" id="breathBtn">Empezar las respiraciones</button><span class="note">Respira audiblemente con la última línea, tres veces. El círculo marca el ritmo; el niño no lo ve.</span></div>
+    </div>
+    <p class="note"><b>Nota de atención.</b> No digas "escucha" ni "¿listo?". El tarareo es la señal. Si el niño habla, sigues tarareando, más suave. La sesión empieza cuando el niño también tararea, o después de la tercera respiración, lo que ocurra primero.</p>`;
+
+  R.cancion = (s)=>`
+    ${head(s)}
+    <p class="say">Manos en la mesa. <i>(Los dos empiezan a dar palmadas suaves en la mesa, una por pulso.)</i> Cantamos con las manos.</p>
+    <div class="card">
+      <div class="row" style="justify-content:space-between;margin-bottom:0.6rem"><div class="label" style="margin:0">Una vez completa, al pulso, sin parar, mirando al niño. Después, la última estrofa en eco.</div><div class="row">${playBtn('songBtn','Oír la canción completa')}${playBtn('echoBtn','Solo la estrofa del eco','btn ghost')}</div></div>
+      ${lyricsHTML([0,1,2], 2)}
+    </div>
+    <p class="note">La melodía se repite igual en las tres estrofas: una sola tonada, muchas veces. Cada fragmento del eco se canta un poco más suave que el anterior, para que el eco del niño baje con él. Si en casa cantan "bajo de sus alas" o "les da su comida", esa versión gana; anótala en el cancionero.</p>`;
+
+  R.sonidos = (s)=>`
+    ${head(s)}
+    <div class="stack">
+      <div class="card">
+        <div class="label">Rima · escuchar el final</div>
+        <p class="say">Escucha: <i>pí-o</i>… <i>frí-o</i>. Terminan igual. ¿Cuál otra palabra de la canción termina como <span class="w">trigo</span>?</p>
+        <div class="row" style="margin-top:0.5rem"><span class="reveal"><button class="btn" id="rhymeBtn">Mostrar respuesta</button><span class="ans" id="rhymeAns" hidden>abrigo · riman</span></span></div>
+      </div>
+      <div class="card">
+        <div class="row" style="justify-content:space-between"><div class="label" style="margin:0">Sílabas y parte fuerte · la palmada cae en la sílaba fuerte</div>${playBtn('lineBtn','Oír la primera línea','btn ghost')}</div>
+        ${lyricsHTML([0]).replace('<div class="lyrics"','<div class="lyrics" style="font-size:1.15rem;margin:0.4rem 0"')}
+        <p class="say">Ahora aplaudimos la palabra <i>pollitos</i> con el pulso: po-lli-tos. ¿Cuántas partes? Cántalo otra vez con las palmas. ¿En cuál parte cae la palmada?</p>
+        <div class="row" style="margin-top:0.6rem"><div class="syll" id="syll"><button data-s="po">po</button><button data-s="lli">lli</button><button data-s="tos">tos</button></div><span class="note" id="syllNote">Toca la sílaba que el niño diga.</span></div>
+      </div>
+      <div class="card">
+        <div class="label">La letra de hoy · fonética explícita</div>
+        <div class="letter">
+          <div class="big">t</div>
+          <div>
+            <p class="say">Suena /t/, con la lengua en los dientes, suavecito. Está al final de una palabra que acabamos de aplaudir: <i>polli-<span class="w">tos</span></i>. Y en una palabra que vamos a leer hoy: <span class="w">tapa</span>. Dilo tú: /t/. Ahora con las vocales:</p>
+            <div class="fam"><span>ta</span><span>te</span><span>ti</span><span>to</span><span>tu</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="label">Construir y escribir</div>
+        <p class="say">Toma las tarjetas: pon <i>ta</i> y luego <i>pa</i>. Léelo despacio.</p>
+        <div class="row" style="margin-top:0.6rem">
+          <div class="cards" id="cards"><button data-c="ta">ta</button><button data-c="pa">pa</button><button data-c="sa">sa</button><button data-c="mo">mo</button></div>
+          <div class="build"><div class="slot" id="slot1"></div><div class="slot" id="slot2"></div><span class="word" id="built"></span><button class="btn ghost" id="resetBuild" style="padding:0.3rem 0.6rem;font-size:0.85rem">otra vez</button></div>
+        </div>
+        <p class="note" style="margin-top:0.6rem">Después: "Ahora escríbela en tu cuaderno." <b>Nota:</b> una /t/ con soplo de aire (la t del inglés) es común; modélala una vez con la lengua en los dientes y sigue. Corrige dos veces como máximo.</p>
+      </div>
+    </div>`;
+
+  R.leer = (s)=>`
+    ${head(s)}
+    <p class="say">Abre tu cancionero en los pollitos. Pon el dedo en la primera palabra. Cantamos despacio y el dedo camina con la canción.</p>
+    <div class="card soft">
+      <div class="label">Quitar la melodía por etapas</div>
+      <div class="row" id="stages">
+        <button class="btn" data-st="0" aria-pressed="false">1 · Cantar con el dedo</button>
+        <button class="btn" data-st="1" aria-pressed="false">2 · Solo con el pulso</button>
+        <button class="btn" data-st="2" aria-pressed="false">3 · Solo decirlo</button>
+        <button class="btn" data-st="3" aria-pressed="false">4 · Leer sin música</button>
+      </div>
+      <div class="row" style="margin-top:0.6rem">${playBtn('stanzaBtn','Oír la estrofa 3 (solo para la etapa 1)','btn ghost')}<span class="note">A partir de la etapa 2 no hay melodía: solo el pulso, luego la voz hablada, luego la lectura.</span></div>
+      ${lyricsHTML([2]).replace('<div class="lyrics"','<div class="lyrics" style="font-size:1.1rem;margin-top:0.6rem"')}
+    </div>
+    <div class="row">
+      <button class="btn primary" id="showChild">Voltear la tablet hacia el niño</button>
+      <span class="note">En el programa real esto es la página del cancionero de papel. Aquí la tablet la sustituye: letra grande, sin animación, nada más en pantalla.</span>
+    </div>
+    <div class="card">
+      <div class="label">Tres lecturas al pulso, nunca más rápido · marca las limpias</div>
+      <div class="row"><div class="readings" id="readings"><button aria-pressed="false">1</button><button aria-pressed="false">2</button><button aria-pressed="false">3</button></div><span class="note">La tercera es la que cuenta: "<i>Leíste todo el versito sin tropezar.</i>" Palabras con letras que aún no vimos (<i>bajo, dos, acurrucaditos, hasta, otro, día, duermen, pollitos</i>) van en tinta clara; el niño las lee de la canción.</span></div>
+    </div>`;
+
+  R.dentro = (s)=>`
+    ${head(s)}
+    <div class="stack">
+      <div class="card">
+        <div class="row" style="justify-content:space-between"><div class="label" style="margin:0">Cantar por dentro · inhibición</div>${playBtn('insideBtn','Oír la primera estrofa','btn ghost')}</div>
+        <p class="say">Ahora la canción va por dentro. Yo canto la primera estrofa y tú la cantas dentro de tu cabeza, sin voz. Cada vez que oigas <i>pío</i>, tocas la mesa una vez.</p>
+        <div class="row" style="margin-top:0.6rem"><div class="taps" id="taps"><span class="t"></span><span class="t"></span><span class="t"></span><span class="note">toca un círculo por cada golpe del niño en el pío correcto</span></div></div>
+      </div>
+      <div class="card">
+        <div class="label">Estatuas suaves · el silencio programado · escalón 1: 3 segundos</div>
+        <p class="say">Yo canto, y cuando me quedo en silencio, tú te quedas como un pollito dormido, sin moverte, y esperas la siguiente palabra.</p>
+        <div class="silence" style="margin-top:0.8rem">
+          <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52"/><circle class="arc" id="arc" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7"/><text class="num" id="snum" x="60" y="70" text-anchor="middle">3</text></svg>
+          <div>
+            <div class="state" id="sstate">La tablet canta la última estrofa, se detiene después de "Bajo sus dos alas," y sigue.<small>El niño no sabe cuándo viene la pausa. Cuentas tú, no él.</small></div>
+            <div class="row" style="margin-top:0.6rem">
+              ${playBtn('silBtn','Cantar con la pausa','btn primary')}
+              <span class="row" style="gap:0.3rem"><span class="note">pausa</span><button class="btn" data-d="2">2 s</button><button class="btn" data-d="3" aria-pressed="true">3 s</button><button class="btn" data-d="4">4 s</button></span>
+              <span class="note" id="silLog"></span>
+            </div>
+          </div>
+        </div>
+        ${lyricsHTML([2]).replace('<div class="lyrics"','<div class="lyrics" style="font-size:1.1rem;margin-top:0.8rem"')}
+        <p class="note" style="margin-top:0.7rem">Al terminar: "<i>Esperaste la palabra sin moverte. Eso es escuchar.</i>" Si el niño llena el silencio, no reacciones; retomas la canción y la próxima vez la pausa dura dos segundos, no tres. La regla es que hoy el niño lo logra; el silencio se alarga a lo largo de la semana.</p>
+      </div>
+    </div>`;
+
+  R.cierre = (s)=>`
+    ${head(s)}
+    <div class="stack">
+      <div class="card">
+        <div class="label">Pregunta dialógica · una oración completa</div>
+        <p class="say">Los pollitos duermen bajo las alas de su mamá. ¿Quién te tapa a ti en la noche? Dímelo con una oración completa: "En la noche me tapa…"</p>
+      </div>
+      <div class="card">
+        <div class="label">Palabra con raíces</div>
+        <p class="say"><span class="r">Elote</span>. La gallina busca el maíz, y el maíz tierno se llama elote. Esa palabra viene del náhuatl, <i>élotl</i>; los pueblos indígenas de México cuidaron el maíz desde hace miles de años. ¿Qué comes tú que se hace de maíz?</p>
+        <p class="note">tortillas · elote · tamales · atole · esquites</p>
+      </div>
+      <div class="card soft">
+        <div class="row" style="justify-content:space-between"><div class="label" style="margin:0">Arrullo de cierre · más corto y más suave que el de apertura</div>${playBtn('closeHumBtn','Oír el arrullo de cierre','btn ghost')}</div>
+        <p class="say" style="margin-top:0.5rem">Esta noche pregunta en tu casa: ¿qué arrullo te cantaban cuando eras bebé? Mañana me lo cantas, o me lo tarareas.</p>
+        <div class="row" style="margin-top:0.6rem"><button class="btn" id="homeBtn" aria-pressed="false">Pregunta para la casa entregada</button><span class="note">No se dice nada sobre la letra de mañana. La sesión termina en el registro en que empezó.</span></div>
+      </div>
+      <div class="row"><button class="btn primary" id="finish">Terminar la sesión</button></div>
+    </div>`;
+
+  R.summary = ()=>{
+    const clean = state.log.readings.filter(Boolean).length;
+    const best = state.log.silence.length ? Math.max(...state.log.silence) : 0;
+    return `
+    <div class="head"><h2><small>Sesión 12 registrada</small>Hasta mañana</h2></div>
+    <div class="sum">
+      <div class="card"><div class="k">${fmt(state.total)}<small>duración</small></div></div>
+      <div class="card"><div class="k">t<small>letra de hoy</small></div></div>
+      <div class="card"><div class="k">${clean}/3<small>lecturas limpias</small></div></div>
+      <div class="card"><div class="k">${best} s<small>silencio sostenido</small></div></div>
+      <div class="card"><div class="k">${state.log.taps}/3<small>píos por dentro</small></div></div>
+      <div class="card"><div class="k">${state.log.home?'sí':'—'}<small>pregunta para la casa</small></div></div>
+    </div>
+    <p class="note">Estos datos van al coach semanal y a la reunión mensual de datos. Mañana: sesión 13, letra <i>t</i> otra vez (segundo día), misma canción, pausa de 3 segundos si hoy se logró; 2 si no.</p>
+    <p class="note">Sesión 12 de 180 · Unidad 1 de 18 · El cancionero de Lupe tiene 1 canción.</p>
+    <div class="row"><button class="btn" id="restart">Volver a empezar la demo</button></div>`;
+  };
+
+  // ---------------- wiring ----------------
+  function wire(){
+    const id = STEPS[state.i]?.id;
+    if(state.done){ document.getElementById('restart').onclick = ()=>location.reload(); return; }
+
+    if(id==='arrullo'){
+      wirePlay('humBtn', { stanzas:[0], bpm:56, hum:true });
+      const ring=document.getElementById('ring'), word=document.getElementById('bword'), cnt=document.getElementById('bcount'), btn=document.getElementById('breathBtn');
+      let n=0, running=false;
+      btn.onclick=()=>{ if(running) return; running=true; btn.disabled=true; n=0; cycle(); };
+      function cycle(){
+        if(n>=3){ word.textContent='listo'; running=false; state.log.breaths=3; return; }
+        ring.classList.add('in'); word.textContent='inhala…';
+        setTimeout(()=>{ ring.classList.remove('in'); word.textContent='exhala con la canción…'; n++; cnt.textContent=n+' de 3'; setTimeout(cycle, reduced?600:4200); }, reduced?600:4200);
+      }
+    }
+    if(id==='cancion'){
+      wirePlay('songBtn', { stanzas:[0,1,2], bpm:76 });
+      wirePlay('echoBtn', { stanzas:[2], bpm:72 });
+    }
+    if(id==='sonidos'){
+      document.getElementById('rhymeBtn').onclick=e=>{ document.getElementById('rhymeAns').hidden=false; e.target.hidden=true; state.log.rhyme=true; };
+      // first line only: perform stanza 0 but cut after line 0 -> emulate by custom stanzas array with a 1-line stanza
+      wirePlay('lineBtn', { stanzas:[0], bpm:76, onlyLine:0 });
+      const syll=document.getElementById('syll'), note=document.getElementById('syllNote');
+      syll.onclick=e=>{ const b=e.target.closest('button'); if(!b) return; [...syll.children].forEach(x=>x.setAttribute('aria-pressed','false')); b.setAttribute('aria-pressed','true');
+        note.textContent = b.dataset.s==='lli' ? 'Sí: po-LLI-tos. La palmada cae en lli; esa es la parte fuerte.' : 'Cántalo otra vez con las palmas y escucha dónde cae la palmada.'; if(b.dataset.s==='lli') state.log.stress=true; };
+      const cards=document.getElementById('cards'), s1=document.getElementById('slot1'), s2=document.getElementById('slot2'), built=document.getElementById('built');
+      let parts=[];
+      function draw(){ s1.textContent=parts[0]||''; s2.textContent=parts[1]||''; s1.classList.toggle('filled',!!parts[0]); s2.classList.toggle('filled',!!parts[1]);
+        const w=parts.join(''); built.textContent = parts.length===2 ? w : ''; if(w==='tapa'){ built.textContent='tapa ✓'; state.log.built=true; } else if(parts.length===2){ built.textContent=w+' · léelo y prueba otra'; }
+        [...cards.children].forEach(b=>b.disabled=parts.includes(b.dataset.c)||parts.length>=2); }
+      cards.onclick=e=>{ const b=e.target.closest('button'); if(!b||b.disabled) return; parts.push(b.dataset.c); draw(); };
+      document.getElementById('resetBuild').onclick=()=>{ parts=[]; draw(); };
+      draw();
+    }
+    if(id==='leer'){
+      wirePlay('stanzaBtn', { stanzas:[2], bpm:72 });
+      const stages=document.getElementById('stages');
+      stages.onclick=e=>{ const b=e.target.closest('button'); if(!b) return; const st=+b.dataset.st; [...stages.children].forEach((x,i)=>x.setAttribute('aria-pressed', i<=st)); if(st>=1) stop(); };
+      document.getElementById('showChild').onclick=()=>{ stop(); document.getElementById('child').classList.add('show'); };
+      const rd=document.getElementById('readings');
+      rd.onclick=e=>{ const b=e.target.closest('button'); if(!b) return; const i=[...rd.children].indexOf(b); state.log.readings[i]=!state.log.readings[i]; b.setAttribute('aria-pressed', state.log.readings[i]); };
+    }
+    if(id==='dentro'){
+      wirePlay('insideBtn', { stanzas:[0], bpm:76 });
+      const taps=document.getElementById('taps'); taps.onclick=e=>{ const t=e.target.closest('.t'); if(!t) return; t.classList.toggle('on'); state.log.taps=taps.querySelectorAll('.t.on').length; };
+      const arc=document.getElementById('arc'), num=document.getElementById('snum'), st=document.getElementById('sstate'), log=document.getElementById('silLog');
+      let dur=3; const C=326.7;
+      document.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{ dur=+b.dataset.d; document.querySelectorAll('[data-d]').forEach(x=>x.setAttribute('aria-pressed', x===b)); num.textContent=dur; });
+      wirePlay('silBtn', { stanzas:[2], bpm:72, get pauseSec(){ return dur; }, pauseAfter:[2,0],
+        onPause:(sec)=>{ st.innerHTML='<b>Silencio.</b> Quieta la voz, quieto el cuerpo.<small>No mires el reloj; mira al niño.</small>'; const t0=performance.now();
+          const tick=()=>{ const el=(performance.now()-t0)/1000; const rem=Math.max(0,sec-el); num.textContent=Math.ceil(rem); arc.style.strokeDashoffset=C*(rem/sec); if(rem>0) requestAnimationFrame(tick); else { state.log.silence.push(sec); log.textContent='silencios: '+state.log.silence.join(' s, ')+' s'; st.innerHTML='Sigue: "acurrucaditos…"<small>Después: "Esperaste la palabra sin moverte. Eso es escuchar."</small>'; setTimeout(()=>{ arc.style.strokeDashoffset=C; num.textContent=dur; }, 800); } };
+          requestAnimationFrame(tick); },
+        after:()=>{ setTimeout(()=>{ st.innerHTML='Otra vez, con la pausa en otro lugar, o sigue al cierre.<small>El niño no sabe cuándo viene la pausa. Cuentas tú, no él.</small>'; }, 900); } });
+    }
+    if(id==='cierre'){
+      wirePlay('closeHumBtn', { stanzas:[2], bpm:52, hum:true });
+      const hb=document.getElementById('homeBtn'); hb.onclick=()=>{ state.log.home=!state.log.home; hb.setAttribute('aria-pressed', state.log.home); };
+      document.getElementById('finish').onclick=()=>{ stop(); state.done=true; render(); };
+    }
+  }
+
+  // perform() support for a single line: wrap
+  const _perform = perform;
+  perform = function(o){
+    if(o.onlyLine!=null){
+      // build a temporary one-line stanza by temporarily slicing STANZAS/LINE data
+      const si=o.stanzas[0]; const saved=STANZAS[si]; const savedNotes=LINE_NOTES.slice();
+      STANZAS[si]=[saved[o.onlyLine]]; LINE_NOTES.length=0; LINE_NOTES.push(savedNotes[o.onlyLine]);
+      const origSyl=o.onSyl; o=Object.assign({}, o, { onSyl:(a,b,c)=>origSyl&&origSyl(a,o.onlyLine,c) });
+      // patch loop count: perform iterates li<4; guard by restoring after schedule
+      const ctl=_performOne(o, si);
+      STANZAS[si]=saved; LINE_NOTES.length=0; savedNotes.forEach(x=>LINE_NOTES.push(x));
+      return ctl;
+    }
+    return _perform(o);
+  };
+  function _performOne(o, si){
+    stop(); const c=audio(); if(c.state==='suspended') c.resume();
+    const beat=60/o.bpm; let t=c.currentTime+0.15; const timers=[]; const at=(when,fn)=>timers.push(setTimeout(fn, Math.max(0,(when-c.currentTime)*1000)));
+    for(let k=0;k<6;k++){ const f=293.66*Math.pow(2,DEG[LINE_NOTES[0][k]]/12); const d=DUR[k]*beat; note(f,t,d*0.95,{}); if(o.onSyl) at(t,()=>o.onSyl(si,0,k)); if(k===0||k===2||k===4||k===5){ if(o.onBeat) at(t,o.onBeat); if(o.tickOn) tick(t); } t+=d; }
+    at(t+0.1, ()=>{ current=null; if(o.onEnd) o.onEnd(); });
+    current={ cancel(){ timers.forEach(clearTimeout); } }; return current;
+  }
+
+  document.getElementById('childBack').onclick=()=>document.getElementById('child').classList.remove('show');
+
+  function render(){
+    stop(); renderRail();
+    if(state.done){ main.innerHTML = R.summary(); document.getElementById('next').disabled=true; document.getElementById('back').disabled=true; wire(); return; }
+    const s=STEPS[state.i]; main.innerHTML = R[s.id](s); main.scrollTop=0;
+    document.getElementById('back').disabled = state.i===0;
+    document.getElementById('next').textContent = state.i===STEPS.length-1 ? 'Terminar' : 'Siguiente';
+    setPulse(s.id==='arrullo'||s.id==='cierre' ? 56 : 76);
+    wire();
+  }
+  function go(k){ if(state.done) return; state.i=Math.max(0,Math.min(STEPS.length-1,k)); state.stepStart=state.total; render(); }
+  document.getElementById('next').onclick=()=>{ if(state.i===STEPS.length-1){ stop(); state.done=true; render(); } else go(state.i+1); };
+  document.getElementById('back').onclick=()=>go(state.i-1);
+  render();
+})();
+</script>
+
+</body>
+</html>

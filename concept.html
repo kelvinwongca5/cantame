@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cántame</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+</head>
+<body>
+<style>
+  :root {
+    --ground: #F4F4EE;
+    --surface: #FFFFFF;
+    --surface-2: #EAEBE3;
+    --ink: #1C2740;
+    --ink-2: #3D4660;
+    --muted: #6B7285;
+    --line: #D3D5CC;
+    --blue: #1F5FA8;
+    --blue-soft: #DCE7F5;
+    --rosa: #C8156F;
+    --rosa-soft: #F9DCEB;
+    --marigold: #D98E12;
+    --marigold-soft: #FBEBC9;
+    --link: #1F5FA8;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #141A26;
+      --surface: #1C2434;
+      --surface-2: #232D40;
+      --ink: #EDEEF3;
+      --ink-2: #C9CEDC;
+      --muted: #9AA3B8;
+      --line: #33405A;
+      --blue: #7FB0EE;
+      --blue-soft: #1F3352;
+      --rosa: #F26FB4;
+      --rosa-soft: #4A1F38;
+      --marigold: #F2B84B;
+      --marigold-soft: #4A3A16;
+      --link: #7FB0EE;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #141A26;
+    --surface: #1C2434;
+    --surface-2: #232D40;
+    --ink: #EDEEF3;
+    --ink-2: #C9CEDC;
+    --muted: #9AA3B8;
+    --line: #33405A;
+    --blue: #7FB0EE;
+    --blue-soft: #1F3352;
+    --rosa: #F26FB4;
+    --rosa-soft: #4A1F38;
+    --marigold: #F2B84B;
+    --marigold-soft: #4A3A16;
+    --link: #7FB0EE;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Alegreya Sans", "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+    font-size: 18px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--rosa); outline-offset: 2px; }
+
+  h1, h2, h3, h4 { font-family: "Alegreya", Georgia, "Times New Roman", serif; text-wrap: balance; margin: 0; font-weight: 500; line-height: 1.15; }
+  h1 { font-size: clamp(2.6rem, 6vw, 4.2rem); font-style: italic; letter-spacing: -0.01em; }
+  h2 { font-size: 1.9rem; margin-top: 0.2rem; }
+  h3 { font-size: 1.3rem; margin-top: 1.6rem; margin-bottom: 0.4rem; }
+  h4 { font-size: 1.05rem; font-family: "Alegreya Sans", system-ui, sans-serif; font-weight: 700; margin-top: 1rem; }
+  p { margin: 0 0 1rem; }
+  p, li, td, th, blockquote { max-width: 68ch; }
+  ul, ol { padding-left: 1.3rem; }
+  li { margin-bottom: 0.4rem; }
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+  sup.cite { font-size: 0.7em; line-height: 0; }
+  sup.cite a { text-decoration: none; color: var(--muted); }
+  sup.cite a:hover { color: var(--link); }
+  .es { font-family: "Alegreya", Georgia, serif; font-style: italic; }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 clamp(1.1rem, 4vw, 2.5rem) 5rem; }
+
+  /* papel picado band */
+  .banner { height: 54px; width: 100%; display: block; }
+
+  header.masthead { padding: 2.2rem 0 1.4rem; border-bottom: 1px solid var(--line); margin-bottom: 2.4rem; }
+  .eyebrow { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; color: var(--muted); margin-bottom: 0.8rem; }
+  .sub { font-family: "Alegreya", Georgia, serif; font-size: 1.35rem; color: var(--ink-2); max-width: 32em; margin-top: 1rem; text-wrap: balance; }
+  .meta { display: flex; flex-wrap: wrap; gap: 0.5rem 1.6rem; margin-top: 1.4rem; font-size: 0.9rem; color: var(--muted); }
+  .meta span b { color: var(--ink-2); font-weight: 700; }
+
+  section { margin-bottom: 3.2rem; }
+  .sec-head { display: grid; grid-template-columns: auto 1fr; gap: 0.9rem; align-items: baseline; margin-bottom: 1.1rem; }
+  .sec-head .k { font-family: "Alegreya", Georgia, serif; font-style: italic; font-size: 1.1rem; color: var(--muted); }
+
+  /* strand tags encode which thread a block belongs to */
+  .tag { display: inline-block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; padding: 0.18rem 0.55rem; border-radius: 2px; vertical-align: middle; }
+  .tag.lit { background: var(--blue-soft); color: var(--blue); }
+  .tag.cul { background: var(--rosa-soft); color: var(--rosa); }
+  .tag.both { background: var(--marigold-soft); color: var(--marigold); }
+
+  .lede { font-size: 1.15rem; color: var(--ink-2); }
+
+  /* evidence ledger */
+  .ledger { border-top: 2px solid var(--ink); margin: 1.2rem 0 1.6rem; }
+  .ledger .row { display: grid; grid-template-columns: 10rem 1fr; gap: 1rem; padding: 0.85rem 0; border-bottom: 1px solid var(--line); }
+  .ledger .row .fig { font-family: "Alegreya", Georgia, serif; font-size: 1.55rem; line-height: 1.1; font-variant-numeric: tabular-nums; color: var(--ink); }
+  .ledger .row .fig small { display: block; font-family: "Alegreya Sans", system-ui, sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-top: 0.25rem; }
+  .ledger .row .txt { font-size: 0.98rem; color: var(--ink-2); }
+  .ledger.lit .row .fig { color: var(--blue); }
+  .ledger.cul .row .fig { color: var(--rosa); }
+  @media (max-width: 560px) { .ledger .row { grid-template-columns: 1fr; gap: 0.3rem; } }
+
+  /* pull quote */
+  blockquote { margin: 1.4rem 0; padding: 0 0 0 1.1rem; border-left: 3px solid var(--rosa); font-family: "Alegreya", Georgia, serif; font-size: 1.15rem; color: var(--ink-2); }
+  blockquote cite { display: block; font-family: "Alegreya Sans", system-ui, sans-serif; font-size: 0.85rem; font-style: normal; color: var(--muted); margin-top: 0.4rem; }
+
+  /* tables */
+  .tbl-wrap { overflow-x: auto; margin: 1rem 0 1.4rem; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+  th, td { text-align: left; vertical-align: top; padding: 0.6rem 0.7rem; border-bottom: 1px solid var(--line); max-width: none; }
+  th { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 700; border-bottom: 2px solid var(--ink); }
+  td.n { font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--muted); }
+  td .es { color: var(--ink); }
+
+  /* callout cards */
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 1.2rem 1.4rem; margin: 1.2rem 0; }
+  .card.lit { border-left: 4px solid var(--blue); }
+  .card.cul { border-left: 4px solid var(--rosa); }
+  .card.warn { border-left: 4px solid var(--marigold); }
+  .card h4 { margin-top: 0; }
+  .card p:last-child { margin-bottom: 0; }
+
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin: 1rem 0; }
+  .pillar { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 1.1rem 1.2rem; }
+  .pillar h4 { margin-top: 0; font-family: "Alegreya", Georgia, serif; font-weight: 500; font-size: 1.25rem; }
+  .pillar h4 .es { font-weight: 500; }
+  .pillar p { font-size: 0.95rem; color: var(--ink-2); margin-bottom: 0.5rem; }
+  .pillar p:last-child { margin-bottom: 0; }
+
+  /* session timeline */
+  .session { border-top: 2px solid var(--ink); margin: 1rem 0 1.5rem; }
+  .session .step { display: grid; grid-template-columns: 4.2rem 11rem 1fr; gap: 1rem; padding: 0.8rem 0; border-bottom: 1px solid var(--line); align-items: start; }
+  .session .min { font-family: "Alegreya", Georgia, serif; font-size: 1.4rem; font-variant-numeric: tabular-nums; color: var(--ink); }
+  .session .min small { display: block; font-family: "Alegreya Sans", system-ui, sans-serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  .session .name { font-weight: 700; }
+  .session .name .es { display: block; font-weight: 400; color: var(--muted); font-size: 0.95rem; }
+  .session .what { font-size: 0.95rem; color: var(--ink-2); }
+  @media (max-width: 620px) { .session .step { grid-template-columns: 4rem 1fr; } .session .what { grid-column: 1 / -1; } }
+
+  /* script sample */
+  .script { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 1.2rem 1.4rem; margin: 1rem 0 1.5rem; font-size: 0.97rem; }
+  .script .who { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; color: var(--muted); display: block; margin-top: 0.8rem; }
+  .script .who:first-child { margin-top: 0; }
+  .script .say { font-family: "Alegreya", Georgia, serif; font-size: 1.1rem; margin: 0.15rem 0 0; }
+  .script .note { color: var(--muted); font-size: 0.9rem; margin: 0.15rem 0 0; }
+  .decodable { font-family: "Alegreya", Georgia, serif; font-size: 1.5rem; line-height: 1.5; background: var(--surface-2); padding: 1rem 1.2rem; border-radius: 4px; margin: 0.8rem 0; max-width: 30ch; }
+  .decodable .root { border-bottom: 2px solid var(--rosa); }
+
+  /* sources */
+  .sources { font-size: 0.9rem; color: var(--ink-2); }
+  .sources ol { padding-left: 2.2rem; }
+  .sources li { margin-bottom: 0.55rem; max-width: 80ch; }
+  .sources li:target { background: var(--marigold-soft); }
+  .flag { color: var(--marigold); font-weight: 700; }
+
+  footer { border-top: 1px solid var(--line); padding-top: 1.2rem; font-size: 0.85rem; color: var(--muted); }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+  /* attention ladder */
+  .ladder { border-top: 2px solid var(--ink); margin: 1rem 0 1.5rem; }
+  .ladder .rung { display: grid; grid-template-columns: 7rem 1fr 1fr; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid var(--line); font-size: 0.95rem; }
+  .ladder .rung .w { font-family: "Alegreya", Georgia, serif; font-size: 1.15rem; color: var(--marigold); font-variant-numeric: tabular-nums; }
+  .ladder .rung .w small { display: block; font-family: "Alegreya Sans", system-ui, sans-serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  .ladder .rung .lbl { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); display: block; margin-bottom: 0.15rem; }
+  @media (max-width: 620px) { .ladder .rung { grid-template-columns: 1fr; gap: 0.4rem; } }
+  .rules { counter-reset: r; list-style: none; padding: 0; margin: 1rem 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0.9rem; }
+  .rules li { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 1rem 1.1rem; margin: 0; font-size: 0.95rem; color: var(--ink-2); max-width: none; }
+  .rules li b { display: block; color: var(--ink); font-family: "Alegreya", Georgia, serif; font-weight: 500; font-size: 1.15rem; margin-bottom: 0.25rem; }
+  .verse { font-family: "Alegreya", Georgia, serif; font-size: 1.2rem; line-height: 1.6; margin: 0.8rem 0 1rem; padding-left: 1.1rem; border-left: 3px solid var(--marigold); color: var(--ink); max-width: 40ch; }
+  .verse .sung { color: var(--muted); }
+  .verse .stress { text-decoration: underline; text-decoration-color: var(--marigold); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  .quiet { font-size: 0.85rem; color: var(--muted); font-style: italic; }
+</style>
+
+
+<svg class="banner" viewBox="0 0 1200 54" preserveAspectRatio="none" aria-hidden="true">
+  <defs>
+    <pattern id="picado" width="120" height="54" patternUnits="userSpaceOnUse">
+      <rect width="120" height="42" fill="var(--rosa)"/>
+      <path d="M0 42 q15 12 30 0 q15 12 30 0 q15 12 30 0 q15 12 30 0 v-2 h-120z" fill="var(--rosa)"/>
+      <circle cx="60" cy="21" r="8" fill="var(--ground)"/>
+      <circle cx="20" cy="21" r="4" fill="var(--ground)"/>
+      <circle cx="100" cy="21" r="4" fill="var(--ground)"/>
+      <path d="M60 6 l4 6 h-8z M60 36 l4 -6 h-8z M45 21 l6 -4 v8z M75 21 l-6 -4 v8z" fill="var(--ground)"/>
+      <rect x="0" y="0" width="120" height="3" fill="var(--ink)" opacity="0.35"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="54" fill="url(#picado)"/>
+</svg>
+
+<div class="wrap">
+
+<header class="masthead">
+  <div class="eyebrow">Program concept · Second draft · Song-first revision</div>
+  <h1>Cántame</h1>
+  <p class="sub">A daily fifteen-minute reading program for Mexican-American children in which the song comes first, the letters come out of the song, and stillness is practiced as carefully as sound.</p>
+  <div class="meta">
+    <span><b>Learners</b> Heritage Spanish speakers, ages 3–8</span>
+    <span><b>Model</b> 1:1, 15 minutes a day, scripted, any trusted adult</span>
+    <span><b>Vehicle</b> Songs, poems, riddles, rhymes from the Mexican oral tradition</span>
+    <span><b>Prepared</b> September 2026</span>
+  </div>
+</header>
+
+<section id="summary">
+  <div class="sec-head"><span class="k">In brief</span><h2>What changed, and why it holds together</h2></div>
+  <p class="lede">The first draft, <span class="es">Cuéntame</span>, put a story at the center and hung songs on it. This draft turns that inside out. The song, the poem, the riddle, and the rhyme are the text. Everything the child learns to read, they first learn to sing or say. The story survives only as a thread: each song is one that Lupe gathers for her grandmother's <span class="es">cancionero</span>.</p>
+  <p>Three commitments define the revision. First, <strong>song is the vehicle, not the reward</strong>. A verse the child already carries in their body is the ideal object on which to point out a rhyme, clap a syllable, find where the stress falls, meet a letter, and then read the line in print; the research on nursery rhymes, music programs, and sung text says this is not sentimental but mechanically sound.<sup class="cite"><a href="#s44">44</a><a href="#s46">,46</a><a href="#s49">,49</a></sup> Second, <strong>the literacy blocks stay explicit</strong>. Song lifts phonological awareness, memory for text, prosody, and fluency; it does not, on its own, teach letter–sound correspondences, and the best study of a daily ten-minute music program found exactly that gap.<sup class="cite"><a href="#s46">46</a></sup> So every session still contains four minutes of scripted, systematic Spanish phonics, and the letters are drawn from the song. Third, <strong>song is used to gather attention, not to seize it</strong>. Music can be a stimulant or a settling force depending on tempo, volume, pacing, and how it is used; the program deliberately chooses the settling register (unaccompanied voice, one tune repeated for weeks, scheduled silence, freeze games played slowly) and treats the child's capacity to stay with a phrase as a skill to be trained on a ladder across the year.<sup class="cite"><a href="#s54">54</a><a href="#s55">,55</a><a href="#s59">,59</a></sup></p>
+  <p>The working name is now <span class="es">Cántame</span>, "sing to me." The two strands are still marked: <span class="tag lit">Literacy</span> for decisions from the reading science, <span class="tag cul">Cultura</span> for decisions from the research on identity, family, and heritage language, and <span class="tag both">Both</span> where one design choice serves both. A third concern, attention, runs through all of them and gets its own section.</p>
+</section>
+
+<section id="why">
+  <div class="sec-head"><span class="k">The case</span><h2>Why this program, and why now</h2></div>
+  <p>Spanish is the home language of four million English learners in U.S. public schools, three-quarters of all ELs, and those children are concentrated in the early grades: nearly 15 percent of kindergartners are ELs, compared with 6 percent of twelfth graders.<sup class="cite"><a href="#s15">15</a></sup> Most of their families cannot keep Spanish alive across generations without help. Pew finds that 57 percent of U.S.-born Latinos can hold a conversation in Spanish; among the third generation and beyond it is 34 percent.<sup class="cite"><a href="#s16">16</a></sup> Among Mexican-origin families in Southern California, 36 percent of the second generation spoke Spanish well, 12 percent of the third, 2 percent of the fourth.<sup class="cite"><a href="#s17">17</a></sup> Eighty-five percent of Latinos say it matters that future generations speak Spanish; among Latinos who do not speak it, 54 percent have been made to feel bad about it by another Latino.<sup class="cite"><a href="#s16">16</a></sup></p>
+  <p>Songs are the part of the language that survives longest. A grandmother who no longer reads Spanish still sings <span class="es">A la rorro niño</span>; a third-generation child who answers in English still knows <span class="es">Los pollitos dicen</span>. Vicente T. Mendoza's <span class="es">Lírica infantil de México</span> catalogued this repertoire in 1951, from lullabies through counting songs to riddles and never-ending tales, organized by the age of the child who sings them.<sup class="cite"><a href="#s64">64</a></sup> It is a curriculum that already exists in the families we want to serve. The reading science and the identity science both say that building on it is sound: learning to read in the home language raises later reading in English,<sup class="cite"><a href="#s7">7</a><a href="#s9">,9</a></sup> and children who keep their heritage language and feel good about their ethnic identity show better psychological and academic adjustment.<sup class="cite"><a href="#s18">18</a><a href="#s19">,19</a></sup></p>
+
+  <div class="ledger">
+    <div class="row"><div class="fig">4.0M<small>students</small></div><div class="txt">U.S. public-school English learners whose home language is Spanish (76.4% of all ELs; 8.4% of all public-school students), fall 2021. NCES.<sup class="cite"><a href="#s15">15</a></sup></div></div>
+    <div class="row"><div class="fig">57% → 34%<small>Spanish fluency</small></div><div class="txt">Share who speak Spanish at least "pretty well": all U.S.-born Latinos vs. third-or-higher generation. Pew, 2023.<sup class="cite"><a href="#s16">16</a></sup></div></div>
+    <div class="row"><div class="fig">0.35–0.40<small>SD, transfer to English</small></div><div class="txt">Average effect of home-language reading instruction on second-language reading across five meta-analyses. Goldenberg, 2008.<sup class="cite"><a href="#s7">7</a></sup></div></div>
+    <div class="row"><div class="fig">7.8%<small>of books</small></div><div class="txt">Children's books received by the CCBC in 2024 that were about Latine characters or subjects (284 of 3,622). CCBC.<sup class="cite"><a href="#s30">30</a></sup></div></div>
+  </div>
+</section>
+
+<section id="once">
+  <div class="sec-head"><span class="k">The chassis</span><h2>What we keep from Once</h2></div>
+  <p>Once's operating model is unchanged: one adult, one child, fifteen minutes a day, a fully scripted sequence, two half-day trainings, weekly video coaching, recorded sessions, monthly data meetings, and a dosage threshold (80+ sessions) below which the program does not claim results.<sup class="cite"><a href="#s1">1</a><a href="#s2">,2</a><a href="#s3">,3</a></sup> The tutoring literature supports every one of those choices: one-to-one tutoring by teaching assistants produces effects (+0.44) at least as large as certified teachers (+0.38),<sup class="cite"><a href="#s12">12</a></sup> paraprofessional tutors average about 0.40 SD across 96 randomized trials, effects are largest in PreK–1, and daily programs beat weekly ones.<sup class="cite"><a href="#s11">11</a></sup></p>
+  <p>Two things about the chassis change. Once's continuous story becomes a continuous <span class="es">cancionero</span>: a physical songbook that gains one song, poem, or riddle every two weeks, in the child's own hand where possible, so that by the end of the year the child owns a book of thirty-some pieces they can sing and read. And the emotional register of the sessions changes. Once's lessons are designed to be "suspenseful and engaging."<sup class="cite"><a href="#s2">2</a></sup> Cántame's are designed to be steady.</p>
+</section>
+
+<section id="song">
+  <div class="sec-head"><span class="k">Strand one</span><h2>Song as the vehicle for the literacy blocks <span class="tag lit">Literacy</span></h2></div>
+  <p>Learning to read in Spanish has the same components as in any alphabetic language: phonological awareness, letter–sound knowledge, decoding, fluency, vocabulary, and comprehension, with writing woven through. What is unusual about Spanish is how much of the early load falls on the syllable and on stress, and how little on irregular spelling.<sup class="cite"><a href="#s4">4</a><a href="#s5">,5</a></sup> Song is unusually well matched to that profile.</p>
+
+  <h3>What the evidence says song can carry</h3>
+  <p><strong>Rhyme knowledge predicts reading.</strong> In the classic longitudinal study, sixty-four children's knowledge of nursery rhymes at age three predicted their reading and spelling three years later, after controlling for IQ, social background, and initial phonological skill; the effect ran through phonological sensitivity.<sup class="cite"><a href="#s44">44</a></sup> For Spanish specifically, preliterate children find rhyme (the end of a syllable) easier to hear than the beginning of a syllable, which makes rhyme the natural entry point for three- and four-year-olds.<sup class="cite"><a href="#s45">45</a></sup></p>
+  <p><strong>A daily ten-minute music program builds the large units, and only those.</strong> Degé and Schwarzer randomized 41 five- and six-year-olds to a music program (singing, drumming, meter, dance), a phonological-skills program, or sports, for ten minutes a day over twenty weeks. Music improved rhyme, syllable segmentation, and blending with an effect of d = 0.9, larger than the phonological program itself (d = 0.6). It did nothing for phoneme-level awareness.<sup class="cite"><a href="#s46">46</a></sup> That result is the design of Cántame in miniature: the same dosage, the same gain, and the same reason to keep explicit phonics in the room. A meta-analysis of thirteen studies puts the average effect of music training on phonological awareness at d = 0.20, growing with hours of training.<sup class="cite"><a href="#s47">47</a></sup></p>
+  <p><strong>One-to-one rhythm work moves poor readers.</strong> In a small trial, poor readers aged six and seven received nineteen one-to-one sessions of rhythmic games: tapping to a beat, clapping while chanting, reciting poetry with attention to stress. Rhyme awareness rose by d = 1.01, nonword reading by d = 0.95, and the children who improved most at keeping a beat improved most at reading (r = .57).<sup class="cite"><a href="#s48">48</a></sup> A Uruguayan study with five-year-olds found the same pattern: rhythm-focused music training beat unstructured singing on phonological awareness, and a year later the music group read more words per minute.<sup class="cite"><a href="#s67">67</a></sup></p>
+  <p><strong>Melody makes text stick, if the melody repeats.</strong> Wallace showed that verses are recalled better sung than spoken, but only when the same simple tune carries every verse; when the melody varied from verse to verse, spoken text won.<sup class="cite"><a href="#s49">49</a></sup> Singing a passage rather than speaking it also improved children's pronunciation and verbatim recall in a second language, with the advantage still present six months later.<sup class="cite"><a href="#s68">68</a></sup> And three-year-olds who heard the same storybook three times learned and retained more words than children who heard three different books with the same words.<sup class="cite"><a href="#s50">50</a></sup> The lesson for a curriculum is unglamorous: one tune, one text, many days.</p>
+  <p><strong>Stress is part of Spanish literacy.</strong> Spanish marks lexical stress in its spelling. The <span class="es">tilde</span> in <span class="es">pío</span> or <span class="es">maíz</span> is a written instruction about where the voice lands, and in Spanish ten-year-olds, prosodic (stress) awareness predicts reading and spelling independently of phonological awareness.<sup class="cite"><a href="#s51">51</a></sup> Song exaggerates stress. A child who has sung <span class="es">ma-ÍZ</span> a hundred times already knows what the accent mark is for.</p>
+  <p><strong>Repeated reading of a known text builds fluency.</strong> Repeated reading has an average effect near 0.75 on fluency, strongest when an adult models the text first and gives feedback.<sup class="cite"><a href="#s53">53</a></sup> The "Poetry Academy" gave struggling third graders one poem a week with a community volunteer (choral reading, gradual release, practice at home) and produced significant gains in words read correctly and word recognition.<sup class="cite"><a href="#s53">53</a></sup> A verse the child can sing is a text they will reread twenty times without being asked.</p>
+  <p><strong>Bilingual Spanish–English children hold their ground.</strong> In a one-year study of 42 low-income Spanish–English bilingual children aged six to nine, those in a community music program held their age-normed reading scores while matched controls declined.<sup class="cite"><a href="#s52">52</a></sup></p>
+
+  <h3>How each block rides on the song</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Literacy block</th><th>What the song does</th><th>What the script still does explicitly</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Phonological awareness</strong></td><td>Rhyme pairs from the verse (<span class="es">pío / frío</span>); syllables clapped on the pulse; the stressed syllable found by singing the line and listening for the long note.</td><td>Phoneme isolation and blending on the day's letter, which song does not deliver.<sup class="cite"><a href="#s46">46</a></sup></td></tr>
+      <tr><td><strong>Letter–sound knowledge</strong></td><td>Every new letter is introduced through a word the child already sings (<span class="es">t</span> from <span class="es">tapa</span>, <span class="es">l</span> from <span class="es">alas</span>).</td><td>Systematic Spanish order: five vowels, then <span class="es">m p s l t n</span>, open syllables first, closed syllables next, then the rest.<sup class="cite"><a href="#s6">6</a></sup></td></tr>
+      <tr><td><strong>Decoding</strong></td><td>The child meets the verse in print only after singing it for days. Words made of taught letters are decoded; the few song words with untaught letters are shown in lighter ink and read from memory until their letter arrives.</td><td>A short decodable verse written for the unit from the song's own words, using only taught letters, read without the melody.</td></tr>
+      <tr><td><strong>Fluency and prosody</strong></td><td>Singing → chanting on the pulse → speaking → reading. The tune is removed in stages so that phrasing and stress survive the transition to print.</td><td>Repeated reading with a performance criterion: three clean readings at the pulse, never faster.<sup class="cite"><a href="#s53">53</a></sup></td></tr>
+      <tr><td><strong>Vocabulary and comprehension</strong></td><td>Riddles (<span class="es">adivinanzas</span>) require inference and holding a question in mind; proverbs (<span class="es">dichos</span>) require interpreting figurative language; song lyrics carry rare words (<span class="es">acurrucaditos, abrigo</span>).</td><td>Dialogic prompts in Spanish after each piece; one "word with roots" per session.</td></tr>
+      <tr><td><strong>Writing</strong></td><td>The child copies one line of the song into the <span class="es">cancionero</span> each week, and in Phase 4 writes a two-line <span class="es">calaverita</span> of their own.</td><td>Dictation of syllables and words built from the day's letter.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="ledger lit">
+    <div class="row"><div class="fig">d = 0.9<small>rhyme, syllable, blending</small></div><div class="txt">Effect of a 10-minute-a-day, 20-week music program on large-unit phonological awareness in five- and six-year-olds, vs. d = 0.6 for a phonological training program; no effect on phoneme awareness. Degé &amp; Schwarzer, 2011.<sup class="cite"><a href="#s46">46</a></sup></div></div>
+    <div class="row"><div class="fig">d = 1.01<small>rhyme awareness, 1:1</small></div><div class="txt">Nineteen one-to-one rhythm sessions with poor readers aged 6–7; nonword reading d = 0.95. Bhide, Power &amp; Goswami, 2013.<sup class="cite"><a href="#s48">48</a></sup></div></div>
+    <div class="row"><div class="fig">64<small>children, age 3 → 6</small></div><div class="txt">Nursery-rhyme knowledge at three predicted reading and spelling three years later, controlling for IQ and background. Bryant et al., 1989.<sup class="cite"><a href="#s44">44</a></sup></div></div>
+    <div class="row"><div class="fig">~0.75<small>repeated reading</small></div><div class="txt">Average fluency effect of repeated reading across 18 studies. Therrien, 2004.<sup class="cite"><a href="#s53">53</a></sup></div></div>
+  </div>
+</section>
+
+<section id="attention">
+  <div class="sec-head"><span class="k">The register</span><h2>Song that gathers attention instead of grabbing it <span class="tag both">Both</span></h2></div>
+  <p>Children's media, and much children's music, works by capture: fast cuts, bright color, rising pitch, constant novelty. That register has a measurable cost. Four-year-olds who watched nine minutes of a fast-paced cartoon performed worse on executive-function tasks immediately afterward than children who watched a slow-paced educational program or simply drew.<sup class="cite"><a href="#s55">55</a></sup> Kindergartners taught in a heavily decorated classroom spent 39 percent of the lesson off task and scored 42 percent on the test, against 28 percent and 55 percent in a bare room.<sup class="cite"><a href="#s56">56</a></sup> Children need a five to seven decibel better signal-to-noise ratio than adults to understand speech, and second-language learners are hurt most by background sound.<sup class="cite"><a href="#s57">57</a></sup> Cántame's first attention decision is therefore subtractive: one voice, no backing track, no screen in front of the child, nothing on the table but the <span class="es">cancionero</span> and the syllable cards.</p>
+
+  <h3>Music has two registers; choose the settling one</h3>
+  <p>The same song sung two ways does two different things to a child's body. When mothers sang a song soothingly, both mother's and infant's physiological arousal fell below baseline as the song went on; when they sang it playfully (faster, higher, louder, with a sharper pulse), arousal held steady and the infant's gaze locked on the mother.<sup class="cite"><a href="#s54">54</a></sup> Playful singing captures; soothing singing settles. Infants also stay calm roughly twice as long listening to singing as to speech.<sup class="cite"><a href="#s69">69</a></sup> The Mexican repertoire already contains both registers, and the <span class="es">arrullo</span> (lullaby) is the oldest and most widely shared of all of it.<sup class="cite"><a href="#s64">64</a></sup> Cántame opens and closes every session in the soothing register, sings the working song at a walking pulse in between, and never uses the playful register to win the child back.</p>
+
+  <h3>Attention is trainable at this age, and rhythm and song are the tools</h3>
+  <p>Five sessions of attention training over two to three weeks measurably improved executive attention in four-year-olds, whose brain responses afterward resembled untrained six-year-olds'.<sup class="cite"><a href="#s62">62</a></sup> The duration of focused attention grows steadily between ages one and four and a half, driven partly by growing inhibitory control.<sup class="cite"><a href="#s72">72</a></sup> Three lines of music research say how to work on it:</p>
+  <ul>
+    <li><strong>Freeze games with songs build self-regulation.</strong> "Red Light, Purple Light," a set of circle-time games in which children move to a song or a drum and stop on a cue (and later must do the opposite of the cue), improved behavioral self-regulation in Head Start preschoolers, with the largest gains for children who started lowest; in the first small trial the treatment group also gained on letter–word identification. The What Works Clearinghouse, reviewing the two later trials (433 children, a third of them English learners), rates the self-regulation effect as small but positive (ES = 0.16) and the literacy effects as uncertain.<sup class="cite"><a href="#s59">59</a></sup></li>
+    <li><strong>Keeping a beat trains inhibition, and tracks attention.</strong> In 76 five- and six-year-olds, twenty weeks of rhythm-based training (three 20-minute sessions a week) improved inhibition (d = 0.82 versus sports) where pitch-based training did not.<sup class="cite"><a href="#s60">60</a></sup> Among adolescents, the steadiness with which a person can tap to a beat correlates with sustained auditory attention (r = .47) and with reading.<sup class="cite"><a href="#s61">61</a></sup> A teacher-delivered rhythm-and-movement program for preschoolers in disadvantaged communities has shown small positive effects on teacher-rated self-regulation and on the Head-Toes-Knees-Shoulders task in cluster-randomized trials in Australia and Hong Kong, though not on a broader executive-function composite.<sup class="cite"><a href="#s70">70</a></sup></li>
+    <li><strong>Children who sing use song to regulate themselves.</strong> Three- and four-year-olds who had taken music classes showed better self-regulation (d = 0.41) and were more likely to sing or hum to themselves while waiting in a delay task; the song had become a tool they reached for.<sup class="cite"><a href="#s58">58</a></sup> That is the outcome Cántame wants: a child who, asked to wait, sings inside.</li>
+  </ul>
+
+  <h3>Six rules of the quiet table</h3>
+  <ol class="rules">
+    <li><b>One voice, no track.</b> The adult sings unaccompanied. Audio exists for adults who need to learn a tune, played face-down and off before the child sits.<sup class="cite"><a href="#s57">57</a></sup></li>
+    <li><b>One tune, two weeks.</b> Each unit has one song or poem. Novelty is rationed; repetition is the method.<sup class="cite"><a href="#s49">49</a><a href="#s50">,50</a></sup></li>
+    <li><b>Walking pulse.</b> Working songs are sung at roughly 70–85 beats a minute, kept with palms on the table. Never faster to "wake up" the child.<sup class="cite"><a href="#s54">54</a><a href="#s60">,60</a></sup></li>
+    <li><b>Quieter to gather.</b> When attention drifts, the adult lowers their voice and slows the pulse. Volume goes down, not up.</li>
+    <li><b>Silence is scheduled.</b> Every session contains planned silence: inner singing, a freeze, a riddle's waiting time. Its length grows on the ladder below.<sup class="cite"><a href="#s59">59</a></sup></li>
+    <li><b>Praise the staying.</b> The script praises holding still, waiting for the next word, and finishing the verse ("<span class="es">Te quedaste con la canción hasta el final</span>"), not speed or volume.</li>
+  </ol>
+
+  <h3>The attention ladder</h3>
+  <p>Each rung names what the child can do by the end of the phase. The demand rises in three ways at once: the length of silence held, the amount of song carried inside without sound, and the complexity of the stop rule.</p>
+  <div class="ladder">
+    <div class="rung"><div class="w">Phase 1<small>weeks 1–6</small></div><div><span class="lbl">Stillness</span>Hold a freeze for 3 seconds while the adult pauses mid-line, then come in on the next word.</div><div><span class="lbl">Inner song</span>Hum the closing <span class="es">arrullo</span> with lips closed; tap the table on every <span class="es">pío</span> while the adult sings.</div></div>
+    <div class="rung"><div class="w">Phase 2<small>weeks 7–12</small></div><div><span class="lbl">Stillness</span>Hold a freeze for 6 seconds; freeze on a sung cue ("<span class="es">estatua</span>") rather than on silence.</div><div><span class="lbl">Inner song</span>Sing one line of the <span class="es">ronda</span> silently and tap only on the last word.</div></div>
+    <div class="rung"><div class="w">Phase 3<small>weeks 13–20</small></div><div><span class="lbl">Stillness</span>Hear a riddle and count five fingers in silence before answering. Freeze on the opposite cue (move on "<span class="es">quieto</span>", stop on "<span class="es">baila</span>").<sup class="cite"><a href="#s59">59</a></sup></div><div><span class="lbl">Inner song</span>Sing a whole verse inside, then say only the rhyming words aloud.</div></div>
+    <div class="rung"><div class="w">Phase 4<small>weeks 21–28</small></div><div><span class="lbl">Stillness</span>Keep a steady pulse alone for 20 seconds while the adult is silent, then read a <span class="es">trabalenguas</span> three times cleanly at that pulse.</div><div><span class="lbl">Inner song</span>Track the printed verse with a finger while singing it inside, and stop the finger where the adult stops singing.</div></div>
+    <div class="rung"><div class="w">Phase 5<small>weeks 29–36</small></div><div><span class="lbl">Stillness</span>Recite a twelve-line poem from memory at a walking pulse, with a two-breath pause between stanzas.</div><div><span class="lbl">Inner song</span>Sing an entire song inside while reading it in print, then sing the last line aloud, in tune and on the beat.</div></div>
+  </div>
+  <p class="quiet">Inner singing is the Kodály tradition's "inner hearing," the ability to hear music without sounding it; here it doubles as an inhibition exercise, since the child must suppress the sung response while keeping the song running.<sup class="cite"><a href="#s71">71</a></sup></p>
+</section>
+
+<section id="cultura">
+  <div class="sec-head"><span class="k">Strand two</span><h2>The repertoire is the cultural strand <span class="tag cul">Cultura</span></h2></div>
+  <p>In the first draft the cultural content was a set of themes. Here it is a body of texts. Mendoza organized the Mexican children's lyric by the age at which it belongs to a child: lullabies and nursing rhymes first, then religious and Christmas songs, then the <span class="es">coplas</span> of six- to eight-year-olds, then games and rounds, never-ending tales, and the narrative ballads and cumulative counting songs of older children.<sup class="cite"><a href="#s64">64</a></sup> That order is close to a scope and sequence already, and Cántame follows it.</p>
+
+  <div class="grid2">
+    <div class="pillar">
+      <h4><span class="es">Arrullos</span> · lullabies</h4>
+      <p><span class="es">A la rorro niño</span>, <span class="es">Señora Santa Ana</span>, <span class="es">Duérmete mi niño</span>, <span class="es">Este niño lindo</span>. The soothing register in its purest form; sung, never decoded, at the start and end of every session. The first "para la casa" question of the year is "<span class="es">¿Qué arrullo te cantaban a ti?</span>"</p>
+    </div>
+    <div class="pillar">
+      <h4><span class="es">Rondas y juegos</span> · rounds and games</h4>
+      <p><span class="es">Naranja dulce, limón partido</span>; <span class="es">A la rueda de San Miguel</span>; <span class="es">La víbora de la mar</span>; <span class="es">Arroz con leche</span>; <span class="es">Los pollitos dicen</span>. Strong pulse, simple repeated tunes, built-in stop cues; these carry the freeze games and the syllable work.<sup class="cite"><a href="#s49">49</a><a href="#s59">,59</a></sup></p>
+    </div>
+    <div class="pillar">
+      <h4><span class="es">Coplas, adivinanzas y dichos</span> · verses, riddles, sayings</h4>
+      <p>"<span class="es">Agua pasa por mi casa, cate de mi corazón</span>" (aguacate); "<span class="es">Oro parece, plata no es</span>" (plátano); "<span class="es">Sana, sana, colita de rana</span>"; the family's own <span class="es">dichos</span>. Riddles are the program's comprehension texts and its waiting exercise; sayings are where families contribute most.<sup class="cite"><a href="#s27">27</a><a href="#s28">,28</a></sup></p>
+    </div>
+    <div class="pillar">
+      <h4><span class="es">Trabalenguas y cuentos de nunca acabar</span> · tongue-twisters and endless tales</h4>
+      <p>"<span class="es">Pepe Pecas pica papas</span>"; "<span class="es">Erre con erre</span>"; "<span class="es">Este era un gato con los pies de trapo</span>." Fluency texts, read slowly and cleanly at the pulse rather than fast; the endless tale is a lesson in knowing when to stop.</p>
+    </div>
+    <div class="pillar">
+      <h4><span class="es">Calaveritas y poemas</span> · verses for the dead, and poems</h4>
+      <p>For <span class="es">Día de Muertos</span> the child writes a two-line <span class="es">calaverita</span> for a relative or a pet, in the tradition of the affectionate mock-epitaph.<sup class="cite"><a href="#s40">40</a></sup> In Phase 5, poems: Amado Nervo's <span class="es">Cantos escolares</span> (1903), written to be sung in Mexican schools and now public domain,<sup class="cite"><a href="#s73">73</a></sup> and <span class="es">Las mañanitas</span>.</p>
+    </div>
+    <div class="pillar">
+      <h4><span class="es">Palabras con raíces</span> · words with roots</h4>
+      <p>The songs are full of Nahuatl: <span class="es">elote, tomate, aguacate, chapulín, papalote, guajolote</span>.<sup class="cite"><a href="#s39">39</a></sup> One per session, and the rule of thumb that Mexican words ending in <span class="es">-te</span> often came from <span class="es">-tl</span>. Seven million people in Mexico speak one of 68 Indigenous language groups; the child learns that as a living fact, not an ancient one.<sup class="cite"><a href="#s39">39</a></sup></p>
+    </div>
+  </div>
+
+  <h3>Why this builds love, not just skill</h3>
+  <p>The identity research says the feeling the program is after has real correlates. Positive ethnic-racial affect is associated with higher self-esteem, better achievement, and fewer depressive symptoms across 46 studies of Latino, Black, Native American, and Asian American youth,<sup class="cite"><a href="#s18">18</a></sup> and ethnic identity is already protective in Mexican- and Dominican-American four- and five-year-olds.<sup class="cite"><a href="#s19">19</a></sup> Mexican-American children build the components of that identity between preschool and age ten.<sup class="cite"><a href="#s20">20</a></sup> Heritage-language proficiency predicts ethnic-identity affirmation in Latino adolescents,<sup class="cite"><a href="#s23">23</a></sup> and when the home language is lost, "rifts develop and families lose the intimacy that comes from shared beliefs and understandings."<sup class="cite"><a href="#s26">26</a></sup> Song is the most intimate form of that shared language. Nobody sings <span class="es">A la rorro niño</span> to a child they do not love; a program that puts that song in the child's mouth, and then in their handwriting, is transmitting the feeling with the words.</p>
+
+  <div class="card cul">
+    <h4>The thread that remains of the story</h4>
+    <p>Lupe's grandmother is making a <span class="es">cancionero</span> for the family and has lost her voice. Each unit, Lupe learns a song from someone (a neighbor from Puebla, a cousin in Oaxaca, the man who sells elotes) and brings it home; the last unit is a song the child's own family gives. The narrative is two or three sentences a week, read by the adult, and exists to answer the child's question of why we are learning this one next.</p>
+  </div>
+
+  <div class="card warn">
+    <h4>Rights, and what "culture" must not become</h4>
+    <p>Traditional songs and rhymes in Mendoza's collection are anonymous and public domain. Cri-Cri (Francisco Gabilondo Soler, 1907–1990), the most beloved Mexican children's songwriter, is not: Mexican copyright runs for the author's life plus 100 years, so his catalog is licensed material and budgeted as such.<sup class="cite"><a href="#s65">65</a></sup> Amado Nervo (d. 1919) is public domain; Gabriela Mistral's <span class="es">Ternura</span> is due to enter the Chilean public domain in 2028, though a bill to extend her term by ten years is pending, so Phase 5 should not depend on it.<sup class="cite"><a href="#s73">73</a></sup> The three guardrails from the first draft stand: no shame for a child who arrives with little Spanish; no single Mexico (rondas from Jalisco are not rondas from Yucatán, and the family's own version of a song outranks the script's); and Indigenous peoples named as living communities.</p>
+  </div>
+</section>
+
+<section id="scope">
+  <div class="sec-head"><span class="k">The year</span><h2>Scope and sequence</h2></div>
+  <p>Thirty-six weeks, five phases, one piece every two weeks (three in Phase 1, where the first songs need longer). The phonics order is the consensus order for Spanish structured literacy;<sup class="cite"><a href="#s6">6</a><a href="#s14">,14</a></sup> the repertoire follows Mendoza's developmental order;<sup class="cite"><a href="#s64">64</a></sup> the attention rung is from the ladder above.</p>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Phase</th><th>Letters and units</th><th>Repertoire (one piece per unit)</th><th>Attention rung</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1 · Weeks 1–6</td><td>Five vowels; <span class="es">m p s l t n</span>; open CV syllables; simple closed syllables ending in <span class="es">n s l</span>.</td><td><span class="es">Los pollitos dicen</span> (weeks 1–3); <span class="es">Sana, sana, colita de rana</span>; closing <span class="es">arrullo</span> <span class="es">A la rorro niño</span> all phase.</td><td>3-second freeze; hum with lips closed; tap on <span class="es">pío</span>.</td></tr>
+      <tr><td class="n">2 · Weeks 7–12</td><td><span class="es">d b f r c/qu g</span> (hard); closed syllables; two- and three-syllable words.</td><td><span class="es">Naranja dulce</span>; <span class="es">Arroz con leche</span>; <span class="es">Pepe Pecas pica papas</span>.</td><td>6-second freeze on a sung cue; one line sung inside.</td></tr>
+      <tr><td class="n">3 · Weeks 13–20</td><td><span class="es">ñ ch ll y j h rr</span>; diphthongs.</td><td><span class="es">A la rueda de San Miguel</span>; <span class="es">La víbora de la mar</span>; adivinanzas (<span class="es">aguacate, plátano, pera</span>); the family's <span class="es">dichos</span>.</td><td>Five-finger wait before a riddle; opposite-cue freeze; verse inside, rhymes aloud.</td></tr>
+      <tr><td class="n">4 · Weeks 21–28</td><td>Consonant blends; <span class="es">c/z</span> soft; <span class="es">g/gu/gü</span>; <span class="es">x</span>.</td><td><span class="es">De colores</span>; <span class="es">Erre con erre</span>; <span class="es">calaveritas</span> for <span class="es">Día de Muertos</span>; a <span class="es">cuento de nunca acabar</span>.</td><td>20 seconds of pulse alone; three clean readings of a <span class="es">trabalenguas</span>; finger tracks the inner song.</td></tr>
+      <tr><td class="n">5 · Weeks 29–36</td><td>Multisyllabic words; stress and the <span class="es">tilde</span>; punctuation for expression.</td><td>Amado Nervo, <span class="es">Cantos escolares</span>; <span class="es">Las mañanitas</span>; a <span class="es">corrido</span> verse; the child's own <span class="es">copla</span> for the <span class="es">cancionero</span>.</td><td>Twelve-line poem from memory; whole song inside while reading it.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="session">
+  <div class="sec-head"><span class="k">A day</span><h2>The fifteen-minute session</h2></div>
+  <p>Six parts, always in the same order, so a grandfather on day three and a paraprofessional on day ninety run the same session. The shape is an arc: settle, work, stretch, settle. Roughly a third of the time is singing, a third is explicit reading work, and a third is talk and silence.</p>
+
+  <div class="session">
+    <div class="step"><div class="min">1<small>min</small></div><div class="name">Arrullo <span class="es">settle</span></div><div class="what">The adult hums the phase's lullaby; the child joins with lips closed. Three slow breaths on the last phrase. Same tune every day of the phase.<sup class="cite"><a href="#s54">54</a></sup></div></div>
+    <div class="step"><div class="min">3<small>min</small></div><div class="name">La canción <span class="es">the song</span></div><div class="what">The unit's piece, sung through once at a walking pulse with palms keeping the beat on the table; then one verse line by line, adult first, child echoing.<sup class="cite"><a href="#s60">60</a></sup></div></div>
+    <div class="step"><div class="min">4<small>min</small></div><div class="name">Los sonidos <span class="es">the sounds</span></div><div class="what">From the song: find the rhyme, clap a word's syllables on the pulse, sing the line to find the stressed syllable. Then the scripted phonics: the day's letter from a song word, blend into syllables, build two words with cards, write one.<sup class="cite"><a href="#s46">46</a></sup></div></div>
+    <div class="step"><div class="min">3<small>min</small></div><div class="name">Leer la canción <span class="es">read the song</span></div><div class="what">The verse in the <span class="es">cancionero</span>. Sing it while tracking with a finger; chant it on the pulse; say it; then read the unit's decodable verse without any tune. Three clean readings, never faster.<sup class="cite"><a href="#s53">53</a></sup></div></div>
+    <div class="step"><div class="min">2<small>min</small></div><div class="name">Por dentro <span class="es">inside</span></div><div class="what">The attention exercise for the current rung: inner singing with a tap, a slow freeze, or a riddle with a counted wait.<sup class="cite"><a href="#s58">58</a><a href="#s59">,59</a></sup></div></div>
+    <div class="step"><div class="min">2<small>min</small></div><div class="name">Cierre y para la casa <span class="es">close</span></div><div class="what">One dialogic question in Spanish about the song, one "word with roots," the closing <span class="es">arrullo</span>, and the question to carry home tonight.</div></div>
+  </div>
+</section>
+
+<section id="example">
+  <div class="sec-head"><span class="k">Worked example</span><h2>Unit 1, session 12: <span class="es">Los pollitos dicen</span></h2></div>
+  <p>Week three. The child has sung this song every day for eleven sessions and knows it by heart. Letters taught so far: the five vowels, then <span class="es">m, p, s, l, n</span>. Today's letter is <span class="es">t</span>. The song is public domain (written by the Chilean teacher Ismael Parraguez and published in 1907; it is now sung across the Spanish-speaking world).<sup class="cite"><a href="#s66">66</a></sup> It was chosen as the first song for a reason beyond familiarity: it moves from need (hunger, cold, <span class="es">pío pío pío</span>) to rest (asleep under the wings until morning). The song's own arc is the session's arc.</p>
+
+  <div class="verse">
+    Los pollitos dicen <span class="stress">pí</span>o, <span class="stress">pí</span>o, <span class="stress">pí</span>o,<br>
+    cuando tienen hambre, cuando tienen <span class="stress">frí</span>o.<br>
+    La gallina busca el maíz y el trigo,<br>
+    les da la comida y les presta abrigo.<br>
+    Bajo sus dos alas, acurrucaditos,<br>
+    hasta el otro día duermen los pollitos.
+  </div>
+
+  <div class="script">
+    <span class="who">1 · Arrullo (1 min)</span>
+    <p class="say"><em>(Humming the tune of </em>A la rorro niño<em>, lips closed, slowly. After one phrase, the adult opens a hand on the table, palm up; the child rests a hand on it. Two more phrases. Then, very quietly:)</em> Tres respiraciones con la canción. <em>(The adult breathes audibly with the last line, three times.)</em></p>
+    <p class="note">Attention note: the adult does not say "listen" or "ready." The hum is the cue. If the child talks, the adult keeps humming, softer. The session starts when the child is humming too, or after the third breath, whichever comes first.</p>
+
+    <span class="who">2 · La canción (3 min)</span>
+    <p class="say">Manos en la mesa. <em>(Both begin patting the table slowly, about one pat per second.)</em> Cantamos con las manos. <em>(Sings the whole song once at that pulse, without stopping, eyes on the child, not loud.)</em></p>
+    <p class="say">Ahora tú me sigues. Yo canto un pedacito y tú lo cantas igual. <em>"Bajo sus dos alas..."</em> <em>(child echoes)</em> <em>"acurrucaditos..."</em> <em>(child echoes)</em> <em>"hasta el otro día..."</em> <em>(child echoes)</em> <em>"duermen los pollitos."</em></p>
+    <p class="note">Families sing this song in several versions ("<span class="es">bajo de sus alas</span>," "<span class="es">les da su comida y les da abrigo</span>"); the family's version wins, and the adult marks it in the <span class="es">cancionero</span>. The echo stanza is always the last one, the quietest. The adult sings each fragment slightly softer than the one before, so the child's echo comes down with it.</p>
+
+    <span class="who">3 · Los sonidos (4 min)</span>
+    <p class="say">Escucha: <em>pí-o</em>... <em>frí-o</em>. Terminan igual. ¿Cuál otra palabra de la canción termina como <em>trigo</em>? <em>(abrigo)</em> Muy bien, riman.</p>
+    <p class="say">Ahora vamos a aplaudir la palabra <em>pollitos</em> con el pulso: po-lli-tos. ¿Cuántas partes? Cántalo despacio y dime cuál parte suena más larga. <em>(po-LLI-tos)</em> Esa es la parte fuerte.</p>
+    <p class="say">La letra de hoy es <em>t</em>. Suena /t/, con la lengua en los dientes, suavecito. Está al final de una palabra que acabamos de aplaudir: <em>polli-tos</em>. Y en una palabra que vamos a leer hoy: <em>tapa</em>. Dilo tú: /t/. Ahora con las vocales: ta, te, ti, to, tu. <em>(Cards:)</em> Pon <em>ta</em> y luego <em>pa</em>. Léelo despacio. Tapa. Ahora escríbela en tu cuaderno.</p>
+    <p class="note">Adult note: an English-style /t/ with a puff of air is common in heritage speakers; model it once with the tongue on the teeth and move on. Correct at most twice. The stress question ("which part sounds longest") is asked by singing, not speaking; the melody is what makes the answer obvious.</p>
+
+    <span class="who">4 · Leer la canción (3 min)</span>
+    <p class="say">Abre tu cancionero en los pollitos. Pon el dedo en la primera palabra. Cantamos despacio y el dedo camina con la canción. <em>(Sing the last stanza, the adult's finger under the child's.)</em></p>
+    <p class="say">Ahora sin cantar, solo con el pulso. <em>(Chant the same stanza, patting.)</em> Ahora solo lo decimos. <em>(Speak it.)</em></p>
+    <p class="say">Y ahora, sin música, leemos nuestro versito. Este es solo tuyo.</p>
+    <div class="decodable">Pío, pío, pío.<br>Mi mamá me <span class="root">tapa</span>.<br>Sus alas son mi manta.</div>
+    <p class="note">Every word in the decodable verse uses only the letters taught through today (vowels, <span class="es">m p s l n t</span>) and the accent the child has sung. In the printed song above it, words with untaught letters (<span class="es">pollitos, dicen, gallina</span>) appear in lighter ink; the child reads them from the song, and each will be decoded when its letter arrives. Three readings of the decodable verse at the pulse. The third is the one that counts: "<span class="es">Leíste todo el versito sin tropezar</span>."</p>
+
+    <span class="who">5 · Por dentro (2 min)</span>
+    <p class="say">Ahora la canción va por dentro. Yo canto la primera estrofa y tú la cantas dentro de tu cabeza, sin voz. Cada vez que oigas <em>pío</em>, tocas la mesa una vez. <em>(Adult sings the first stanza at the walking pulse; the child taps three times on the three</em> pío<em>s.)</em></p>
+    <p class="say">Ahora estatuas suaves. Yo canto, y cuando me quedo en silencio, tú te quedas como un pollito dormido, sin moverte, y esperas la siguiente palabra. <em>(Sings the last stanza, stops after "Bajo sus dos alas," holds three seconds of silence, then continues with "acurrucaditos." Repeats once with the pause elsewhere.)</em> Esperaste la palabra sin moverte. Eso es escuchar.</p>
+    <p class="note">Rung for Phase 1: a 3-second pause. The adult counts it silently. The child is never told the pause is coming. If the child fills the silence, the adult does not react; she resumes singing, and next time pauses for two seconds instead of three. The rule is that the child succeeds today; the silence lengthens across the week.</p>
+
+    <span class="who">6 · Cierre y para la casa (2 min)</span>
+    <p class="say">Los pollitos duermen bajo las alas de su mamá. ¿Quién te tapa a ti en la noche? Dímelo con una oración completa: "En la noche me tapa..."</p>
+    <p class="say">Palabra con raíces: <em>elote</em>. La gallina busca el maíz, y el maíz tierno se llama elote. Esa palabra viene del náhuatl, <em>élotl</em>; los pueblos indígenas de México cuidaron el maíz desde hace miles de años. ¿Qué comes tú que se hace de maíz? <em>(tortillas, elote, tamales, atole)</em></p>
+    <p class="say"><em>(Humming </em>A la rorro niño<em> again, one verse, softer than the opening.)</em> Esta noche pregunta en tu casa: ¿qué arrullo te cantaban cuando eras bebé? Mañana me lo cantas, o me lo tarareas.</p>
+    <p class="note">The closing lullaby is the same every day of the phase and is shorter than the opening one. The session ends in the register it began in. Nothing is said about tomorrow's letter.</p>
+  </div>
+
+  <h3>Two more examples from later in the year</h3>
+  <div class="card lit">
+    <h4>Phase 2, week 11: a tongue-twister read slowly</h4>
+    <p class="es" style="font-size:1.15rem">Pepe Pecas pica papas con un pico.</p>
+    <p>Every letter is taught by week 11 (<span class="es">p, c</span> hard, vowels, <span class="es">s, n</span>). The tradition says a <span class="es">trabalenguas</span> is for speed; Cántame uses it for the opposite. The child keeps the pulse alone on the table for ten seconds while the adult is silent, then reads the line three times at that pulse, cleanly. The adult's only feedback is which reading was cleanest. The point is a text hard enough that the child must attend to every syllable, delivered at a tempo that makes attending possible.<sup class="cite"><a href="#s53">53</a></sup></p>
+  </div>
+  <div class="card cul">
+    <h4>Phase 3, week 16: a riddle with a counted wait</h4>
+    <p class="es" style="font-size:1.15rem">Agua pasa por mi casa, cate de mi corazón.<br>El que no lo adivine, es un burro cabezón.</p>
+    <p>The adult says the riddle once, slowly. The rule, taught in Phase 3, is that a riddle is answered only after five fingers have been counted in silence. The child holds the question, holds the answer, and holds still; that is delay of gratification dressed as a game.<sup class="cite"><a href="#s59">59</a></sup> Then the phonological work: <span class="es">agua</span> + <span class="es">cate</span>, the two halves clapped and joined; then the riddle in print, where <span class="es">c</span> before <span class="es">a</span> and <span class="es">z</span> in <span class="es">cabezón</span> are the day's letters; then the word with roots, <span class="es">aguacate</span>, from Nahuatl <span class="es">ahuacatl</span>.<sup class="cite"><a href="#s39">39</a></sup> "Para la casa": ask someone at home for a riddle they knew as a child.</p>
+  </div>
+</section>
+
+<section id="delivery">
+  <div class="sec-head"><span class="k">Two channels</span><h2>School and home</h2></div>
+  <div class="grid2">
+    <div class="card lit" style="margin:0">
+      <h4>At school</h4>
+      <p>Once's operating model, unchanged: the school assigns paraprofessionals or aides; Cántame supplies the scripts, two half-day onboardings, weekly 30-minute video coaching, session recording, and monthly data meetings.<sup class="cite"><a href="#s1">1</a></sup> The onboarding adds two things. Adults learn the year's repertoire (thirty-odd tunes, most already known to any Mexican-American adult) from audio, and they rehearse the quiet register: singing at a walking pulse, lowering rather than raising the voice, and holding a three-second silence without filling it. A quiet corner, not a classroom wall, is a requirement.<sup class="cite"><a href="#s56">56</a></sup></p>
+    </div>
+    <div class="card cul" style="margin:0">
+      <h4>At home</h4>
+      <p>The adult may be a parent, an older sibling, or an abuela, and for this program the grandmother is often the best-qualified person in the household: she knows the songs. Parent-delivered tutoring averages about half the effect of paraprofessional tutoring,<sup class="cite"><a href="#s11">11</a></sup> so the home channel leans on coaching and on scripts that can be run by an adult who does not read Spanish fluently (audio for every spoken line, played before the child sits down). The National Academies' guidance that children benefit most from adults using the language they are most competent in applies with special force to song.<sup class="cite"><a href="#s10">10</a></sup></p>
+    </div>
+  </div>
+</section>
+
+<section id="measure">
+  <div class="sec-head"><span class="k">Proof</span><h2>How we would know it works</h2></div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Outcome</th><th>Measure</th><th>Target after one year</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag lit">Literacy</span> Spanish phonological awareness, decoding, fluency</td><td>Spanish early-literacy benchmarks three times a year (Stanford's ROAR-Fonema for phonological awareness;<sup class="cite"><a href="#s43">43</a></sup> a Spanish DIBELS-family measure for syllable, word, and passage reading).</td><td>Children with 80+ sessions move from below to at or above benchmark.<sup class="cite"><a href="#s3">3</a></sup></td></tr>
+      <tr><td><span class="tag lit">Literacy</span> Transfer to English</td><td>The school's existing English benchmark in the following year.</td><td>No penalty by end of grade 1; positive effect by grade 3.<sup class="cite"><a href="#s7">7</a><a href="#s9">,9</a></sup></td></tr>
+      <tr><td><span class="tag both">Both</span> Self-regulation and attention</td><td>Head-Toes-Knees-Shoulders (HTKS), the task used in the freeze-game and rhythm trials;<sup class="cite"><a href="#s59">59</a><a href="#s70">,70</a></sup> beat-tapping variability;<sup class="cite"><a href="#s61">61</a></sup> and the program's own "silent span" (longest freeze held, longest inner-singing stretch), logged by the adult each week.</td><td>HTKS gains at least matching the freeze-game trials (ES ≈ 0.16 overall, larger for children starting low); silent span from 3 to 20+ seconds.</td></tr>
+      <tr><td><span class="tag cul">Cultura</span> Repertoire owned</td><td>Number of pieces the child can sing or recite unprompted, from the <span class="es">cancionero</span>; recorded at year-end.</td><td>Twenty or more.</td></tr>
+      <tr><td><span class="tag cul">Cultura</span> Ethnic identity and Spanish at home</td><td>Age-appropriate ethnic-identity items adapted from Bernal and Knight;<sup class="cite"><a href="#s20">20</a></sup> parent survey on who sings and speaks Spanish with the child and how often the child answers in Spanish.</td><td>Gains in ethnic knowledge and positive affect; more child-initiated Spanish and more singing at home.</td></tr>
+      <tr><td><span class="tag both">Both</span> Dosage</td><td>Sessions completed per child per month.</td><td>Median 4+ a week; 80+ by spring.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="risks">
+  <div class="sec-head"><span class="k">Candor</span><h2>What the research does not say</h2></div>
+  <ul>
+    <li><strong>Music does not make children smarter, and the program should not say it does.</strong> The most rigorous meta-analysis of music training's far-transfer effects finds them near zero in randomized studies with active controls;<sup class="cite"><a href="#s63">63</a></sup> a re-analysis argues small effects are real.<sup class="cite"><a href="#s63">63</a></sup> Cántame's claims are all near-transfer: song builds rhyme and syllable awareness, memory for text, stress awareness, and fluency on the texts sung, and the explicit phonics does the rest.</li>
+    <li><strong>Song does not teach phonemes.</strong> The best daily-dose study found no effect of music on phoneme-level awareness.<sup class="cite"><a href="#s46">46</a></sup> The four minutes of scripted phonics are not optional.</li>
+    <li><strong>The arousal evidence is on infants.</strong> Soothing versus playful singing has been measured physiologically in mother–infant pairs,<sup class="cite"><a href="#s54">54</a></sup> not in six-year-olds at a reading table. The freeze-game and rhythm trials are the direct evidence for this age, and their effects are small.<sup class="cite"><a href="#s59">59</a><a href="#s70">,70</a></sup></li>
+    <li><strong>Nobody has tested poem memorization in young children.</strong> The Phase 5 target rests on the song-memory and repeated-reading evidence, not on a trial of recitation.</li>
+    <li><strong>The identity evidence is mostly adolescent,</strong> and correlational for preschoolers.<sup class="cite"><a href="#s18">18</a><a href="#s19">,19</a></sup> The program should claim to build identity, and measure whether it does.</li>
+    <li><strong>Once's own outcome studies are vendor-commissioned</strong>; the independent tutoring literature is what supports the chassis.<sup class="cite"><a href="#s3">3</a><a href="#s11">,11</a></sup></li>
+    <li><strong>Some children will find the quiet register hard at first,</strong> and a few, with attention difficulties, will need the ladder to start below rung one. Intake should include a baseline silent span and HTKS, and the script should branch.</li>
+    <li><strong>Not every family sings.</strong> The home channel must work for a parent who is embarrassed to sing; audio of the tunes, permission to hum, and a script that says "you can say it instead" are part of the design, not an afterthought.</li>
+  </ul>
+</section>
+
+<section id="roadmap">
+  <div class="sec-head"><span class="k">Next</span><h2>A path to a pilot</h2></div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Stage</th><th>Work</th><th>Exit criterion</th></tr></thead>
+    <tbody>
+      <tr><td class="n">Months 1–4</td><td>Select and clear the repertoire (public-domain pieces first; license Cri-Cri if wanted). Write Phases 1–2: 30 sessions, decodable verses, scripts, adult audio. Convene a family advisory group of Mexican-American parents and grandparents from two regions to sing each piece back and correct it.</td><td>Sixty sessions playable end to end; advisory sign-off on every song.</td></tr>
+      <tr><td class="n">Months 5–8</td><td>Feasibility pilot: 30 children, half at a dual-language school with paraprofessionals, half at home. Record everything; log silent span weekly; HTKS and ROAR at start and end.</td><td>Median 4 sessions a week; adults hold the quiet register unassisted by week 3; measurable growth in silent span.</td></tr>
+      <tr><td class="n">Months 9–14</td><td>Finish Phases 3–5. Revise from recordings. Build the <span class="es">cancionero</span> as a physical product.</td><td>Full 36-week program complete.</td></tr>
+      <tr><td class="n">Year 2</td><td>Quasi-experimental study, 300–500 kindergartners, matched comparison, Spanish and English literacy plus HTKS and family measures.</td><td>ESSA Tier 2 evidence; decision on a randomized trial.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="sources" class="sources">
+  <div class="sec-head"><span class="k">Sources</span><h2>References</h2></div>
+  <p>Numbers match the superscripts above. Items marked <span class="flag">▲</span> were confirmed only through a secondary source or a vendor's own reporting and should be checked against the original before publication. Entries without a superscript in this draft supported the first draft's cultural argument and are kept for reference.</p>
+  <ol>
+    <li id="s1" value="1">Once. Program pages: <a href="https://tryonce.com/">tryonce.com</a>; <a href="https://tryonce.com/docs/overview/what-is-once-in-school">What is Once in school</a>; <a href="https://tryonce.com/at-home">At-home program</a>.</li>
+    <li id="s2">Linda Jacobson, "One-on-One Tutoring Program Bets Big on Teaching Kindergartners to Read," <em>The 74</em>, 2024. <a href="https://www.the74million.org/article/one-on-one-tutoring-program-bets-big-on-teaching-kindergartners-to-read/">the74million.org</a></li>
+    <li id="s3"><span class="flag">▲</span> Once, research summary (LXD Research quasi-experimental study; i-Ready and DIBELS reports). <a href="https://tryonce.com/research">tryonce.com/research</a>. Vendor-reported.</li>
+    <li id="s4">Seymour, P. H. K., Aro, M., &amp; Erskine, J. M. (2003). Foundation literacy acquisition in European orthographies. <em>British Journal of Psychology</em>, 94, 143–174. <a href="https://pubmed.ncbi.nlm.nih.gov/12803812/">PubMed</a></li>
+    <li id="s5">Jiménez González, J. E., &amp; Ortiz González, M. R. (2000). Metalinguistic awareness and reading acquisition in the Spanish language. <em>Spanish Journal of Psychology</em>, 3(1), 37–46.</li>
+    <li id="s6">Colorín Colorado. Early literacy instruction in Spanish: Teaching the beginning reader. <a href="https://www.colorincolorado.org/article/early-literacy-instruction-spanish-teaching-beginning-reader">colorincolorado.org</a></li>
+    <li id="s7">Goldenberg, C. (2008). Teaching English language learners: What the research does—and does not—say. <em>American Educator</em>, Summer 2008. <a href="https://www.aft.org/sites/default/files/periodicals/goldenberg.pdf">aft.org</a></li>
+    <li id="s8">Slavin, R. E., &amp; Cheung, A. (2005). A synthesis of research on language of reading instruction for English language learners. <em>Review of Educational Research</em>, 75(2), 247–284. <a href="https://journals.sagepub.com/doi/10.3102/00346543075002247">SAGE</a></li>
+    <li id="s9">Steele, J. L., et al. (2017). Effects of dual-language immersion programs on student achievement: Evidence from lottery data. <em>AERJ</em>, 54(1S). <a href="https://www.rand.org/pubs/research_briefs/RB9903.html">RAND brief</a></li>
+    <li id="s10">National Academies of Sciences, Engineering, and Medicine (2017). <em>Promoting the Educational Success of Children and Youth Learning English.</em> <a href="https://www.nationalacademies.org/read/24677/chapter/2">nationalacademies.org</a></li>
+    <li id="s11">Nickow, A., Oreopoulos, P., &amp; Quan, V. (2020/2024). The impressive effects of tutoring on PreK–12 learning. NBER Working Paper 27476; <em>AERJ</em> 2024. <a href="https://www.nber.org/papers/w27476">NBER</a></li>
+    <li id="s12">Neitzel, A. J., Lake, C., Pellegrini, M., &amp; Slavin, R. E. (2022). A synthesis of quantitative research on programs for struggling readers in elementary schools. <em>Reading Research Quarterly</em>, 57(1), 149–179. <a href="https://bestevidence.org/wp-content/uploads/2021/02/struggling-readers-master-for-bee-unblind-12-16-20.pdf">PDF</a></li>
+    <li id="s13">Borman, G. D., Borman, T. H., Park, S. J., &amp; Houghton, S. (2019). Multisite RCT of Descubriendo la Lectura. <a href="https://edknowledge.stanford.edu/node/207">Stanford EdKnowledge</a></li>
+    <li id="s14">Vaughn, S., et al. (2006). Effectiveness of a Spanish intervention and an English intervention for English language learners at risk for reading problems. <em>AERJ</em>, 43(3), 449–487. <a href="https://journals.sagepub.com/doi/10.3102/00028312043003449">SAGE</a></li>
+    <li id="s15">National Center for Education Statistics (2024). English learners in public schools. <a href="https://nces.ed.gov/programs/coe/indicator/cgf/english-learners">nces.ed.gov</a></li>
+    <li id="s16">Pew Research Center (2023). Latinos' views of and experiences with the Spanish language. <a href="https://www.pewresearch.org/race-and-ethnicity/2023/09/20/latinos-views-of-and-experiences-with-the-spanish-language/">pewresearch.org</a></li>
+    <li id="s17">Rumbaut, R. G., &amp; Massey, D. S. (2013). Immigration and language diversity in the United States. <em>Daedalus</em>, 142(3), 141–154. <a href="https://pubmed.ncbi.nlm.nih.gov/25018562/">PubMed</a></li>
+    <li id="s18">Rivas-Drake, D., et al. (2014). Feeling good, happy, and proud: A meta-analysis of positive ethnic-racial affect and adjustment. <em>Child Development</em>, 85(1), 77–102. <a href="https://eric.ed.gov/?id=EJ1027516">ERIC</a></li>
+    <li id="s19">Serrano-Villar, M., &amp; Calzada, E. J. (2016). Ethnic identity: Evidence of protective effects for young, Latino children. <em>Journal of Applied Developmental Psychology</em>, 42, 21–30. <a href="https://ncbi.nlm.nih.gov/pmc/articles/PMC4709849">PMC</a></li>
+    <li id="s20">Bernal, M. E., Knight, G. P., Garza, C. A., Ocampo, K. A., &amp; Cota, M. K. (1990). The development of ethnic identity in Mexican-American children. <em>Hispanic Journal of Behavioral Sciences</em>, 12(1), 3–24. <a href="https://journals.sagepub.com/doi/abs/10.1177/07399863900121001">SAGE</a></li>
+    <li id="s21">Umaña-Taylor, A. J., et al. (2018). The Identity Project randomized trial and one-year follow-up. <em>Child Development</em>, 89(3); <em>Journal of Youth and Adolescence</em>, 47. <a href="https://pubmed.ncbi.nlm.nih.gov/29030792/">PubMed</a></li>
+    <li id="s22">Dee, T. S., &amp; Penner, E. K. (2017). The causal effects of cultural relevance. <em>AERJ</em>, 54(1), 127–166. <a href="https://files.eric.ed.gov/fulltext/EJ1132535.pdf">ERIC PDF</a>. Bonilla, Dee &amp; Penner (2021), <em>PNAS</em>, 118(37). <a href="https://www.pnas.org/doi/10.1073/pnas.2026386118">PNAS</a></li>
+    <li id="s23">Oh, J. S., &amp; Fuligni, A. J. (2010). The role of heritage language development in the ethnic identity and family relationships of adolescents from immigrant backgrounds. <em>Social Development</em>, 19(1), 202–220. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-9507.2008.00530.x">Wiley</a></li>
+    <li id="s24">Tseng, V., &amp; Fuligni, A. J. (2000). Parent-adolescent language use and relationships among immigrant families. <em>Journal of Marriage and the Family</em>, 62(2), 465–476. <a href="https://eric.ed.gov/?id=EJ622659">ERIC</a></li>
+    <li id="s25">Portes, A., &amp; Hao, L. (2002). The price of uniformity. <em>Ethnic and Racial Studies</em>, 25(6), 889–912. <a href="https://www.tandfonline.com/doi/abs/10.1080/0141987022000009368">Taylor &amp; Francis</a></li>
+    <li id="s26">Wong Fillmore, L. (1991). When learning a second language means losing the first. <em>Early Childhood Research Quarterly</em>, 6(3), 323–346. <a href="https://www.sciencedirect.com/science/article/abs/pii/S0885200605800596">ScienceDirect</a></li>
+    <li id="s27">Moll, L. C., Amanti, C., Neff, D., &amp; González, N. (1992). Funds of knowledge for teaching. <em>Theory Into Practice</em>, 31(2), 132–141. <a href="https://eric.ed.gov/?id=EJ452272">ERIC</a></li>
+    <li id="s28">Delgado-Gaitan, C. (1994). Consejos: The power of cultural narratives. <em>Anthropology &amp; Education Quarterly</em>, 25(3), 298–316. Espinoza-Herold, M. (2007). Stepping beyond <em>sí se puede</em>: Dichos as a cultural resource. <em>AEQ</em>, 38(3), 260–277.</li>
+    <li id="s29">Bishop, R. S. (1990). Mirrors, windows, and sliding glass doors. <em>Perspectives</em>, 6(3). <a href="https://readteachwrite.com/wp-content/uploads/2019/04/mirrors-windows-and-sliding-glass-doors.pdf">PDF</a></li>
+    <li id="s30">Cooperative Children's Book Center. Books by and/or about Black, Indigenous and People of Color, 2018–2024. <a href="https://ccbc.education.wisc.edu/literature-resources/ccbc-diversity-statistics/books-by-and-or-about-poc-2018/">ccbc.education.wisc.edu</a></li>
+    <li id="s31">Ebe, A. E. (2010). Culturally relevant texts and reading assessment for English language learners. <em>Reading Horizons</em>, 50(3). <a href="https://scholarworks.wmich.edu/reading_horizons/vol50/iss3/5/">ScholarWorks</a></li>
+    <li id="s32">Mar, R. A., Li, J., Nguyen, A. T. P., &amp; Ta, C. P. (2021). Memory and comprehension of narrative versus expository texts: A meta-analysis. <em>Psychonomic Bulletin &amp; Review</em>, 28, 732–749. <a href="https://link.springer.com/article/10.3758/s13423-020-01853-1">Springer</a></li>
+    <li id="s33">Luo, R., &amp; Song, L. (2022). Home and classroom literacy activities and Spanish–English dual language learners' emergent literacy. <em>Frontiers in Psychology</em>, 13. <a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2022.1016492/full">Frontiers</a></li>
+    <li id="s34">What Works Clearinghouse (2010). Dialogic reading: Intervention report. <a href="https://ies.ed.gov/ncee/wwc/Docs/InterventionReports/wwc_dialogic_reading_042710.pdf">IES</a></li>
+    <li id="s35">Lowe, C. J., Cho, I., Goldsmith, S. F., &amp; Morton, J. B. (2021). The bilingual advantage in children's executive functioning is not related to language status. <em>Psychological Science</em>, 32(7), 1115–1146. <a href="https://journals.sagepub.com/doi/full/10.1177/0956797621993108">SAGE</a></li>
+    <li id="s36"><span class="flag">▲</span> Rumbaut, R. G. (2014). English plus. In Callahan &amp; Gándara (Eds.), <em>The Bilingual Advantage.</em> Summarized in Gándara (2015), <a href="https://files.eric.ed.gov/fulltext/EJ1109319.pdf">ETS</a>.</li>
+    <li id="s37">Kittle, C., Amendum, S. J., &amp; Budde, C. (2024). The science of reading for multilingual learners: A systematic review of systematic reviews. <em>Educational Psychology Review</em>, 36. <a href="https://link.springer.com/article/10.1007/s10648-024-09942-6">Springer</a></li>
+    <li id="s38">Chen, Y., &amp; Guzman, L. (2022). One in seven Latino children live with grandparents. <a href="https://www.hispanicresearchcenter.org/research-resources/one-in-seven-latino-children-live-with-grandparents-who-play-an-important-role-in-childrens-lives/">National Research Center on Hispanic Children &amp; Families</a></li>
+    <li id="s39">Real Academia Española, <em>Diccionario de la lengua española</em>, etymologies: <a href="https://dle.rae.es/tomate">tomate</a>, <a href="https://dle.rae.es/aguacate">aguacate</a>, <a href="https://dle.rae.es/elote">elote</a>, <a href="https://dle.rae.es/chapulín">chapulín</a>. INEGI Censo 2020 Indigenous-language figures reported at <a href="https://www.nationalgeographicla.com/historia/2025/08/dia-internacional-de-los-pueblos-indigenas-cuantas-lenguas-indigenas-existen-en-mexico-y-donde-se-hablan-mas">National Geographic en Español</a>.</li>
+    <li id="s40">UNESCO Intangible Cultural Heritage. Indigenous festivity dedicated to the dead (Mexico, 2008). <a href="https://ich.unesco.org/en/RL/indigenous-festivity-dedicated-to-the-dead-00054">ich.unesco.org</a></li>
+    <li id="s41">Ramirez, O., &amp; McCollough, C. (2012). Lotería as a culturally relevant family math tool. <em>TEEM</em>, 4(1). <a href="https://journals.charlotte.edu/teem/article/view/1726/1440">journals.charlotte.edu</a></li>
+    <li id="s42">Umansky, I., &amp; Reardon, S. (2014). Reclassification patterns among Latino English learner students. <em>AERJ</em>. <a href="https://cepa.stanford.edu/content/reclassification-patterns-among-latino-english-learner-students-bilingual-dual-immersion-and-english-immersion-classrooms">Stanford CEPA</a></li>
+    <li id="s43">Stanford Rapid Online Assessment of Reading. ROAR-Fonema. <a href="https://roar.stanford.edu/technical/intro-fonema.html">roar.stanford.edu</a></li>
+    <li id="s44">Bryant, P. E., Bradley, L., Maclean, M., &amp; Crossland, J. (1989). Nursery rhymes, phonological skills and reading. <em>Journal of Child Language</em>, 16(2), 407–428. <a href="https://www.cambridge.org/core/journals/journal-of-child-language/article/abs/nursery-rhymes-phonological-skills-and-reading/53EE25F1E011C8090E659A8FABBB209E">Cambridge</a>. See also Maclean, Bryant &amp; Bradley (1987), <em>Merrill-Palmer Quarterly</em>, 33(3), 255–281. <a href="https://eric.ed.gov/?id=EJ361475">ERIC</a></li>
+    <li id="s45">Goikoetxea, E. (2005). Levels of phonological awareness in preliterate and literate Spanish-speaking children. <em>Reading and Writing</em>, 18, 51–79. <a href="https://link.springer.com/article/10.1007/s11145-004-1955-7">Springer</a></li>
+    <li id="s46">Degé, F., &amp; Schwarzer, G. (2011). The effect of a music program on phonological awareness in preschoolers. <em>Frontiers in Psychology</em>, 2:124. <a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2011.00124/full">Frontiers</a></li>
+    <li id="s47">Gordon, R. L., Fehd, H. M., &amp; McCandliss, B. D. (2015). Does music training enhance literacy skills? A meta-analysis. <em>Frontiers in Psychology</em>, 6:1777. <a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2015.01777/full">Frontiers</a></li>
+    <li id="s48">Bhide, A., Power, A., &amp; Goswami, U. (2013). A rhythmic musical intervention for poor readers: A comparison of efficacy with a letter-based intervention. <em>Mind, Brain, and Education</em>, 7(2), 113–123. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/mbe.12016">Wiley</a></li>
+    <li id="s49">Wallace, W. T. (1994). Memory for music: Effect of melody on recall of text. <em>Journal of Experimental Psychology: Learning, Memory, and Cognition</em>, 20(6), 1471–1485.</li>
+    <li id="s50">Horst, J. S., Parsons, K. L., &amp; Bryan, N. M. (2011). Get the story straight: Contextual repetition promotes word learning from storybooks. <em>Frontiers in Psychology</em>, 2:17. <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2011.00017/full">Frontiers</a></li>
+    <li id="s51">Defior, S., Gutiérrez-Palma, N., &amp; Cano-Marín, M. J. (2012). Prosodic awareness skills and literacy acquisition in Spanish. <em>Journal of Psycholinguistic Research</em>, 41, 285–294. <a href="https://link.springer.com/article/10.1007/s10936-011-9192-0">Springer</a></li>
+    <li id="s52">Slater, J., Strait, D. L., Skoe, E., O'Connell, S., Thompson, E., &amp; Kraus, N. (2014). Longitudinal effects of group music instruction on literacy skills in low-income children. <em>PLOS ONE</em>, 9(11): e113383. <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0113383">PLOS</a></li>
+    <li id="s53"><span class="flag">▲</span> Therrien, W. J. (2004). Fluency and comprehension gains as a result of repeated reading: A meta-analysis. <em>Remedial and Special Education</em>, 25(4), 252–261 (effect sizes via ASHA summary). <a href="https://eric.ed.gov/?id=EJ695617">ERIC</a>. Wilfong, L. G. (2008). Building fluency, word-recognition ability, and confidence in struggling readers: The Poetry Academy. <em>The Reading Teacher</em>, 62(1), 4–13. <a href="https://eric.ed.gov/?id=EJ817098">ERIC</a></li>
+    <li id="s54">Cirelli, L. K., Jurewicz, Z. B., &amp; Trehub, S. E. (2020). Effects of maternal singing style on mother–infant arousal and behavior. <em>Journal of Cognitive Neuroscience</em>, 32(7), 1213–1220. <a href="https://direct.mit.edu/jocn/article-abstract/32/7/1213/95428">MIT Press</a></li>
+    <li id="s55">Lillard, A. S., &amp; Peterson, J. (2011). The immediate impact of different types of television on young children's executive function. <em>Pediatrics</em>, 128(4), 644–649. <a href="https://publications.aap.org/pediatrics/article/128/4/644/30711">AAP</a></li>
+    <li id="s56">Fisher, A. V., Godwin, K. E., &amp; Seltman, H. (2014). Visual environment, attention allocation, and learning in young children. <em>Psychological Science</em>, 25(7), 1362–1370. <a href="https://journals.sagepub.com/doi/abs/10.1177/0956797614533801">SAGE</a></li>
+    <li id="s57">Klatte, M., Bergström, K., &amp; Lachmann, T. (2013). Does noise affect learning? A short review on noise effects on cognitive performance in children. <em>Frontiers in Psychology</em>, 4:578. <a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2013.00578/full">Frontiers</a></li>
+    <li id="s58">Winsler, A., Ducenne, L., &amp; Koury, A. (2011). Singing one's way to self-regulation: The role of early music and movement curricula and private speech. <em>Early Education and Development</em>, 22(2), 274–304. <a href="https://eric.ed.gov/?id=EJ920135">ERIC</a></li>
+    <li id="s59">Tominey, S. L., &amp; McClelland, M. M. (2011). Red Light, Purple Light. <em>Early Education and Development</em>, 22(3), 489–519. <a href="https://eric.ed.gov/?id=EJ927309">ERIC</a>. Schmitt, S. A., McClelland, M. M., Tominey, S. L., &amp; Acock, A. C. (2015). <em>Early Childhood Research Quarterly</em>, 30, 20–31. What Works Clearinghouse (2022). Red Light, Purple Light intervention report. <a href="https://ies.ed.gov/ncee/wwc/Docs/InterventionReports/WWC-red-light-purple-light_report.pdf">IES PDF</a></li>
+    <li id="s60">Frischen, U., Schwarzer, G., &amp; Degé, F. (2019). Comparing the effects of rhythm-based music training and pitch-based music training on executive functions in preschoolers. <em>Frontiers in Integrative Neuroscience</em>, 13:41. <a href="https://www.frontiersin.org/journals/integrative-neuroscience/articles/10.3389/fnint.2019.00041/full">Frontiers</a></li>
+    <li id="s61">Tierney, A., &amp; Kraus, N. (2013). The ability to tap to a beat relates to cognitive, linguistic, and perceptual skills. <em>Brain and Language</em>, 124(3), 225–231. <a href="https://brainvolts.northwestern.edu/wp-content/uploads/boxtrx/Tierney_2013_BrainAndLanguage.pdf">PDF</a></li>
+    <li id="s62"><span class="flag">▲</span> Rueda, M. R., Rothbart, M. K., McCandliss, B. D., Saccomanno, L., &amp; Posner, M. I. (2005). Training, maturation, and genetic influences on the development of executive attention. <em>PNAS</em>, 102(41), 14931–14936. <a href="https://www.pnas.org/doi/10.1073/pnas.0506897102">PNAS</a></li>
+    <li id="s63">Sala, G., &amp; Gobet, F. (2020). Cognitive and academic benefits of music training with children: A multilevel meta-analysis. <em>Memory &amp; Cognition</em>, 48, 1429–1441. <a href="https://link.springer.com/article/10.3758/s13421-020-01060-2">Springer</a>. Bigand, E., &amp; Tillmann, B. (2022). Near and far transfer: Is music special? <em>Memory &amp; Cognition</em>, 50, 339–347. <a href="https://link.springer.com/article/10.3758/s13421-021-01226-6">Springer</a></li>
+    <li id="s64">Mendoza, V. T. (1951). <em>Lírica infantil de México.</em> El Colegio de México; reissued FCE, 1980. <a href="https://archive.org/details/lirica-infantil-de-mexico-vicente-t.-mendoza">Internet Archive scan</a>; <a href="https://www.elem.mx/obra/datos/206679">ELEM record</a>.</li>
+    <li id="s65">Ley Federal del Derecho de Autor (Mexico), Art. 29: economic rights for the life of the author plus 100 years. <a href="https://leyes-mx.com/ley_federal_del_derecho_de_autor/29.htm">leyes-mx.com</a>. Francisco Gabilondo Soler, "Cri-Cri" (1907–1990). <a href="https://en.wikipedia.org/wiki/Francisco_Gabilondo_Soler">Wikipedia</a></li>
+    <li id="s66">Texas State Library and Archives Commission, <em>El día de los niños</em> songs and rhymes (lyrics of traditional songs). <a href="https://www.tsl.texas.gov/ld/projects/ninos/songsrhymes.html">tsl.texas.gov</a>. Adivinanzas (the aguacate riddle circulates in several variants; the document uses the common Mexican form): <a href="https://www.elhuevodechocolate.com/adivinanzas/adivina29.html">elhuevodechocolate.com</a>. "Los pollitos dicen" attribution and date: <a href="https://en.wikipedia.org/wiki/Ismael_Parraguez">Ismael Parraguez</a>.</li>
+    <li id="s67">Rivera Ibaceta, J., &amp; Moreira Tricot, K. (2020). La música como promotora de habilidades fonológicas: un estudio exploratorio con niños preescolares uruguayos. <em>Ciencias Psicológicas</em>, 14(2). <a href="https://www.redalyc.org/journal/4595/459565063012/html/">Redalyc</a></li>
+    <li id="s68">Good, A. J., Russo, F. A., &amp; Sullivan, J. (2015). The efficacy of singing in foreign-language learning. <em>Psychology of Music</em>, 43(5), 627–640. <a href="https://journals.sagepub.com/doi/abs/10.1177/0305735614528833">SAGE</a>. Ludke, K. M., Ferreira, F., &amp; Overy, K. (2014). Singing can facilitate foreign language learning. <em>Memory &amp; Cognition</em>, 42, 41–52. <a href="https://link.springer.com/article/10.3758/s13421-013-0342-5">Springer</a></li>
+    <li id="s69">Corbeil, M., Trehub, S. E., &amp; Peretz, I. (2016). Singing delays the onset of infant distress. <em>Infancy</em>, 21(3), 373–391. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/infa.12114">Wiley</a></li>
+    <li id="s70">Williams, K. E., Bentley, L. A., Savage, S., Eager, R., &amp; Nielson, C. (2023). Rhythm and movement delivered by teachers supports self-regulation skills of preschool-aged children in disadvantaged communities: A clustered RCT. <em>Early Childhood Research Quarterly</em>, 65, 115–128. <a href="https://www.sciencedirect.com/science/article/pii/S0885200623000704">ScienceDirect</a>. Williams, K. E., et al. (2026). Cluster-randomized trial of RAMSR in Hong Kong. <em>Child Development</em>, 97(3), 841. <a href="https://academic.oup.com/chidev/article/97/3/841/8512761">OUP</a>. Earlier non-randomized pilot: Williams &amp; Berthelsen (2019), <em>Psychology of Music</em>, 47(6).</li>
+    <li id="s71">Organization of American Kodály Educators. The Kodály concept. <a href="https://www.oake.org/the-kodaly-concept/">oake.org</a>. British Kodály Academy, "The importance of inner hearing." <a href="https://kodaly.org.uk/news/the-importance-of-inner-hearing-by-becky-welsh">kodaly.org.uk</a></li>
+    <li id="s72">Ruff, H. A., &amp; Lawson, K. R. (1990). Development of sustained, focused attention in young children during free play. <em>Developmental Psychology</em>, 26(1), 85–93.</li>
+    <li id="s73">Amado Nervo, <em>Cantos escolares</em> (1903), twenty school songs with scores. <a href="http://cancionypoema.blogspot.com/2021/11/los-poemas-de-amado-nervo-en-musica_15.html">Canción y poema</a>. Gabriela Mistral copyright status (public domain in Chile from 2028): <a href="https://www.safecreative.org/tips/es/propuesta-para-extender-una-decada-los-derechos-de-autor-de-gabriela-mistral/">Safe Creative</a></li>
+  </ol>
+</section>
+
+<footer>Cántame is a working title. This concept was prepared as a discussion draft; effect sizes are reported as published and are not directly comparable across studies with different designs and outcome measures. The first, story-centered draft (<span class="es">Cuéntame</span>) is retained in the version history.</footer>
+
+</div>
+
+</body>
+</html>

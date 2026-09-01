@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cántame · Guide / Guía</title>
+<title>Cántame · Session tutorial</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap">
 </head>
 <body>
@@ -12,7 +12,7 @@
     --ground: #E9E9E1; --tablet: #F4F4EE; --surface: #FFFFFF; --surface-2: #EAEBE3;
     --ink: #1C2740; --ink-2: #3D4660; --muted: #6B7285; --line: #D3D5CC;
     --blue: #1F5FA8; --blue-soft: #DCE7F5; --rosa: #C8156F; --rosa-soft: #F9DCEB;
-    --marigold: #D98E12; --marigold-soft: #FBEBC9; --bezel: #2A2F3A;
+    --marigold: #D98E12; --marigold-soft: #FBEBC9;
     color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
@@ -20,936 +20,1120 @@
       --ground: #0F131C; --tablet: #171D2A; --surface: #1F2737; --surface-2: #263043;
       --ink: #EDEEF3; --ink-2: #C9CEDC; --muted: #9AA3B8; --line: #34405A;
       --blue: #7FB0EE; --blue-soft: #1F3352; --rosa: #F26FB4; --rosa-soft: #4A1F38;
-      --marigold: #F2B84B; --marigold-soft: #4A3A16; --bezel: #05070B;
+      --marigold: #F2B84B; --marigold-soft: #4A3A16;
       color-scheme: dark;
     }
   }
-  :root[data-theme="dark"] {
-    --ground: #0F131C; --tablet: #171D2A; --surface: #1F2737; --surface-2: #263043;
-    --ink: #EDEEF3; --ink-2: #C9CEDC; --muted: #9AA3B8; --line: #34405A;
-    --blue: #7FB0EE; --blue-soft: #1F3352; --rosa: #F26FB4; --rosa-soft: #4A1F38;
-    --marigold: #F2B84B; --marigold-soft: #4A3A16; --bezel: #05070B;
-    color-scheme: dark;
-  }
-
   * { box-sizing: border-box; }
+  html, body { height: 100%; }
   body {
     margin: 0; background: var(--ground); color: var(--ink);
     font-family: "Alegreya Sans", "Segoe UI", system-ui, sans-serif;
-    font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased;
+    font-size: 17px; line-height: 1.5; -webkit-font-smoothing: antialiased;
+    display: flex; flex-direction: column;
   }
   button { font: inherit; color: inherit; cursor: pointer; }
-  button:focus-visible, a:focus-visible { outline: 2px solid var(--rosa); outline-offset: 2px; }
-  .wrap { max-width: 60rem; margin: 0 auto; padding: 0 1.4rem 5rem; }
+  button:focus-visible { outline: 2px solid var(--rosa); outline-offset: 3px; }
 
-  /* language switching */
-  [data-lang="en"] .es-only { display: none !important; }
-  [data-lang="es"] .en-only { display: none !important; }
-
-  /* top bar */
-  .top { position: sticky; top: 0; z-index: 20; background: var(--tablet); border-bottom: 1px solid var(--line); }
-  .top .inner { max-width: 60rem; margin: 0 auto; padding: 0.7rem 1.4rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-  .top .brand { font-family: "Alegreya", Georgia, serif; font-style: italic; font-size: 1.35rem; }
-  .top nav { display: flex; gap: 0.9rem; font-size: 0.9rem; flex-wrap: wrap; }
-  .top nav a { color: var(--muted); text-decoration: none; border-bottom: 1px solid transparent; }
-  .top nav a:hover { color: var(--ink); border-bottom-color: var(--marigold); }
-  .top .grow { flex: 1; }
+  /* ---------- progress header ---------- */
+  .hdr { flex: none; border-bottom: 1px solid var(--line); background: var(--tablet); }
+  .hdr .in { max-width: 52rem; margin: 0 auto; padding: 0.6rem 1.3rem; display: flex; align-items: center; gap: 0.9rem; }
+  .hdr .brand { font-family: "Alegreya", Georgia, serif; font-style: italic; font-size: 1.15rem; }
+  .hdr .where { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--muted); font-weight: 700; }
+  .hdr .grow { flex: 1; }
   .langsw { display: flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
-  .langsw button { background: var(--surface); border: 0; padding: 0.3rem 0.75rem; font-size: 0.85rem; color: var(--muted); }
+  .langsw button { background: var(--surface); border: 0; padding: 0.22rem 0.6rem; font-size: 0.8rem; color: var(--muted); }
   .langsw button[aria-pressed="true"] { background: var(--ink); color: var(--tablet); font-weight: 500; }
+  .track { height: 3px; background: var(--surface-2); }
+  .track .fill { height: 100%; background: var(--marigold); transition: width 340ms ease; }
 
-  /* hero */
-  .hero { padding: 2.6rem 0 1.6rem; border-bottom: 1px solid var(--line); }
-  .kicker { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; color: var(--muted); }
-  h1 { font-family: "Alegreya", Georgia, serif; font-weight: 500; font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.05; margin: 0.5rem 0 0.7rem; }
-  .lede { font-size: 1.12rem; color: var(--ink-2); max-width: 46em; margin: 0 0 1rem; }
-  .facts { display: flex; flex-wrap: wrap; gap: 0.4rem 1.6rem; font-size: 0.88rem; color: var(--muted); margin-top: 1rem; }
-  .facts b { color: var(--ink); font-weight: 500; }
+  /* ---------- stage ---------- */
+  .stage { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem 1.3rem; min-height: 0; overflow-y: auto; }
+  .card { width: 100%; max-width: 40rem; }
+  .card.wide { max-width: 46rem; }
+  .anim { animation: rise 380ms cubic-bezier(.2,.7,.3,1) both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .anim { animation: none; } .track .fill { transition: none; } }
 
-  h2 { font-family: "Alegreya", Georgia, serif; font-weight: 500; font-size: 1.95rem; line-height: 1.15; margin: 0 0 0.2rem; }
-  h2 .num { color: var(--muted); font-size: 0.62em; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
-  h3 { font-family: "Alegreya", Georgia, serif; font-weight: 500; font-size: 1.3rem; margin: 1.6rem 0 0.5rem; }
-  section { padding: 2.6rem 0 0; border-top: 1px solid var(--line); margin-top: 2.6rem; }
-  section:first-of-type { border-top: 0; }
-  section { scroll-margin-top: 6.5rem; }
-  .sub { color: var(--muted); font-size: 0.95rem; margin: 0 0 1.4rem; max-width: 52em; }
-  p { max-width: 46em; }
+  .eyebrow { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 700; color: var(--marigold); margin-bottom: 0.7rem; }
+  .eyebrow.blue { color: var(--blue); } .eyebrow.rosa { color: var(--rosa); } .eyebrow.grey { color: var(--muted); }
+  h1 { font-family: "Alegreya", Georgia, serif; font-weight: 500; font-size: clamp(2rem, 5.4vw, 2.9rem); line-height: 1.1; margin: 0 0 0.8rem; }
+  h1.big { font-size: clamp(2.4rem, 7vw, 3.7rem); }
+  .lede { font-size: 1.1rem; color: var(--ink-2); margin: 0 0 0.4rem; max-width: 34em; }
+  .tiny { font-size: 0.92rem; color: var(--muted); margin: 1.1rem 0 0; max-width: 40em; }
 
-  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 1.1rem 1.3rem; }
-  .card.soft { background: var(--surface-2); border-color: transparent; }
-  .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; color: var(--muted); margin: 0 0 0.5rem; }
-  .row { display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: center; }
-  .stack { display: flex; flex-direction: column; gap: 1rem; }
-  .btn { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 0.5rem 1rem; font-weight: 500; }
+  /* the Spanish line you say */
+  .sayline { border-left: 3px solid var(--marigold); padding: 0.15rem 0 0.15rem 1.1rem; margin: 1.4rem 0 0; }
+  .sayline .es { font-family: "Alegreya", Georgia, serif; font-size: clamp(1.5rem, 4vw, 2rem); line-height: 1.35; margin: 0; }
+  .sayline .es i { color: var(--muted); font-size: 0.78em; }
+  .sayline .gl { font-size: 1rem; color: var(--ink-2); font-style: italic; margin: 0.5rem 0 0; }
+  .sayline .ph { font-size: 0.83rem; color: var(--muted); margin: 0.35rem 0 0; }
+  .sayline .ph b { font-variant: small-caps; letter-spacing: 0.07em; color: var(--ink-2); }
+
+  /* do list — at most two */
+  .dolist { margin: 1.3rem 0 0; padding: 0; list-style: none; }
+  .dolist li { display: grid; grid-template-columns: 1.5rem 1fr; gap: 0.7rem; align-items: start; margin-bottom: 0.7rem; font-size: 1.05rem; }
+  .dolist li .n { font-family: "Alegreya", Georgia, serif; color: var(--marigold); font-size: 1.2rem; line-height: 1.3; }
+
+  /* watch / trap panels */
+  .panels { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-top: 1.4rem; }
+  @media (max-width: 680px) { .panels { grid-template-columns: 1fr; } }
+  .pan { border-radius: 8px; padding: 0.9rem 1.05rem; background: var(--surface); border: 1px solid var(--line); }
+  .pan.go { border-left: 3px solid var(--blue); }
+  .pan.no { border-left: 3px solid var(--rosa); }
+  .pan .h { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 0.35rem; }
+  .pan.go .h { color: var(--blue); } .pan.no .h { color: var(--rosa); }
+  .pan p { margin: 0; font-size: 0.95rem; }
+
+  /* coach aside */
+  .coach { margin-top: 1.4rem; background: var(--surface-2); border-radius: 8px; padding: 0.9rem 1.1rem; font-size: 0.95rem; color: var(--ink-2); }
+  .coach b { color: var(--ink); }
+
+  /* buttons */
+  .btn { background: var(--surface); border: 1px solid var(--line); border-radius: 7px; padding: 0.6rem 1.15rem; font-weight: 500; }
   .btn:hover { border-color: var(--ink-2); }
   .btn.primary { background: var(--ink); color: var(--tablet); border-color: var(--ink); }
-  .btn.ghost { background: transparent; }
+  .btn.primary:hover { opacity: 0.9; }
   .btn[aria-pressed="true"] { background: var(--marigold-soft); border-color: var(--marigold); }
-  .btn.primary[aria-pressed="true"] { color: var(--ink); }
-  .btn:disabled { opacity: 0.45; cursor: default; }
-  .note { font-size: 0.9rem; color: var(--muted); max-width: 56em; }
-  .note b { color: var(--ink-2); }
-  .tag { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 2px; white-space: nowrap; }
-  .tag.lit { background: var(--blue-soft); color: var(--blue); }
-  .tag.cul { background: var(--rosa-soft); color: var(--rosa); }
-  .tag.att { background: var(--marigold-soft); color: var(--marigold); }
+  .btn:disabled { opacity: 0.4; cursor: default; }
+  .btn.lg { padding: 0.8rem 1.6rem; font-size: 1.05rem; }
+  a.btn { text-decoration: none; display: inline-block; }
+  a.btn:hover { text-decoration: none; }
+  .row { display: flex; flex-wrap: wrap; gap: 0.7rem; align-items: center; }
 
-  /* the arc */
-  .arc { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.5rem; margin: 1.2rem 0; }
-  @media (max-width: 720px) { .arc { grid-template-columns: repeat(2, 1fr); } }
-  .arc .a { border-radius: 6px; padding: 0.7rem 0.8rem; border: 1px solid var(--line); background: var(--surface); }
-  .arc .a .mins { font-family: "Alegreya", Georgia, serif; font-size: 1.5rem; line-height: 1; }
-  .arc .a .nm { font-size: 0.85rem; font-weight: 500; margin-top: 0.25rem; }
-  .arc .a .gl { font-size: 0.76rem; color: var(--muted); }
-  .arc .a.settle { background: var(--marigold-soft); border-color: var(--marigold); }
-  .arc .a.work { background: var(--blue-soft); border-color: var(--blue); }
-  .arcband { display: flex; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 700; gap: 0.5rem; }
-  .arcband span { padding: 0.2rem 0; }
-
-  /* script blocks */
-  .script { border-left: 3px solid var(--marigold); padding: 0.1rem 0 0.1rem 1rem; margin: 0.9rem 0; }
-  .script .sp { font-family: "Alegreya", Georgia, serif; font-size: 1.28rem; line-height: 1.45; color: var(--ink); margin: 0; }
-  .script .sp i { color: var(--muted); font-size: 0.88em; }
-  .script .gloss { font-size: 0.95rem; color: var(--ink-2); margin: 0.3rem 0 0; font-style: italic; }
-  .script .say { font-size: 0.82rem; color: var(--muted); margin: 0.25rem 0 0; letter-spacing: 0.02em; }
-  .script .say b { font-weight: 700; color: var(--ink-2); font-variant: small-caps; letter-spacing: 0.06em; }
-
-  /* step blocks */
-  .step { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin-bottom: 1.4rem; background: var(--surface); }
-  .step > header { display: flex; align-items: baseline; gap: 0.9rem; flex-wrap: wrap; padding: 0.9rem 1.2rem; background: var(--surface-2); border-bottom: 1px solid var(--line); }
-  .step > header .m { font-family: "Alegreya", Georgia, serif; font-size: 1.9rem; line-height: 1; font-variant-numeric: tabular-nums; }
-  .step > header .m small { font-size: 0.42em; color: var(--muted); display: block; text-transform: uppercase; letter-spacing: 0.1em; }
-  .step > header h3 { margin: 0; font-size: 1.45rem; }
-  .step > header h3 small { display: block; font-family: "Alegreya Sans", system-ui, sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); font-weight: 700; }
-  .step > header .grow { flex: 1; }
-  .step .body { padding: 1.1rem 1.2rem 1.3rem; }
-  .step .body > *:first-child { margin-top: 0; }
-  .do { display: grid; grid-template-columns: 1.6rem 1fr; gap: 0.2rem 0.6rem; margin: 0.5rem 0; }
-  .do .i { font-family: "Alegreya", Georgia, serif; color: var(--marigold); font-size: 1.1rem; text-align: center; }
-  .do p { margin: 0 0 0.5rem; }
-  .inapp { background: var(--blue-soft); border-radius: 6px; padding: 0.7rem 0.95rem; margin: 0.9rem 0; font-size: 0.92rem; }
-  .inapp .label { color: var(--blue); margin-bottom: 0.3rem; }
-  .inapp code { font-family: "Alegreya Sans", system-ui, sans-serif; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 0.05rem 0.4rem; font-weight: 500; white-space: nowrap; }
-  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-top: 1rem; }
-  @media (max-width: 720px) { .two { grid-template-columns: 1fr; } }
-  .good, .bad { border-radius: 6px; padding: 0.75rem 0.95rem; font-size: 0.92rem; }
-  .good { background: var(--surface-2); border-left: 3px solid var(--blue); }
-  .bad { background: var(--surface-2); border-left: 3px solid var(--rosa); }
-  .good .label { color: var(--blue); } .bad .label { color: var(--rosa); }
-  .good p, .bad p { margin: 0; }
-
-  table { border-collapse: collapse; width: 100%; font-size: 0.93rem; margin: 1rem 0; }
-  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
-  th { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 700; }
-  td:first-child { white-space: nowrap; font-weight: 500; }
-  .tablewrap { overflow-x: auto; }
-
-  ul.checks { list-style: none; padding: 0; margin: 0.6rem 0; }
-  ul.checks li { padding: 0.35rem 0 0.35rem 1.6rem; position: relative; max-width: 46em; }
-  ul.checks li::before { content: "□"; position: absolute; left: 0.2rem; color: var(--marigold); font-size: 1.1rem; }
-
-  .rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 0.8rem; margin: 1rem 0; }
-  .rules .r { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--marigold); border-radius: 6px; padding: 0.75rem 0.9rem; }
-  .rules .r b { display: block; font-family: "Alegreya", Georgia, serif; font-size: 1.15rem; font-weight: 500; margin-bottom: 0.15rem; }
-  .rules .r span { font-size: 0.88rem; color: var(--muted); }
-
-  /* interactive widgets */
-  .lab { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 1.1rem 1.3rem; margin: 1.1rem 0; }
-  .lab > .label { color: var(--marigold); }
-  .dot { width: 20px; height: 20px; border-radius: 50%; background: var(--marigold); opacity: 0.3; transition: transform 90ms ease-out, opacity 90ms ease-out; flex: none; }
+  /* widget shell */
+  .w { margin-top: 1.4rem; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 1.2rem 1.3rem; }
+  .w.plain { background: transparent; border: 0; padding: 0; }
+  .dot { width: 22px; height: 22px; border-radius: 50%; background: var(--marigold); opacity: 0.28; flex: none; transition: transform 90ms ease-out, opacity 90ms ease-out; }
   .dot.on { transform: scale(1.4); opacity: 1; }
-  .bignum { font-family: "Alegreya", Georgia, serif; font-size: 2.6rem; line-height: 1; font-variant-numeric: tabular-nums; }
-  .bignum small { display: block; font-family: "Alegreya Sans", system-ui, sans-serif; font-size: 0.26em; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-top: 0.3rem; }
-  .verdict { font-family: "Alegreya", Georgia, serif; font-size: 1.25rem; }
-  .verdict.ok { color: var(--blue); } .verdict.fast { color: var(--rosa); } .verdict.slow { color: var(--marigold); }
-  .tapzone { min-width: 11rem; min-height: 5.2rem; border: 2px dashed var(--line); border-radius: 8px; background: var(--surface-2); display: grid; place-items: center; font-family: "Alegreya", Georgia, serif; font-size: 1.2rem; color: var(--muted); user-select: none; -webkit-user-select: none; touch-action: manipulation; }
-  .tapzone:active { background: var(--marigold-soft); border-color: var(--marigold); }
-  .meter { height: 10px; border-radius: 5px; background: var(--surface-2); position: relative; overflow: hidden; margin: 0.6rem 0 0.2rem; }
-  .meter .band { position: absolute; top: 0; bottom: 0; left: 28.57%; width: 21.43%; background: var(--blue-soft); }
-  .meter .pin { position: absolute; top: -3px; width: 3px; height: 16px; background: var(--ink); border-radius: 2px; transition: left 140ms ease-out; }
-  .meterlabels { position: relative; display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted); }
-  .meterlabels .mid { position: absolute; left: 28.57%; }
-  .silring { display: grid; place-items: center; position: relative; }
-  .silring svg { width: 120px; height: 120px; }
-  .silring .track { fill: none; stroke: var(--line); stroke-width: 6; }
-  .silring .arc2 { fill: none; stroke: var(--marigold); stroke-width: 6; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; }
-  .silring .num { font-family: "Alegreya", Georgia, serif; font-size: 1.7rem; fill: var(--ink); }
-  .lyricline { font-family: "Alegreya", Georgia, serif; font-size: 1.25rem; line-height: 1.6; }
-  .lyricline .sy.hot { background: var(--marigold-soft); border-radius: 3px; }
+  .lyr { font-family: "Alegreya", Georgia, serif; font-size: 1.35rem; line-height: 1.65; margin-top: 0.9rem; }
+  .lyr .sy.hot { background: var(--marigold-soft); border-radius: 3px; }
   .voice { font-size: 0.85rem; color: var(--muted); display: flex; gap: 0.45rem; align-items: center; }
   .voice input[type=range] { width: 90px; accent-color: var(--marigold); }
-  @media (prefers-reduced-motion: reduce) { .dot, .meter .pin { transition: none; } }
 
-  .toc { background: var(--surface-2); border-radius: 8px; padding: 1rem 1.2rem; margin: 1.6rem 0 0; }
-  .toc ol { margin: 0.4rem 0 0; padding-left: 1.3rem; columns: 2; column-gap: 2rem; }
-  @media (max-width: 620px) { .toc ol { columns: 1; } }
-  .toc li { margin-bottom: 0.3rem; }
-  .toc a { color: var(--ink-2); text-decoration: none; }
-  .toc a:hover { color: var(--rosa); }
-  footer { margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.88rem; }
-  footer a { color: var(--blue); }
+  /* pulse pad */
+  .pad { flex: 1; min-width: 10rem; min-height: 5.6rem; border: 2px dashed var(--line); border-radius: 10px; background: var(--surface-2); display: grid; place-items: center; font-family: "Alegreya", Georgia, serif; font-size: 1.2rem; color: var(--muted); user-select: none; -webkit-user-select: none; touch-action: manipulation; text-align: center; }
+  .pad:active { background: var(--marigold-soft); border-color: var(--marigold); }
+  .bpmbox { min-width: 7rem; text-align: center; }
+  .bpmbox .k { font-family: "Alegreya", Georgia, serif; font-size: 3rem; line-height: 1; font-variant-numeric: tabular-nums; }
+  .bpmbox .u { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+  .meter { height: 10px; border-radius: 5px; background: var(--surface-2); position: relative; margin: 0.9rem 0 0.25rem; }
+  .meter .band { position: absolute; top: 0; bottom: 0; left: 28.57%; width: 21.43%; background: var(--blue-soft); border-radius: 5px; }
+  .meter .pin { position: absolute; top: -4px; width: 3px; height: 18px; background: var(--ink); border-radius: 2px; transition: left 150ms ease-out; }
+  .mlab { position: relative; display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted); }
+  .mlab .mid { position: absolute; left: 28.57%; color: var(--blue); }
+  .verdict { font-family: "Alegreya", Georgia, serif; font-size: 1.3rem; margin-top: 0.8rem; min-height: 1.6em; }
+  .verdict.ok { color: var(--blue); } .verdict.fast { color: var(--rosa); } .verdict.slow { color: var(--marigold); }
+
+  /* rings */
+  .ring { display: grid; place-items: center; }
+  .ring svg { width: 128px; height: 128px; }
+  .ring .trk { fill: none; stroke: var(--line); stroke-width: 6; }
+  .ring .arc { fill: none; stroke: var(--marigold); stroke-width: 6; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; }
+  .ring .num { font-family: "Alegreya", Georgia, serif; font-size: 1.8rem; fill: var(--ink); }
+  .breathring { width: 96px; height: 96px; border-radius: 50%; background: var(--blue-soft); border: 2px solid var(--blue); transition: transform 4s ease-in-out; }
+  .breathring.in { transform: scale(1.85); }
+  @media (prefers-reduced-motion: reduce) { .breathring { transition: none; } .dot { transition: none; } }
+
+  /* syllable + card widgets */
+  .chips { display: flex; gap: 0.55rem; flex-wrap: wrap; }
+  .chips button { font-family: "Alegreya", Georgia, serif; font-size: 1.6rem; background: var(--surface); border: 1px solid var(--line); border-radius: 7px; padding: 0.4rem 0.95rem; min-width: 3.4rem; }
+  .chips button[aria-pressed="true"] { border-color: var(--marigold); background: var(--marigold-soft); }
+  .chips button:disabled { opacity: 0.3; }
+  .slots { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.9rem; }
+  .slot { min-width: 3.6rem; height: 3.2rem; border: 2px dashed var(--line); border-radius: 7px; display: grid; place-items: center; font-family: "Alegreya", Georgia, serif; font-size: 1.7rem; }
+  .slot.filled { border-style: solid; border-color: var(--blue); background: var(--blue-soft); }
+  .built { font-family: "Alegreya", Georgia, serif; font-size: 1.7rem; color: var(--blue); margin-left: 0.5rem; }
+  .stages { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .taps { display: flex; gap: 0.7rem; }
+  .taps .t { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--marigold); cursor: pointer; }
+  .taps .t.on { background: var(--marigold); }
+
+  /* child page preview */
+  .childpg { background: var(--tablet); border: 1px solid var(--line); border-radius: 8px; padding: 1.4rem 1.5rem; }
+  .childpg .lab { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); font-weight: 700; margin-bottom: 0.5rem; }
+  .childpg .song { font-family: "Alegreya", Georgia, serif; font-size: 1.5rem; line-height: 1.6; margin: 0; }
+  .childpg .song .lt { color: var(--muted); }
+  .childpg .verse { font-family: "Alegreya", Georgia, serif; font-size: 1.7rem; line-height: 1.65; margin: 0; padding-left: 1rem; border-left: 4px solid var(--marigold); }
+  .childpg .verse b { font-weight: 500; border-bottom: 3px solid var(--rosa); }
+  .cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+  @media (max-width: 680px) { .cols2 { grid-template-columns: 1fr; } }
+
+  /* the arc map */
+  .map { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.4rem; margin-top: 1.4rem; }
+  @media (max-width: 620px) { .map { grid-template-columns: repeat(3, 1fr); } }
+  .map .m { border-radius: 6px; padding: 0.55rem 0.5rem; border: 1px solid var(--line); background: var(--surface); text-align: center; }
+  .map .m.settle { background: var(--marigold-soft); border-color: var(--marigold); }
+  .map .m.work { background: var(--blue-soft); border-color: var(--blue); }
+  .map .m.now { outline: 2px solid var(--ink); }
+  .map .m .mm { font-family: "Alegreya", Georgia, serif; font-size: 1.25rem; line-height: 1; }
+  .map .m .nn { font-size: 0.72rem; margin-top: 0.15rem; }
+
+  /* summary */
+  .sum { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.7rem; margin-top: 1.3rem; }
+  .sum .c { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 0.8rem 0.9rem; }
+  .sum .c .k { font-family: "Alegreya", Georgia, serif; font-size: 1.7rem; line-height: 1.1; }
+  .sum .c .u { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-top: 0.2rem; }
+
+  /* ---------- footer nav ---------- */
+  .nav { flex: none; border-top: 1px solid var(--line); background: var(--tablet); }
+  .nav .in { max-width: 52rem; margin: 0 auto; padding: 0.75rem 1.3rem; display: flex; align-items: center; gap: 0.8rem; }
+  .nav .grow { flex: 1; }
+  .nav .hint { font-size: 0.82rem; color: var(--muted); }
+  .steps { display: flex; gap: 4px; }
+  .steps i { width: 7px; height: 7px; border-radius: 50%; background: var(--line); display: block; }
+  .steps i.on { background: var(--marigold); }
+  .steps i.past { background: var(--ink-2); }
 </style>
 
-<header class="top">
-  <div class="inner">
+<header class="hdr">
+  <div class="in">
     <span class="brand">Cántame</span>
-    <nav>
-      <a href="index.html"><span class="en-only">Session demo</span><span class="es-only">Demo de la sesión</span></a>
-      <a href="concept.html"><span class="en-only">Program concept</span><span class="es-only">Concepto del programa</span></a>
-      <a href="guide.html"><span class="en-only">Guide</span><span class="es-only">Guía</span></a>
-    </nav>
+    <span class="where" id="where"></span>
     <span class="grow"></span>
-    <div class="langsw" role="group" aria-label="Language / Idioma">
-      <button id="btnEn" aria-pressed="true">English</button>
-      <button id="btnEs" aria-pressed="false">Español</button>
+    <div class="langsw" role="group" aria-label="Language">
+      <button id="btnEn" aria-pressed="true">EN</button>
+      <button id="btnEs" aria-pressed="false">ES</button>
     </div>
   </div>
+  <div class="track"><div class="fill" id="fill" style="width:0%"></div></div>
 </header>
 
-<div class="wrap">
+<main class="stage"><div class="card anim" id="card"></div></main>
 
-<div class="hero">
-  <div class="kicker"><span class="en-only">Walkthrough for the adult</span><span class="es-only">Guía para la persona adulta</span></div>
-  <h1><span class="en-only">How to run a session</span><span class="es-only">Cómo dar una sesión</span></h1>
-  <p class="lede en-only">Cántame is fifteen minutes, one adult, one child, every day. This guide walks you through all six steps of a session, tells you exactly what to say and what it means, and lets you rehearse the three things that are hard: the tune, the walking pulse, and the silence. You do not need to read Spanish fluently to run it.</p>
-  <p class="lede es-only">Cántame son quince minutos, una persona adulta, un niño, todos los días. Esta guía recorre los seis pasos de una sesión, te dice exactamente qué decir y qué significa, y te deja ensayar las tres cosas difíciles: la tonada, el pulso de caminata y el silencio. No necesitas leer español con fluidez para darla.</p>
-  <div class="facts">
-    <span class="en-only"><b>15 minutes</b> a day</span><span class="es-only"><b>15 minutos</b> al día</span>
-    <span class="en-only"><b>6 steps</b>, always the same order</span><span class="es-only"><b>6 pasos</b>, siempre en el mismo orden</span>
-    <span class="en-only"><b>Ages 3–8</b>, one-to-one</span><span class="es-only"><b>3 a 8 años</b>, uno a uno</span>
-    <span class="en-only"><b>Today:</b> Unit 1, session 12, letter <i>t</i></span><span class="es-only"><b>Hoy:</b> Unidad 1, sesión 12, letra <i>t</i></span>
+<nav class="nav">
+  <div class="in">
+    <button class="btn" id="back"></button>
+    <span class="steps" id="dots"></span>
+    <span class="grow"></span>
+    <span class="hint" id="hint"></span>
+    <button class="btn primary lg" id="next"></button>
   </div>
-  <div class="toc">
-    <div class="label"><span class="en-only">On this page</span><span class="es-only">En esta página</span></div>
-    <ol>
-      <li><a href="#shape"><span class="en-only">The shape of a session</span><span class="es-only">La forma de la sesión</span></a></li>
-      <li><a href="#before"><span class="en-only">Before you sit down</span><span class="es-only">Antes de sentarte</span></a></li>
-      <li><a href="#rehearse"><span class="en-only">Rehearse the three hard things</span><span class="es-only">Ensaya las tres cosas difíciles</span></a></li>
-      <li><a href="#controls"><span class="en-only">What every control does</span><span class="es-only">Qué hace cada control</span></a></li>
-      <li><a href="#steps"><span class="en-only">The six steps, walked through</span><span class="es-only">Los seis pasos, uno por uno</span></a></li>
-      <li><a href="#summary"><span class="en-only">Reading the session record</span><span class="es-only">Leer el registro de la sesión</span></a></li>
-      <li><a href="#trouble"><span class="en-only">When it goes wrong</span><span class="es-only">Cuando algo sale mal</span></a></li>
-      <li><a href="#glossary"><span class="en-only">Glossary</span><span class="es-only">Glosario</span></a></li>
-    </ol>
-  </div>
-</div>
-
-<section id="shape">
-  <h2><span class="num">1</span><span class="en-only">The shape of a session</span><span class="es-only">La forma de la sesión</span></h2>
-  <p class="sub en-only">Six parts, always in the same order, so that a grandfather on day three and a paraprofessional on day ninety run the same session. The shape is an arc: settle, work, stretch, settle. Roughly a third of the time is singing, a third is explicit reading work, and a third is talk and silence.</p>
-  <p class="sub es-only">Seis partes, siempre en el mismo orden, para que un abuelo en el día tres y una asistente en el día noventa den la misma sesión. La forma es un arco: calmar, trabajar, estirar, calmar. Más o menos un tercio del tiempo es canto, un tercio es trabajo explícito de lectura y un tercio es plática y silencio.</p>
-
-  <div class="arc">
-    <div class="a settle"><div class="mins">1</div><div class="nm">Arrullo</div><div class="gl en-only">settle</div><div class="gl es-only">calmar</div></div>
-    <div class="a work"><div class="mins">3</div><div class="nm">La canción</div><div class="gl en-only">the song</div><div class="gl es-only">la canción</div></div>
-    <div class="a work"><div class="mins">4</div><div class="nm">Los sonidos</div><div class="gl en-only">the sounds</div><div class="gl es-only">los sonidos</div></div>
-    <div class="a work"><div class="mins">3</div><div class="nm">Leer la canción</div><div class="gl en-only">read the song</div><div class="gl es-only">leer</div></div>
-    <div class="a"><div class="mins">2</div><div class="nm">Por dentro</div><div class="gl en-only">inside</div><div class="gl es-only">por dentro</div></div>
-    <div class="a settle"><div class="mins">2</div><div class="nm">Cierre</div><div class="gl en-only">close</div><div class="gl es-only">cierre</div></div>
-  </div>
-
-  <p class="note en-only"><b>Read the colors.</b> The amber ends are the soothing register — humming, breathing, lowering the voice. The blue middle is the working register at a walking pulse. <i>Por dentro</i> is the stretch: the only place the child is asked to do something genuinely effortful, and it comes after the hard reading work, not before.</p>
-  <p class="note es-only"><b>Lee los colores.</b> Los extremos ámbar son el registro que calma: tararear, respirar, bajar la voz. El azul del centro es el registro de trabajo, a paso de caminata. <i>Por dentro</i> es el estiramiento: el único momento en que se le pide al niño algo de verdad esforzado, y viene después del trabajo de lectura, no antes.</p>
-
-  <h3><span class="en-only">The one idea behind all of it</span><span class="es-only">La idea detrás de todo</span></h3>
-  <p class="en-only">Everything the child learns to read, they first learn to sing. A verse already in the body is the ideal thing to point at when you want to show a rhyme, clap a syllable, find where the stress falls, meet a letter, and then read that line in print. The song is not a reward for the reading work — it is the material the reading work is made of.</p>
-  <p class="es-only">Todo lo que el niño aprende a leer, primero lo aprende a cantar. Un verso que ya vive en el cuerpo es lo ideal para señalar una rima, aplaudir una sílaba, encontrar dónde cae la fuerza, conocer una letra y luego leer esa línea impresa. La canción no es el premio por el trabajo de lectura: es el material del que está hecho ese trabajo.</p>
-</section>
-
-<section id="before">
-  <h2><span class="num">2</span><span class="en-only">Before you sit down</span><span class="es-only">Antes de sentarte</span></h2>
-  <p class="sub en-only">Two minutes of setup. The child should walk up to a table that has almost nothing on it.</p>
-  <p class="sub es-only">Dos minutos de preparación. El niño debe llegar a una mesa que casi no tiene nada encima.</p>
-
-  <ul class="checks">
-    <li class="en-only">A quiet corner, not a busy room. Children need a noticeably better signal-to-noise ratio than adults to understand speech, and heritage speakers are hurt most by background sound.</li>
-    <li class="es-only">Un rincón tranquilo, no un cuarto con movimiento. Los niños necesitan mucho menos ruido de fondo que los adultos para entender el habla, y los hablantes de herencia son los más afectados.</li>
-    <li class="en-only">On the table: the <i>cancionero</i> (the songbook) and the syllable cards. Nothing else — no toys, no phone face-up, no snack.</li>
-    <li class="es-only">En la mesa: el cancionero y las tarjetas de sílabas. Nada más: ni juguetes, ni teléfono boca arriba, ni comida.</li>
-    <li class="en-only">The tablet is <b>yours</b>, propped face-up beside the songbook, angled so the child sees paper, not a screen. It turns toward the child exactly once, in step 4.</li>
-    <li class="es-only">La tablet es <b>tuya</b>, apoyada junto al cancionero, en un ángulo en el que el niño ve papel, no pantalla. Se voltea hacia el niño una sola vez, en el paso 4.</li>
-    <li class="en-only">Learn the tune <b>before</b> the child sits down, not during. Use the rehearsal tools below with the sound off if anyone is nearby.</li>
-    <li class="es-only">Aprende la tonada <b>antes</b> de que el niño se siente, no durante. Usa las herramientas de abajo con el sonido apagado si hay alguien cerca.</li>
-    <li class="en-only">Decide nothing about your own Spanish. If you sing the version your family sings, that version wins over the script. Mark it in the songbook.</li>
-    <li class="es-only">No te preocupes por tu español. Si cantas la versión que canta tu familia, esa versión gana sobre el guion. Anótala en el cancionero.</li>
-  </ul>
-
-  <h3><span class="en-only">The six rules of the quiet table</span><span class="es-only">Las seis reglas de la mesa tranquila</span></h3>
-  <div class="rules">
-    <div class="r"><b><span class="en-only">One voice, no track</span><span class="es-only">Una voz, sin pista</span></b><span class="en-only">You sing unaccompanied. Recorded audio exists for you to learn from, played before the child arrives — never as a backing track.</span><span class="es-only">Cantas sin acompañamiento. El audio grabado existe para que tú aprendas, antes de que llegue el niño, nunca como pista de fondo.</span></div>
-    <div class="r"><b><span class="en-only">One tune, two weeks</span><span class="es-only">Una tonada, dos semanas</span></b><span class="en-only">Each unit has one piece. Novelty is rationed; repetition is the method. Verses stick when the same simple tune carries all of them.</span><span class="es-only">Cada unidad tiene una sola pieza. La novedad se raciona; la repetición es el método. Los versos se quedan cuando una misma tonada sencilla los carga todos.</span></div>
-    <div class="r"><b><span class="en-only">Walking pulse</span><span class="es-only">Pulso de caminata</span></b><span class="en-only">Roughly 70–85 beats a minute, kept with palms on the table. Never speed up to wake the child.</span><span class="es-only">Más o menos 70 a 85 pulsos por minuto, con las palmas en la mesa. Nunca aceleres para despertar al niño.</span></div>
-    <div class="r"><b><span class="en-only">Quieter to gather</span><span class="es-only">Más bajo para reunir</span></b><span class="en-only">When attention drifts, lower your voice and slow the pulse. Volume goes down, not up.</span><span class="es-only">Cuando la atención se va, baja la voz y frena el pulso. El volumen baja, no sube.</span></div>
-    <div class="r"><b><span class="en-only">Silence is scheduled</span><span class="es-only">El silencio está programado</span></b><span class="en-only">Every session contains planned silence. It is an exercise, not an accident, and it gets longer across the year.</span><span class="es-only">Cada sesión tiene silencio planeado. Es un ejercicio, no un accidente, y se alarga a lo largo del año.</span></div>
-    <div class="r"><b><span class="en-only">Praise the staying</span><span class="es-only">Celebra el quedarse</span></b><span class="en-only">Praise holding still, waiting for the next word, finishing the verse. Never praise speed or volume.</span><span class="es-only">Celebra quedarse quieto, esperar la siguiente palabra, terminar el verso. Nunca celebres la rapidez ni el volumen.</span></div>
-  </div>
-</section>
-
-<section id="rehearse">
-  <h2><span class="num">3</span><span class="en-only">Rehearse the three hard things</span><span class="es-only">Ensaya las tres cosas difíciles</span></h2>
-  <p class="sub en-only">In the real program these are what adults practice in onboarding: singing at a walking pulse, lowering rather than raising the voice, and holding a three-second silence without filling it. Do these now, with no child in the room.</p>
-  <p class="sub es-only">En el programa real, esto es lo que las personas adultas ensayan en la capacitación: cantar a paso de caminata, bajar la voz en vez de subirla, y sostener tres segundos de silencio sin llenarlos. Hazlo ahora, sin ningún niño en el cuarto.</p>
-
-  <div class="lab">
-    <div class="label"><span class="en-only">Rehearsal 1 · Learn the tune</span><span class="es-only">Ensayo 1 · Aprende la tonada</span></div>
-    <p class="note en-only" style="margin-top:0">The same four-line melody carries all three stanzas — that repetition is why the words stick. Play it, then hum it back with your lips closed. <b>Hum</b> mode is an octave lower and softer, which is how it should sound when you open the session.</p>
-    <p class="note es-only" style="margin-top:0">La misma melodía de cuatro líneas carga las tres estrofas: esa repetición es la razón por la que las palabras se quedan. Escúchala y luego tarareala con los labios cerrados. El modo <b>tarareo</b> va una octava más abajo y más suave, que es como debe sonar al abrir la sesión.</p>
-    <div class="row" style="margin-top:0.8rem">
-      <button class="btn primary" id="tuneBtn"><span class="en-only">Play the melody</span><span class="es-only">Tocar la melodía</span></button>
-      <button class="btn" id="humModeBtn" aria-pressed="false"><span class="en-only">Hum (lullaby register)</span><span class="es-only">Tarareo (registro de arrullo)</span></button>
-      <span class="voice"><span class="en-only">volume</span><span class="es-only">volumen</span><input type="range" id="vol" min="0" max="100" value="55" aria-label="volume"></span>
-    </div>
-    <div class="lyricline" id="tuneLyrics" style="margin-top:0.9rem"></div>
-    <p class="note" style="margin-top:0.6rem"><span class="en-only">The highlight follows the syllable being sung. Notice the long notes at the end of each line — that is where the stress lands, and it is what makes the accent mark in <i>pío</i> obvious to a child who has sung it a hundred times.</span><span class="es-only">El resaltado sigue la sílaba que se canta. Fíjate en las notas largas al final de cada línea: ahí cae la fuerza, y eso es lo que vuelve obvio el acento de <i>pío</i> para un niño que ya lo cantó cien veces.</span></p>
-  </div>
-
-  <div class="lab">
-    <div class="label"><span class="en-only">Rehearsal 2 · Find the walking pulse</span><span class="es-only">Ensayo 2 · Encuentra el pulso de caminata</span></div>
-    <p class="note en-only" style="margin-top:0">Almost every adult sings children's songs too fast. Tap the pad below at the speed you would naturally sing, four taps or more, and see where you land. The target is a walking pace — about 76 — not a clapping game.</p>
-    <p class="note es-only" style="margin-top:0">Casi todos los adultos cantan las canciones infantiles demasiado rápido. Toca el cuadro de abajo al ritmo en que cantarías, cuatro toques o más, y mira dónde caes. La meta es un paso de caminata, como 76, no un juego de palmadas.</p>
-    <div class="row" style="margin-top:0.9rem; align-items:stretch">
-      <div class="tapzone" id="tapzone" tabindex="0" role="button" aria-label="Tap to set tempo"><span class="en-only">tap here<br>in time</span><span class="es-only">toca aquí<br>al compás</span></div>
-      <div style="min-width:8rem"><div class="bignum"><span id="tapBpm">—</span><small><span class="en-only">your tempo</span><span class="es-only">tu tempo</span></small></div></div>
-      <div style="flex:1; min-width:14rem">
-        <div class="verdict" id="tapVerdict"><span class="en-only">Tap four times to begin.</span><span class="es-only">Toca cuatro veces para empezar.</span></div>
-        <div class="meter"><div class="band"></div><div class="pin" id="tapPin" style="left:50%"></div></div>
-        <div class="meterlabels"><span>50</span><span class="mid" style="color:var(--blue)">70–85</span><span>120</span></div>
-      </div>
-    </div>
-    <div class="row" style="margin-top:0.9rem">
-      <button class="btn" id="metroBtn" aria-pressed="false"><span class="en-only">Hear 76 beats a minute</span><span class="es-only">Oír 76 pulsos por minuto</span></button>
-      <div class="dot" id="metroDot"></div>
-      <button class="btn ghost" id="tapReset"><span class="en-only">Reset</span><span class="es-only">Reiniciar</span></button>
-    </div>
-  </div>
-
-  <div class="lab">
-    <div class="label"><span class="en-only">Rehearsal 3 · Hold the silence</span><span class="es-only">Ensayo 3 · Sostén el silencio</span></div>
-    <p class="note en-only" style="margin-top:0">This is the hardest thing in the program and the one adults fail at. The line stops mid-phrase and three seconds of nothing follow. Your job is to not fill them — no prompting, no "¿verdad?", no eyebrows. Press play and sit through it. Watch the child, not the clock.</p>
-    <p class="note es-only" style="margin-top:0">Esto es lo más difícil del programa y donde más falla la persona adulta. La línea se corta a la mitad y siguen tres segundos de nada. Tu trabajo es no llenarlos: sin apurar, sin "¿verdad?", sin cejas. Dale play y aguántalo. Mira al niño, no al reloj.</p>
-    <div class="row" style="margin-top:0.9rem; align-items:center">
-      <div class="silring">
-        <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52"/><circle class="arc2" id="silArc" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7"/><text class="num" id="silNum" x="60" y="70" text-anchor="middle">3</text></svg>
-      </div>
-      <div style="flex:1; min-width:16rem">
-        <div class="verdict" id="silState"><span class="en-only">The line stops after <i>"Bajo sus dos alas,"</i> and then resumes.</span><span class="es-only">La línea se detiene después de <i>«Bajo sus dos alas,»</i> y luego sigue.</span></div>
-        <div class="row" style="margin-top:0.7rem">
-          <button class="btn primary" id="silBtn"><span class="en-only">Sing with the pause</span><span class="es-only">Cantar con la pausa</span></button>
-          <span class="row" style="gap:0.3rem"><span class="note"><span class="en-only">pause</span><span class="es-only">pausa</span></span>
-          <button class="btn" data-sil="2">2 s</button><button class="btn" data-sil="3" aria-pressed="true">3 s</button><button class="btn" data-sil="4">4 s</button></span>
-        </div>
-      </div>
-    </div>
-    <p class="note" style="margin-top:0.8rem"><span class="en-only"><b>The rule the child never hears:</b> the child succeeds today. If they fill the silence, you do not react — you simply resume singing, and next time you pause for two seconds instead of three. The silence lengthens across the week, never within a session.</span><span class="es-only"><b>La regla que el niño nunca escucha:</b> hoy el niño lo logra. Si llena el silencio, no reaccionas: retomas la canción, y la próxima vez la pausa dura dos segundos en vez de tres. El silencio se alarga a lo largo de la semana, nunca dentro de una sesión.</span></p>
-  </div>
-</section>
-
-<section id="controls">
-  <h2><span class="num">4</span><span class="en-only">What every control does</span><span class="es-only">Qué hace cada control</span></h2>
-  <p class="sub en-only">The tablet in the <a href="index.html">session demo</a> is labeled in Spanish, because that is what the adult sees in the field. Here is every control, translated.</p>
-  <p class="sub es-only">La tablet del <a href="index.html">demo de la sesión</a> está en español, porque es lo que ve la persona adulta en el campo. Aquí está cada control.</p>
-
-  <div class="tablewrap">
-  <table>
-    <thead><tr>
-      <th><span class="en-only">Control</span><span class="es-only">Control</span></th>
-      <th><span class="en-only">Literally</span><span class="es-only">Literalmente</span></th>
-      <th><span class="en-only">What it does, and when to touch it</span><span class="es-only">Qué hace y cuándo tocarlo</span></th>
-    </tr></thead>
-    <tbody>
-      <tr><td>Siguiente / Atrás</td><td class="en-only">Next / Back</td><td class="es-only">—</td><td><span class="en-only">Moves between the six steps. On the last step <i>Siguiente</i> becomes <i>Terminar</i> (finish) and writes the session record.</span><span class="es-only">Cambia entre los seis pasos. En el último paso, <i>Siguiente</i> se vuelve <i>Terminar</i> y guarda el registro.</span></td></tr>
-      <tr><td class="es-only">Barra lateral</td><td class="en-only">Step rail</td><td class="en-only">—</td><td class="es-only">—</td><td><span class="en-only">The numbered list on the left. Each entry shows its minutes; a check mark means done, the amber bar means you are there now. Tap any step to jump — useful when a child needs you to go back to the song.</span><span class="es-only">La lista numerada de la izquierda. Cada entrada muestra sus minutos; la palomita indica hecho y la barra ámbar dónde estás. Toca cualquier paso para saltar: útil si el niño necesita volver a la canción.</span></td></tr>
-      <tr><td>0:00 de 15:00</td><td class="en-only">0:00 of 15:00</td><td class="es-only">—</td><td><span class="en-only">Total elapsed time. It is information, not a deadline — a session that runs to 16 minutes because a child was talking about their abuela is a good session.</span><span class="es-only">Tiempo total transcurrido. Es información, no una fecha límite: una sesión de 16 minutos porque el niño habló de su abuela es una buena sesión.</span></td></tr>
-      <tr><td>paso 1:00</td><td class="en-only">step 1:00</td><td class="es-only">—</td><td><span class="en-only">Time left in the current step. It turns pink when you go over. Glance, don't stare.</span><span class="es-only">Tiempo que queda en este paso. Se pone rosa cuando te pasas. Míralo de reojo, no lo vigiles.</span></td></tr>
-      <tr><td>pulso</td><td class="en-only">pulse</td><td class="es-only">—</td><td><span class="en-only">Toggles the blinking dot that shows the beat. Visual only, and it is for <b>you</b> — the child should be watching your face, not a dot.</span><span class="es-only">Enciende o apaga el punto que marca el pulso. Es solo visual y es para <b>ti</b>: el niño debe mirar tu cara, no un punto.</span></td></tr>
-      <tr><td>tic</td><td class="en-only">tick</td><td class="es-only">—</td><td><span class="en-only">Adds a soft audible click on each beat. Use it while you are learning; turn it off before the child sits down. It is a backing track by another name.</span><span class="es-only">Agrega un clic suave en cada pulso. Úsalo mientras aprendes; apágalo antes de que el niño se siente. Es una pista de fondo con otro nombre.</span></td></tr>
-      <tr><td>voz</td><td class="en-only">voice</td><td class="es-only">—</td><td><span class="en-only">Volume of the synthesized voice. In a real session this sits at zero — you are the voice.</span><span class="es-only">Volumen de la voz sintetizada. En una sesión real está en cero: la voz eres tú.</span></td></tr>
-      <tr><td>76 pulsos/min</td><td class="en-only">76 beats/min</td><td class="es-only">—</td><td><span class="en-only">The working tempo. It drops to 56 automatically in <i>Arrullo</i> and <i>Cierre</i>, because those two steps are in the soothing register.</span><span class="es-only">El tempo de trabajo. Baja solo a 56 en <i>Arrullo</i> y <i>Cierre</i>, porque esos dos pasos van en el registro que calma.</span></td></tr>
-      <tr><td>Voltear la tablet</td><td class="en-only">Turn the tablet</td><td class="es-only">—</td><td><span class="en-only">In step 4 only. Shows the child-facing songbook page: large type, no animation, nothing else on screen. Stands in for the paper <i>cancionero</i>.</span><span class="es-only">Solo en el paso 4. Muestra la página del cancionero para el niño: letra grande, sin animación, nada más. Sustituye al cancionero de papel.</span></td></tr>
-      <tr><td class="es-only">Etiquetas</td><td class="en-only">Tags</td><td class="en-only">—</td><td class="es-only">—</td><td><span class="en-only"><span class="tag lit">Literacy</span> reading science · <span class="tag cul">Cultura</span> identity and heritage · <span class="tag att">Atención</span> attention training. Most steps carry more than one.</span><span class="es-only"><span class="tag lit">Literacy</span> ciencia de la lectura · <span class="tag cul">Cultura</span> identidad y herencia · <span class="tag att">Atención</span> entrenamiento de atención.</span></td></tr>
-    </tbody>
-  </table>
-  </div>
-</section>
-
-<section id="steps">
-  <h2><span class="num">5</span><span class="en-only">The six steps, walked through</span><span class="es-only">Los seis pasos, uno por uno</span></h2>
-  <p class="sub en-only">Every line you say to the child is in Spanish and stays in Spanish. Underneath each one you get a plain-English meaning and, where it helps, a rough pronunciation. Stage directions are in parentheses and italics — you do them, you don't say them.</p>
-  <p class="sub es-only">Cada línea que le dices al niño está en español y se queda en español. Debajo de cada una viene el sentido y, cuando ayuda, una pronunciación aproximada. Las acotaciones van en paréntesis y cursiva: se hacen, no se dicen.</p>
-
-  <!-- STEP 1 -->
-  <article class="step">
-    <header>
-      <div class="m">1<small>min</small></div>
-      <h3>Arrullo<small><span class="en-only">settle · lullaby</span><span class="es-only">calmar</span></small></h3>
-      <span class="grow"></span><span class="tag att">Atención</span>
-    </header>
-    <div class="body">
-      <p class="en-only"><b>The purpose.</b> To change the register of the room before any work happens. There is no instruction, no attention-getter, no "are you ready?" The hum itself is the signal, and the child learns across weeks that this sound means the table is now quiet.</p>
-      <p class="es-only"><b>El propósito.</b> Cambiar el registro del cuarto antes de cualquier trabajo. No hay instrucción, ni llamada de atención, ni «¿listo?». El tarareo es la señal, y con las semanas el niño aprende que ese sonido significa que la mesa ya está tranquila.</p>
-
-      <div class="script">
-        <p class="sp"><i>(Tararea el arrullo con los labios cerrados, despacio. Después de una frase, abre una mano sobre la mesa, con la palma hacia arriba. Deja que el niño ponga la suya. Dos frases más.)</i></p>
-        <p class="gloss en-only">(Hum the lullaby with your lips closed, slowly. After one phrase, open a hand on the table, palm up. Let the child rest theirs on it. Two more phrases.)</p>
-      </div>
-      <div class="script">
-        <p class="sp">Tres respiraciones con la canción.</p>
-        <p class="gloss en-only">Three breaths with the song.</p>
-        <p class="say en-only"><b>say</b> trehs res-pee-rah-see-OH-nes kon la kan-see-OHN</p>
-      </div>
-
-      <div class="do">
-        <span class="i en-only">1</span><p class="en-only">Hum <i>A la rorro niño</i> — the phase's lullaby, the same one every day for six weeks. Lips closed. Slower than feels natural.</p>
-        <span class="i es-only">1</span><p class="es-only">Tararea <i>A la rorro niño</i>, el arrullo de la fase, el mismo todos los días durante seis semanas. Labios cerrados. Más lento de lo que se siente natural.</p>
-        <span class="i en-only">2</span><p class="en-only">After one phrase, open your hand on the table, palm up. Say nothing. Wait. The child places their hand in yours — this is the whole invitation.</p>
-        <span class="i es-only">2</span><p class="es-only">Después de una frase, abre la mano sobre la mesa, palma arriba. No digas nada. Espera. El niño pone su mano en la tuya: esa es toda la invitación.</p>
-        <span class="i en-only">3</span><p class="en-only">Two more phrases, then breathe audibly with the last line, three times. The child breathes with you without being told to.</p>
-        <span class="i es-only">3</span><p class="es-only">Dos frases más y respira de forma audible con la última línea, tres veces. El niño respira contigo sin que se lo pidas.</p>
-      </div>
-
-      <div class="inapp">
-        <div class="label"><span class="en-only">In the demo</span><span class="es-only">En el demo</span></div>
-        <span class="en-only"><code>Oír el arrullo tarareado</code> plays the hum an octave down at 56 beats — that is the register, not a performance to copy exactly. <code>Empezar las respiraciones</code> runs the three-breath circle. The circle is for you; the child never sees it.</span>
-        <span class="es-only"><code>Oír el arrullo tarareado</code> toca el tarareo una octava abajo a 56 pulsos: ese es el registro. <code>Empezar las respiraciones</code> corre el círculo de tres respiraciones. El círculo es para ti; el niño no lo ve.</span>
-      </div>
-
-      <div class="two">
-        <div class="good"><div class="label"><span class="en-only">Move on when</span><span class="es-only">Sigue cuando</span></div><p class="en-only">The child is humming too — or the third breath finishes. Whichever comes first. Do not wait for both.</p><p class="es-only">El niño también tararea, o termina la tercera respiración. Lo que pase primero. No esperes las dos.</p></div>
-        <div class="bad"><div class="label"><span class="en-only">If the child talks</span><span class="es-only">Si el niño habla</span></div><p class="en-only">Keep humming, softer. Do not answer, do not shush, do not repeat yourself louder. The volume going down is the correction.</p><p class="es-only">Sigue tarareando, más suave. No contestes, no lo calles, no repitas más fuerte. Que baje el volumen es la corrección.</p></div>
-      </div>
-    </div>
-  </article>
-
-  <!-- STEP 2 -->
-  <article class="step">
-    <header>
-      <div class="m">3<small>min</small></div>
-      <h3>La canción<small><span class="en-only">the song</span><span class="es-only">la canción</span></small></h3>
-      <span class="grow"></span><span class="tag cul">Cultura</span><span class="tag att">Atención</span>
-    </header>
-    <div class="body">
-      <p class="en-only"><b>The purpose.</b> To put the whole text in the child's body once, at a walking pulse, with the beat kept by hands on the table rather than by a recording. Then to hand back one stanza in pieces, so the child produces it themselves.</p>
-      <p class="es-only"><b>El propósito.</b> Poner el texto completo en el cuerpo del niño una vez, a paso de caminata, con el pulso en las manos sobre la mesa y no en una grabación. Después devolverle una estrofa en pedazos, para que él la produzca.</p>
-
-      <div class="script">
-        <p class="sp">Manos en la mesa. <i>(Los dos empiezan a dar palmadas suaves en la mesa, una por pulso.)</i> Cantamos con las manos.</p>
-        <p class="gloss en-only">Hands on the table. <i>(Both of you start patting the table gently, one pat per beat.)</i> We sing with our hands.</p>
-        <p class="say en-only"><b>say</b> MAH-nos en la MEH-sa … kan-TAH-mos kon las MAH-nos</p>
-      </div>
-      <div class="script">
-        <p class="sp">Ahora tú me sigues. Yo canto un pedacito y tú lo cantas igual.</p>
-        <p class="gloss en-only">Now you follow me. I sing a little piece and you sing it the same.</p>
-        <p class="say en-only"><b>say</b> ah-OH-ra too meh SEE-gehs. yo KAN-to oon peh-da-SEE-to ee too lo KAN-tas ee-GWAL</p>
-      </div>
-
-      <div class="do">
-        <span class="i en-only">1</span><p class="en-only">Sing the whole song once, straight through, no stopping, eyes on the child, not loud. Both of you pat the beat.</p>
-        <span class="i es-only">1</span><p class="es-only">Canta la canción completa una vez, sin parar, mirando al niño, sin subir la voz. Los dos marcan el pulso.</p>
-        <span class="i en-only">2</span><p class="en-only">Then the <b>last</b> stanza in fragments, you first, child echoing: <i>"Bajo sus dos alas…"</i> → child → <i>"acurrucaditos…"</i> → child → and so on.</p>
-        <span class="i es-only">2</span><p class="es-only">Luego la <b>última</b> estrofa en fragmentos, tú primero y el niño en eco: <i>«Bajo sus dos alas…»</i> → niño → <i>«acurrucaditos…»</i> → niño.</p>
-        <span class="i en-only">3</span><p class="en-only">Sing each fragment slightly softer than the one before, so the child's echo comes down with you. The echo stanza is always the last and always the quietest.</p>
-        <span class="i es-only">3</span><p class="es-only">Canta cada fragmento un poco más suave que el anterior, para que el eco del niño baje contigo. La estrofa del eco es siempre la última y siempre la más suave.</p>
-      </div>
-
-      <div class="inapp">
-        <div class="label"><span class="en-only">In the demo</span><span class="es-only">En el demo</span></div>
-        <span class="en-only"><code>Oír la canción completa</code> sings all three stanzas at 76. <code>Solo la estrofa del eco</code> sings just the echo stanza at 72, a touch slower. The pink <i>eco</i> marking in the lyrics shows which stanza that is; amber underlines mark the stressed syllable.</span>
-        <span class="es-only"><code>Oír la canción completa</code> canta las tres estrofas a 76. <code>Solo la estrofa del eco</code> canta solo la del eco a 72, un poco más lenta. La marca rosa <i>eco</i> señala esa estrofa; el subrayado ámbar marca la sílaba fuerte.</span>
-      </div>
-
-      <div class="two">
-        <div class="good"><div class="label"><span class="en-only">The family's version wins</span><span class="es-only">La versión de la familia gana</span></div><p class="en-only">If the child sings "bajo de sus alas" or "les da su comida," that is correct. Write their version in the songbook and use it from then on.</p><p class="es-only">Si el niño canta «bajo de sus alas» o «les da su comida», es correcto. Anota su versión en el cancionero y úsala desde entonces.</p></div>
-        <div class="bad"><div class="label"><span class="en-only">Do not</span><span class="es-only">No hagas</span></div><p class="en-only">Do not stop mid-song to correct a word, and do not speed up for energy. One tune, many days — it does not need to be exciting today.</p><p class="es-only">No pares a media canción para corregir, y no aceleres para dar energía. Una tonada, muchos días: no tiene que ser emocionante hoy.</p></div>
-      </div>
-    </div>
-  </article>
-
-  <!-- STEP 3 -->
-  <article class="step">
-    <header>
-      <div class="m">4<small>min</small></div>
-      <h3>Los sonidos<small><span class="en-only">the sounds · explicit phonics</span><span class="es-only">los sonidos</span></small></h3>
-      <span class="grow"></span><span class="tag lit">Literacy</span>
-    </header>
-    <div class="body">
-      <p class="en-only"><b>The purpose.</b> This is the longest step and the one that does the actual teaching. Song reliably builds the big units — rhyme, syllables, stress — but it does not teach letter–sound correspondences on its own. So this step goes from the song outward into explicit, systematic phonics, and today's letter is pulled from a word the child has already sung.</p>
-      <p class="es-only"><b>El propósito.</b> Es el paso más largo y el que de verdad enseña. El canto construye bien las unidades grandes —rima, sílabas, fuerza— pero no enseña por sí solo la relación letra–sonido. Por eso este paso va de la canción hacia la fonética explícita y sistemática, y la letra de hoy sale de una palabra que el niño ya cantó.</p>
-
-      <h4 style="font-family:Alegreya,Georgia,serif;font-weight:500;font-size:1.1rem;margin:1.2rem 0 0.2rem">a · <span class="en-only">Rhyme</span><span class="es-only">Rima</span></h4>
-      <div class="script">
-        <p class="sp">Escucha: <i>pí-o</i>… <i>frí-o</i>. Terminan igual. ¿Cuál otra palabra de la canción termina como <b>trigo</b>?</p>
-        <p class="gloss en-only">Listen: <i>pí-o</i>… <i>frí-o</i>. They end the same. Which other word in the song ends like <b>trigo</b> (wheat)?</p>
-        <p class="say en-only"><b>answer</b> abrigo (shelter, coat) — <i>Muy bien, riman.</i> "Very good, they rhyme."</p>
-      </div>
-      <p class="note en-only">Rhyme is the entry point for three- and four-year-olds because the end of a syllable is easier to hear than its beginning. Knowing nursery rhymes at three predicts reading and spelling three years later.</p>
-      <p class="note es-only">La rima es la entrada para los de tres y cuatro años porque el final de la sílaba se oye más fácil que su inicio. Saber rimas a los tres años predice la lectura y la escritura tres años después.</p>
-
-      <h4 style="font-family:Alegreya,Georgia,serif;font-weight:500;font-size:1.1rem;margin:1.4rem 0 0.2rem">b · <span class="en-only">Syllables and stress</span><span class="es-only">Sílabas y fuerza</span></h4>
-      <div class="script">
-        <p class="sp">Ahora aplaudimos la palabra <i>pollitos</i> con el pulso: po-lli-tos. ¿Cuántas partes? Cántalo otra vez con las palmas. ¿En cuál parte cae la palmada?</p>
-        <p class="gloss en-only">Now we clap the word <i>pollitos</i> with the pulse: po-lli-tos. How many parts? Sing it again with the claps. Which part does the clap land on?</p>
-        <p class="say en-only"><b>answer</b> po-<b>LLI</b>-tos — three parts, the clap lands on <i>lli</i>.</p>
-      </div>
-      <p class="note en-only"><b>Ask this by singing, not speaking.</b> The melody holds <i>lli</i> longer than the syllables around it, which makes the answer audible instead of abstract. Spanish writes its stress down — the accent in <i>pío</i> or <i>maíz</i> is an instruction about where the voice lands — so a child who has sung it a hundred times already knows what the mark is for.</p>
-      <p class="note es-only"><b>Pregúntalo cantando, no hablando.</b> La melodía sostiene <i>lli</i> más que las sílabas de al lado, y eso vuelve audible la respuesta. El español escribe su acento: la tilde de <i>pío</i> o <i>maíz</i> dice dónde cae la voz.</p>
-
-      <h4 style="font-family:Alegreya,Georgia,serif;font-weight:500;font-size:1.1rem;margin:1.4rem 0 0.2rem">c · <span class="en-only">Today's letter</span><span class="es-only">La letra de hoy</span></h4>
-      <div class="script">
-        <p class="sp">Suena /t/, con la lengua en los dientes, suavecito. Está al final de una palabra que acabamos de aplaudir: polli-<b>tos</b>. Y en una palabra que vamos a leer hoy: <b>tapa</b>. Dilo tú: /t/. Ahora con las vocales: ta, te, ti, to, tu.</p>
-        <p class="gloss en-only">It sounds /t/, with the tongue on the teeth, softly. It's at the end of a word we just clapped: polli-<b>tos</b>. And in a word we're going to read today: <b>tapa</b> (covers / tucks in). You say it: /t/. Now with the vowels: ta, te, ti, to, tu.</p>
-      </div>
-      <div class="bad" style="margin-top:0.8rem"><div class="label"><span class="en-only">The pronunciation note that matters</span><span class="es-only">La nota de pronunciación que importa</span></div><p class="en-only">An English-style /t/ with a puff of air is <b>very common</b> in heritage speakers and is not a mistake to be embarrassed about — yours or the child's. Model it once, tongue against the teeth, no puff, and move on. <b>Correct at most twice.</b></p><p class="es-only">Una /t/ con soplo de aire (la del inglés) es <b>muy común</b> en hablantes de herencia y no es motivo de pena, ni tuya ni del niño. Modélala una vez, con la lengua en los dientes y sin soplo, y sigue. <b>Corrige dos veces como máximo.</b></p></div>
-
-      <h4 style="font-family:Alegreya,Georgia,serif;font-weight:500;font-size:1.1rem;margin:1.4rem 0 0.2rem">d · <span class="en-only">Build it and write it</span><span class="es-only">Construir y escribir</span></h4>
-      <div class="script">
-        <p class="sp">Toma las tarjetas: pon <i>ta</i> y luego <i>pa</i>. Léelo despacio. <b>Tapa.</b> Ahora escríbela en tu cuaderno.</p>
-        <p class="gloss en-only">Take the cards: put <i>ta</i> and then <i>pa</i>. Read it slowly. <b>Tapa.</b> Now write it in your notebook.</p>
-      </div>
-      <div class="inapp">
-        <div class="label"><span class="en-only">In the demo</span><span class="es-only">En el demo</span></div>
-        <span class="en-only"><code>Mostrar respuesta</code> reveals the rhyme answer. The three syllable buttons <code>po</code> <code>lli</code> <code>tos</code> record which one the child said — tap <code>lli</code> and you get the confirmation line. The four cards build a word into the two slots; <code>ta</code>+<code>pa</code> is the target, and <code>otra vez</code> clears it. Decoy cards (<code>sa</code>, <code>mo</code>) are there on purpose.</span>
-        <span class="es-only"><code>Mostrar respuesta</code> revela la rima. Los botones <code>po</code> <code>lli</code> <code>tos</code> registran cuál dijo el niño: toca <code>lli</code> y aparece la confirmación. Las cuatro tarjetas arman la palabra en los dos espacios; <code>ta</code>+<code>pa</code> es la meta y <code>otra vez</code> la borra. Las tarjetas distractoras (<code>sa</code>, <code>mo</code>) están a propósito.</span>
-      </div>
-      <p class="note en-only"><b>Why <i>t</i> today.</b> The letter order is the standard Spanish sequence — five vowels, then m p s l t n, open syllables before closed. It is not drawn from the song at random; the song was chosen because it contains the letters in the order they are taught.</p>
-      <p class="note es-only"><b>Por qué <i>t</i> hoy.</b> El orden de letras es la secuencia estándar del español: cinco vocales, luego m p s l t n, sílabas abiertas antes que cerradas. La canción se eligió porque contiene las letras en el orden en que se enseñan.</p>
-    </div>
-  </article>
-
-  <!-- STEP 4 -->
-  <article class="step">
-    <header>
-      <div class="m">3<small>min</small></div>
-      <h3>Leer la canción<small><span class="en-only">read the song</span><span class="es-only">leer la canción</span></small></h3>
-      <span class="grow"></span><span class="tag lit">Literacy</span>
-    </header>
-    <div class="body">
-      <p class="en-only"><b>The purpose.</b> To walk the child off the melody and onto the page in four deliberate stages, so that phrasing and stress survive the move into print. This is the step where the tablet turns around.</p>
-      <p class="es-only"><b>El propósito.</b> Llevar al niño de la melodía a la página en cuatro etapas, para que el fraseo y la fuerza sobrevivan el paso a la letra impresa. Es el paso en el que la tablet se voltea.</p>
-
-      <div class="script">
-        <p class="sp">Abre tu cancionero en los pollitos. Pon el dedo en la primera palabra. Cantamos despacio y el dedo camina con la canción.</p>
-        <p class="gloss en-only">Open your songbook to the chicks. Put your finger on the first word. We sing slowly and the finger walks with the song.</p>
-      </div>
-
-      <div class="do">
-        <span class="i en-only">1</span><p class="en-only"><b>Sing with the finger.</b> Your finger under the child's, moving word by word. The melody is still there.</p>
-        <span class="i es-only">1</span><p class="es-only"><b>Cantar con el dedo.</b> Tu dedo bajo el del niño, palabra por palabra. La melodía sigue ahí.</p>
-        <span class="i en-only">2</span><p class="en-only"><b>Pulse only.</b> No melody — chant the same stanza on the beat, still patting.</p>
-        <span class="i es-only">2</span><p class="es-only"><b>Solo con el pulso.</b> Sin melodía: recita la misma estrofa al pulso, marcando con las palmas.</p>
-        <span class="i en-only">3</span><p class="en-only"><b>Just say it.</b> Speaking voice, no beat.</p>
-        <span class="i es-only">3</span><p class="es-only"><b>Solo decirlo.</b> Voz hablada, sin pulso.</p>
-        <span class="i en-only">4</span><p class="en-only"><b>Read without music.</b> The child reads the short decodable verse — <i>Pío, pío, pío. / Mi mamá me tapa. / Sus alas son mi manta.</i> — which uses only letters taught so far.</p>
-        <span class="i es-only">4</span><p class="es-only"><b>Leer sin música.</b> El niño lee el versito decodificable —<i>Pío, pío, pío. / Mi mamá me tapa. / Sus alas son mi manta.</i>— que solo usa letras ya enseñadas.</p>
-      </div>
-
-      <div class="inapp">
-        <div class="label"><span class="en-only">In the demo</span><span class="es-only">En el demo</span></div>
-        <span class="en-only">The four stage buttons fill in as you go; from stage 2 on, tapping one stops any melody that is playing — that is deliberate, not a glitch. <code>Voltear la tablet hacia el niño</code> shows the child-facing page, and <code>Voltear hacia mí</code> brings it back. The three circles <code>1</code> <code>2</code> <code>3</code> are where you mark clean readings.</span>
-        <span class="es-only">Los cuatro botones de etapa se van llenando; de la etapa 2 en adelante, tocar uno detiene la melodía: es a propósito. <code>Voltear la tablet hacia el niño</code> muestra la página del niño y <code>Voltear hacia mí</code> la regresa. Los círculos <code>1</code> <code>2</code> <code>3</code> marcan las lecturas limpias.</span>
-      </div>
-
-      <div class="two">
-        <div class="good"><div class="label"><span class="en-only">Three clean readings, never faster</span><span class="es-only">Tres lecturas limpias, nunca más rápido</span></div><p class="en-only">The third is the one that counts. Say: <i>"Leíste todo el versito sin tropezar."</i> — "You read the whole little verse without stumbling."</p><p class="es-only">La tercera es la que cuenta. Di: <i>«Leíste todo el versito sin tropezar.»</i></p></div>
-        <div class="bad"><div class="label"><span class="en-only">The light-ink words</span><span class="es-only">Las palabras en tinta clara</span></div><p class="en-only">Words whose letters have not been taught yet — <i>bajo, dos, acurrucaditos, hasta, otro, día, duermen, pollitos</i> — are printed pale. The child reads those <b>from the song</b>, not by decoding. Do not make them sound those out.</p><p class="es-only">Las palabras con letras aún no vistas —<i>bajo, dos, acurrucaditos, hasta, otro, día, duermen, pollitos</i>— van en tinta clara. El niño las lee <b>de la canción</b>, no decodificando. No lo hagas deletrearlas.</p></div>
-      </div>
-    </div>
-  </article>
-
-  <!-- STEP 5 -->
-  <article class="step">
-    <header>
-      <div class="m">2<small>min</small></div>
-      <h3>Por dentro<small><span class="en-only">inside · attention</span><span class="es-only">por dentro</span></small></h3>
-      <span class="grow"></span><span class="tag att">Atención</span>
-    </header>
-    <div class="body">
-      <p class="en-only"><b>The purpose.</b> The child must keep the song running in their head while suppressing the urge to sing it out loud. That is inhibition training wearing a song as a costume — and it is the rung of the attention ladder for this phase.</p>
-      <p class="es-only"><b>El propósito.</b> El niño debe mantener la canción corriendo en su cabeza mientras se aguanta las ganas de cantarla en voz alta. Es entrenamiento de inhibición disfrazado de canción, y es el escalón de la escalera de atención de esta fase.</p>
-
-      <div class="script">
-        <p class="sp">Ahora la canción va por dentro. Yo canto la primera estrofa y tú la cantas dentro de tu cabeza, sin voz. Cada vez que oigas <i>pío</i>, tocas la mesa una vez.</p>
-        <p class="gloss en-only">Now the song goes inside. I sing the first stanza and you sing it inside your head, with no voice. Every time you hear <i>pío</i>, you tap the table once.</p>
-      </div>
-      <div class="script">
-        <p class="sp">Ahora estatuas suaves. Yo canto, y cuando me quedo en silencio, tú te quedas como un pollito dormido, sin moverte, y esperas la siguiente palabra.</p>
-        <p class="gloss en-only">Now gentle statues. I sing, and when I go silent, you stay like a sleeping chick, without moving, and you wait for the next word.</p>
-      </div>
-      <div class="script">
-        <p class="sp">Esperaste la palabra sin moverte. Eso es escuchar.</p>
-        <p class="gloss en-only">You waited for the word without moving. That is what listening is.</p>
-        <p class="say en-only"><b>This is the praise line.</b> It names holding still — not being fast, not being loud, not being right.</p>
-      </div>
-
-      <div class="inapp">
-        <div class="label"><span class="en-only">In the demo</span><span class="es-only">En el demo</span></div>
-        <span class="en-only">The three amber circles are tapped by <b>you</b>, once for each <i>pío</i> the child catches correctly. <code>Cantar con la pausa</code> sings the last stanza and stops after <i>"Bajo sus dos alas,"</i>; the ring counts your silence down. <code>2 s</code> <code>3 s</code> <code>4 s</code> set its length before you start.</span>
-        <span class="es-only">Los tres círculos ámbar los tocas <b>tú</b>, uno por cada <i>pío</i> que el niño atrapa. <code>Cantar con la pausa</code> canta la última estrofa y se detiene después de <i>«Bajo sus dos alas,»</i>; el anillo cuenta tu silencio. <code>2 s</code> <code>3 s</code> <code>4 s</code> fijan su duración antes de empezar.</span>
-      </div>
-
-      <div class="two">
-        <div class="good"><div class="label"><span class="en-only">Count it yourself</span><span class="es-only">Cuéntalo tú</span></div><p class="en-only">The child is never told a pause is coming, and never counts it. You count, silently, watching their face. Three seconds is Phase 1; it grows to twenty by Phase 4.</p><p class="es-only">Al niño nunca se le avisa la pausa ni la cuenta. Cuentas tú, en silencio, mirando su cara. Tres segundos es la Fase 1; llega a veinte en la Fase 4.</p></div>
-        <div class="bad"><div class="label"><span class="en-only">If the child fills the silence</span><span class="es-only">Si el niño llena el silencio</span></div><p class="en-only">Do not react at all. Resume singing as if nothing happened, and make the <b>next</b> pause two seconds instead of three. Shortening it is not a punishment — it guarantees the child succeeds today.</p><p class="es-only">No reacciones. Retoma la canción como si nada y haz que la <b>siguiente</b> pausa dure dos segundos en vez de tres. Acortarla no es castigo: garantiza que hoy el niño lo logre.</p></div>
-      </div>
-    </div>
-  </article>
-
-  <!-- STEP 6 -->
-  <article class="step">
-    <header>
-      <div class="m">2<small>min</small></div>
-      <h3>Cierre y para la casa<small><span class="en-only">close · and the question to carry home</span><span class="es-only">cierre</span></small></h3>
-      <span class="grow"></span><span class="tag cul">Cultura</span>
-    </header>
-    <div class="body">
-      <p class="en-only"><b>The purpose.</b> One real conversation, one word with roots, and a question that sends the song into the house. The session ends in the register it began in.</p>
-      <p class="es-only"><b>El propósito.</b> Una conversación de verdad, una palabra con raíces y una pregunta que manda la canción a la casa. La sesión termina en el registro en que empezó.</p>
-
-      <div class="script">
-        <p class="sp">Los pollitos duermen bajo las alas de su mamá. ¿Quién te tapa a ti en la noche? Dímelo con una oración completa: «En la noche me tapa…»</p>
-        <p class="gloss en-only">The chicks sleep under their mother's wings. Who tucks <i>you</i> in at night? Tell me in a complete sentence: "At night I'm tucked in by…"</p>
-      </div>
-      <div class="script">
-        <p class="sp"><b>Elote.</b> La gallina busca el maíz, y el maíz tierno se llama elote. Esa palabra viene del náhuatl, <i>élotl</i>; los pueblos indígenas de México cuidaron el maíz desde hace miles de años. ¿Qué comes tú que se hace de maíz?</p>
-        <p class="gloss en-only"><b>Elote.</b> The hen looks for corn, and tender corn is called <i>elote</i>. That word comes from Nahuatl, <i>élotl</i>; the Indigenous peoples of Mexico have tended corn for thousands of years. What do you eat that's made of corn?</p>
-        <p class="say en-only"><b>expect</b> tortillas · elote · tamales · atole · esquites</p>
-      </div>
-      <div class="script">
-        <p class="sp"><i>(Tarareando A la rorro niño otra vez, una estrofa, más suave que la de apertura.)</i> Esta noche pregunta en tu casa: ¿qué arrullo te cantaban cuando eras bebé? Mañana me lo cantas, o me lo tarareas.</p>
-        <p class="gloss en-only"><i>(Humming A la rorro niño again, one verse, softer than the opening one.)</i> Tonight ask at home: what lullaby did they sing to you when you were a baby? Tomorrow you sing it to me, or hum it to me.</p>
-      </div>
-
-      <div class="inapp">
-        <div class="label"><span class="en-only">In the demo</span><span class="es-only">En el demo</span></div>
-        <span class="en-only"><code>Oír el arrullo de cierre</code> plays the closing hum at 52 beats — slower and softer than the opening. <code>Pregunta para la casa entregada</code> marks that you actually delivered the home question. <code>Terminar la sesión</code> writes the record.</span>
-        <span class="es-only"><code>Oír el arrullo de cierre</code> toca el tarareo de cierre a 52 pulsos, más lento y más suave que el de apertura. <code>Pregunta para la casa entregada</code> marca que sí entregaste la pregunta. <code>Terminar la sesión</code> guarda el registro.</span>
-      </div>
-
-      <div class="two">
-        <div class="good"><div class="label"><span class="en-only">Why "words with roots"</span><span class="es-only">Por qué «palabras con raíces»</span></div><p class="en-only">One per session. Mexican words ending in <i>-te</i> often come from Nahuatl <i>-tl</i>: elote, tomate, aguacate, chapulín, papalote, guajolote. Indigenous peoples are named as living communities — seven million people in Mexico speak one of 68 Indigenous language groups.</p><p class="es-only">Una por sesión. Las palabras mexicanas en <i>-te</i> a menudo vienen del náhuatl <i>-tl</i>: elote, tomate, aguacate, chapulín, papalote, guajolote. Los pueblos indígenas se nombran como comunidades vivas: siete millones de personas en México hablan una de 68 agrupaciones lingüísticas indígenas.</p></div>
-        <div class="bad"><div class="label"><span class="en-only">Say nothing about tomorrow</span><span class="es-only">No digas nada de mañana</span></div><p class="en-only">No preview of tomorrow's letter, no "next time we'll…". The hum is the last thing that happens. Suspense is the wrong register for this program.</p><p class="es-only">Sin adelanto de la letra de mañana, sin «la próxima vez vamos a…». El tarareo es lo último que pasa. El suspenso es el registro equivocado para este programa.</p></div>
-      </div>
-    </div>
-  </article>
-</section>
-
-<section id="summary">
-  <h2><span class="num">6</span><span class="en-only">Reading the session record</span><span class="es-only">Leer el registro de la sesión</span></h2>
-  <p class="sub en-only">When you press <i>Terminar la sesión</i>, the demo writes six numbers. These are the numbers that go to weekly video coaching and the monthly data meeting, so it is worth knowing what each one is actually claiming.</p>
-  <p class="sub es-only">Cuando presionas <i>Terminar la sesión</i>, el demo escribe seis números. Son los que van a la asesoría semanal por video y a la reunión mensual de datos, así que vale la pena saber qué afirma cada uno.</p>
-
-  <div class="tablewrap">
-  <table>
-    <thead><tr><th><span class="en-only">Field</span><span class="es-only">Campo</span></th><th><span class="en-only">Means</span><span class="es-only">Significa</span></th><th><span class="en-only">How to read it</span><span class="es-only">Cómo leerlo</span></th></tr></thead>
-    <tbody>
-      <tr><td>duración</td><td class="en-only">duration</td><td class="es-only">—</td><td><span class="en-only">Wall-clock length. Fifteen is the target, not the rule. Consistently under ten means steps are being skipped.</span><span class="es-only">Duración real. Quince es la meta, no la regla. Menos de diez de forma constante significa que se están saltando pasos.</span></td></tr>
-      <tr><td>letra de hoy</td><td class="en-only">today's letter</td><td class="es-only">—</td><td><span class="en-only">Which letter was taught. Each letter gets two consecutive days.</span><span class="es-only">Qué letra se enseñó. Cada letra recibe dos días seguidos.</span></td></tr>
-      <tr><td>lecturas limpias</td><td class="en-only">clean readings</td><td class="es-only">—</td><td><span class="en-only">Out of three, how many the child read without stumbling <b>at the pulse</b>. A reading that was fast but stumbly does not count.</span><span class="es-only">De tres, cuántas leyó el niño sin tropezar <b>al pulso</b>. Una lectura rápida pero con tropiezos no cuenta.</span></td></tr>
-      <tr><td>silencio sostenido</td><td class="en-only">silence held</td><td class="es-only">—</td><td><span class="en-only">The longest pause the child sat through. This is the attention-ladder measure and the one that should creep up across the phase.</span><span class="es-only">La pausa más larga que el niño aguantó. Es la medida de la escalera de atención y la que debe subir poco a poco en la fase.</span></td></tr>
-      <tr><td>píos por dentro</td><td class="en-only">inner <i>píos</i></td><td class="es-only">—</td><td><span class="en-only">Out of three, how many <i>pío</i> taps landed correctly while the child sang silently.</span><span class="es-only">De tres, cuántos toques en <i>pío</i> cayeron bien mientras el niño cantaba en silencio.</span></td></tr>
-      <tr><td>pregunta para la casa</td><td class="en-only">home question</td><td class="es-only">—</td><td><span class="en-only">Whether you actually delivered it. It is the program's main line into the household, so it is tracked separately.</span><span class="es-only">Si de verdad la entregaste. Es la vía principal del programa hacia la casa, por eso se registra aparte.</span></td></tr>
-    </tbody>
-  </table>
-  </div>
-  <p class="note en-only"><b>A dosage note.</b> The program does not claim results below about 80 sessions. Two good sessions a week is not a slower version of this program; it is a different and much weaker one. Daily beats weekly by a wide margin in the tutoring evidence.</p>
-  <p class="note es-only"><b>Nota de dosis.</b> El programa no reclama resultados por debajo de unas 80 sesiones. Dos buenas sesiones por semana no son una versión lenta de esto: son otra cosa, mucho más débil. Diario le gana a semanal por mucho.</p>
-</section>
-
-<section id="trouble">
-  <h2><span class="num">7</span><span class="en-only">When it goes wrong</span><span class="es-only">Cuando algo sale mal</span></h2>
-  <p class="sub en-only">Almost every failure in this program is the adult reaching for energy when the answer is quiet.</p>
-  <p class="sub es-only">Casi toda falla en este programa es la persona adulta buscando energía cuando la respuesta es calma.</p>
-  <div class="tablewrap">
-  <table>
-    <thead><tr><th style="width:30%"><span class="en-only">What happens</span><span class="es-only">Qué pasa</span></th><th><span class="en-only">What to do</span><span class="es-only">Qué hacer</span></th></tr></thead>
-    <tbody>
-      <tr><td><span class="en-only">The child won't stop talking</span><span class="es-only">El niño no deja de hablar</span></td><td><span class="en-only">Lower your voice and slow the pulse. Do not shush, do not repeat louder, do not ask for attention. Volume goes down, not up — that is the whole technique.</span><span class="es-only">Baja la voz y frena el pulso. No lo calles, no repitas más fuerte, no pidas atención. El volumen baja, no sube: esa es toda la técnica.</span></td></tr>
-      <tr><td><span class="en-only">The child fills every silence</span><span class="es-only">El niño llena todos los silencios</span></td><td><span class="en-only">Drop to two seconds and stay there for days. The rung only moves up when today is easy. Never announce that a pause is coming.</span><span class="es-only">Baja a dos segundos y quédate ahí varios días. El escalón sube solo cuando hoy es fácil. Nunca anuncies que viene una pausa.</span></td></tr>
-      <tr><td><span class="en-only">The child answers in English</span><span class="es-only">El niño contesta en inglés</span></td><td><span class="en-only">That is fine and expected — this is a heritage-speaker program, not an immersion test. Accept the answer, then offer the Spanish version once, warmly, and move on. Shame is the one thing that reliably ends the program.</span><span class="es-only">Está bien y se espera: es un programa para hablantes de herencia, no un examen de inmersión. Acepta la respuesta, ofrece la versión en español una vez, con calidez, y sigue. La vergüenza es lo único que de verdad acaba con el programa.</span></td></tr>
-      <tr><td><span class="en-only">You don't know the tune</span><span class="es-only">No te sabes la tonada</span></td><td><span class="en-only">Learn it before the session with the player above, face-down and off once the child arrives. Singing it imperfectly yourself beats playing a recording — the unaccompanied human voice is the point.</span><span class="es-only">Apréndela antes con el reproductor de arriba, y déjalo apagado cuando llegue el niño. Cantarla tú, imperfecta, le gana a poner una grabación: la voz humana sin acompañamiento es el punto.</span></td></tr>
-      <tr><td><span class="en-only">Your Spanish isn't fluent</span><span class="es-only">Tu español no es fluido</span></td><td><span class="en-only">Run the script with the glosses on this page. Adults do best using the language they are most competent in — but the sung lines and the scripted prompts stay Spanish, and a hesitant Spanish delivered warmly is worth more than a fluent English substitute.</span><span class="es-only">Usa el guion con las glosas de esta página. Las líneas cantadas y las preguntas del guion se quedan en español, y un español titubeante dicho con calidez vale más que un inglés fluido.</span></td></tr>
-      <tr><td><span class="en-only">The child is bored of the song</span><span class="es-only">El niño se aburre de la canción</span></td><td><span class="en-only">Expected, and not a reason to change it. One tune for two weeks is the mechanism: verses are recalled better sung only when the same simple tune carries all of them. Boredom in the adult is more common than in the child.</span><span class="es-only">Se espera, y no es razón para cambiarla. Una tonada por dos semanas es el mecanismo. El aburrimiento suele ser del adulto, no del niño.</span></td></tr>
-      <tr><td><span class="en-only">You ran out of time</span><span class="es-only">Se acabó el tiempo</span></td><td><span class="en-only">Never cut <i>Cierre</i>. Cut minutes from <i>Los sonidos</i> instead. The session must end in the settling register or the next one starts harder.</span><span class="es-only">Nunca cortes el <i>Cierre</i>. Quita minutos de <i>Los sonidos</i>. La sesión debe terminar en el registro que calma o la siguiente empieza más difícil.</span></td></tr>
-      <tr><td><span class="en-only">The child sings a different version</span><span class="es-only">El niño canta otra versión</span></td><td><span class="en-only">Their version wins over the script, always. Write it into the songbook. There is no single Mexico, and the family's variant is the more valuable text.</span><span class="es-only">Su versión gana sobre el guion, siempre. Anótala en el cancionero. No hay un solo México, y la variante de la familia es el texto más valioso.</span></td></tr>
-    </tbody>
-  </table>
-  </div>
-</section>
-
-<section id="glossary">
-  <h2><span class="num">8</span><span class="en-only">Glossary</span><span class="es-only">Glosario</span></h2>
-  <p class="sub en-only">The Spanish words that appear on the tablet and in the script, and what they carry.</p>
-  <p class="sub es-only">Las palabras que aparecen en la tablet y en el guion.</p>
-  <div class="tablewrap">
-  <table>
-    <thead><tr><th><span class="en-only">Word</span><span class="es-only">Palabra</span></th><th><span class="en-only">Meaning</span><span class="es-only">Significado</span></th></tr></thead>
-    <tbody>
-      <tr><td>arrullo</td><td><span class="en-only">Lullaby. The oldest and most widely shared part of the repertoire; opens and closes every session, and is never decoded — only sung.</span><span class="es-only">Canción de cuna. La parte más antigua y compartida del repertorio; abre y cierra cada sesión y nunca se decodifica, solo se canta.</span></td></tr>
-      <tr><td>cancionero</td><td><span class="en-only">Songbook. A physical book that gains one piece every two weeks, in the child's own handwriting where possible. By year's end the child owns a book of thirty-odd pieces they can both sing and read.</span><span class="es-only">Libro de canciones. Gana una pieza cada dos semanas, en la letra del propio niño cuando se pueda. Al final del año el niño tiene un libro de más de treinta piezas que puede cantar y leer.</span></td></tr>
-      <tr><td>copla</td><td><span class="en-only">A short traditional verse, typically four lines.</span><span class="es-only">Verso tradicional corto, normalmente de cuatro líneas.</span></td></tr>
-      <tr><td>adivinanza</td><td><span class="en-only">Riddle. Used as the program's comprehension text and as its waiting exercise — the answer is given only after five fingers are counted in silence.</span><span class="es-only">Acertijo. Es el texto de comprensión del programa y su ejercicio de espera: la respuesta se da tras contar cinco dedos en silencio.</span></td></tr>
-      <tr><td>dicho</td><td><span class="en-only">A saying or proverb. Figurative language; the place families contribute most.</span><span class="es-only">Refrán. Lenguaje figurado; donde más aportan las familias.</span></td></tr>
-      <tr><td>trabalenguas</td><td><span class="en-only">Tongue-twister. Traditionally for speed; here read slowly and cleanly at the pulse, to force attention to every syllable.</span><span class="es-only">Tradicionalmente para la rapidez; aquí se lee lento y limpio al pulso, para forzar la atención en cada sílaba.</span></td></tr>
-      <tr><td>ronda</td><td><span class="en-only">A circle game or round. Strong pulse, simple repeated tune, built-in stop cues — which is what makes them carry the freeze games.</span><span class="es-only">Juego de ronda. Pulso fuerte, tonada sencilla y repetida, señales de alto incorporadas.</span></td></tr>
-      <tr><td>calaverita</td><td><span class="en-only">A short, affectionate mock-epitaph in verse, written for Día de Muertos — for a relative or even a pet.</span><span class="es-only">Verso corto y cariñoso de burla para el Día de Muertos, dedicado a un familiar o incluso a una mascota.</span></td></tr>
-      <tr><td>por dentro</td><td><span class="en-only">"Inside." Singing without sound — the Kodály tradition's inner hearing, used here as inhibition practice.</span><span class="es-only">Cantar sin sonido: la audición interna de la tradición Kodály, usada aquí como práctica de inhibición.</span></td></tr>
-      <tr><td>estatuas suaves</td><td><span class="en-only">"Gentle statues." The freeze game, played slowly and quietly rather than as a scramble.</span><span class="es-only">El juego de congelarse, jugado lento y en calma, no como una carrera.</span></td></tr>
-      <tr><td>palabra con raíces</td><td><span class="en-only">"Word with roots." One per session, usually a Nahuatl borrowing: elote, tomate, aguacate, papalote.</span><span class="es-only">Una por sesión, normalmente un préstamo del náhuatl: elote, tomate, aguacate, papalote.</span></td></tr>
-      <tr><td>para la casa</td><td><span class="en-only">"For home." The closing question the child carries into the house that night, usually one that asks an adult at home for a song, a riddle, or a saying.</span><span class="es-only">La pregunta de cierre que el niño lleva a su casa esa noche, casi siempre pidiéndole a un adulto una canción, un acertijo o un dicho.</span></td></tr>
-    </tbody>
-  </table>
-  </div>
-</section>
-
-<footer>
-  <p><span class="en-only">Cántame · walkthrough for the adult. See also the <a href="index.html">session demo</a> and the <a href="concept.html">program concept</a>.</span><span class="es-only">Cántame · guía para la persona adulta. Ver también el <a href="index.html">demo de la sesión</a> y el <a href="concept.html">concepto del programa</a>.</span></p>
-  <p class="note"><span class="en-only">The synthesized voice on this page exists so an adult can learn a tune before a child sits down. In a session there is no recording and no backing track — one voice, unaccompanied, by design.</span><span class="es-only">La voz sintetizada de esta página existe para que una persona adulta aprenda la tonada antes de que se siente un niño. En una sesión no hay grabación ni pista: una sola voz, sin acompañamiento, por diseño.</span></p>
-</footer>
-
-</div>
+</nav>
 
 <script>
 (function(){
-  // ---------- language ----------
-  var root = document.documentElement;
-  var btnEn = document.getElementById('btnEn'), btnEs = document.getElementById('btnEs');
-  function setLang(l){
-    root.setAttribute('data-lang', l);
-    root.setAttribute('lang', l === 'es' ? 'es' : 'en');
-    btnEn.setAttribute('aria-pressed', l === 'en');
-    btnEs.setAttribute('aria-pressed', l === 'es');
-    try { localStorage.setItem('cantame-lang', l); } catch(e){}
+"use strict";
+
+/* ============ language ============ */
+var root = document.documentElement, LANG = "en";
+function T(o){ if(o == null) return ""; return (typeof o === "string") ? o : (o[LANG] || o.en || ""); }
+
+/* ============ audio ============ */
+var DEG = { do:0, re:2, mi:4, fa:5, sol:7, la:9 };
+var LINE_NOTES = [
+  ["do","re","mi","fa","sol","sol"],
+  ["la","la","la","la","sol","sol"],
+  ["fa","fa","fa","fa","mi","mi"],
+  ["re","re","re","re","do","do"]
+];
+var DUR = [0.5,0.5,0.5,0.5,1,1];
+var ST1 = [ ["Los","po","-lli","-tos","di","-cen"], ["pí","-o","pí","-o","pí","-o"], ["cuan","-do","tie","-nen","ham","-bre"], ["cuan","-do","tie","-nen","frí","-o"] ];
+var ST3 = [ ["Ba","-jo","sus","dos","a","-las"], ["a","-cu","-rru","-ca","-di","-tos"], ["has","-ta el","o","-tro","dí","-a"], ["duer","-men","los","po","-lli","-tos"] ];
+var PUNCT = [",", ",", ",", "."];
+
+var ctx = null, master = null, vol = 0.55;
+function audio(){
+  if(ctx) return ctx;
+  ctx = new (window.AudioContext || window.webkitAudioContext)();
+  master = ctx.createGain(); master.gain.value = vol * 0.5; master.connect(ctx.destination);
+  return ctx;
+}
+function setVol(v){ vol = v; if(master) master.gain.setTargetAtTime(vol*0.5, ctx.currentTime, 0.02); }
+
+function note(freq, t0, dur, hum){
+  var c = audio();
+  var g = c.createGain(); g.gain.setValueAtTime(0.0001, t0);
+  var a = Math.min(0.08, dur*0.25), r = Math.min(0.12, dur*0.3), lvl = hum ? 0.7 : 0.9;
+  g.gain.exponentialRampToValueAtTime(lvl, t0+a);
+  g.gain.setValueAtTime(lvl, t0+dur-r);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0+dur);
+  var lp = c.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = hum ? 700 : 1400; lp.Q.value = 0.7;
+  var o1 = c.createOscillator(); o1.type = "sine"; o1.frequency.value = freq;
+  var o2 = c.createOscillator(); o2.type = "triangle"; o2.frequency.value = freq*2;
+  var g2 = c.createGain(); g2.gain.value = hum ? 0.06 : 0.16;
+  var lfo = c.createOscillator(); lfo.frequency.value = 5.2;
+  var lg = c.createGain(); lg.gain.value = freq*0.004;
+  lfo.connect(lg); lg.connect(o1.frequency); lg.connect(o2.frequency);
+  o1.connect(lp); o2.connect(g2); g2.connect(lp); lp.connect(g); g.connect(master);
+  o1.start(t0); o2.start(t0); lfo.start(t0);
+  var end = t0+dur+0.05; o1.stop(end); o2.stop(end); lfo.stop(end);
+}
+var current = null;
+function stopAudio(){
+  if(current){ current.cancel(); current = null; }
+  if(ctx && master){
+    master.gain.cancelScheduledValues(ctx.currentTime);
+    master.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.03);
+    setTimeout(function(){ if(master) master.gain.setTargetAtTime(vol*0.5, ctx.currentTime, 0.02); }, 150);
   }
-  btnEn.addEventListener('click', function(){ setLang('en'); });
-  btnEs.addEventListener('click', function(){ setLang('es'); });
-  var saved = null;
-  try { saved = localStorage.getItem('cantame-lang'); } catch(e){}
-  if(!saved && (navigator.language||'').toLowerCase().indexOf('es') === 0) saved = 'es';
-  setLang(saved === 'es' ? 'es' : 'en');
-
-  // ---------- song data (same melody as the session demo) ----------
-  var DEG = { do:0, re:2, mi:4, fa:5, sol:7, la:9 };
-  var LINE_NOTES = [
-    ['do','re','mi','fa','sol','sol'],
-    ['la','la','la','la','sol','sol'],
-    ['fa','fa','fa','fa','mi','mi'],
-    ['re','re','re','re','do','do']
-  ];
-  var DUR = [0.5,0.5,0.5,0.5,1,1];
-  var STANZA1 = [ ['Los','po','-lli','-tos','di','-cen'], ['pí','-o','pí','-o','pí','-o'], ['cuan','-do','tie','-nen','ham','-bre'], ['cuan','-do','tie','-nen','frí','-o'] ];
-  var STANZA3 = [ ['Ba','-jo','sus','dos','a','-las'], ['a','-cu','-rru','-ca','-di','-tos'], ['has','-ta el','o','-tro','dí','-a'], ['duer','-men','los','po','-lli','-tos'] ];
-  var PUNCT1 = [',', ',', ',', '.'];
-
-  // ---------- audio ----------
-  var ctx = null, master = null;
-  var volEl = document.getElementById('vol');
-  function audio(){
-    if(ctx) return ctx;
-    ctx = new (window.AudioContext || window.webkitAudioContext)();
-    master = ctx.createGain(); master.gain.value = volEl.value/100 * 0.5; master.connect(ctx.destination);
-    return ctx;
-  }
-  volEl.addEventListener('input', function(){ if(master) master.gain.setTargetAtTime(volEl.value/100*0.5, ctx.currentTime, 0.02); });
-
-  function note(freq, t0, dur, hum){
-    var c = audio();
-    var g = c.createGain(); g.gain.setValueAtTime(0.0001, t0);
-    var a = Math.min(0.08, dur*0.25), r = Math.min(0.12, dur*0.3), lvl = hum ? 0.7 : 0.9;
-    g.gain.exponentialRampToValueAtTime(lvl, t0+a);
-    g.gain.setValueAtTime(lvl, t0+dur-r);
-    g.gain.exponentialRampToValueAtTime(0.0001, t0+dur);
-    var lp = c.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value = hum ? 700 : 1400; lp.Q.value = 0.7;
-    var o1 = c.createOscillator(); o1.type='sine'; o1.frequency.value = freq;
-    var o2 = c.createOscillator(); o2.type='triangle'; o2.frequency.value = freq*2;
-    var g2 = c.createGain(); g2.gain.value = hum ? 0.06 : 0.16;
-    var lfo = c.createOscillator(); lfo.frequency.value = 5.2;
-    var lg = c.createGain(); lg.gain.value = freq*0.004;
-    lfo.connect(lg); lg.connect(o1.frequency); lg.connect(o2.frequency);
-    o1.connect(lp); o2.connect(g2); g2.connect(lp); lp.connect(g); g.connect(master);
-    o1.start(t0); o2.start(t0); lfo.start(t0);
-    var end = t0+dur+0.05; o1.stop(end); o2.stop(end); lfo.stop(end);
-  }
-
-  var current = null;
-  function stopAll(){
-    if(current){ current.cancel(); current = null; }
-    if(ctx && master){
-      master.gain.cancelScheduledValues(ctx.currentTime);
-      master.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.03);
-      setTimeout(function(){ if(master) master.gain.setTargetAtTime(volEl.value/100*0.5, ctx.currentTime, 0.02); }, 150);
+}
+/* sing N lines of a stanza; opts {bpm,hum,lines,pauseAfterLine,pauseSec,onSyl,onPause,onEnd} */
+function sing(opts){
+  stopAudio();
+  var c = audio(); if(c.state === "suspended") c.resume();
+  var beat = 60/opts.bpm, t = c.currentTime + 0.15, timers = [];
+  function at(when, fn){ timers.push(setTimeout(fn, Math.max(0,(when - c.currentTime)*1000))); }
+  var lines = opts.lines || [0,1,2,3];
+  lines.forEach(function(li){
+    for(var k=0;k<6;k++){
+      var f = 293.66 * Math.pow(2, DEG[LINE_NOTES[li][k]]/12) * (opts.hum ? 0.5 : 1);
+      var d = DUR[k]*beat;
+      note(f, t, d*0.95, opts.hum);
+      if(opts.onSyl){ (function(l,kk,w){ at(w, function(){ opts.onSyl(l,kk); }); })(li,k,t); }
+      t += d;
     }
-  }
-  // sing one stanza; opts: bpm, hum, pauseAfterLine, pauseSec, onSyl, onPause, onEnd
-  function sing(opts){
-    stopAll();
-    var c = audio(); if(c.state === 'suspended') c.resume();
-    var beat = 60/opts.bpm, t = c.currentTime + 0.15, timers = [];
-    function at(when, fn){ timers.push(setTimeout(fn, Math.max(0,(when - c.currentTime)*1000))); }
-    for(var li=0; li<4; li++){
-      for(var k=0; k<6; k++){
-        var f = 293.66 * Math.pow(2, DEG[LINE_NOTES[li][k]]/12) * (opts.hum ? 0.5 : 1);
-        var d = DUR[k]*beat;
-        note(f, t, d*0.95, opts.hum);
-        if(opts.onSyl){ (function(l,kk,when){ at(when, function(){ opts.onSyl(l,kk); }); })(li,k,t); }
-        t += d;
-      }
-      if(opts.pauseAfterLine === li && opts.pauseSec){
-        if(opts.onPause){ (function(when,sec){ at(when, function(){ opts.onPause(sec); }); })(t, opts.pauseSec); }
-        t += opts.pauseSec;
-      }
+    if(opts.pauseAfterLine === li && opts.pauseSec){
+      if(opts.onPause){ (function(w,s){ at(w, function(){ opts.onPause(s); }); })(t, opts.pauseSec); }
+      t += opts.pauseSec;
     }
-    at(t+0.1, function(){ current = null; if(opts.onEnd) opts.onEnd(); });
-    current = { cancel: function(){ timers.forEach(clearTimeout); } };
-    return current;
-  }
+  });
+  at(t+0.1, function(){ current = null; if(opts.onEnd) opts.onEnd(); });
+  current = { cancel: function(){ timers.forEach(clearTimeout); } };
+  return current;
+}
 
-  // ---------- rehearsal 1: the tune ----------
-  var tuneLyrics = document.getElementById('tuneLyrics');
-  var html = '';
+/* ============ the tutorial script ============ */
+var MAP = [
+  {m:1, n:"Arrullo",        k:"settle"},
+  {m:3, n:"La canción",     k:"work"},
+  {m:4, n:"Los sonidos",    k:"work"},
+  {m:3, n:"Leer",           k:"work"},
+  {m:2, n:"Por dentro",     k:""},
+  {m:2, n:"Cierre",         k:"settle"}
+];
+
+var S = [
+/* ---------- welcome ---------- */
+{ part:{en:"Welcome",es:"Bienvenida"},
+  eye:{en:"A coached run-through",es:"Un recorrido guiado"}, eyeClass:"grey",
+  h:{en:"How to run a session",es:"Cómo dar una sesión"}, big:true,
+  lede:{en:"Fifteen minutes. One adult. One child. I will take you through it once, slowly — three rehearsals first, then the six steps.",
+        es:"Quince minutos. Una persona adulta. Un niño. Te llevo una vez, despacio: primero tres ensayos y luego los seis pasos."},
+  tiny:{en:"You do not need to read Spanish fluently. Every line you say is glossed.",
+        es:"No necesitas leer español con fluidez. Cada línea viene explicada."},
+  cta:{en:"Begin",es:"Empezar"} },
+
+{ part:{en:"Welcome",es:"Bienvenida"},
+  eye:{en:"The shape",es:"La forma"}, eyeClass:"grey",
+  h:{en:"Settle, work, stretch, settle",es:"Calmar, trabajar, estirar, calmar"},
+  lede:{en:"Six parts, always this order — so that a grandfather on day three and an aide on day ninety run the same session.",
+        es:"Seis partes, siempre en este orden, para que un abuelo en el día tres y una asistente en el día noventa den la misma sesión."},
+  widget:"map",
+  tiny:{en:"Amber is the quiet register. Blue is the work. You never raise your voice in any of it.",
+        es:"El ámbar es el registro tranquilo. El azul es el trabajo. En ninguno subes la voz."} },
+
+/* ---------- rehearsal 1 ---------- */
+{ part:{en:"Rehearsal 1 of 3",es:"Ensayo 1 de 3"},
+  eye:{en:"Rehearsal 1 · the tune",es:"Ensayo 1 · la tonada"},
+  h:{en:"Learn the tune first",es:"Primero apréndete la tonada"},
+  lede:{en:"Never in front of the child. Play it now and listen for the long notes at the end of each line.",
+        es:"Nunca frente al niño. Tócala ahora y escucha las notas largas al final de cada línea."},
+  widget:"tune",
+  gate:{en:"Play it once to continue",es:"Tócala una vez para seguir"},
+  tiny:{en:"One tune carries all three stanzas. That repetition is not laziness — it is why the words stick.",
+        es:"Una sola tonada carga las tres estrofas. Esa repetición no es pereza: es la razón por la que las palabras se quedan."} },
+
+{ part:{en:"Rehearsal 1 of 3",es:"Ensayo 1 de 3"},
+  eye:{en:"Rehearsal 1 · the tune",es:"Ensayo 1 · la tonada"},
+  h:{en:"Now hum it back",es:"Ahora tararéala"},
+  lede:{en:"Lips closed, an octave down, slower than feels natural. This is the sound that opens every session.",
+        es:"Labios cerrados, una octava abajo, más lento de lo que se siente natural. Este es el sonido que abre cada sesión."},
+  widget:"hum",
+  gate:{en:"Hear it, then hum along",es:"Escúchalo y tararea"},
+  coach:{en:"<b>Why humming.</b> Sung soothingly, a song lowers both bodies in the room. Sung playfully — faster, higher, louder — it grabs instead. You want the first one.",
+         es:"<b>Por qué tarareo.</b> Cantada con calma, una canción baja el pulso de los dos cuerpos en el cuarto. Cantada juguetona —más rápida, más aguda, más fuerte— agarra en vez de calmar. Quieres la primera."} },
+
+/* ---------- rehearsal 2 ---------- */
+{ part:{en:"Rehearsal 2 of 3",es:"Ensayo 2 de 3"},
+  eye:{en:"Rehearsal 2 · the pulse",es:"Ensayo 2 · el pulso"},
+  h:{en:"Almost every adult sings this too fast",es:"Casi todos cantan esto muy rápido"},
+  lede:{en:"Tap the pad at the speed you would naturally sing it. Four taps or more.",
+        es:"Toca el cuadro al ritmo en que cantarías. Cuatro toques o más."},
+  widget:"pulse",
+  gate:{en:"Tap at least four times",es:"Toca al menos cuatro veces"} },
+
+{ part:{en:"Rehearsal 2 of 3",es:"Ensayo 2 de 3"},
+  eye:{en:"Rehearsal 2 · the pulse",es:"Ensayo 2 · el pulso"},
+  h:{en:"This is a walking pace",es:"Esto es paso de caminata"},
+  lede:{en:"Listen to seventy-six for a moment, and put your palms on the table with it.",
+        es:"Escucha setenta y seis un momento y pon las palmas en la mesa con él."},
+  widget:"metro",
+  gate:{en:"Start the beat to continue",es:"Enciende el pulso para seguir"},
+  coach:{en:"<b>The rule that follows from this.</b> When the child drifts, you slow down and get quieter. Never faster, never louder. Volume goes down, not up.",
+         es:"<b>La regla que sale de aquí.</b> Cuando el niño se distrae, frenas y bajas la voz. Nunca más rápido, nunca más fuerte. El volumen baja, no sube."} },
+
+/* ---------- rehearsal 3 ---------- */
+{ part:{en:"Rehearsal 3 of 3",es:"Ensayo 3 de 3"},
+  eye:{en:"Rehearsal 3 · the silence",es:"Ensayo 3 · el silencio"},
+  h:{en:"The hardest thing in the program",es:"Lo más difícil del programa"},
+  lede:{en:"The line stops mid-phrase. Three seconds of nothing follow. Your only job is to not fill them.",
+        es:"La línea se corta a la mitad. Siguen tres segundos de nada. Tu único trabajo es no llenarlos."},
+  widget:"silence",
+  gate:{en:"Sit through it once",es:"Aguántalo una vez"},
+  tiny:{en:"No prompting, no “¿verdad?”, no raised eyebrows. Watch the child, not the clock.",
+        es:"Sin apurar, sin «¿verdad?», sin cejas levantadas. Mira al niño, no al reloj."} },
+
+{ part:{en:"Rehearsal 3 of 3",es:"Ensayo 3 de 3"},
+  eye:{en:"Rehearsal 3 · the silence",es:"Ensayo 3 · el silencio"},
+  h:{en:"Be honest — did you fill it?",es:"Sé honesto: ¿lo llenaste?"},
+  lede:{en:"Most adults do, the first few times.",es:"Casi todos lo llenan las primeras veces."},
+  widget:"honest",
+  gate:{en:"Choose one",es:"Elige una"} },
+
+/* ---------- session intro ---------- */
+{ part:{en:"The session",es:"La sesión"},
+  eye:{en:"Now the real thing",es:"Ahora lo real"}, eyeClass:"grey",
+  h:{en:"The child sits down",es:"El niño se sienta"},
+  lede:{en:"From here I will give you one thing at a time: what to do, what to say, and what to watch for.",
+        es:"De aquí en adelante te doy una cosa a la vez: qué hacer, qué decir y qué observar."},
+  widget:"map",
+  tiny:{en:"On the table: the songbook and the syllable cards. Nothing else. The tablet is yours, face-up beside it.",
+        es:"En la mesa: el cancionero y las tarjetas. Nada más. La tablet es tuya, junto a ellos."},
+  cta:{en:"Start the session",es:"Empezar la sesión"} }
+];
+
+/* ---------- STEP 1 · Arrullo ---------- */
+S.push(
+{ part:{en:"Step 1 of 6",es:"Paso 1 de 6"}, now:0,
+  eye:{en:"Step 1 · 1 minute · Atención",es:"Paso 1 · 1 minuto · Atención"},
+  h:{en:"Arrullo",es:"Arrullo"},
+  lede:{en:"Change the register of the room before any work happens.",
+        es:"Cambia el registro del cuarto antes de cualquier trabajo."},
+  widget:"map",
+  coach:{en:"There is no instruction here. No “sit down”, no “are you ready?”. The hum itself is the signal, and across weeks the child learns that this sound means the table is now quiet.",
+         es:"Aquí no hay instrucción. Ni «siéntate», ni «¿listo?». El tarareo es la señal, y con las semanas el niño aprende que ese sonido significa que la mesa ya está tranquila."} },
+
+{ part:{en:"Step 1 of 6",es:"Paso 1 de 6"}, now:0,
+  eye:{en:"Step 1 · do this",es:"Paso 1 · haz esto"},
+  h:{en:"Hum, then open your hand",es:"Tararea y abre la mano"},
+  dos:[{en:"Hum the lullaby with your lips closed. Slower than feels natural.",
+        es:"Tararea el arrullo con los labios cerrados. Más lento de lo natural."},
+       {en:"After one phrase, open a hand on the table, palm up. Say nothing. Wait for the child to rest theirs on it.",
+        es:"Después de una frase, abre una mano sobre la mesa, palma arriba. No digas nada. Espera a que el niño ponga la suya."}],
+  widget:"hum",
+  tiny:{en:"That open hand is the entire invitation. Adding words to it weakens it.",
+        es:"Esa mano abierta es toda la invitación. Agregarle palabras la debilita."} },
+
+{ part:{en:"Step 1 of 6",es:"Paso 1 de 6"}, now:0,
+  eye:{en:"Step 1 · say this",es:"Paso 1 · di esto"},
+  h:{en:"Then three breaths",es:"Luego tres respiraciones"},
+  say:{ es:"Tres respiraciones con la canción.",
+        gl:{en:"Three breaths with the song."},
+        ph:"trehs res-pee-rah-see-OH-nes kon la kan-see-OHN" },
+  widget:"breath",
+  tiny:{en:"Breathe audibly with the last line, three times. The child breathes with you without being asked.",
+        es:"Respira de forma audible con la última línea, tres veces. El niño respira contigo sin que se lo pidas."} },
+
+{ part:{en:"Step 1 of 6",es:"Paso 1 de 6"}, now:0,
+  eye:{en:"Step 1 · watch for",es:"Paso 1 · observa"},
+  h:{en:"When to move on",es:"Cuándo seguir"},
+  watch:{en:"The child is humming too — or the third breath finishes. Whichever comes first. Do not wait for both.",
+         es:"El niño también tararea, o termina la tercera respiración. Lo que pase primero. No esperes las dos."},
+  trap:{en:"If the child talks, keep humming, softer. Do not answer, do not shush, do not repeat yourself louder.",
+        es:"Si el niño habla, sigue tarareando, más suave. No contestes, no lo calles, no repitas más fuerte."} },
+
+/* ---------- STEP 2 · La canción ---------- */
+{ part:{en:"Step 2 of 6",es:"Paso 2 de 6"}, now:1,
+  eye:{en:"Step 2 · 3 minutes · Cultura",es:"Paso 2 · 3 minutos · Cultura"},
+  h:{en:"La canción",es:"La canción"},
+  lede:{en:"Put the whole text through the child’s body once, at a walking pulse, with the beat in your hands — not in a recording.",
+        es:"Pasa el texto completo por el cuerpo del niño una vez, a paso de caminata, con el pulso en las manos y no en una grabación."},
+  widget:"map" },
+
+{ part:{en:"Step 2 of 6",es:"Paso 2 de 6"}, now:1,
+  eye:{en:"Step 2 · say this",es:"Paso 2 · di esto"},
+  h:{en:"Start the hands first",es:"Primero las manos"},
+  say:{ es:"Manos en la mesa. <i>(Los dos empiezan a dar palmadas suaves, una por pulso.)</i> Cantamos con las manos.",
+        gl:{en:"Hands on the table. <i>(Both of you start patting gently, one pat per beat.)</i> We sing with our hands."},
+        ph:"MAH-nos en la MEH-sa … kan-TAH-mos kon las MAH-nos" },
+  widget:"tune",
+  tiny:{en:"Then sing it through once — no stopping, eyes on the child, not loud.",
+        es:"Luego cántala completa una vez: sin parar, mirando al niño, sin subir la voz."} },
+
+{ part:{en:"Step 2 of 6",es:"Paso 2 de 6"}, now:1,
+  eye:{en:"Step 2 · say this",es:"Paso 2 · di esto"},
+  h:{en:"Then hand it back in pieces",es:"Luego devuélvela en pedazos"},
+  say:{ es:"Ahora tú me sigues. Yo canto un pedacito y tú lo cantas igual.",
+        gl:{en:"Now you follow me. I sing a little piece and you sing it the same."},
+        ph:"ah-OH-ra too meh SEE-gehs" },
+  widget:"echo",
+  coach:{en:"<b>Sing each fragment slightly softer than the last</b>, so the child’s echo comes down with you. The echo stanza is always the last one, and always the quietest.",
+         es:"<b>Canta cada fragmento un poco más suave que el anterior</b>, para que el eco del niño baje contigo. La estrofa del eco es siempre la última y la más suave."} },
+
+{ part:{en:"Step 2 of 6",es:"Paso 2 de 6"}, now:1,
+  eye:{en:"Step 2 · watch for",es:"Paso 2 · observa"},
+  h:{en:"The family’s version wins",es:"Gana la versión de la familia"},
+  watch:{en:"If the child sings “bajo de sus alas” or “les da su comida”, that is correct. Write their version into the songbook and use it from then on.",
+         es:"Si el niño canta «bajo de sus alas» o «les da su comida», es correcto. Anota su versión en el cancionero y úsala desde entonces."},
+  trap:{en:"Do not stop mid-song to fix a word, and do not speed up for energy. It does not need to be exciting today.",
+        es:"No pares a media canción para corregir, y no aceleres para dar energía. No tiene que ser emocionante hoy."} },
+
+/* ---------- STEP 3 · Los sonidos ---------- */
+{ part:{en:"Step 3 of 6",es:"Paso 3 de 6"}, now:2,
+  eye:{en:"Step 3 · 4 minutes · Literacy",es:"Paso 3 · 4 minutos · Literacy"},
+  h:{en:"Los sonidos",es:"Los sonidos"},
+  lede:{en:"The longest step, and the one that does the actual teaching.",
+        es:"El paso más largo y el que de verdad enseña."},
+  widget:"map",
+  coach:{en:"Song reliably builds the big units — rhyme, syllables, stress. It does <b>not</b> teach letter–sound correspondences on its own. That is why this step exists, and why today’s letter is pulled from a word the child has already sung.",
+         es:"El canto construye bien las unidades grandes: rima, sílabas, fuerza. <b>No</b> enseña por sí solo la relación letra–sonido. Por eso existe este paso, y por eso la letra de hoy sale de una palabra que el niño ya cantó."} },
+
+{ part:{en:"Step 3 of 6",es:"Paso 3 de 6"}, now:2,
+  eye:{en:"Step 3a · rhyme",es:"Paso 3a · rima"},
+  h:{en:"Start with the ends of words",es:"Empieza por el final de las palabras"},
+  say:{ es:"Escucha: <i>pí-o</i>… <i>frí-o</i>. Terminan igual. ¿Cuál otra palabra de la canción termina como <b>trigo</b>?",
+        gl:{en:"Listen: <i>pí-o</i>… <i>frí-o</i>. They end the same. Which other word in the song ends like <b>trigo</b> (wheat)?"} },
+  widget:"rhyme",
+  gate:{en:"Reveal the answer",es:"Muestra la respuesta"},
+  tiny:{en:"Rhyme is the entry point for three- and four-year-olds: the end of a syllable is easier to hear than its beginning.",
+        es:"La rima es la entrada a los tres y cuatro años: el final de la sílaba se oye más fácil que su inicio."} },
+
+{ part:{en:"Step 3 of 6",es:"Paso 3 de 6"}, now:2,
+  eye:{en:"Step 3b · syllables and stress",es:"Paso 3b · sílabas y fuerza"},
+  h:{en:"Ask this by singing, not speaking",es:"Pregunta cantando, no hablando"},
+  say:{ es:"Ahora aplaudimos <i>pollitos</i> con el pulso: po-lli-tos. ¿En cuál parte cae la palmada?",
+        gl:{en:"Now we clap <i>pollitos</i> with the pulse: po-lli-tos. Which part does the clap land on?"} },
+  widget:"syll",
+  gate:{en:"Tap the stressed syllable",es:"Toca la sílaba fuerte"},
+  coach:{en:"The melody holds <b>lli</b> longer than the syllables around it, which makes the answer audible instead of abstract. Spanish writes its stress down — the mark in <i>pío</i> is an instruction about where the voice lands.",
+         es:"La melodía sostiene <b>lli</b> más que las sílabas de al lado, y eso vuelve audible la respuesta. El español escribe su acento: la tilde de <i>pío</i> dice dónde cae la voz."} },
+
+{ part:{en:"Step 3 of 6",es:"Paso 3 de 6"}, now:2,
+  eye:{en:"Step 3c · today’s letter",es:"Paso 3c · la letra de hoy"},
+  h:{en:"t",es:"t"}, big:true,
+  say:{ es:"Suena /t/, con la lengua en los dientes, suavecito. Está en polli-<b>tos</b>, y en una palabra que vamos a leer hoy: <b>tapa</b>. Ahora con las vocales: ta, te, ti, to, tu.",
+        gl:{en:"It sounds /t/, tongue on the teeth, softly. It is in polli-<b>tos</b>, and in a word we will read today: <b>tapa</b> (tucks in). Now with the vowels: ta, te, ti, to, tu."} },
+  trap:{en:"An English-style /t/ with a puff of air is very common in heritage speakers — yours or the child’s — and is not something to be embarrassed about. Model it once, tongue on the teeth, and move on. Correct at most twice.",
+        es:"Una /t/ con soplo de aire (la del inglés) es muy común en hablantes de herencia, tuya o del niño, y no es motivo de pena. Modélala una vez, con la lengua en los dientes, y sigue. Corrige dos veces como máximo."} },
+
+{ part:{en:"Step 3 of 6",es:"Paso 3 de 6"}, now:2,
+  eye:{en:"Step 3d · build it",es:"Paso 3d · constrúyela"},
+  h:{en:"Now the cards",es:"Ahora las tarjetas"},
+  say:{ es:"Toma las tarjetas: pon <i>ta</i> y luego <i>pa</i>. Léelo despacio.",
+        gl:{en:"Take the cards: put <i>ta</i> and then <i>pa</i>. Read it slowly."} },
+  widget:"cards",
+  gate:{en:"Build the word",es:"Arma la palabra"},
+  tiny:{en:"Then: “Ahora escríbela en tu cuaderno.” — now write it in your notebook. The decoy cards are there on purpose.",
+        es:"Después: «Ahora escríbela en tu cuaderno.» Las tarjetas distractoras están a propósito."} },
+
+/* ---------- STEP 4 · Leer la canción ---------- */
+{ part:{en:"Step 4 of 6",es:"Paso 4 de 6"}, now:3,
+  eye:{en:"Step 4 · 3 minutes · Literacy",es:"Paso 4 · 3 minutos · Literacy"},
+  h:{en:"Leer la canción",es:"Leer la canción"},
+  lede:{en:"Walk the child off the melody and onto the page, in four deliberate stages.",
+        es:"Lleva al niño de la melodía a la página, en cuatro etapas."},
+  widget:"map",
+  say:{ es:"Abre tu cancionero. Pon el dedo en la primera palabra. Cantamos despacio y el dedo camina con la canción.",
+        gl:{en:"Open your songbook. Put your finger on the first word. We sing slowly and the finger walks with the song."} } },
+
+{ part:{en:"Step 4 of 6",es:"Paso 4 de 6"}, now:3,
+  eye:{en:"Step 4 · do this",es:"Paso 4 · haz esto"},
+  h:{en:"Take the music away in stages",es:"Quita la música por etapas"},
+  widget:"stages",
+  gate:{en:"Work through all four",es:"Recorre las cuatro"},
+  coach:{en:"Removing the tune gradually is what lets phrasing and stress survive the move into print. Skipping straight to reading loses both.",
+         es:"Quitar la tonada poco a poco es lo que permite que el fraseo y la fuerza sobrevivan el paso a la letra impresa. Saltar directo a leer pierde los dos."} },
+
+{ part:{en:"Step 4 of 6",es:"Paso 4 de 6"}, now:3,
+  eye:{en:"Step 4 · turn the tablet",es:"Paso 4 · voltea la tablet"},
+  h:{en:"The only time the child sees the screen",es:"La única vez que el niño ve la pantalla"},
+  widget:"child",
+  wide:true,
+  tiny:{en:"Large type, no animation, nothing else on screen. It stands in for the paper songbook page.",
+        es:"Letra grande, sin animación, nada más en pantalla. Sustituye la página de papel del cancionero."} },
+
+{ part:{en:"Step 4 of 6",es:"Paso 4 de 6"}, now:3,
+  eye:{en:"Step 4 · watch for",es:"Paso 4 · observa"},
+  h:{en:"Three clean readings, never faster",es:"Tres lecturas limpias, nunca más rápido"},
+  watch:{en:"The third is the one that counts. Say: “Leíste todo el versito sin tropezar.” — you read the whole little verse without stumbling.",
+         es:"La tercera es la que cuenta. Di: «Leíste todo el versito sin tropezar.»"},
+  trap:{en:"Words in light ink — bajo, dos, acurrucaditos, hasta, otro, día, duermen, pollitos — have letters not yet taught. The child reads those from the song. Do not make them sound those out.",
+        es:"Las palabras en tinta clara —bajo, dos, acurrucaditos, hasta, otro, día, duermen, pollitos— tienen letras aún no vistas. El niño las lee de la canción. No lo hagas deletrearlas."} },
+
+/* ---------- STEP 5 · Por dentro ---------- */
+{ part:{en:"Step 5 of 6",es:"Paso 5 de 6"}, now:4,
+  eye:{en:"Step 5 · 2 minutes · Atención",es:"Paso 5 · 2 minutos · Atención"},
+  h:{en:"Por dentro",es:"Por dentro"},
+  lede:{en:"The child keeps the song running in their head while suppressing the urge to sing it out loud.",
+        es:"El niño mantiene la canción en su cabeza mientras se aguanta las ganas de cantarla."},
+  widget:"map",
+  coach:{en:"This is inhibition training wearing a song as a costume — and it is the only place in the session where the child is asked for something genuinely effortful. It comes <b>after</b> the hard reading work, not before.",
+         es:"Es entrenamiento de inhibición disfrazado de canción, y es el único momento en que se le pide al niño algo de verdad esforzado. Va <b>después</b> del trabajo de lectura, no antes."} },
+
+{ part:{en:"Step 5 of 6",es:"Paso 5 de 6"}, now:4,
+  eye:{en:"Step 5 · say this",es:"Paso 5 · di esto"},
+  h:{en:"Send the song inside",es:"Manda la canción por dentro"},
+  say:{ es:"Ahora la canción va por dentro. Tú la cantas dentro de tu cabeza, sin voz. Cada vez que oigas <i>pío</i>, tocas la mesa una vez.",
+        gl:{en:"Now the song goes inside. You sing it inside your head, with no voice. Every time you hear <i>pío</i>, tap the table once."} },
+  widget:"taps",
+  gate:{en:"Mark the three píos",es:"Marca los tres píos"} },
+
+{ part:{en:"Step 5 of 6",es:"Paso 5 de 6"}, now:4,
+  eye:{en:"Step 5 · say this",es:"Paso 5 · di esto"},
+  h:{en:"Then the gentle statues",es:"Luego las estatuas suaves"},
+  say:{ es:"Yo canto, y cuando me quedo en silencio, tú te quedas como un pollito dormido, sin moverte, y esperas la siguiente palabra.",
+        gl:{en:"I sing, and when I go silent, you stay like a sleeping chick, without moving, and wait for the next word."} },
+  widget:"silence",
+  gate:{en:"Run it once",es:"Córrelo una vez"},
+  trap:{en:"If the child fills the silence, do not react at all. Resume singing as if nothing happened, and make the next pause two seconds instead of three. The rule is that the child succeeds today.",
+        es:"Si el niño llena el silencio, no reacciones. Retoma la canción como si nada y haz que la siguiente pausa dure dos segundos en vez de tres. La regla es que hoy el niño lo logra."} },
+
+{ part:{en:"Step 5 of 6",es:"Paso 5 de 6"}, now:4,
+  eye:{en:"Step 5 · the praise line",es:"Paso 5 · la frase de elogio"},
+  h:{en:"Praise the staying",es:"Celebra el quedarse"},
+  say:{ es:"Esperaste la palabra sin moverte. Eso es escuchar.",
+        gl:{en:"You waited for the word without moving. That is what listening is."} },
+  coach:{en:"Notice what this praises: holding still and waiting. Not being fast, not being loud, not being right. That is the whole reward structure of the program in one sentence.",
+         es:"Fíjate qué celebra: quedarse quieto y esperar. No la rapidez, no el volumen, no acertar. Ahí está toda la estructura de recompensa del programa en una frase."} },
+
+/* ---------- STEP 6 · Cierre ---------- */
+{ part:{en:"Step 6 of 6",es:"Paso 6 de 6"}, now:5,
+  eye:{en:"Step 6 · 2 minutes · Cultura",es:"Paso 6 · 2 minutos · Cultura"},
+  h:{en:"Cierre y para la casa",es:"Cierre y para la casa"},
+  lede:{en:"One real conversation, one word with roots, and a question that sends the song into the house.",
+        es:"Una conversación de verdad, una palabra con raíces y una pregunta que manda la canción a la casa."},
+  widget:"map" },
+
+{ part:{en:"Step 6 of 6",es:"Paso 6 de 6"}, now:5,
+  eye:{en:"Step 6 · say this",es:"Paso 6 · di esto"},
+  h:{en:"Ask for a whole sentence",es:"Pide una oración completa"},
+  say:{ es:"Los pollitos duermen bajo las alas de su mamá. ¿Quién te tapa a ti en la noche? Dímelo con una oración completa: «En la noche me tapa…»",
+        gl:{en:"The chicks sleep under their mother’s wings. Who tucks <i>you</i> in at night? Tell me in a complete sentence: “At night I’m tucked in by…”"} } },
+
+{ part:{en:"Step 6 of 6",es:"Paso 6 de 6"}, now:5,
+  eye:{en:"Step 6 · say this",es:"Paso 6 · di esto"},
+  h:{en:"One word with roots",es:"Una palabra con raíces"},
+  say:{ es:"<b>Elote.</b> El maíz tierno se llama elote. Esa palabra viene del náhuatl, <i>élotl</i>; los pueblos indígenas de México cuidaron el maíz desde hace miles de años. ¿Qué comes tú que se hace de maíz?",
+        gl:{en:"<b>Elote.</b> Tender corn is called elote. That word comes from Nahuatl, <i>élotl</i>; the Indigenous peoples of Mexico have tended corn for thousands of years. What do you eat that is made of corn?"} },
+  tiny:{en:"Expect: tortillas · elote · tamales · atole · esquites. Mexican words ending in -te often come from Nahuatl -tl.",
+        es:"Espera: tortillas · elote · tamales · atole · esquites. Las palabras mexicanas en -te suelen venir del náhuatl -tl."} },
+
+{ part:{en:"Step 6 of 6",es:"Paso 6 de 6"}, now:5,
+  eye:{en:"Step 6 · close",es:"Paso 6 · cierre"},
+  h:{en:"End where you began",es:"Termina donde empezaste"},
+  say:{ es:"<i>(Tarareando otra vez, una estrofa, más suave que la de apertura.)</i> Esta noche pregunta en tu casa: ¿qué arrullo te cantaban cuando eras bebé?",
+        gl:{en:"<i>(Humming again, one verse, softer than the opening one.)</i> Tonight ask at home: what lullaby did they sing to you when you were a baby?"} },
+  widget:"hum",
+  trap:{en:"Say nothing about tomorrow’s letter. No “next time we’ll…”. The hum is the last thing that happens — suspense is the wrong register for this program.",
+        es:"No digas nada de la letra de mañana. Sin «la próxima vez vamos a…». El tarareo es lo último que pasa: el suspenso es el registro equivocado."} },
+
+/* ---------- end ---------- */
+{ part:{en:"Done",es:"Listo"},
+  eye:{en:"Session recorded",es:"Sesión registrada"}, eyeClass:"blue",
+  h:{en:"That is the session",es:"Esa es la sesión"},
+  lede:{en:"Six numbers go to weekly coaching and the monthly data meeting.",
+        es:"Seis números van a la asesoría semanal y a la reunión mensual de datos."},
+  widget:"summary",
+  coach:{en:"<b>Tomorrow:</b> session 13, the letter <i>t</i> again for a second day, the same song, and a three-second pause if today’s was held — two if it was not. The program does not claim results below about eighty sessions.",
+         es:"<b>Mañana:</b> sesión 13, la letra <i>t</i> otra vez, la misma canción y pausa de tres segundos si hoy se logró; dos si no. El programa no reclama resultados por debajo de unas ochenta sesiones."},
+  cta:{en:"Finish",es:"Terminar"} },
+
+{ part:{en:"Done",es:"Listo"},
+  eye:{en:"You are ready",es:"Ya estás listo"}, eyeClass:"blue",
+  h:{en:"Fifteen minutes, every day",es:"Quince minutos, todos los días"},
+  lede:{en:"Two good sessions a week is not a slower version of this program. It is a weaker one — daily beats weekly by a wide margin.",
+        es:"Dos buenas sesiones por semana no son una versión lenta de esto: son una más débil. Diario le gana a semanal por mucho."},
+  widget:"finish" }
+);
+
+/* ============ shared bits ============ */
+var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+var LOG = { silence:[], taps:0, built:false, stress:false, rhyme:false, stages:0, t0:Date.now() };
+
+function volBar(){
+  return '<span class="voice" style="margin-left:auto"><span>' + (LANG==="es"?"voz":"voice") +
+    '</span><input type="range" class="vsl" min="0" max="100" value="' + Math.round(vol*100) + '" aria-label="volume"></span>';
+}
+function wireVol(el){
+  var s = el.querySelector(".vsl");
+  if(s) s.addEventListener("input", function(){ setVol(s.value/100); });
+}
+function lyricsHTML(stanza, id){
+  var h = '<div class="lyr" id="' + id + '">';
   for(var li=0; li<4; li++){
-    html += '<div>';
-    for(var k=0; k<6; k++){
-      var sy = STANZA1[li][k];
-      var sp = (k>0 && sy.charAt(0) !== '-') ? ' ' : '';
-      html += sp + '<span class="sy" data-s="'+li+'-'+k+'">' + sy.replace(/^-/,'') + '</span>';
+    h += "<div>";
+    for(var k=0;k<6;k++){
+      var sy = stanza[li][k];
+      h += ((k>0 && sy.charAt(0) !== "-") ? " " : "") +
+           '<span class="sy" data-s="' + li + "-" + k + '">' + sy.replace(/^-/,"") + "</span>";
     }
-    html += PUNCT1[li] + '</div>';
+    h += PUNCT[li] + "</div>";
   }
-  tuneLyrics.innerHTML = html;
-
-  var tuneBtn = document.getElementById('tuneBtn'), humModeBtn = document.getElementById('humModeBtn');
-  var humMode = false;
-  humModeBtn.addEventListener('click', function(){
-    humMode = !humMode;
-    humModeBtn.setAttribute('aria-pressed', humMode);
+  return h + "</div>";
+}
+function hotter(box){
+  return function(l,k){
+    var old = box.querySelectorAll(".sy.hot");
+    for(var i=0;i<old.length;i++) old[i].classList.remove("hot");
+    var el = box.querySelector('.sy[data-s="' + l + "-" + k + '"]');
+    if(el) el.classList.add("hot");
+  };
+}
+function clearHot(box){ var o = box.querySelectorAll(".sy.hot"); for(var i=0;i<o.length;i++) o[i].classList.remove("hot"); }
+function playToggle(btn, labels, start){
+  var playing = false;
+  btn.addEventListener("click", function(){
+    if(playing){ stopAudio(); done(); return; }
+    playing = true; btn.textContent = T(labels.stop); btn.setAttribute("aria-pressed","true");
+    start(done);
   });
-  function clearHot(){ var hs = tuneLyrics.querySelectorAll('.sy.hot'); for(var i=0;i<hs.length;i++) hs[i].classList.remove('hot'); }
-  var tunePlaying = false;
-  tuneBtn.addEventListener('click', function(){
-    if(tunePlaying){ stopAll(); tuneDone(); return; }
-    tunePlaying = true; tuneBtn.setAttribute('aria-pressed','true');
-    sing({
-      bpm: humMode ? 56 : 76, hum: humMode,
-      onSyl: function(l,k){ clearHot(); var el = tuneLyrics.querySelector('.sy[data-s="'+l+'-'+k+'"]'); if(el) el.classList.add('hot'); },
-      onEnd: tuneDone
-    });
-  });
-  function tuneDone(){ tunePlaying = false; tuneBtn.setAttribute('aria-pressed','false'); clearHot(); }
+  function done(){ playing = false; btn.textContent = T(labels.play); btn.setAttribute("aria-pressed","false"); }
+  return done;
+}
 
-  // ---------- rehearsal 2: walking pulse ----------
-  var tapzone = document.getElementById('tapzone'), tapBpm = document.getElementById('tapBpm');
-  var tapVerdict = document.getElementById('tapVerdict'), tapPin = document.getElementById('tapPin');
+/* ============ widgets ============ */
+var W = {};
+
+W.map = { html:function(sc){
+  var h = '<div class="map">';
+  for(var i=0;i<MAP.length;i++){
+    h += '<div class="m ' + MAP[i].k + (sc.now === i ? " now" : "") + '"><div class="mm">' + MAP[i].m +
+         '</div><div class="nn">' + MAP[i].n + "</div></div>";
+  }
+  return h + "</div>";
+}, wire:function(){} };
+
+W.tune = { cls:"", html:function(){
+  return '<div class="row">' +
+    '<button class="btn primary" id="wPlay">' + (LANG==="es"?"Tocar la melodía":"Play the melody") + "</button>" +
+    volBar() + "</div>" + lyricsHTML(ST1, "wLyr");
+}, wire:function(el, unlock){
+  wireVol(el);
+  var box = el.querySelector("#wLyr"), btn = el.querySelector("#wPlay");
+  var reset = playToggle(btn, {play:{en:"Play the melody",es:"Tocar la melodía"}, stop:{en:"Stop",es:"Detener"}}, function(fin){
+    sing({ bpm:76, onSyl:hotter(box), onEnd:function(){ clearHot(box); fin(); unlock(); } });
+  });
+  btn.addEventListener("click", function(){ unlock(); });
+} };
+
+W.hum = { html:function(){
+  return '<div class="row">' +
+    '<button class="btn primary" id="wPlay">' + (LANG==="es"?"Oír el tarareo":"Hear the hum") + "</button>" +
+    volBar() + "</div>";
+}, wire:function(el, unlock){
+  wireVol(el);
+  var btn = el.querySelector("#wPlay");
+  playToggle(btn, {play:{en:"Hear the hum",es:"Oír el tarareo"}, stop:{en:"Stop",es:"Detener"}}, function(fin){
+    sing({ bpm:56, hum:true, onEnd:function(){ fin(); unlock(); } });
+  });
+  btn.addEventListener("click", function(){ unlock(); });
+} };
+
+W.echo = { html:function(){
+  return '<div class="row">' +
+    '<button class="btn primary" id="wPlay">' + (LANG==="es"?"Oír la estrofa del eco":"Hear the echo stanza") + "</button>" +
+    volBar() + "</div>" + lyricsHTML(ST3, "wLyr");
+}, wire:function(el, unlock){
+  wireVol(el);
+  var box = el.querySelector("#wLyr"), btn = el.querySelector("#wPlay");
+  playToggle(btn, {play:{en:"Hear the echo stanza",es:"Oír la estrofa del eco"}, stop:{en:"Stop",es:"Detener"}}, function(fin){
+    sing({ bpm:72, onSyl:hotter(box), onEnd:function(){ clearHot(box); fin(); unlock(); } });
+  });
+  btn.addEventListener("click", function(){ unlock(); });
+} };
+
+W.pulse = { html:function(){
+  return '<div class="row" style="align-items:stretch">' +
+    '<div class="pad" id="wPad" tabindex="0" role="button">' + (LANG==="es"?"toca aquí<br>al compás":"tap here<br>in time") + "</div>" +
+    '<div class="bpmbox"><div class="k" id="wBpm">—</div><div class="u">' + (LANG==="es"?"tu tempo":"your tempo") + "</div></div></div>" +
+    '<div class="meter"><div class="band"></div><div class="pin" id="wPin" style="left:50%"></div></div>' +
+    '<div class="mlab"><span>50</span><span class="mid">70–85</span><span>120</span></div>' +
+    '<div class="verdict" id="wVer"></div>' +
+    '<div class="row" style="margin-top:0.4rem"><button class="btn" id="wReset">' + (LANG==="es"?"Reiniciar":"Reset") + "</button></div>";
+}, wire:function(el, unlock){
+  var pad = el.querySelector("#wPad"), bpmEl = el.querySelector("#wBpm");
+  var ver = el.querySelector("#wVer"), pin = el.querySelector("#wPin");
   var taps = [];
-  function registerTap(){
+  function tap(){
     var now = performance.now();
     if(taps.length && now - taps[taps.length-1] > 2500) taps = [];
-    taps.push(now);
-    if(taps.length > 7) taps.shift();
+    taps.push(now); if(taps.length > 7) taps.shift();
     if(taps.length < 4){
-      var need = 4 - taps.length;
-      tapVerdict.innerHTML = (root.getAttribute('data-lang') === 'es')
-        ? ('Sigue… ' + need + ' más.')
-        : ('Keep going… ' + need + ' more.');
+      ver.className = "verdict";
+      ver.textContent = (LANG==="es" ? "Sigue… " + (4-taps.length) + " más." : "Keep going… " + (4-taps.length) + " more.");
       return;
     }
-    var sum = 0;
-    for(var i=1;i<taps.length;i++) sum += taps[i] - taps[i-1];
-    var bpm = Math.round(60000 / (sum/(taps.length-1)));
-    tapBpm.textContent = bpm;
-    var pct = Math.max(0, Math.min(100, (bpm - 50)/(120 - 50)*100));
-    tapPin.style.left = pct + '%';
-    var es = root.getAttribute('data-lang') === 'es';
-    if(bpm > 85){
-      tapVerdict.className = 'verdict fast';
-      tapVerdict.textContent = es ? 'Vas rápido. Piensa en caminar, no en aplaudir.' : 'Too fast. Think walking, not clapping.';
-    } else if(bpm < 70){
-      tapVerdict.className = 'verdict slow';
-      tapVerdict.textContent = es ? 'Un poco lento; el pulso se puede desarmar.' : 'A little slow — the pulse can fall apart down here.';
-    } else {
-      tapVerdict.className = 'verdict ok';
-      tapVerdict.textContent = es ? 'Ese es el pulso de caminata. Cántalo así.' : 'That is the walking pulse. Sing it there.';
-    }
+    var sum = 0; for(var i=1;i<taps.length;i++) sum += taps[i]-taps[i-1];
+    var bpm = Math.round(60000/(sum/(taps.length-1)));
+    bpmEl.textContent = bpm;
+    pin.style.left = Math.max(0, Math.min(100, (bpm-50)/70*100)) + "%";
+    if(bpm > 85){ ver.className = "verdict fast"; ver.textContent = LANG==="es" ? "Vas rápido. Piensa en caminar, no en aplaudir." : "Too fast. Think walking, not clapping."; }
+    else if(bpm < 70){ ver.className = "verdict slow"; ver.textContent = LANG==="es" ? "Un poco lento; el pulso se desarma aquí abajo." : "A little slow — the pulse falls apart down here."; }
+    else { ver.className = "verdict ok"; ver.textContent = LANG==="es" ? "Ese es el pulso de caminata. Canta ahí." : "That is the walking pulse. Sing it there."; }
+    unlock();
   }
-  tapzone.addEventListener('pointerdown', function(e){ e.preventDefault(); registerTap(); });
-  tapzone.addEventListener('keydown', function(e){ if(e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); registerTap(); } });
-  document.getElementById('tapReset').addEventListener('click', function(){
-    taps = []; tapBpm.textContent = '—'; tapPin.style.left = '50%';
-    tapVerdict.className = 'verdict';
-    tapVerdict.innerHTML = '<span class="en-only">Tap four times to begin.</span><span class="es-only">Toca cuatro veces para empezar.</span>';
+  pad.addEventListener("pointerdown", function(e){ e.preventDefault(); tap(); });
+  pad.addEventListener("keydown", function(e){ if(e.key===" "||e.key==="Enter"){ e.preventDefault(); tap(); } });
+  el.querySelector("#wReset").addEventListener("click", function(){
+    taps = []; bpmEl.textContent = "—"; pin.style.left = "50%"; ver.className = "verdict"; ver.textContent = "";
   });
+} };
 
-  var metroBtn = document.getElementById('metroBtn'), metroDot = document.getElementById('metroDot');
-  var metroTimer = null;
-  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  metroBtn.addEventListener('click', function(){
-    if(metroTimer){
-      clearInterval(metroTimer); metroTimer = null;
-      metroBtn.setAttribute('aria-pressed','false'); metroDot.classList.remove('on');
-      return;
-    }
-    metroBtn.setAttribute('aria-pressed','true');
-    var c = audio(); if(c.state === 'suspended') c.resume();
-    var beatFn = function(){
-      metroDot.classList.add('on');
-      setTimeout(function(){ metroDot.classList.remove('on'); }, reduced ? 0 : 120);
+W.metro = { html:function(){
+  return '<div class="row"><button class="btn primary" id="wPlay">' + (LANG==="es"?"Encender el pulso · 76":"Start the beat · 76") + "</button>" +
+    '<div class="dot" id="wDot"></div>' + volBar() + "</div>";
+}, wire:function(el, unlock){
+  wireVol(el);
+  var btn = el.querySelector("#wPlay"), dot = el.querySelector("#wDot"), timer = null;
+  btn.addEventListener("click", function(){
+    if(timer){ clearInterval(timer); timer = null; dot.classList.remove("on");
+      btn.textContent = LANG==="es"?"Encender el pulso · 76":"Start the beat · 76"; btn.setAttribute("aria-pressed","false"); return; }
+    btn.setAttribute("aria-pressed","true");
+    btn.textContent = LANG==="es"?"Detener":"Stop";
+    var c = audio(); if(c.state === "suspended") c.resume();
+    function beat(){
+      dot.classList.add("on"); setTimeout(function(){ dot.classList.remove("on"); }, reduced?0:120);
       var t0 = ctx.currentTime + 0.01;
-      var o = ctx.createOscillator(); o.type='sine'; o.frequency.value = 1800;
-      var g = ctx.createGain(); g.gain.setValueAtTime(0.35, t0);
+      var o = ctx.createOscillator(); o.type = "sine"; o.frequency.value = 1500;
+      var g = ctx.createGain(); g.gain.setValueAtTime(0.3, t0);
       g.gain.exponentialRampToValueAtTime(0.0001, t0+0.03);
       o.connect(g); g.connect(ctx.destination); o.start(t0); o.stop(t0+0.04);
-    };
-    beatFn();
-    metroTimer = setInterval(beatFn, 60000/76);
+    }
+    beat(); timer = setInterval(beat, 60000/76);
+    unlock();
   });
+  el._cleanup = function(){ if(timer) clearInterval(timer); };
+} };
 
-  // ---------- rehearsal 3: the silence ----------
-  var silArc = document.getElementById('silArc'), silNum = document.getElementById('silNum');
-  var silState = document.getElementById('silState'), silBtn = document.getElementById('silBtn');
-  var silDur = 3, C = 326.7, silPlaying = false;
-  var silBtns = document.querySelectorAll('[data-sil]');
-  for(var i=0;i<silBtns.length;i++){
-    (function(b){
-      b.addEventListener('click', function(){
-        silDur = +b.getAttribute('data-sil');
-        for(var j=0;j<silBtns.length;j++) silBtns[j].setAttribute('aria-pressed', silBtns[j] === b);
-        silNum.textContent = silDur;
-      });
-    })(silBtns[i]);
+W.silence = { html:function(){
+  return '<div class="row" style="align-items:center;gap:1.3rem">' +
+    '<div class="ring"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="trk" cx="60" cy="60" r="52"/>' +
+    '<circle class="arc" id="wArc" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7"/>' +
+    '<text class="num" id="wNum" x="60" y="70" text-anchor="middle">3</text></svg></div>' +
+    '<div style="flex:1;min-width:14rem"><div class="verdict" id="wState">' +
+    (LANG==="es" ? "Se detiene después de «Bajo sus dos alas,»" : "It stops after “Bajo sus dos alas,”") + "</div>" +
+    '<div class="row" style="margin-top:0.7rem"><button class="btn primary" id="wPlay">' +
+    (LANG==="es"?"Cantar con la pausa":"Sing with the pause") + "</button>" +
+    '<span class="row" style="gap:0.3rem"><button class="btn" data-d="2">2 s</button>' +
+    '<button class="btn" data-d="3" aria-pressed="true">3 s</button><button class="btn" data-d="4">4 s</button></span>' +
+    volBar() + "</div></div></div>";
+}, wire:function(el, unlock){
+  wireVol(el);
+  var arc = el.querySelector("#wArc"), num = el.querySelector("#wNum"), st = el.querySelector("#wState");
+  var btn = el.querySelector("#wPlay"), dur = 3, C = 326.7;
+  var ds = el.querySelectorAll("[data-d]");
+  for(var i=0;i<ds.length;i++){
+    (function(b){ b.addEventListener("click", function(){
+      dur = +b.getAttribute("data-d"); num.textContent = dur;
+      for(var j=0;j<ds.length;j++) ds[j].setAttribute("aria-pressed", ds[j] === b);
+    }); })(ds[i]);
   }
-  silBtn.addEventListener('click', function(){
-    if(silPlaying){ stopAll(); silDone(); return; }
-    silPlaying = true; silBtn.setAttribute('aria-pressed','true');
-    var es = root.getAttribute('data-lang') === 'es';
-    silState.className = 'verdict';
-    silState.textContent = es ? 'Cantando…' : 'Singing…';
-    sing({
-      bpm: 72, pauseAfterLine: 0, pauseSec: silDur,
-      onPause: function(sec){
-        var e2 = root.getAttribute('data-lang') === 'es';
-        silState.className = 'verdict fast';
-        silState.textContent = e2 ? 'Silencio. Voz quieta, cuerpo quieto.' : 'Silence. Still voice, still body.';
+  playToggle(btn, {play:{en:"Sing with the pause",es:"Cantar con la pausa"}, stop:{en:"Stop",es:"Detener"}}, function(fin){
+    st.className = "verdict"; st.textContent = LANG==="es" ? "Cantando…" : "Singing…";
+    sing({ bpm:72, lines:[0,1,2,3], pauseAfterLine:0, pauseSec:dur,
+      onPause:function(sec){
+        st.className = "verdict fast";
+        st.textContent = LANG==="es" ? "Silencio. Voz quieta, cuerpo quieto." : "Silence. Still voice, still body.";
         var t0 = performance.now();
         (function frame(){
-          var el = (performance.now() - t0)/1000, rem = Math.max(0, sec - el);
-          silNum.textContent = Math.ceil(rem);
-          silArc.style.strokeDashoffset = C * (rem/sec);
-          if(rem > 0){ requestAnimationFrame(frame); }
+          var e = (performance.now()-t0)/1000, rem = Math.max(0, sec-e);
+          num.textContent = Math.ceil(rem); arc.style.strokeDashoffset = C*(rem/sec);
+          if(rem > 0) requestAnimationFrame(frame);
           else {
-            var e3 = root.getAttribute('data-lang') === 'es';
-            silState.className = 'verdict ok';
-            silState.textContent = e3 ? 'Sigue: «acurrucaditos…»' : 'It resumes: "acurrucaditos…"';
-            setTimeout(function(){ silArc.style.strokeDashoffset = C; silNum.textContent = silDur; }, 800);
+            st.className = "verdict ok";
+            st.textContent = LANG==="es" ? "Sigue: «acurrucaditos…»" : "It resumes: “acurrucaditos…”";
+            LOG.silence.push(sec); unlock();
+            setTimeout(function(){ arc.style.strokeDashoffset = C; num.textContent = dur; }, 800);
           }
         })();
       },
-      onEnd: function(){
-        silDone();
-        var e4 = root.getAttribute('data-lang') === 'es';
-        silState.className = 'verdict';
-        silState.textContent = e4 ? '¿Lo llenaste? Si sí, hazlo otra vez a 2 s.' : 'Did you fill it? If so, run it again at 2 s.';
-      }
+      onEnd:function(){ fin(); }
     });
   });
-  function silDone(){ silPlaying = false; silBtn.setAttribute('aria-pressed','false'); }
+} };
+
+W.honest = { html:function(){
+  return '<div class="row">' +
+    '<button class="btn lg" id="wQuiet">' + (LANG==="es"?"Me quedé callado":"I stayed quiet") + "</button>" +
+    '<button class="btn lg" id="wFill">' + (LANG==="es"?"Lo llené":"I filled it") + "</button></div>" +
+    '<div class="coach" id="wResp" style="display:none"></div>';
+}, wire:function(el, unlock){
+  var resp = el.querySelector("#wResp");
+  function answer(txt){ resp.style.display = "block"; resp.innerHTML = txt; unlock(); }
+  el.querySelector("#wQuiet").addEventListener("click", function(){
+    answer(LANG==="es"
+      ? "<b>Bien.</b> Ahora nota lo que se siente: tres segundos se sienten mucho más largos desde tu lado que desde el del niño. Esa incomodidad es tuya, no suya."
+      : "<b>Good.</b> Now notice how it felt: three seconds is far longer from your side than from the child’s. That discomfort is yours, not theirs.");
+  });
+  el.querySelector("#wFill").addEventListener("click", function(){
+    answer(LANG==="es"
+      ? "<b>Es lo normal.</b> Vuelve atrás y córrelo a 2 segundos hasta que se sienta cómodo. Con el niño harías lo mismo: acortar, no insistir."
+      : "<b>That is the normal answer.</b> Go back and run it at 2 seconds until it feels comfortable. With the child you would do the same: shorten it, do not push.");
+  });
+} };
+
+W.breath = { html:function(){
+  return '<div class="row" style="align-items:center;gap:1.4rem">' +
+    '<div class="ring" style="width:150px;height:150px"><div class="breathring" id="wRing"></div></div>' +
+    '<div style="flex:1;min-width:12rem"><div class="verdict" id="wWord">' + (LANG==="es"?"toca para empezar":"tap to begin") + "</div>" +
+    '<div class="row" style="margin-top:0.7rem"><button class="btn primary" id="wPlay">' +
+    (LANG==="es"?"Empezar las respiraciones":"Start the breaths") + '</button><span class="voice" id="wCount">0 / 3</span></div></div></div>';
+}, wire:function(el, unlock){
+  var ring = el.querySelector("#wRing"), word = el.querySelector("#wWord");
+  var cnt = el.querySelector("#wCount"), btn = el.querySelector("#wPlay"), n = 0, running = false;
+  btn.addEventListener("click", function(){
+    if(running) return; running = true; btn.disabled = true; n = 0; cycle();
+  });
+  function cycle(){
+    if(n >= 3){
+      word.textContent = LANG==="es" ? "listo" : "ready";
+      running = false; btn.disabled = false; unlock(); return;
+    }
+    ring.classList.add("in"); word.textContent = LANG==="es" ? "inhala…" : "breathe in…";
+    setTimeout(function(){
+      ring.classList.remove("in");
+      word.textContent = LANG==="es" ? "exhala con la canción…" : "out, with the song…";
+      n++; cnt.textContent = n + " / 3";
+      setTimeout(cycle, reduced?500:4200);
+    }, reduced?500:4200);
+  }
+} };
+
+W.rhyme = { html:function(){
+  return '<div class="row"><button class="btn primary" id="wShow">' + (LANG==="es"?"Mostrar la respuesta":"Show the answer") + "</button>" +
+    '<span class="verdict ok" id="wAns" style="display:none">abrigo · riman</span></div>';
+}, wire:function(el, unlock){
+  var b = el.querySelector("#wShow");
+  b.addEventListener("click", function(){
+    el.querySelector("#wAns").style.display = "inline"; b.style.display = "none"; LOG.rhyme = true; unlock();
+  });
+} };
+
+W.syll = { html:function(){
+  return '<div class="chips" id="wChips"><button data-s="po">po</button><button data-s="lli">lli</button><button data-s="tos">tos</button></div>' +
+    '<div class="verdict" id="wNote" style="min-height:2.4em">' + (LANG==="es"?"Toca la sílaba que el niño diría.":"Tap the syllable the child would say.") + "</div>";
+}, wire:function(el, unlock){
+  var chips = el.querySelector("#wChips"), note = el.querySelector("#wNote");
+  chips.addEventListener("click", function(e){
+    var b = e.target.closest("button"); if(!b) return;
+    var all = chips.querySelectorAll("button");
+    for(var i=0;i<all.length;i++) all[i].setAttribute("aria-pressed", all[i] === b);
+    if(b.getAttribute("data-s") === "lli"){
+      note.className = "verdict ok";
+      note.textContent = LANG==="es" ? "Sí: po-LLI-tos. La palmada cae ahí; esa es la parte fuerte." : "Yes: po-LLI-tos. The clap lands there — that is the strong part.";
+      LOG.stress = true; unlock();
+    } else {
+      note.className = "verdict slow";
+      note.textContent = LANG==="es" ? "Cántalo otra vez con las palmas y escucha cuál dura más." : "Sing it again with the claps and listen for which one lasts longer.";
+    }
+  });
+} };
+
+W.cards = { html:function(){
+  return '<div class="chips" id="wCards"><button data-c="ta">ta</button><button data-c="pa">pa</button><button data-c="sa">sa</button><button data-c="mo">mo</button></div>' +
+    '<div class="slots"><div class="slot" id="wS1"></div><div class="slot" id="wS2"></div><span class="built" id="wBuilt"></span>' +
+    '<button class="btn" id="wAgain" style="margin-left:auto">' + (LANG==="es"?"otra vez":"again") + "</button></div>";
+}, wire:function(el, unlock){
+  var cards = el.querySelector("#wCards"), s1 = el.querySelector("#wS1"), s2 = el.querySelector("#wS2");
+  var built = el.querySelector("#wBuilt"), parts = [];
+  function draw(){
+    s1.textContent = parts[0] || ""; s2.textContent = parts[1] || "";
+    s1.classList.toggle("filled", !!parts[0]); s2.classList.toggle("filled", !!parts[1]);
+    var w = parts.join("");
+    built.textContent = parts.length === 2 ? (w === "tapa" ? "tapa ✓" : w + " · " + (LANG==="es"?"prueba otra":"try another")) : "";
+    if(w === "tapa"){ LOG.built = true; unlock(); }
+    var bs = cards.querySelectorAll("button");
+    for(var i=0;i<bs.length;i++) bs[i].disabled = parts.indexOf(bs[i].getAttribute("data-c")) >= 0 || parts.length >= 2;
+  }
+  cards.addEventListener("click", function(e){
+    var b = e.target.closest("button"); if(!b || b.disabled) return;
+    parts.push(b.getAttribute("data-c")); draw();
+  });
+  el.querySelector("#wAgain").addEventListener("click", function(){ parts = []; draw(); });
+  draw();
+} };
+
+W.stages = { html:function(){
+  var L = (LANG === "es")
+    ? ["1 · Cantar con el dedo","2 · Solo con el pulso","3 · Solo decirlo","4 · Leer sin música"]
+    : ["1 · Sing, finger walking","2 · Pulse only","3 · Just say it","4 · Read, no music"];
+  var h = '<div class="stages" id="wStages">';
+  for(var i=0;i<4;i++) h += '<button class="btn" data-st="' + i + '" aria-pressed="false">' + L[i] + "</button>";
+  return h + '</div><div class="verdict" id="wSt" style="min-height:2.4em"></div>';
+}, wire:function(el, unlock){
+  var box = el.querySelector("#wStages"), note = el.querySelector("#wSt"), seen = {};
+  var MSG = (LANG === "es")
+    ? ["La melodía sigue ahí; el dedo camina palabra por palabra.","Sin melodía: recita al pulso, marcando con las palmas.","Voz hablada, sin pulso.","Ahora el versito decodificable, sin música."]
+    : ["The melody is still there; the finger walks word by word.","No melody — chant it on the beat, still patting.","Speaking voice, no beat.","Now the decodable verse, with no music at all."];
+  box.addEventListener("click", function(e){
+    var b = e.target.closest("button"); if(!b) return;
+    var st = +b.getAttribute("data-st");
+    var all = box.querySelectorAll("button");
+    for(var i=0;i<all.length;i++) all[i].setAttribute("aria-pressed", i <= st);
+    for(var j=0;j<=st;j++) seen[j] = true;
+    note.className = "verdict"; note.textContent = MSG[st];
+    if(st >= 1) stopAudio();
+    var n = 0; for(var k in seen) if(seen.hasOwnProperty(k)) n++;
+    LOG.stages = n;
+    if(n === 4){ note.className = "verdict ok"; unlock(); }
+  });
+} };
+
+W.child = { html:function(){
+  return '<div class="childpg"><div class="cols2">' +
+    '<div><div class="lab">Los pollitos dicen · estrofa 3</div><p class="song">' +
+    '<span class="lt">Bajo</span> sus <span class="lt">dos</span> alas,<br><span class="lt">acurrucaditos</span>,<br>' +
+    '<span class="lt">hasta</span> el <span class="lt">otro día</span><br><span class="lt">duermen</span> los <span class="lt">pollitos</span>.</p></div>' +
+    '<div><div class="lab">' + (LANG==="es"?"Mi versito":"Mi versito · the child’s own verse") + "</div>" +
+    '<p class="verse">Pío, pío, pío.<br>Mi mamá me <b>tapa</b>.<br>Sus alas son mi manta.</p></div>' +
+    "</div></div>";
+}, wire:function(){} };
+
+W.taps = { html:function(){
+  return '<div class="row"><button class="btn primary" id="wPlay">' + (LANG==="es"?"Cantar la primera estrofa":"Sing the first stanza") + "</button>" +
+    '<div class="taps" id="wTaps"><span class="t"></span><span class="t"></span><span class="t"></span></div>' + volBar() + "</div>" +
+    '<div class="verdict" id="wNote" style="min-height:2.2em;font-size:1.05rem">' +
+    (LANG==="es"?"Toca un círculo por cada «pío» que el niño atrape.":"Tap one circle for each “pío” the child catches.") + "</div>" +
+    lyricsHTML(ST1, "wLyr");
+}, wire:function(el, unlock){
+  wireVol(el);
+  var box = el.querySelector("#wLyr"), btn = el.querySelector("#wPlay");
+  var taps = el.querySelector("#wTaps"), note = el.querySelector("#wNote");
+  playToggle(btn, {play:{en:"Sing the first stanza",es:"Cantar la primera estrofa"}, stop:{en:"Stop",es:"Detener"}}, function(fin){
+    sing({ bpm:76, onSyl:hotter(box), onEnd:function(){ clearHot(box); fin(); } });
+  });
+  taps.addEventListener("click", function(e){
+    var t = e.target.closest(".t"); if(!t) return;
+    t.classList.toggle("on");
+    LOG.taps = taps.querySelectorAll(".t.on").length;
+    if(LOG.taps === 3){
+      note.className = "verdict ok";
+      note.textContent = LANG==="es" ? "Tres de tres. El niño sostuvo la canción por dentro." : "Three of three. The child held the song inside.";
+      unlock();
+    }
+  });
+} };
+
+W.summary = { html:function(){
+  var mins = Math.max(1, Math.round((Date.now()-LOG.t0)/60000));
+  var best = LOG.silence.length ? Math.max.apply(null, LOG.silence) : 0;
+  var L = (LANG === "es")
+    ? ["duración del ensayo","letra de hoy","silencio sostenido","píos por dentro","palabra armada","sílaba fuerte"]
+    : ["tutorial length","today’s letter","silence held","inner píos","word built","stressed syllable"];
+  var v = [mins + " min", "t", best + " s", LOG.taps + "/3", LOG.built ? "tapa ✓" : "—", LOG.stress ? "lli ✓" : "—"];
+  var h = '<div class="sum">';
+  for(var i=0;i<6;i++) h += '<div class="c"><div class="k">' + v[i] + '</div><div class="u">' + L[i] + "</div></div>";
+  return h + "</div>";
+}, wire:function(){} };
+
+W.finish = { html:function(){
+  return '<div class="row" style="margin-top:1.4rem">' +
+    '<a class="btn primary lg" href="index.html">' + (LANG==="es"?"Abrir el demo de la sesión":"Open the session demo") + "</a>" +
+    '<a class="btn lg" href="concept.html">' + (LANG==="es"?"Leer el concepto":"Read the concept") + "</a>" +
+    '<button class="btn lg" id="wRestart">' + (LANG==="es"?"Otra vez":"Run it again") + "</button></div>";
+}, wire:function(el){
+  el.querySelector("#wRestart").addEventListener("click", function(){ LOG.silence = []; LOG.taps = 0; LOG.built = false; LOG.stress = false; go(0); });
+} };
+
+/* ============ engine ============ */
+var card = document.getElementById("card"), whereEl = document.getElementById("where");
+var fill = document.getElementById("fill"), dotsEl = document.getElementById("dots");
+var backBtn = document.getElementById("back"), nextBtn = document.getElementById("next");
+var hintEl = document.getElementById("hint");
+var i = 0, unlocked = {};
+
+var PARTS = [];
+S.forEach(function(s){ var p = s.part.en; if(PARTS.indexOf(p) < 0) PARTS.push(p); });
+
+function esc(x){ return x; }
+
+function render(){
+  stopAudio();
+  if(card._cleanup){ card._cleanup(); card._cleanup = null; }
+  var s = S[i];
+  var h = "";
+  if(s.eye) h += '<div class="eyebrow ' + (s.eyeClass||"") + '">' + T(s.eye) + "</div>";
+  h += "<h1" + (s.big ? ' class="big"' : "") + ">" + T(s.h) + "</h1>";
+  if(s.lede) h += '<p class="lede">' + T(s.lede) + "</p>";
+
+  if(s.say){
+    h += '<div class="sayline"><p class="es">' + s.say.es + "</p>";
+    if(s.say.gl && LANG === "en") h += '<p class="gl">' + T(s.say.gl) + "</p>";
+    if(s.say.ph && LANG === "en") h += '<p class="ph"><b>say</b> ' + s.say.ph + "</p>";
+    h += "</div>";
+  }
+  if(s.dos){
+    h += '<ul class="dolist">';
+    s.dos.forEach(function(d, n){ h += '<li><span class="n">' + (n+1) + "</span><span>" + T(d) + "</span></li>"; });
+    h += "</ul>";
+  }
+  if(s.widget) h += '<div class="w' + (W[s.widget].plain ? " plain" : "") + '" id="wbox">' + W[s.widget].html(s) + "</div>";
+
+  if(s.watch || s.trap){
+    h += '<div class="panels">';
+    if(s.watch) h += '<div class="pan go"><div class="h">' + (LANG==="es"?"Bien":"Good") + '</div><p>' + T(s.watch) + "</p></div>";
+    if(s.trap)  h += '<div class="pan no"><div class="h">' + (LANG==="es"?"Cuidado":"Careful") + '</div><p>' + T(s.trap) + "</p></div>";
+    h += "</div>";
+  }
+  if(s.coach) h += '<div class="coach">' + T(s.coach) + "</div>";
+  if(s.tiny) h += '<p class="tiny">' + T(s.tiny) + "</p>";
+
+  card.className = "card anim" + (s.wide ? " wide" : "");
+  card.innerHTML = h;
+  void card.offsetWidth;
+
+  if(s.widget){
+    var box = document.getElementById("wbox");
+    W[s.widget].wire(box, function(){ unlocked[i] = true; refreshNav(); });
+    if(box._cleanup) card._cleanup = box._cleanup;
+  }
+
+  whereEl.textContent = T(s.part);
+  fill.style.width = ((i+1)/S.length*100) + "%";
+
+  var pIdx = PARTS.indexOf(s.part.en);
+  var d = "";
+  for(var k=0;k<PARTS.length;k++) d += "<i class='" + (k < pIdx ? "past" : (k === pIdx ? "on" : "")) + "'></i>";
+  dotsEl.innerHTML = d;
+
+  refreshNav();
+  card.scrollIntoView({ block:"nearest" });
+  document.querySelector(".stage").scrollTop = 0;
+}
+
+function refreshNav(){
+  var s = S[i];
+  var gated = !!s.gate && !unlocked[i];
+  backBtn.textContent = LANG === "es" ? "Atrás" : "Back";
+  backBtn.disabled = i === 0;
+  backBtn.style.visibility = i === 0 ? "hidden" : "visible";
+  nextBtn.textContent = s.cta ? T(s.cta) : (i === S.length-1 ? (LANG==="es"?"Fin":"Done") : (LANG==="es"?"Siguiente":"Next"));
+  nextBtn.disabled = gated || i === S.length-1;
+  hintEl.textContent = gated ? T(s.gate) : "";
+}
+
+function go(n){
+  i = Math.max(0, Math.min(S.length-1, n));
+  render();
+}
+nextBtn.addEventListener("click", function(){ if(!nextBtn.disabled) go(i+1); });
+backBtn.addEventListener("click", function(){ go(i-1); });
+document.addEventListener("keydown", function(e){
+  if(e.target.tagName === "INPUT" || e.target.classList.contains("pad")) return;
+  if(e.key === "ArrowRight" && !nextBtn.disabled) go(i+1);
+  if(e.key === "ArrowLeft" && i > 0) go(i-1);
+});
+
+/* ============ language switch ============ */
+var btnEn = document.getElementById("btnEn"), btnEs = document.getElementById("btnEs");
+function setLang(l){
+  LANG = l;
+  root.setAttribute("data-lang", l);
+  root.setAttribute("lang", l);
+  btnEn.setAttribute("aria-pressed", l === "en");
+  btnEs.setAttribute("aria-pressed", l === "es");
+  try { localStorage.setItem("cantame-lang", l); } catch(err){}
+  render();
+}
+btnEn.addEventListener("click", function(){ if(LANG !== "en") setLang("en"); });
+btnEs.addEventListener("click", function(){ if(LANG !== "es") setLang("es"); });
+
+var saved = null;
+try { saved = localStorage.getItem("cantame-lang"); } catch(err){}
+if(!saved && (navigator.language||"").toLowerCase().indexOf("es") === 0) saved = "es";
+LANG = saved === "es" ? "es" : "en";
+setLang(LANG);
 })();
 </script>
 

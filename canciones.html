@@ -1,0 +1,1566 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cántame Cancionero</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400;1,700&display=swap">
+</head>
+<body>
+<style>
+  :root {
+    --ground: #FBF3E2; --card: #FFFFFF; --soft: #FDEBCB; --soft2: #F3EEDF;
+    --ink: #2A2418; --ink-2: #574C38; --muted: #8A7C64; --line: #E7D9BC;
+    --blue: #1F6F9E; --blue-soft: #D9EDF7; --rosa: #D6337B; --rosa-soft: #FCE0EC;
+    --marigold: #F2A62C; --marigold-deep: #C97C10; --marigold-soft: #FDEBCB;
+    --green: #4C9A5A; --green-soft: #DDF0DE; --morado: #6B4FA0; --morado-soft: #E9E2F5;
+    --on-marigold: #3A2A08; --shadow: 0 2px 8px rgba(60,40,10,.07);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #221D14; --card: #2E2719; --soft: #3E3117; --soft2: #332C1E;
+      --ink: #FBF3E2; --ink-2: #E4D8BF; --muted: #B0A085; --line: #4A3E28;
+      --blue: #7FC3E8; --blue-soft: #1E3B4C; --rosa: #F98CBB; --rosa-soft: #4B2035;
+      --marigold: #F5B948; --marigold-deep: #F5B948; --marigold-soft: #3E3117;
+      --green: #8CCB97; --green-soft: #24381F; --morado: #B9A3E6; --morado-soft: #33294A;
+      --on-marigold: #2A1E05; --shadow: 0 2px 8px rgba(0,0,0,.3);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #221D14; --card: #2E2719; --soft: #3E3117; --soft2: #332C1E;
+    --ink: #FBF3E2; --ink-2: #E4D8BF; --muted: #B0A085; --line: #4A3E28;
+    --blue: #7FC3E8; --blue-soft: #1E3B4C; --rosa: #F98CBB; --rosa-soft: #4B2035;
+    --marigold: #F5B948; --marigold-deep: #F5B948; --marigold-soft: #3E3117;
+    --green: #8CCB97; --green-soft: #24381F; --morado: #B9A3E6; --morado-soft: #33294A;
+    --on-marigold: #2A1E05; --shadow: 0 2px 8px rgba(0,0,0,.3);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { background: var(--ground); }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: "Alegreya Sans", "Segoe UI", system-ui, sans-serif;
+    font-size: 17px; line-height: 1.5; -webkit-font-smoothing: antialiased;
+    min-height: 100vh; display: flex; flex-direction: column;
+  }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  a { color: var(--blue); text-underline-offset: 2px; }
+  button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--rosa); outline-offset: 3px; border-radius: 6px; }
+  h1, h2, h3 { font-family: "Alegreya", Georgia, serif; font-weight: 500; line-height: 1.12; margin: 0; text-wrap: balance; font-variant-numeric: lining-nums; }
+  .serif { font-family: "Alegreya", Georgia, serif; }
+  .label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  .hidden, [hidden] { display: none !important; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+  /* ---------- header with papel picado ---------- */
+  .hdr { flex: none; position: relative; }
+  .picado { display: block; width: 100%; height: 38px; }
+  .hdr .in { max-width: 62rem; margin: 0 auto; padding: 0.4rem 1.2rem 0.9rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .brand { font-family: "Alegreya", Georgia, serif; font-style: italic; font-size: 1.55rem; color: var(--marigold-deep); text-decoration: none; display: flex; align-items: baseline; gap: 0.5rem; }
+  .brand small { font-family: "Alegreya Sans", system-ui, sans-serif; font-style: normal; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); }
+  .nav { display: flex; gap: 0.2rem; }
+  .nav a { text-decoration: none; color: var(--ink-2); font-weight: 700; padding: 0.35rem 0.8rem; border-radius: 999px; font-size: 0.98rem; }
+  .nav a[aria-current="page"] { background: var(--soft); color: var(--marigold-deep); }
+  .nav a:hover { color: var(--ink); }
+  .grow { flex: 1; }
+  .langsw { display: flex; background: var(--soft2); border-radius: 999px; padding: 3px; gap: 2px; }
+  .langsw button { background: transparent; border: 0; padding: 0.25rem 0.75rem; font-size: 0.88rem; color: var(--muted); border-radius: 999px; font-weight: 700; }
+  .langsw button[aria-pressed="true"] { background: var(--card); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+  @media (max-width: 560px) {
+    .hdr .in { gap: 0.4rem 0.5rem; padding-bottom: 0.7rem; }
+    .brand { width: 100%; }
+    .nav a { padding: 0.3rem 0.55rem; font-size: 0.92rem; }
+    .langsw button { padding: 0.22rem 0.55rem; font-size: 0.82rem; }
+  }
+
+  /* ---------- page shell ---------- */
+  main { flex: 1; width: 100%; max-width: 62rem; margin: 0 auto; padding: 0.6rem 1.2rem 3rem; }
+  .fade { animation: fade 360ms cubic-bezier(.2,.8,.3,1) both; }
+  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .fade, .anim { animation: none !important; } * { transition: none !important; } }
+
+  /* ---------- buttons ---------- */
+  .btn { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--card); border: 2px solid var(--line); border-radius: 999px; padding: 0.5rem 1.05rem; font-weight: 700; box-shadow: var(--shadow); text-decoration: none; color: var(--ink); line-height: 1.2; }
+  .btn:hover { border-color: var(--marigold); }
+  .btn:active { transform: translateY(1px); }
+  .btn.primary { background: var(--marigold); border-color: var(--marigold); color: var(--on-marigold); }
+  .btn.primary:hover { background: var(--marigold-deep); border-color: var(--marigold-deep); }
+  .btn[aria-pressed="true"] { background: var(--soft); border-color: var(--marigold); color: var(--ink); }
+  .btn.sm { padding: 0.32rem 0.8rem; font-size: 0.9rem; box-shadow: none; }
+  .btn.ghost { background: transparent; box-shadow: none; }
+  .btn:disabled { opacity: 0.45; cursor: default; }
+  .btn svg { width: 1.1em; height: 1.1em; flex: none; }
+  .row { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+
+  /* ---------- pills (category) ---------- */
+  .pill { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.82rem; font-weight: 700; padding: 0.18rem 0.7rem; border-radius: 999px; letter-spacing: 0.01em; }
+  .pill svg { width: 0.95em; height: 0.95em; }
+  .c-blue { color: var(--blue); background: var(--blue-soft); }
+  .c-green { color: var(--green); background: var(--green-soft); }
+  .c-rosa { color: var(--rosa); background: var(--rosa-soft); }
+  .c-marigold { color: var(--marigold-deep); background: var(--marigold-soft); }
+  .c-morado { color: var(--morado); background: var(--morado-soft); }
+  .stripe-blue { border-left-color: var(--blue) !important; } .stripe-green { border-left-color: var(--green) !important; }
+  .stripe-rosa { border-left-color: var(--rosa) !important; } .stripe-marigold { border-left-color: var(--marigold) !important; }
+  .stripe-morado { border-left-color: var(--morado) !important; }
+
+  /* ---------- library ---------- */
+  .hero { display: grid; grid-template-columns: 1fr auto; gap: 1rem 2rem; align-items: end; margin: 0.6rem 0 1.2rem; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-style: italic; }
+  .hero p { margin: 0.4rem 0 0; color: var(--ink-2); max-width: 46ch; font-size: 1.05rem; }
+  .hero .stat { text-align: right; color: var(--muted); font-size: 0.95rem; }
+  .hero .stat b { display: block; font-family: "Alegreya", Georgia, serif; font-size: 2rem; color: var(--marigold-deep); line-height: 1; font-variant-numeric: lining-nums tabular-nums; }
+  @media (max-width: 640px) { .hero { grid-template-columns: 1fr; } .hero .stat { text-align: left; } }
+
+  .banner { display: flex; align-items: center; gap: 0.9rem; background: var(--soft); border-radius: 18px; padding: 0.85rem 1.1rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
+  .banner .pic { width: 44px; height: 44px; flex: none; }
+  .banner p { margin: 0; flex: 1; min-width: 14rem; }
+  .banner .x { background: none; border: 0; color: var(--muted); font-size: 1.2rem; padding: 0.2rem 0.5rem; }
+
+  .filters { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+  .filters button { border: 2px solid transparent; background: var(--soft2); border-radius: 999px; padding: 0.35rem 0.9rem; font-weight: 700; font-size: 0.92rem; color: var(--ink-2); display: inline-flex; align-items: center; gap: 0.4rem; }
+  .filters button svg { width: 1em; height: 1em; }
+  .filters button[aria-pressed="true"] { background: var(--card); border-color: var(--marigold); color: var(--ink); box-shadow: var(--shadow); }
+  .filters button:hover { color: var(--ink); }
+
+  .group { margin-bottom: 1.6rem; }
+  .group h2 { font-size: 1.35rem; display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.2rem; }
+  .group h2 .pill { font-family: "Alegreya Sans", system-ui, sans-serif; }
+  .group .desc { color: var(--muted); margin: 0 0 0.7rem; font-size: 0.95rem; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr)); gap: 0.8rem; }
+  .card { position: relative; display: block; text-decoration: none; color: inherit; background: var(--card); border-radius: 16px; border-left: 6px solid var(--line); padding: 0.9rem 1rem 0.85rem 1rem; box-shadow: var(--shadow); transition: transform 120ms ease, box-shadow 120ms ease; }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(60,40,10,.12); }
+  .card h3 { font-size: 1.32rem; font-weight: 500; }
+  .card .first { font-family: "Alegreya", Georgia, serif; font-style: italic; color: var(--muted); font-size: 1rem; margin: 0.15rem 0 0.5rem; }
+  .card .meta { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; font-size: 0.8rem; color: var(--muted); }
+  .card .meta .tag { display: inline-flex; align-items: center; gap: 0.25rem; }
+  .card .meta svg { width: 0.95em; height: 0.95em; }
+  .card .start { position: absolute; top: -0.55rem; right: 0.8rem; background: var(--rosa); color: #fff; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.15rem 0.6rem; border-radius: 999px; }
+  .card .known { position: absolute; top: 0.75rem; right: 0.8rem; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--green); color: #fff; display: grid; place-items: center; font-size: 0.85rem; font-weight: 700; }
+
+  /* ---------- song page ---------- */
+  .back { display: inline-flex; align-items: center; gap: 0.3rem; white-space: nowrap; text-decoration: none; color: var(--muted); font-weight: 700; font-size: 0.92rem; margin-bottom: 0.6rem; }
+  .back:hover { color: var(--ink); }
+  .song-head { margin-bottom: 1rem; }
+  .song-head h1 { font-size: clamp(2rem, 5vw, 2.8rem); margin: 0.35rem 0 0.2rem; }
+  .song-head .also { color: var(--muted); font-style: italic; font-family: "Alegreya", Georgia, serif; font-size: 1.1rem; }
+  .note { background: var(--soft); border-radius: 18px; padding: 0.9rem 1.15rem; margin: 0.9rem 0 1.1rem; display: flex; gap: 0.8rem; align-items: flex-start; }
+  .note .ic { flex: none; width: 2rem; height: 2rem; border-radius: 50%; background: var(--marigold); color: var(--on-marigold); display: grid; place-items: center; font-family: "Alegreya", Georgia, serif; font-weight: 700; font-style: italic; }
+  .note p { margin: 0; color: var(--ink-2); font-size: 1rem; max-width: 70ch; }
+  .note p b { color: var(--ink); }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 0.55rem; align-items: center; margin-bottom: 1.1rem; }
+  .toolbar .sep { flex: 1; }
+  .voice-note { font-size: 0.85rem; color: var(--muted); width: 100%; }
+
+  .song-grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(16rem, 1fr); gap: 1.6rem; align-items: start; }
+  @media (max-width: 760px) { .song-grid { grid-template-columns: 1fr; } }
+
+  .lyrics { background: var(--card); border-radius: 22px; padding: 1.2rem 1.4rem 1.3rem; box-shadow: var(--shadow); }
+  .stanza { padding: 0.35rem 0; }
+  .stanza + .stanza { border-top: 1px dashed var(--line); margin-top: 0.5rem; padding-top: 0.85rem; }
+  .stanza .cue { font-size: 0.78rem; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.2rem; }
+  .ln { display: grid; grid-template-columns: 1fr auto; gap: 0 0.6rem; align-items: center; padding: 0.22rem 0.5rem; margin: 0 -0.5rem; border-radius: 10px; cursor: pointer; }
+  .ln:hover { background: var(--soft2); }
+  .ln.hot { background: var(--marigold-soft); box-shadow: inset 0 0 0 2px var(--marigold); }
+  .ln .es { grid-column: 1; grid-row: 1; font-family: "Alegreya", Georgia, serif; font-size: 1.36rem; line-height: 1.35; }
+  .ln .en { grid-column: 1; grid-row: 2; font-size: 0.93rem; color: var(--muted); line-height: 1.3; margin-top: 0.05rem; }
+  .ln .spk { grid-column: 2; grid-row: 1 / span 2; background: none; border: 0; color: var(--muted); padding: 0.2rem; border-radius: 50%; opacity: 0.55; }
+  .ln:hover .spk, .ln.hot .spk { opacity: 1; color: var(--marigold-deep); }
+  .ln .spk svg { width: 1.25rem; height: 1.25rem; display: block; }
+  .no-gloss .ln .en { display: none; }
+  .no-gloss .ln .spk { grid-row: 1; }
+  .repeat { color: var(--muted); font-style: italic; font-family: "Alegreya", Georgia, serif; font-size: 1rem; padding: 0.3rem 0; }
+
+  .side { display: flex; flex-direction: column; gap: 1rem; }
+  .panel { background: var(--card); border-radius: 20px; padding: 1rem 1.15rem; box-shadow: var(--shadow); }
+  .panel h2 { font-size: 1.2rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+  .panel h2 svg { width: 1.15em; height: 1.15em; color: var(--marigold-deep); }
+  .howto { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .howto li { display: flex; gap: 0.65rem; align-items: flex-start; font-size: 0.98rem; }
+  .howto li .n { flex: none; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--marigold); color: var(--on-marigold); display: grid; place-items: center; font-weight: 700; font-size: 0.85rem; margin-top: 0.05rem; }
+  .vocab { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .chip { border: 2px solid var(--line); background: var(--soft2); border-radius: 12px; padding: 0.35rem 0.7rem; text-align: left; line-height: 1.15; display: flex; flex-direction: column; gap: 0.05rem; }
+  .chip:hover { border-color: var(--marigold); }
+  .chip.hot { border-color: var(--marigold); background: var(--marigold-soft); }
+  .chip .es { font-family: "Alegreya", Georgia, serif; font-size: 1.12rem; font-weight: 500; }
+  .chip .en { font-size: 0.8rem; color: var(--muted); }
+  .no-gloss .chip .en { display: none; }
+  .know { width: 100%; justify-content: center; padding: 0.7rem 1rem; }
+  .know[aria-pressed="true"] { background: var(--green-soft); border-color: var(--green); color: var(--green); }
+  .panel .tip { margin: 0.5rem 0 0; font-size: 0.9rem; color: var(--muted); }
+  .nextprev { display: flex; justify-content: space-between; gap: 0.6rem; margin-top: 1.4rem; flex-wrap: wrap; }
+  .nextprev a { flex: 1; min-width: 12rem; text-decoration: none; color: inherit; background: var(--card); border-radius: 14px; padding: 0.7rem 1rem; box-shadow: var(--shadow); }
+  .nextprev a small { display: block; color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
+  .nextprev a b { font-family: "Alegreya", Georgia, serif; font-weight: 500; font-size: 1.15rem; }
+  .nextprev a.next { text-align: right; }
+
+  /* ---------- sing-along overlay: a scrolling reel ---------- */
+  .sing { position: fixed; inset: 0; background: var(--ground); z-index: 50; display: flex; flex-direction: column; }
+  .sing .top { display: flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.1rem; flex-wrap: wrap; }
+  .sing .top .title { font-family: "Alegreya", Georgia, serif; font-style: italic; font-size: 1.15rem; color: var(--marigold-deep); }
+  .sing .top .count { color: var(--muted); font-variant-numeric: lining-nums tabular-nums; font-weight: 700; margin-right: 0.4rem; }
+  .sing .reelwrap { flex: 1; position: relative; overflow: hidden; min-height: 0;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 22%, #000 78%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 22%, #000 78%, transparent 100%); }
+  .sing .reel { position: absolute; left: 0; right: 0; top: 0; padding: 0 1.4rem; transition: transform 650ms cubic-bezier(.22,.85,.25,1); will-change: transform; }
+  .sing .rline { text-align: center; padding: 0.55rem 0; opacity: 0.28; transform: scale(.58); transform-origin: 50% 50%; cursor: pointer; transition: transform 650ms cubic-bezier(.22,.85,.25,1), opacity 650ms; user-select: none; }
+  .sing .rline.near { opacity: 0.45; }
+  .sing .rline.cur { opacity: 1; transform: none; cursor: default; }
+  .sing .rline:hover:not(.cur) { opacity: 0.7; }
+  .sing .rcue { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 0.3rem; }
+  .sing .rtext { font-family: "Alegreya", Georgia, serif; font-size: clamp(2rem, 6.5vw, 4.2rem); line-height: 1.22; text-wrap: balance; max-width: 18ch; margin: 0 auto; }
+  .sing .rgl { font-size: clamp(1rem, 2.3vw, 1.4rem); color: var(--muted); margin-top: 0.45rem; opacity: 0; transition: opacity 400ms; max-width: 44ch; margin-left: auto; margin-right: auto; }
+  .sing .rline.cur .rgl { opacity: 1; }
+  .sing.no-gl .rgl { display: none; }
+  .sing .w { display: inline-block; padding: 0 0.12em; border-radius: 0.2em; transition: background 140ms, box-shadow 140ms; }
+  .sing .rline.cur .w.on { background: var(--marigold-soft); box-shadow: 0 0 0 3px var(--marigold); }
+  .sing .bar { height: 5px; background: var(--soft2); margin: 0.4rem 1.4rem 0; border-radius: 999px; overflow: hidden; }
+  .sing .bar i { display: block; height: 100%; width: 0; background: var(--marigold); border-radius: 999px; transition: width 400ms; }
+  .sing .ctl { display: flex; gap: 0.6rem; justify-content: center; align-items: center; padding: 0.9rem 1.2rem 0.3rem; flex-wrap: wrap; }
+  .sing .ctl .btn.lg { padding: 0.8rem 1.5rem; font-size: 1.1rem; }
+  .sing .ctl .btn[aria-label] { padding: 0.75rem; border-radius: 50%; }
+  .sing .ctl .btn[aria-label] svg { width: 1.2rem; height: 1.2rem; }
+  .sing .hint { text-align: center; color: var(--muted); font-size: 0.85rem; margin: 0 1rem 1rem; }
+  .sing.playing .hint { opacity: 0; }
+  @media (prefers-reduced-motion: reduce) { .sing .reel, .sing .rline { transition: none; } }
+
+  /* ---------- words page ---------- */
+  .tabs { display: flex; gap: 0.4rem; margin: 0.4rem 0 1.2rem; }
+  .tabs button { border: 2px solid transparent; background: var(--soft2); border-radius: 999px; padding: 0.4rem 1rem; font-weight: 700; color: var(--ink-2); }
+  .tabs button[aria-pressed="true"] { background: var(--card); border-color: var(--marigold); color: var(--ink); box-shadow: var(--shadow); }
+  .flash { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: 0.7rem; }
+  .fc { position: relative; min-height: 7.4rem; border: 0; background: var(--card); border-radius: 18px; box-shadow: var(--shadow); padding: 0.9rem 0.9rem 0.8rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between; gap: 0.3rem; }
+  .fc .w { font-family: "Alegreya", Georgia, serif; font-size: 1.5rem; font-weight: 500; line-height: 1.15; }
+  .fc .m { font-size: 0.92rem; color: var(--muted); min-height: 1.3em; }
+  .fc .from { font-size: 0.75rem; color: var(--muted); font-style: italic; font-family: "Alegreya", Georgia, serif; }
+  .fc.flipped { background: var(--soft); }
+  .fc .hear { position: absolute; top: 0.6rem; right: 0.6rem; background: none; border: 0; color: var(--muted); padding: 0.2rem; }
+  .fc .hear svg { width: 1.2rem; height: 1.2rem; display: block; }
+  .fc:hover .hear { color: var(--marigold-deep); }
+  .phrases { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 0.7rem; }
+  .ph { background: var(--card); border-radius: 16px; padding: 0.85rem 1rem; box-shadow: var(--shadow); display: grid; grid-template-columns: 1fr auto; gap: 0 0.6rem; align-items: center; }
+  .ph .es { grid-column: 1; grid-row: 1; font-family: "Alegreya", Georgia, serif; font-size: 1.4rem; font-weight: 500; }
+  .ph .en { grid-column: 1; grid-row: 2; color: var(--muted); font-size: 0.95rem; }
+  .ph .spk { grid-column: 2; grid-row: 1 / span 2; background: none; border: 0; color: var(--muted); padding: 0.3rem; }
+  .ph .spk svg { width: 1.3rem; height: 1.3rem; display: block; }
+  .ph:hover .spk { color: var(--marigold-deep); }
+  .wordhint { color: var(--muted); font-size: 0.95rem; margin: 0 0 1rem; max-width: 60ch; }
+
+  /* ---------- tutorial overlay ---------- */
+  .tour { position: fixed; inset: 0; z-index: 60; background: var(--ground); display: flex; flex-direction: column; overflow: hidden; }
+  .tour .thdr { flex: none; }
+  .tour .thdr .in { max-width: 50rem; margin: 0 auto; padding: 0.8rem 1.2rem 0.5rem; display: flex; align-items: center; gap: 0.8rem; }
+  .tour .where { font-size: 0.92rem; color: var(--muted); font-weight: 700; }
+  .tour .x { background: var(--card); border: 2px solid var(--line); border-radius: 999px; width: 2.2rem; height: 2.2rem; display: grid; place-items: center; font-size: 1.1rem; color: var(--ink-2); }
+  .tour .x:hover { border-color: var(--rosa); color: var(--rosa); }
+  .tour .bar { max-width: 50rem; margin: 0 auto; padding: 0 1.2rem; width: 100%; }
+  .tour .rail { height: 9px; background: var(--soft2); border-radius: 999px; overflow: hidden; }
+  .tour .rail i { display: block; height: 100%; background: var(--marigold); border-radius: 999px; transition: width 400ms cubic-bezier(.3,.8,.3,1); }
+  .tour .tstage { flex: 1; display: flex; align-items: flex-start; justify-content: center; padding: 1.2rem 1.2rem; min-height: 0; overflow-y: auto; }
+  .tcard { width: 100%; max-width: 36rem; text-align: center; margin: auto 0; }
+  .anim { animation: pop 420ms cubic-bezier(.2,.8,.3,1) both; }
+  @keyframes pop { from { opacity: 0; transform: translateY(14px) scale(.985); } to { opacity: 1; transform: none; } }
+  .tcard .pic { margin: 0 auto 0.4rem; width: 120px; height: 120px; }
+  .tcard .pic svg { width: 100%; height: 100%; display: block; }
+  .eyebrow { display: inline-block; font-size: 0.85rem; font-weight: 700; color: var(--marigold-deep); background: var(--soft); padding: 0.22rem 0.8rem; border-radius: 999px; margin-bottom: 0.6rem; }
+  .tcard h1 { font-weight: 700; font-size: clamp(1.9rem, 6vw, 2.7rem); margin: 0 0 0.5rem; letter-spacing: -0.01em; }
+  .tcard .lede { font-size: 1.12rem; color: var(--ink-2); margin: 0 auto; max-width: 30em; }
+  .tcard .tiny { font-size: 0.95rem; color: var(--muted); margin: 0.9rem auto 0; max-width: 30em; }
+  .tcard .coach { margin-top: 1rem; background: var(--card); border-radius: 18px; padding: 0.85rem 1.1rem; font-size: 0.98rem; color: var(--ink-2); box-shadow: var(--shadow); text-align: left; }
+  .demo { margin: 1.1rem auto 0; background: var(--card); border-radius: 22px; padding: 1rem 1.1rem; box-shadow: 0 3px 14px rgba(60,40,10,.08); text-align: left; max-width: 30rem; }
+  .demo .ln .es { font-size: 1.3rem; }
+  .demo .cards { grid-template-columns: 1fr; gap: 0.5rem; }
+  .demo .card { pointer-events: none; }
+  .demo .vocab, .demo .howto { margin-top: 0.2rem; }
+  .demo .week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 0.7rem; }
+  .demo .week i { display: block; height: 1.7rem; border-radius: 6px; background: var(--soft2); display: grid; place-items: center; font-style: normal; font-size: 0.8rem; font-weight: 700; color: var(--muted); }
+  .demo .week i.on { background: var(--marigold); color: var(--on-marigold); }
+  .demo .week i.last { background: var(--green); color: #fff; }
+  .demo .phrases { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .demo .ph { padding: 0.55rem 0.75rem; box-shadow: none; background: var(--soft2); }
+  .demo .ph .es { font-size: 1.15rem; }
+  .demo .ph .en { font-size: 0.85rem; }
+  .demo .bigline { font-family: "Alegreya", Georgia, serif; font-size: clamp(1.6rem, 5vw, 2.4rem); text-align: center; padding: 1rem 0.5rem 0.4rem; line-height: 1.2; }
+  .demo .bigline + .g { text-align: center; color: var(--muted); }
+  .tour .tfoot { flex: none; max-width: 50rem; margin: 0 auto; width: 100%; padding: 0.6rem 1.2rem 1.3rem; display: flex; justify-content: space-between; gap: 0.6rem; align-items: center; }
+  .tour .tfoot .mid { color: var(--muted); font-size: 0.9rem; }
+
+  /* ---------- tour scenes (show, don't tell) ---------- */
+  .tcard { max-width: 38rem; }
+  .tcard h1 { font-size: clamp(1.8rem, 5.5vw, 2.5rem); }
+  .tcard .lede { font-size: 1.08rem; }
+  .scene { position: relative; margin: 1.1rem auto 0; background: var(--card); border-radius: 22px; padding: 1.2rem 1.3rem; box-shadow: 0 3px 14px rgba(60,40,10,.08); max-width: 32rem; text-align: left; overflow: hidden; }
+  .hand { position: absolute; left: 0; top: 0; width: 30px; height: 36px; pointer-events: none; z-index: 5; opacity: 0; transform: translate(-100px, -100px); transition: transform 600ms cubic-bezier(.3,.7,.25,1), opacity 300ms; filter: drop-shadow(0 3px 4px rgba(0,0,0,.28)); }
+  .hand.show { opacity: 1; }
+  .hand svg { width: 100%; height: 100%; display: block; }
+  .hand.tap svg { animation: tapdown 280ms ease; }
+  @keyframes tapdown { 40% { transform: scale(.82) translateY(3px); } }
+  .press { animation: press 420ms ease; }
+  @keyframes press { 30% { box-shadow: 0 0 0 5px var(--marigold-soft), 0 0 0 7px var(--marigold); } }
+  .waves { display: inline-flex; gap: 3px; align-items: center; margin-left: 2px; height: 1.2rem; }
+  .waves i { display: block; width: 4px; height: 6px; border-radius: 2px; background: var(--marigold); opacity: 0; }
+  .waves.on i { animation: wave 700ms ease-in-out infinite; opacity: 1; }
+  .waves.on.slow i { animation-duration: 1500ms; }
+  .waves i:nth-child(2) { animation-delay: 120ms; } .waves i:nth-child(3) { animation-delay: 240ms; }
+  @keyframes wave { 0%, 100% { height: 6px; } 50% { height: 18px; } }
+  .w.on { background: var(--marigold-soft); box-shadow: 0 0 0 3px var(--marigold-soft); border-radius: 5px; color: var(--ink); }
+
+  /* welcome / ready */
+  .sc-welcome, .sc-ready { background: transparent; box-shadow: none; padding: 0; max-width: 22rem; margin-top: 0.4rem; }
+  .sc-welcome svg, .sc-ready svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .flag { animation: sway 3.2s ease-in-out infinite; }
+  @keyframes sway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+  .chick-bob { animation: bob 1.6s ease-in-out infinite; transform-origin: 50% 100%; }
+  @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px) scaleY(1.03); } }
+  .note-float { animation: floatnote 2.4s ease-in-out infinite; }
+  @keyframes floatnote { 0% { opacity: 0; transform: translateY(6px); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(-16px); } }
+
+  /* lang */
+  .mock-hdr { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; padding-bottom: 0.7rem; border-bottom: 1px solid var(--line); }
+  .mock-hdr .brand { font-size: 1.2rem; }
+  .mock-nav { display: flex; gap: 0.7rem; font-weight: 700; font-size: 0.92rem; color: var(--ink-2); }
+  .mock-nav b { font-weight: 700; transition: color 200ms; }
+  .mock-hdr .langsw { margin-left: auto; }
+  .mock-h { font-family: "Alegreya", Georgia, serif; font-style: italic; font-size: 1.45rem; margin: 0.8rem 0 0.4rem; }
+  .mock-line { display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; }
+  .mock-line .es { font-family: "Alegreya", Georgia, serif; font-size: 1.25rem; }
+  .mock-line .stay { font-size: 0.8rem; color: var(--green); font-weight: 700; background: var(--green-soft); padding: 0.1rem 0.55rem; border-radius: 999px; }
+
+  /* browse */
+  .filters.mini { margin-bottom: 0.8rem; gap: 0.35rem; }
+  .filters.mini button { font-size: 0.85rem; padding: 0.28rem 0.75rem; }
+  .mini-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .mc { position: relative; background: var(--soft2); border-left: 5px solid var(--line); border-radius: 12px; padding: 0.6rem 0.8rem; font-family: "Alegreya", Georgia, serif; font-size: 1.05rem; transition: opacity 400ms, transform 400ms; }
+  .mc.dim { opacity: 0.15; transform: scale(.96); }
+  .mc .start { position: absolute; top: -0.5rem; right: 0.5rem; background: var(--rosa); color: #fff; font-family: "Alegreya Sans", system-ui, sans-serif; font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 0.1rem 0.5rem; border-radius: 999px; }
+  @media (max-width: 420px) { .mini-cards { grid-template-columns: 1fr; } }
+
+  /* read */
+  .sc-read .rl { margin-bottom: 0.7rem; }
+  .sc-read .es { font-family: "Alegreya", Georgia, serif; font-size: clamp(1.7rem, 5.5vw, 2.2rem); line-height: 1.35; }
+  .sc-read .en { font-size: 1rem; color: var(--muted); opacity: 0; transform: translateY(-4px); transition: opacity 400ms, transform 400ms; min-height: 1.4em; }
+  .sc-read .rl.glossed .en { opacity: 1; transform: none; }
+  .sc-read.hide-en .en { opacity: 0; }
+  .sc-read .row { margin-top: 0.4rem; }
+
+  /* listen */
+  .ll { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+  .ll .es { font-family: "Alegreya", Georgia, serif; font-size: clamp(1.5rem, 5vw, 1.9rem); }
+  .ll .spk { background: var(--soft2); border: 0; border-radius: 50%; width: 2.4rem; height: 2.4rem; display: grid; place-items: center; color: var(--marigold-deep); }
+  .ll .spk svg { width: 1.3rem; height: 1.3rem; }
+  .sc-listen .notes { position: absolute; left: 0; right: 0; bottom: 2.6rem; height: 0; pointer-events: none; }
+  .sc-listen .notes i { position: absolute; bottom: 0; font-style: normal; font-size: 1.4rem; color: var(--blue); animation: noteup 1.6s ease-out forwards; }
+  @keyframes noteup { 0% { opacity: 0; transform: translateY(0); } 20% { opacity: 1; } 100% { opacity: 0; transform: translateY(-70px) rotate(12deg); } }
+
+  /* sing */
+  .sc-sing { background: transparent; box-shadow: none; padding: 0.4rem 0 0; display: flex; justify-content: center; }
+  .phone { width: min(100%, 17rem); aspect-ratio: 9 / 12; background: var(--ground); border: 8px solid var(--ink); border-radius: 26px; padding: 1rem 0.9rem 0.8rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 12px 30px -10px rgba(0,0,0,.35); position: relative; }
+  :root[data-theme="dark"] .phone { border-color: #0E0B06; }
+  .phone .preel { flex: 1; width: 100%; position: relative; overflow: hidden; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent); mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent); }
+  .phone .pinner { position: absolute; left: 0; right: 0; top: 0; transition: transform 600ms cubic-bezier(.22,.85,.25,1); }
+  .phone .pl { font-family: "Alegreya", Georgia, serif; font-size: 1.5rem; line-height: 1.25; padding: 0.35rem 0.2rem; opacity: 0.3; transform: scale(.6); transition: transform 600ms cubic-bezier(.22,.85,.25,1), opacity 600ms; }
+  .phone .pl.cur { opacity: 1; transform: none; }
+  .phone .pl .w { display: inline-block; padding: 0 0.1em; border-radius: 4px; transition: background 120ms, box-shadow 120ms; }
+  .phone .pl.cur .w.on { background: var(--marigold-soft); box-shadow: 0 0 0 2px var(--marigold); }
+  .phone .pplay { display: inline-flex; align-items: center; gap: 0.35rem; background: var(--marigold); color: var(--on-marigold); font-weight: 700; font-size: 0.9rem; border-radius: 999px; padding: 0.4rem 1.2rem; margin-top: 0.5rem; }
+  .phone .pplay svg { width: 0.9em; height: 0.9em; }
+  .phone .pplay.on { background: var(--soft); color: var(--ink); box-shadow: inset 0 0 0 2px var(--marigold); }
+  .phone .pcue { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .phone .pbig { font-family: "Alegreya", Georgia, serif; font-size: 1.75rem; line-height: 1.15; margin-top: auto; text-wrap: balance; }
+  .phone .pgl { color: var(--muted); font-size: 0.85rem; margin: 0.4rem 0 auto; }
+  .phone .pbig.in, .phone .pgl.in { animation: pop 320ms ease both; }
+  .phone .pdots { display: flex; gap: 4px; margin-bottom: 0.6rem; }
+  .phone .pdots i { width: 6px; height: 6px; border-radius: 50%; background: var(--line); }
+  .phone .pdots i.on { background: var(--marigold); transform: scale(1.4); } .phone .pdots i.past { background: var(--marigold); opacity: 0.45; }
+  .phone .pnext { background: var(--marigold); color: var(--on-marigold); font-weight: 700; font-size: 0.85rem; border-radius: 999px; padding: 0.35rem 1.2rem; }
+  .phone.press { animation: none; }
+  .phone.press::after { content: ""; position: absolute; left: 50%; top: 52%; width: 14px; height: 14px; border-radius: 50%; border: 3px solid var(--marigold); transform: translate(-50%, -50%); animation: ripple 500ms ease-out forwards; }
+  @keyframes ripple { to { width: 90px; height: 90px; opacity: 0; } }
+
+  /* play (tortillas) */
+  .sc-play { text-align: center; }
+  .pat { display: flex; align-items: flex-end; justify-content: center; gap: 0.2rem; height: 7.4rem; margin-bottom: 0.5rem; }
+  .pat svg { width: 4rem; height: 5.4rem; transition: transform 150ms cubic-bezier(.3,.7,.3,1); transform-origin: 50% 100%; }
+  .pat .hl { transform: translateX(-10px) scaleX(-1) rotate(-14deg); }
+  .pat .hr { transform: translateX(10px) rotate(-14deg); }
+  .pat.hit .hl { transform: translateX(14px) scaleX(-1) rotate(-6deg); }
+  .pat.hit .hr { transform: translateX(-14px) rotate(-6deg); }
+  .tortilla { width: 3rem; height: 3rem; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #F7E2B5, #E9C98A 70%, #D9B372); box-shadow: inset 0 -3px 0 rgba(0,0,0,.08); margin: 0 -0.7rem 1.5rem; z-index: 1; transition: transform 150ms ease; position: relative; }
+  .pat.hit .tortilla { transform: scale(.78, 1.12); }
+  .tortilla::before, .tortilla::after { content: ""; position: absolute; top: -0.6rem; width: 3px; height: 0.7rem; border-radius: 2px; background: var(--marigold); opacity: 0; transition: opacity 120ms, transform 120ms; }
+  .tortilla::before { left: 0.3rem; transform: rotate(-30deg); } .tortilla::after { right: 0.3rem; transform: rotate(30deg); }
+  .pat.hit .tortilla::before, .pat.hit .tortilla::after { opacity: 1; transform: translateY(-5px) rotate(-30deg); }
+  .pat.hit .tortilla::after { transform: translateY(-5px) rotate(30deg); }
+  .syl .sl { font-family: "Alegreya", Georgia, serif; font-size: 1.5rem; display: flex; justify-content: center; gap: 0.35rem; flex-wrap: wrap; }
+  .syl .s { padding: 0 0.1rem; border-radius: 5px; transition: background 120ms, color 120ms; }
+  .syl .s.on { background: var(--marigold); color: var(--on-marigold); }
+  .sc-play .cap { margin-top: 0.4rem; font-size: 0.8rem; color: var(--muted); font-style: italic; font-family: "Alegreya", Georgia, serif; }
+
+  /* words (flip cards) */
+  .fcards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+  .fcard { position: relative; height: 6.2rem; cursor: pointer; border-radius: 14px; }
+  .fcard .in { position: absolute; inset: 0; transition: transform 140ms ease-in; border-radius: 14px; }
+  .fcard.flipping .in { transform: scaleX(0.06); }
+  .fcard .f, .fcard .b { position: absolute; inset: 0; border-radius: 14px; display: grid; place-items: center; font-family: "Alegreya", Georgia, serif; font-size: 1.45rem; }
+  .fcard .f { background: var(--soft2); border: 2px solid var(--line); }
+  .fcard .b { background: var(--soft); border: 2px solid var(--marigold); font-family: "Alegreya Sans", system-ui, sans-serif; font-size: 1.15rem; color: var(--ink-2); opacity: 0; }
+  .fcard.flip .f { opacity: 0; } .fcard.flip .b { opacity: 1; }
+  .fcard .spk { position: absolute; top: 0.3rem; right: 0.3rem; z-index: 2; background: none; border: 0; color: var(--muted); padding: 0.2rem; border-radius: 50%; }
+  .fcard .spk svg { width: 1.1rem; height: 1.1rem; display: block; }
+  .fcard .waves { position: absolute; bottom: 0.4rem; right: 0.5rem; z-index: 2; }
+  @media (max-width: 420px) { .fcards { grid-template-columns: 1fr 1fr; } }
+
+  /* track */
+  .sc-track { text-align: center; }
+  .sc-track .tt { font-family: "Alegreya", Georgia, serif; font-size: 1.3rem; margin-bottom: 0.6rem; }
+  .week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-bottom: 0.9rem; }
+  .day { background: var(--soft2); border-radius: 9px; height: 3.2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; transition: background 300ms; }
+  .day b { font-size: 0.75rem; color: var(--muted); }
+  .day i { font-style: normal; font-size: 1rem; opacity: 0; transform: scale(.5); transition: opacity 250ms, transform 250ms; color: var(--on-marigold); }
+  .day.on { background: var(--marigold); } .day.on b { color: var(--on-marigold); } .day.on i { opacity: 1; transform: none; }
+  .day.done { background: var(--green); } .day.done b { color: #fff; } .day.done i { opacity: 1; transform: none; color: #fff; }
+  .day.done i::before { content: "✓"; } .day.done i { font-size: 0; } .day.done i::before { font-size: 1rem; }
+  .sc-track .know { width: auto; }
+
+  /* talk: a plain transcript */
+  .convo { display: flex; flex-direction: column; gap: 0.7rem; }
+  .turn { display: grid; grid-template-columns: 6.5rem 1fr; gap: 0 0.8rem; align-items: baseline; opacity: 0; transform: translateY(4px); transition: opacity 350ms, transform 350ms; }
+  .turn.on { opacity: 1; transform: none; }
+  .turn small { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--marigold-deep); text-align: right; }
+  .turn.c small { color: var(--rosa); }
+  .turn .es { font-family: "Alegreya", Georgia, serif; font-size: 1.4rem; line-height: 1.25; }
+  .turn .en { grid-column: 2; font-size: 0.92rem; color: var(--muted); }
+  @media (max-width: 420px) { .turn { grid-template-columns: 1fr; } .turn small { text-align: left; } .turn .en { grid-column: 1; } }
+
+  @media (prefers-reduced-motion: reduce) { .flag, .chick-bob, .note-float, .waves.on i { animation: none; } .waves.on i { height: 12px; } .hand { transition: none; } }
+
+  /* toast */
+  .toast { position: fixed; left: 50%; bottom: 1.4rem; transform: translateX(-50%); background: var(--ink); color: var(--ground); padding: 0.55rem 1.1rem; border-radius: 999px; font-weight: 700; font-size: 0.95rem; z-index: 90; opacity: 0; transition: opacity 200ms; pointer-events: none; }
+  .toast.on { opacity: 1; }
+
+  @media print {
+    .hdr, .toolbar, .side, .nextprev, .back, .banner, .filters, .ln .spk { display: none !important; }
+    body { background: #fff; color: #000; } .lyrics { box-shadow: none; padding: 0; }
+  }
+</style>
+
+<div class="hdr">
+  <svg class="picado" viewBox="0 0 1200 38" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <pattern id="pp" x="0" y="0" width="200" height="38" patternUnits="userSpaceOnUse">
+        <path d="M0 6 Q100 12 200 6" fill="none" stroke="#8A7C64" stroke-width="1"/>
+        <g transform="translate(6,6)">
+          <path d="M0 0h36v22l-4 4-5-4-5 4-5-4-5 4-5-4-4 4-3-4z" fill="#F2A62C"/>
+          <circle cx="18" cy="10" r="4" fill="#FBF3E2"/><path d="M12 19h12" stroke="#FBF3E2" stroke-width="2"/>
+        </g>
+        <g transform="translate(56,7)">
+          <path d="M0 0h36v22l-4 4-5-4-5 4-5-4-5 4-5-4-4 4-3-4z" fill="#D6337B"/>
+          <path d="M18 5l3 5h-6z M18 17l-3-5h6z" fill="#FBF3E2"/><circle cx="9" cy="11" r="2" fill="#FBF3E2"/><circle cx="27" cy="11" r="2" fill="#FBF3E2"/>
+        </g>
+        <g transform="translate(106,8)">
+          <path d="M0 0h36v22l-4 4-5-4-5 4-5-4-5 4-5-4-4 4-3-4z" fill="#1F6F9E"/>
+          <path d="M8 12h20M18 4v16" stroke="#FBF3E2" stroke-width="2"/><circle cx="18" cy="12" r="3" fill="#FBF3E2"/>
+        </g>
+        <g transform="translate(156,7)">
+          <path d="M0 0h36v22l-4 4-5-4-5 4-5-4-5 4-5-4-4 4-3-4z" fill="#4C9A5A"/>
+          <circle cx="12" cy="8" r="2.5" fill="#FBF3E2"/><circle cx="24" cy="8" r="2.5" fill="#FBF3E2"/><circle cx="18" cy="15" r="3" fill="#FBF3E2"/>
+        </g>
+      </pattern>
+    </defs>
+    <rect width="1200" height="38" fill="url(#pp)"/>
+  </svg>
+  <div class="in">
+    <a class="brand" href="#/">Cántame <small id="brandSub">Cancionero</small></a>
+    <nav class="nav" id="nav"></nav>
+    <span class="grow"></span>
+    <div class="langsw" role="group" aria-label="Language">
+      <button type="button" data-lang="en">English</button>
+      <button type="button" data-lang="es">Español</button>
+    </div>
+  </div>
+</div>
+
+<main id="view"></main>
+<div id="overlay"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ================= interface strings ================= */
+const I = {
+  nav_songs:{en:"Songs",es:"Canciones"}, nav_words:{en:"Words",es:"Palabras"}, nav_tour:{en:"Tutorial",es:"Tutorial"},
+  hero_h:{en:"Songs your family already knows",es:"Canciones que tu familia ya conoce"},
+  hero_p:{en:"Twenty-one Mexican songs and rhymes for singing with a child. Spanish in big letters, English underneath, a voice to copy, and the game that goes with each one.",es:"Veintiuna canciones y rimas mexicanas para cantar con un niño. El español en grande, el inglés debajo, una voz para copiar y el juego que va con cada una."},
+  stat:{en:"songs you know",es:"canciones que ya saben"},
+  banner:{en:"New here? A two-minute tour shows you how to read, listen, sing and play.",es:"¿Es tu primera vez? Un recorrido de dos minutos te enseña a leer, escuchar, cantar y jugar."},
+  take_tour:{en:"Take the tour",es:"Ver el recorrido"}, dismiss:{en:"Dismiss",es:"Cerrar"},
+  all:{en:"All",es:"Todas"}, start_here:{en:"Start here",es:"Empieza aquí"},
+  start_desc:{en:"Three short songs with a tune or a hand game. Learn these first.",es:"Tres canciones cortas con tonada o juego de manos. Aprende estas primero."},
+  has_tune:{en:"tune",es:"tonada"}, has_game:{en:"game",es:"juego"}, lines:{en:"lines",es:"líneas"},
+  back:{en:"All songs",es:"Todas las canciones"},
+  hear_all:{en:"Hear the whole song",es:"Oír toda la canción"}, stop:{en:"Stop",es:"Parar"},
+  play_tune:{en:"Play the tune",es:"Tocar la tonada"},
+  sing:{en:"Sing together",es:"Cantar juntos"},
+  english:{en:"English",es:"Inglés"}, slow:{en:"Slow",es:"Despacio"}, slow_title:{en:"Slow down the voice and the tune",es:"Hace más lenta la voz y la tonada"},
+  no_voice:{en:"No Spanish voice is installed on this device, so the speaker buttons will use a different accent. Adding a Spanish (Mexico) voice in your system settings fixes this.",es:"Este aparato no tiene una voz en español instalada, así que los botones de bocina usarán otro acento. Agrega una voz de Español (México) en los ajustes del sistema para arreglarlo."},
+  no_speech:{en:"This browser cannot read text aloud. The lyrics and tune still work.",es:"Este navegador no puede leer en voz alta. La letra y la tonada sí funcionan."},
+  how:{en:"How to play",es:"Cómo se juega"}, words:{en:"Words to keep",es:"Palabras para guardar"},
+  tap_word:{en:"Tap a word to hear it.",es:"Toca una palabra para oírla."},
+  know:{en:"We know this one",es:"Ya la sabemos"}, know_on:{en:"We know this one ✓",es:"Ya la sabemos ✓"},
+  know_tip:{en:"Sing it every day for a week, then mark it.",es:"Cántala todos los días una semana y luego márcala."},
+  prev:{en:"Previous",es:"Anterior"}, next:{en:"Next",es:"Siguiente"},
+  cue_stanza:{en:"Verse",es:"Estrofa"}, repeat_more:{en:"…and keep counting up, as far as you like.",es:"…y sigan contando, hasta donde quieran."},
+  close:{en:"Close",es:"Cerrar"}, hear:{en:"Hear it",es:"Oír"}, play:{en:"Play",es:"Reproducir"}, tune:{en:"Tune",es:"Tonada"},
+  sing_hint:{en:"Play hums the tune and scrolls by itself. Tap any line to jump there.",es:"Reproducir tararea la tonada y avanza sola. Toca cualquier línea para ir ahí."},
+  sing_hint_voice:{en:"This song has no tune yet, so Play reads it aloud and scrolls by itself. Tap any line to jump there.",es:"Esta canción aún no tiene tonada, así que Reproducir la lee en voz alta y avanza sola. Toca cualquier línea para ir ahí."}, tap_stage:{en:"Tap the words or press the arrow keys to move.",es:"Toca las palabras o usa las flechas para avanzar."},
+  tab_words:{en:"Song words",es:"Palabras de las canciones"}, tab_phrases:{en:"Phrases for grown-ups",es:"Frases para los grandes"},
+  words_hint:{en:"Every key word from every song. Tap a card to flip it, or the speaker to hear it. Words you have heard in a song you know are marked.",es:"Todas las palabras clave de todas las canciones. Toca una tarjeta para voltearla, o la bocina para oírla."},
+  phrases_hint:{en:"You do not need long sentences. These cover most of what you will say while singing.",es:"No necesitas oraciones largas. Estas cubren casi todo lo que dirás mientras cantan."},
+  from:{en:"from",es:"de"},
+  step:{en:"Step",es:"Paso"}, of:{en:"of",es:"de"},
+  tour_back:{en:"Back",es:"Atrás"}, tour_next:{en:"Next",es:"Siguiente"}, tour_start:{en:"Start",es:"Empezar"}, tour_skip:{en:"Skip the tour",es:"Saltar el recorrido"},
+  try_it:{en:"Try it",es:"Pruébalo"},
+  saved:{en:"Marked as known",es:"Marcada como conocida"}, unsaved:{en:"Unmarked",es:"Desmarcada"},
+  weekdays:{en:["M","T","W","T","F","S","S"],es:["L","M","M","J","V","S","D"]},
+};
+
+/* ================= categories ================= */
+const CATS = [
+  {id:"arrullos", c:"blue", n:{en:"Lullabies",es:"Arrullos"}, d:{en:"Soft songs for the end of the day.",es:"Canciones suaves para el final del día."}, ic:"moon"},
+  {id:"animales", c:"green", n:{en:"Animals",es:"Animales"}, d:{en:"Chicks, frogs, elephants, puppies. The words children learn first.",es:"Pollitos, ranas, elefantes, perritos. Las palabras que los niños aprenden primero."}, ic:"chick"},
+  {id:"jugar", c:"rosa", n:{en:"Games and rounds",es:"Juegos y rondas"}, d:{en:"Circle games and songs with a chase in them. Best with two or more.",es:"Rondas y canciones con persecución. Mejor con dos o más."}, ic:"ring"},
+  {id:"manos", c:"marigold", n:{en:"Hands and laps",es:"Manos y regazo"}, d:{en:"Clapping, bouncing and finger rhymes. Good from the very first months.",es:"Palmas, brincos y rimas con los dedos. Buenas desde los primeros meses."}, ic:"hand"},
+  {id:"fiestas", c:"morado", n:{en:"Celebrations",es:"Fiestas"}, d:{en:"The songs every family birthday needs.",es:"Las canciones que todo cumpleaños familiar necesita."}, ic:"star"},
+];
+
+/* ================= tiny icons ================= */
+const IC = {
+  moon:'<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M13.5 2.5a7.5 7.5 0 1 0 4 13.9A8.5 8.5 0 0 1 13.5 2.5z"/></svg>',
+  chick:'<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><circle cx="8" cy="7" r="4"/><ellipse cx="11" cy="13" rx="6" ry="4.5"/><path d="M3.5 7l-2.5 1 2.5 1z"/></svg>',
+  ring:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><circle cx="10" cy="3.5" r="1.6" fill="currentColor" stroke="none"/><circle cx="16.5" cy="10" r="1.6" fill="currentColor" stroke="none"/><circle cx="10" cy="16.5" r="1.6" fill="currentColor" stroke="none"/><circle cx="3.5" cy="10" r="1.6" fill="currentColor" stroke="none"/></svg>',
+  hand:'<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M6 18c-2 0-3.2-1.4-3.6-3L1.5 9.8a1.3 1.3 0 0 1 2.4-.9L5 11V4.2a1.3 1.3 0 0 1 2.6 0V9h.8V2.8a1.3 1.3 0 0 1 2.6 0V9h.8V3.8a1.3 1.3 0 0 1 2.6 0V9h.8V6.2a1.3 1.3 0 0 1 2.6 0V13c0 3-2 5-5 5H6z"/></svg>',
+  star:'<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 1.5l2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L10 14.9l-5.3 2.8 1.1-5.9L1.5 7.7l5.9-.8z"/></svg>',
+  note:'<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M8 3v10.2a3 3 0 1 0 2 2.8V7l6-1.5V3L8 3z"/></svg>',
+  spk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" stroke="none"/><path d="M16 8.5a4.5 4.5 0 0 1 0 7"/><path d="M18.5 5.5a8 8 0 0 1 0 13"/></svg>',
+  play:'<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 3l12 7-12 7z"/></svg>',
+  stopi:'<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><rect x="4" y="4" width="12" height="12" rx="2"/></svg>',
+  singi:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="7" y="2" width="6" height="10" rx="3" fill="currentColor" stroke="none"/><path d="M4 9a6 6 0 0 0 12 0M10 15v3M7 18h6"/></svg>',
+  check:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>',
+  back:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4l-6 6 6 6"/></svg>',
+};
+
+/* ================= drawings for the tour ================= */
+const PIC = {
+  picado:'<svg viewBox="0 0 120 120" aria-hidden="true"><path d="M6 30 Q60 42 114 30" fill="none" stroke="#8A7C64" stroke-width="2"/><g transform="translate(12,32)"><path d="M0 0h28v26l-3 4-4-4-4 4-4-4-4 4-4-4-3 4-2-4z" fill="#F2A62C"/><circle cx="14" cy="12" r="4" fill="#FBF3E2"/></g><g transform="translate(46,36)"><path d="M0 0h28v26l-3 4-4-4-4 4-4-4-4 4-4-4-3 4-2-4z" fill="#D6337B"/><path d="M14 6l4 6h-8zM14 20l-4-6h8z" fill="#FBF3E2"/></g><g transform="translate(80,33)"><path d="M0 0h28v26l-3 4-4-4-4 4-4-4-4 4-4-4-3 4-2-4z" fill="#1F6F9E"/><path d="M6 13h16M14 5v16" stroke="#FBF3E2" stroke-width="2.5"/></g><path d="M30 92c8-10 22-10 30 0c8-10 22-10 30 0" fill="none" stroke="#4C9A5A" stroke-width="3" stroke-linecap="round"/></svg>',
+  chick:'<svg viewBox="0 0 120 120" aria-hidden="true"><ellipse cx="66" cy="76" rx="32" ry="26" fill="#F2A62C"/><circle cx="44" cy="52" r="20" fill="#F2A62C"/><circle cx="38" cy="48" r="3" fill="#2A2418"/><path d="M22 54l-10 3 10 4z" fill="#D6337B"/><path d="M66 60c10-6 22-4 28 6" fill="none" stroke="#C97C10" stroke-width="3" stroke-linecap="round"/><path d="M56 102v8M74 102v8" stroke="#C97C10" stroke-width="4" stroke-linecap="round"/><path d="M50 110h12M68 110h12" stroke="#C97C10" stroke-width="4" stroke-linecap="round"/></svg>',
+  globe:'<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="40" fill="#D9EDF7" stroke="#1F6F9E" stroke-width="3"/><ellipse cx="60" cy="60" rx="16" ry="40" fill="none" stroke="#1F6F9E" stroke-width="2.5"/><path d="M20 60h80M28 40h64M28 80h64" stroke="#1F6F9E" stroke-width="2.5"/><circle cx="30" cy="30" r="12" fill="#F2A62C"/><text x="30" y="35" font-family="Alegreya Sans,sans-serif" font-size="13" font-weight="700" text-anchor="middle" fill="#3A2A08">en</text><circle cx="92" cy="92" r="12" fill="#D6337B"/><text x="92" y="97" font-family="Alegreya Sans,sans-serif" font-size="13" font-weight="700" text-anchor="middle" fill="#fff">es</text></svg>',
+  book:'<svg viewBox="0 0 120 120" aria-hidden="true"><path d="M18 26q22-6 42 6q20-12 42-6v66q-22-6-42 6q-20-12-42-6z" fill="#FDEBCB" stroke="#C97C10" stroke-width="3" stroke-linejoin="round"/><path d="M60 32v66" stroke="#C97C10" stroke-width="3"/><path d="M28 44h22M28 56h22M28 68h16M70 44h22M70 56h22M70 68h14" stroke="#1F6F9E" stroke-width="3" stroke-linecap="round"/><circle cx="96" cy="26" r="12" fill="#D6337B"/><path d="M96 19l2.2 4.5 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7z" fill="#fff"/></svg>',
+  read:'<svg viewBox="0 0 120 120" aria-hidden="true"><rect x="14" y="22" width="92" height="76" rx="12" fill="#fff" stroke="#E7D9BC" stroke-width="3"/><text x="26" y="54" font-family="Alegreya,serif" font-size="22" fill="#2A2418">Pío, pío</text><text x="26" y="72" font-family="Alegreya Sans,sans-serif" font-size="12" fill="#8A7C64">peep, peep</text><circle cx="92" cy="60" r="10" fill="#FDEBCB"/><path d="M86 60l4 4 7-8" fill="none" stroke="#C97C10" stroke-width="2.5" stroke-linecap="round"/></svg>',
+  ear:'<svg viewBox="0 0 120 120" aria-hidden="true"><path d="M44 42a20 20 0 0 1 40 0c0 12-10 14-12 24-1 8-6 14-14 14" fill="none" stroke="#1F6F9E" stroke-width="6" stroke-linecap="round"/><path d="M58 44a8 8 0 0 1 14 4" fill="none" stroke="#1F6F9E" stroke-width="4" stroke-linecap="round"/><path d="M26 50q-8 10 0 20M18 40q-14 20 0 40" fill="none" stroke="#F2A62C" stroke-width="4" stroke-linecap="round"/><path d="M92 92c6-6 14-6 20 0" fill="none" stroke="#D6337B" stroke-width="3" stroke-linecap="round"/></svg>',
+  sing:'<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="40" cy="44" r="16" fill="#F2A62C"/><path d="M18 100c0-20 10-30 22-30s22 10 22 30z" fill="#F2A62C"/><circle cx="84" cy="60" r="11" fill="#D6337B"/><path d="M68 100c0-14 7-22 16-22s16 8 16 22z" fill="#D6337B"/><path d="M52 30q10-14 20-4M60 20q6-6 12 0" fill="none" stroke="#1F6F9E" stroke-width="3" stroke-linecap="round"/><path d="M98 44q8-6 14 2" fill="none" stroke="#1F6F9E" stroke-width="3" stroke-linecap="round"/></svg>',
+  hands:'<svg viewBox="0 0 120 120" aria-hidden="true"><path d="M30 96c-8-2-12-8-13-16l-5-22a5 5 0 0 1 9-3l4 10V32a5 5 0 0 1 10 0v22h3V26a5 5 0 0 1 10 0v28h3V30a5 5 0 0 1 10 0v40c0 14-8 26-24 26z" fill="#F2A62C"/><path d="M90 96c8-2 12-8 13-16l5-22a5 5 0 0 0-9-3l-4 10V32a5 5 0 0 0-10 0v22h-3V26a5 5 0 0 0-10 0v28h-3V30a5 5 0 0 0-10 0v40c0 14 8 26 24 26z" fill="#D6337B" opacity=".9"/></svg>',
+  words:'<svg viewBox="0 0 120 120" aria-hidden="true"><rect x="12" y="30" width="56" height="40" rx="8" fill="#fff" stroke="#E7D9BC" stroke-width="3"/><text x="40" y="56" font-family="Alegreya,serif" font-size="18" text-anchor="middle" fill="#2A2418">gallina</text><rect x="52" y="52" width="56" height="40" rx="8" fill="#FDEBCB" stroke="#F2A62C" stroke-width="3"/><text x="80" y="77" font-family="Alegreya Sans,sans-serif" font-size="14" text-anchor="middle" fill="#574C38">hen</text></svg>',
+  week:'<svg viewBox="0 0 120 120" aria-hidden="true"><g fill="#F2A62C"><rect x="10" y="50" width="12" height="20" rx="3"/><rect x="25" y="50" width="12" height="20" rx="3"/><rect x="40" y="50" width="12" height="20" rx="3"/><rect x="55" y="50" width="12" height="20" rx="3"/><rect x="70" y="50" width="12" height="20" rx="3"/><rect x="85" y="50" width="12" height="20" rx="3"/></g><rect x="100" y="44" width="14" height="26" rx="3" fill="#4C9A5A"/><path d="M103 57l3 3 6-7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><path d="M14 36q46-16 96 0" fill="none" stroke="#D6337B" stroke-width="3" stroke-linecap="round"/></svg>',
+  talk:'<svg viewBox="0 0 120 120" aria-hidden="true"><path d="M14 30h56a8 8 0 0 1 8 8v22a8 8 0 0 1-8 8H36l-14 12V68h-8a8 8 0 0 1-8-8V38a8 8 0 0 1 8-8z" fill="#FDEBCB" stroke="#C97C10" stroke-width="3"/><text x="42" y="54" font-family="Alegreya,serif" font-size="16" text-anchor="middle" fill="#2A2418">¿Cantamos?</text><path d="M106 58H70a8 8 0 0 0-8 8v14a8 8 0 0 0 8 8h22l10 10V88h4a8 8 0 0 0 8-8V66a8 8 0 0 0-8-8z" fill="#D9EDF7" stroke="#1F6F9E" stroke-width="3"/><text x="86" y="78" font-family="Alegreya,serif" font-size="16" text-anchor="middle" fill="#2A2418">¡Sí!</text></svg>',
+};
+
+/* ================= songs ================= */
+const L = (es,en)=>({es,en});
+const SONGS = [
+{ id:"pollitos", cat:"animales", title:"Los pollitos dicen", start:true, melody:"pollitos",
+  note:{en:"The most-sung nursery song in Mexico and across Latin America. Listen for <b>acurrucaditos</b>: a diminutive stacked on a diminutive, which is a very Mexican way of talking to small children.",
+        es:"La canción infantil más cantada en México y en toda Latinoamérica. Fíjate en <b>acurrucaditos</b>: un diminutivo encima de otro, una forma muy mexicana de hablarle a los niños chiquitos."},
+  how:{en:["Make beaks with your fingers and open them on every pío.","Hug your arms and shiver on frío.","Fold your arms like wings over the child on the last verse, and sing it softer."],
+       es:["Haz piquitos con los dedos y ábrelos en cada pío.","Abrázate y tiembla en frío.","En la última estrofa, tapa al niño con los brazos como alas y cántala más suave."]},
+  stanzas:[
+    [L("Los pollitos dicen","The little chicks say"),L("pío, pío, pío,","peep, peep, peep,"),L("cuando tienen hambre,","when they are hungry,"),L("cuando tienen frío.","when they are cold.")],
+    [L("La gallina busca","The hen looks for"),L("el maíz y el trigo,","the corn and the wheat,"),L("les da la comida","she gives them their food"),L("y les presta abrigo.","and lends them her warmth.")],
+    [L("Bajo sus dos alas,","Under her two wings,"),L("acurrucaditos,","all snuggled up,"),L("hasta el otro día","until the next day"),L("duermen los pollitos.","the little chicks sleep.")]],
+  vocab:[L("pollito","little chick"),L("gallina","hen"),L("hambre","hunger"),L("frío","cold"),L("maíz","corn"),L("alas","wings"),L("acurrucados","snuggled up")] },
+
+{ id:"tortillitas", cat:"manos", title:"Tortillitas de manteca", start:true,
+  note:{en:"The Mexican pat-a-cake. The clap is the tortilla pat, the same motion an abuela makes at the comal. The second verse swaps who is grumpy so nobody stays <b>enojado</b>.",
+        es:"El pat-a-cake mexicano. La palmada es la de hacer tortillas, el mismo movimiento de la abuela en el comal. La segunda estrofa cambia quién está enojado para que nadie se quede <b>enojado</b>."},
+  how:{en:["Sit facing the child. Hold their hands and pat them together like making tortillas.","Point to mamá or papá when you name them.","Make a happy face on contenta and feliz, a grumpy face on enojado."],
+       es:["Siéntate frente al niño. Tómale las manos y pálmeaselas como haciendo tortillas.","Señala a mamá o papá cuando los nombres.","Cara contenta en contenta y feliz, cara de enojo en enojado."]},
+  stanzas:[
+    [L("Tortillitas de manteca","Little tortillas made with lard"),L("pa' mamá que está contenta.","for mama, who is happy."),L("Tortillitas de salvado","Little tortillas made with bran"),L("pa' papá que está enojado.","for papa, who is grumpy.")],
+    [L("Tortillitas de cebada","Little tortillas made with barley"),L("pa' mamá que está enojada.","for mama, who is grumpy."),L("Tortillitas de maíz","Little tortillas made with corn"),L("pa' papá que está feliz.","for papa, who is happy.")]],
+  vocab:[L("tortilla","tortilla"),L("manteca","lard"),L("mamá","mom"),L("papá","dad"),L("contenta","happy (she)"),L("enojado","grumpy, angry (he)"),L("feliz","happy")] },
+
+{ id:"estrellita", cat:"arrullos", title:"Estrellita, ¿dónde estás?", start:true, melody:"estrellita",
+  note:{en:"Same tune as Twinkle, Twinkle. A bridge song: your child already knows the melody, so the Spanish rides in on it for free. <b>Titilar</b> is to twinkle.",
+        es:"La misma tonada que Twinkle, Twinkle. Una canción puente: tu hijo ya conoce la melodía, así que el español entra solo. <b>Titilar</b> es parpadear como una estrella."},
+  how:{en:["Open and close your hands above your head on estrellita.","Shade your eyes and look around on ¿dónde estás?","Point up on cielo and make waves on mar."],
+       es:["Abre y cierra las manos sobre la cabeza en estrellita.","Tápate los ojos y busca en ¿dónde estás?","Señala arriba en cielo y haz olas en mar."]},
+  stanzas:[
+    [L("Estrellita, ¿dónde estás?","Little star, where are you?"),L("Quiero verte titilar.","I want to see you twinkle."),L("En el cielo o en el mar,","In the sky or in the sea,"),L("un diamante de verdad.","a real diamond."),L("Estrellita, ¿dónde estás?","Little star, where are you?"),L("Quiero verte titilar.","I want to see you twinkle.")]],
+  vocab:[L("estrella","star"),L("estrellita","little star"),L("¿dónde?","where?"),L("cielo","sky"),L("mar","sea"),L("diamante","diamond"),L("quiero","I want")] },
+
+{ id:"rorro", cat:"arrullos", title:"A la rorro niño",
+  note:{en:"The lullaby most Mexican grandmothers sang. <b>Rorro</b> is an old, tender word for a baby. The verses are little jokes: the baby born by day wants ice cream, the baby born by night wants a ride.",
+        es:"El arrullo que cantaban casi todas las abuelas mexicanas. <b>Rorro</b> es una palabra vieja y tierna para bebé. Las estrofas son bromitas: el que nació de día quiere nieve, el que nació de noche quiere paseo."},
+  how:{en:["Rock side to side, one sway per rorro.","Sing it a little slower each time through.","Hum the last verse with your lips closed."],
+       es:["Mécete de lado a lado, un vaivén por cada rorro.","Cántala un poco más despacio cada vuelta.","Tararea la última estrofa con los labios cerrados."]},
+  stanzas:[
+    [L("A la rorro, niño,","Hush-a-bye, baby,"),L("a la rorrorró,","hush-a-bye-o,"),L("duérmete, mi niño,","go to sleep, my child,"),L("duérmete, mi amor.","go to sleep, my love.")],
+    [L("Este niño lindo","This pretty baby"),L("que nació de día,","who was born by day"),L("quiere que lo lleven","wants to be taken"),L("a la nevería.","to the ice-cream shop.")],
+    [L("Este niño lindo","This pretty baby"),L("que nació de noche,","who was born at night"),L("quiere que lo lleven","wants to be taken"),L("a pasear en coche.","for a ride in the car.")]],
+  vocab:[L("niño","child, baby"),L("duérmete","go to sleep"),L("mi amor","my love"),L("día","day"),L("noche","night"),L("coche","car"),L("nevería","ice-cream shop")] },
+
+{ id:"santaana", cat:"arrullos", title:"Señora Santa Ana",
+  note:{en:"A lullaby from colonial times, still sung all over Mexico. The last line, <b>pedazo de mi corazón</b>, is something parents say to children to this day.",
+        es:"Un arrullo de la época colonial que todavía se canta en todo México. La última línea, <b>pedazo de mi corazón</b>, es algo que los papás siguen diciendo a sus hijos."},
+  how:{en:["Pat the child's back slowly on the beat.","Lower your voice on each verse; the last one is almost a whisper.","Hold the last word as long as you can."],
+       es:["Dale palmaditas lentas en la espalda al ritmo.","Baja la voz en cada estrofa; la última es casi un susurro.","Sostén la última palabra lo más que puedas."]},
+  stanzas:[
+    [L("Señora Santa Ana,","Lady Saint Anne,"),L("¿por qué llora el niño?","why is the baby crying?"),L("Por una manzana","Over an apple"),L("que se le ha perdido.","that he has lost.")],
+    [L("Vamos a la huerta,","Let's go to the orchard,"),L("cortaremos dos:","we'll pick two:"),L("una para el niño","one for the baby"),L("y otra para vos.","and one for you.")],
+    [L("Duérmete, mi niño,","Sleep, my child,"),L("duérmete, mi sol,","sleep, my sunshine,"),L("duérmete, pedazo","sleep, little piece"),L("de mi corazón.","of my heart.")]],
+  vocab:[L("llorar","to cry"),L("manzana","apple"),L("huerta","orchard"),L("sol","sun"),L("corazón","heart"),L("pedazo","piece")] },
+
+{ id:"elefante", cat:"animales", title:"Un elefante se balanceaba", open:true,
+  note:{en:"A counting song that goes as high as you like. The fun is the ending: the web finally gives way and everyone tumbles. <b>Tela de araña</b> is a spider's web.",
+        es:"Una canción para contar hasta donde quieran. Lo divertido es el final: la telaraña por fin se rompe y todos se caen. <b>Tela de araña</b> es telaraña."},
+  how:{en:["Sway side to side like an elephant on a wobbly web.","Hold up fingers for the number.","Decide together which number breaks the web, then fall down laughing."],
+       es:["Balancéense de lado a lado como elefantes en una telaraña.","Levanten los dedos con el número.","Decidan juntos en qué número se rompe la telaraña, y cáiganse riendo."]},
+  stanzas:[
+    [L("Un elefante se balanceaba","One elephant was swinging"),L("sobre la tela de una araña.","on a spider's web."),L("Como veía que resistía,","When he saw that it held,"),L("fue a llamar a otro elefante.","he went to call another elephant.")],
+    [L("Dos elefantes se balanceaban","Two elephants were swinging"),L("sobre la tela de una araña.","on a spider's web."),L("Como veían que resistía,","When they saw that it held,"),L("fueron a llamar a otro elefante.","they went to call another elephant.")],
+    [L("Tres elefantes se balanceaban","Three elephants were swinging"),L("sobre la tela de una araña.","on a spider's web."),L("Como veían que resistía,","When they saw that it held,"),L("fueron a llamar a otro elefante.","they went to call another elephant.")]],
+  vocab:[L("elefante","elephant"),L("araña","spider"),L("tela de araña","spider's web"),L("uno, dos, tres","one, two, three"),L("otro","another"),L("llamar","to call")] },
+
+{ id:"rana", cat:"animales", title:"Cucú, cantaba la rana",
+  note:{en:"In Spanish a frog does not say ribbit, it says <b>cucú</b>. The song is a parade of people passing by, so it teaches who and what without trying.",
+        es:"En español la rana no dice ribbit, dice <b>cucú</b>. La canción es un desfile de gente que pasa, así que enseña quién y qué sin esfuerzo."},
+  how:{en:["The child sings every cucú, cucú. You sing the rest.","Act out each passer-by: tip a hat, swish a gown, sell rosemary.","Pretend to cry on the last line, then laugh."],
+       es:["El niño canta todos los cucú, cucú. Tú cantas lo demás.","Actúa cada personaje: el sombrero, el vestido, el romero.","Haz que lloras en la última línea, y luego ríete."]},
+  stanzas:[
+    [L("Cucú, cucú, cantaba la rana,","Ribbit, ribbit, sang the frog,"),L("cucú, cucú, debajo del agua.","ribbit, ribbit, under the water."),L("Cucú, cucú, pasó un caballero,","Ribbit, ribbit, a gentleman went by,"),L("cucú, cucú, con capa y sombrero.","ribbit, ribbit, with a cape and a hat.")],
+    [L("Cucú, cucú, pasó una señora,","Ribbit, ribbit, a lady went by,"),L("cucú, cucú, con traje de cola.","ribbit, ribbit, in a gown with a train."),L("Cucú, cucú, pasó un marinero,","Ribbit, ribbit, a sailor went by,"),L("cucú, cucú, vendiendo romero.","ribbit, ribbit, selling rosemary.")],
+    [L("Cucú, cucú, le pidió un ramito,","Ribbit, ribbit, she asked him for a sprig,"),L("cucú, cucú, no le quiso dar,","ribbit, ribbit, he would not give her one,"),L("cucú, cucú, y se echó a llorar.","ribbit, ribbit, and she burst into tears.")]],
+  vocab:[L("rana","frog"),L("agua","water"),L("caballero","gentleman"),L("sombrero","hat"),L("señora","lady"),L("marinero","sailor"),L("llorar","to cry")] },
+
+{ id:"perritos", cat:"animales", title:"Los diez perritos",
+  note:{en:"Counting down from ten with a rhyme for every number. Each puppy leaves for a silly reason. This is how a lot of Mexican kids learned <b>nueve, ocho, siete</b>.",
+        es:"Cuenta regresiva del diez con una rima para cada número. Cada perrito se va por una razón chistosa. Así aprendieron muchos niños mexicanos <b>nueve, ocho, siete</b>."},
+  how:{en:["Start with ten fingers up. Fold one down each verse.","Let the child shout the number at the end of each verse.","Bark once when the last puppy goes."],
+       es:["Empieza con los diez dedos arriba. Baja uno en cada estrofa.","Deja que el niño grite el número al final de cada estrofa.","Ladren una vez cuando se va el último perrito."]},
+  stanzas:[
+    [L("Yo tenía diez perritos,","I had ten little puppies,"),L("yo tenía diez perritos.","I had ten little puppies."),L("Uno se perdió en la nieve,","One got lost in the snow,"),L("no me quedan más que nueve.","now I only have nine.")],
+    [L("De los nueve que tenía,","Of the nine I had,"),L("uno se comió un bizcocho,","one ate a biscuit,"),L("no me quedan más que ocho.","now I only have eight.")],
+    [L("De los ocho que tenía,","Of the eight I had,"),L("uno se subió a un cohete,","one climbed onto a rocket,"),L("no me quedan más que siete.","now I only have seven.")],
+    [L("De los siete que tenía,","Of the seven I had,"),L("uno se fue con Moisés,","one went off with Moisés,"),L("no me quedan más que seis.","now I only have six.")],
+    [L("De los seis que tenía,","Of the six I had,"),L("uno se pegó un brinco,","one took a big jump,"),L("no me quedan más que cinco.","now I only have five.")],
+    [L("De los cinco que tenía,","Of the five I had,"),L("uno se fue al teatro,","one went to the theater,"),L("no me quedan más que cuatro.","now I only have four.")],
+    [L("De los cuatro que tenía,","Of the four I had,"),L("uno se volteó al revés,","one flipped upside down,"),L("no me quedan más que tres.","now I only have three.")],
+    [L("De los tres que tenía,","Of the three I had,"),L("uno se enfermó de tos,","one came down with a cough,"),L("no me quedan más que dos.","now I only have two.")],
+    [L("De los dos que tenía,","Of the two I had,"),L("uno se fue con Bruno,","one went off with Bruno,"),L("no me queda más que uno.","now I only have one.")],
+    [L("Y el uno que tenía","And the one I had"),L("se fue al campo un día,","went off to the countryside one day,"),L("y ya no me queda ninguno.","and now I have none at all.")]],
+  vocab:[L("perrito","puppy"),L("diez","ten"),L("nueve","nine"),L("ocho","eight"),L("siete","seven"),L("nieve","snow"),L("brinco","jump"),L("ninguno","none")] },
+
+{ id:"colores", cat:"animales", title:"De colores",
+  note:{en:"An old song that came to Mexico from Spain and became the anthem of the farmworkers' movement in California. For Mexican-American families it carries both places at once. The second verse is a barnyard.",
+        es:"Una canción vieja que llegó a México de España y se volvió el himno del movimiento campesino en California. Para las familias mexicoamericanas lleva los dos lugares a la vez. La segunda estrofa es un corral."},
+  how:{en:["Paint the air with big brushstrokes on de colores.","Make a rainbow arch with both arms on arcoíris.","Crow, cluck and peep with the rooster, the hen and the chicks."],
+       es:["Pinta el aire con brochazos grandes en de colores.","Haz un arco con los dos brazos en arcoíris.","Canten como el gallo, la gallina y los pollitos."]},
+  stanzas:[
+    [L("De colores, de colores","In colors, in colors"),L("se visten los campos en la primavera.","the fields dress themselves in spring."),L("De colores, de colores","In colors, in colors"),L("son los pajaritos que vienen de afuera.","are the little birds that come from far away."),L("De colores, de colores","In colors, in colors"),L("es el arcoíris que vemos lucir.","is the rainbow we see shining."),L("Y por eso los grandes amores","And that is why the great loves"),L("de muchos colores me gustan a mí.","of many colors are the ones I like.")],
+    [L("Canta el gallo, canta el gallo","The rooster sings, the rooster sings"),L("con el quiri, quiri, quiri, quiri, quiri.","with his cock-a-doodle-doo."),L("La gallina, la gallina","The hen, the hen"),L("con el cara, cara, cara, cara, cara.","with her cluck, cluck, cluck."),L("Los pollitos, los pollitos","The chicks, the chicks"),L("con el pío, pío, pío, pío, pí.","with their peep, peep, peep."),L("Y por eso los grandes amores","And that is why the great loves"),L("de muchos colores me gustan a mí.","of many colors are the ones I like.")]],
+  vocab:[L("colores","colors"),L("campo","field, countryside"),L("primavera","spring"),L("pajarito","little bird"),L("arcoíris","rainbow"),L("gallo","rooster"),L("me gustan","I like them")] },
+
+{ id:"caballito", cat:"animales", title:"Caballito blanco",
+  note:{en:"A song about the <b>pueblo</b> you come from. A natural moment to name the town where abuela or abuelo was born.",
+        es:"Una canción sobre el <b>pueblo</b> de donde uno viene. Un momento natural para nombrar el pueblo donde nació la abuela o el abuelo."},
+  how:{en:["Bounce the child on your knee like a horse.","Say the name of your family's town on mi pueblo.","Count three sheep on your fingers."],
+       es:["Brinca al niño en la rodilla como caballito.","Di el nombre del pueblo de tu familia en mi pueblo.","Cuenta tres ovejas con los dedos."]},
+  stanzas:[
+    [L("Caballito blanco,","Little white horse,"),L("llévame de aquí,","take me away from here,"),L("llévame a mi pueblo","take me to my town"),L("donde yo nací.","where I was born.")],
+    [L("Tengo, tengo, tengo,","I have, I have, I have,"),L("tú no tienes nada,","you have nothing at all,"),L("tengo tres ovejas","I have three sheep"),L("en una cabaña.","in a little cabin.")],
+    [L("Una me da leche,","One gives me milk,"),L("otra me da lana,","another gives me wool,"),L("y otra me mantiene","and the other keeps me fed"),L("toda la semana.","all week long.")]],
+  vocab:[L("caballo","horse"),L("blanco","white"),L("pueblo","town, village"),L("oveja","sheep"),L("leche","milk"),L("lana","wool"),L("semana","week")] },
+
+{ id:"vibora", cat:"jugar", title:"A la víbora de la mar",
+  note:{en:"The game at every Mexican wedding: the couple stand on chairs holding the veil as a bridge and the guests snake underneath. At home two grown-ups make the arch. Whoever gets caught on <b>tras, tras, tras</b> picks melón or sandía.",
+        es:"El juego de toda boda mexicana: los novios se suben a las sillas con el velo como puente y los invitados pasan en fila debajo. En casa, dos adultos hacen el arco. A quien atrapan en <b>tras, tras, tras</b> escoge melón o sandía."},
+  how:{en:["Two people join hands high to make an arch.","Everyone else holds hands in a line and runs under, again and again.","The arch drops on tras, tras, tras and traps someone.","The trapped one whispers melón or sandía and joins that side."],
+       es:["Dos personas se toman de las manos en alto para hacer un arco.","Los demás se toman de las manos en fila y pasan por debajo, una y otra vez.","El arco baja en tras, tras, tras y atrapa a alguien.","El atrapado dice en secreto melón o sandía y se pasa a ese lado."]},
+  stanzas:[
+    [L("A la víbora, víbora","To the snake, the snake"),L("de la mar, de la mar,","of the sea, of the sea,"),L("por aquí pueden pasar.","this way you may pass."),L("Los de adelante corren mucho","The ones in front run fast"),L("y los de atrás se quedarán,","and the ones behind will stay,"),L("tras, tras, tras, tras.","stay, stay, stay, stay.")],
+    [L("Una mexicana","A Mexican woman"),L("que fruta vendía:","who sold fruit:"),L("ciruela, chabacano,","plum, apricot,"),L("melón o sandía.","melon or watermelon.")],
+    [L("Verbena, verbena,","Verbena, verbena,"),L("jardín de matatena.","garden of jacks."),L("Verbena, verbena,","Verbena, verbena,"),L("la Virgen de la Cueva.","the Virgin of the Cave.")],
+    [L("Campanita de oro,","Little golden bell,"),L("déjame pasar","let me pass"),L("con todos mis hijos,","with all my children,"),L("menos el de atrás,","except the one at the back,"),L("tras, tras, tras, tras.","back, back, back, back.")],
+    [L("Será melón, será sandía,","Will it be melon, will it be watermelon,"),L("será la vieja del otro día,","will it be the old lady from the other day,"),L("día, día, día, día.","day, day, day, day.")]],
+  vocab:[L("víbora","snake"),L("mar","sea"),L("fruta","fruit"),L("ciruela","plum"),L("chabacano","apricot (Mexico)"),L("melón","melon"),L("sandía","watermelon"),L("campanita","little bell")] },
+
+{ id:"naranja", cat:"jugar", title:"Naranja dulce",
+  note:{en:"A circle game with a hug in the middle of it. <b>Sololoy</b> is how children said celuloide, the plastic old dolls were made of. The tacos line at the end always gets a laugh.",
+        es:"Una ronda con un abrazo a la mitad. <b>Sololoy</b> es como los niños decían celuloide, el plástico de las muñecas de antes. La línea de los tacos al final siempre da risa."},
+  how:{en:["Hold hands in a circle and walk around while singing.","On dame un abrazo, hug the person next to you.","March in place on toca la marcha.","On no le doy, everyone sits down fast."],
+       es:["Tómense de las manos en círculo y caminen mientras cantan.","En dame un abrazo, abraza a quien tengas al lado.","Marchen en su lugar en toca la marcha.","En no le doy, todos se sientan rápido."]},
+  stanzas:[
+    [L("Naranja dulce,","Sweet orange,"),L("limón partido,","lemon cut in half,"),L("dame un abrazo","give me a hug,"),L("que yo te pido.","I'm asking you.")],
+    [L("Si fueran falsos","If my promises"),L("mis juramentos,","were false,"),L("en poco tiempo","in a little while"),L("se olvidarán.","they will be forgotten.")],
+    [L("Toca la marcha,","Play the march,"),L("mi pecho llora,","my heart is crying,"),L("adiós, señora,","goodbye, señora,"),L("yo ya me voy","I'm off now")],
+    [L("a mi casita","to my little house"),L("de sololoy,","made of celluloid,"),L("a comer tacos","to eat tacos"),L("y no le doy.","and I won't share.")]],
+  vocab:[L("naranja","orange"),L("dulce","sweet"),L("limón","lemon, lime"),L("abrazo","hug"),L("adiós","goodbye"),L("casita","little house"),L("tacos","tacos")] },
+
+{ id:"blanca", cat:"jugar", title:"Doña Blanca",
+  note:{en:"A Mexican <b>ronda</b> known since colonial times. A jicote is a big wasp, from the Nahuatl xicotli, so this game carries an indigenous word in it.",
+        es:"Una <b>ronda</b> mexicana conocida desde la época colonial. Un jicote es una avispa grande, del náhuatl xicotli, así que este juego lleva una palabra indígena."},
+  how:{en:["One child is Doña Blanca and stands in the middle.","The others hold hands around her: they are the pillars.","One child outside is the jicotillo. On the last line it tries to break through the pillars to reach Doña Blanca."],
+       es:["Un niño es Doña Blanca y se para en medio.","Los demás se toman de las manos alrededor: son los pilares.","Un niño afuera es el jicotillo. En la última línea trata de romper los pilares para llegar a Doña Blanca."]},
+  stanzas:[
+    [L("Doña Blanca está cubierta","Doña Blanca is surrounded"),L("de pilares de oro y plata.","by pillars of gold and silver."),L("Romperemos un pilar","We will break a pillar"),L("para ver a Doña Blanca.","to see Doña Blanca.")],
+    [L("¿Quién es ese jicotillo","Who is that little wasp"),L("que anda en pos de Doña Blanca?","chasing after Doña Blanca?"),L("Yo soy ese jicotillo","I am that little wasp"),L("que anda en pos de Doña Blanca.","chasing after Doña Blanca.")]],
+  vocab:[L("oro","gold"),L("plata","silver"),L("pilar","pillar"),L("romper","to break"),L("jicote","big wasp (Mexico)"),L("¿quién?","who?")] },
+
+{ id:"arroz", cat:"jugar", title:"Arroz con leche",
+  note:{en:"Also a dessert: rice cooked in milk with cinnamon and sugar. Sing it, then make it together and you have a whole afternoon. The line <b>con esta sí, con esta no</b> is for choosing.",
+        es:"También es un postre: arroz cocido en leche con canela y azúcar. Cántenla y luego háganlo juntos y ya tienen una tarde entera. La línea <b>con esta sí, con esta no</b> es para escoger."},
+  how:{en:["Circle, holding hands, one child in the middle.","The middle child mimes sewing and embroidering.","On con esta sí, con esta no, they point at people in the circle and pick a partner on the last line."],
+       es:["Ronda tomados de las manos, un niño en medio.","El de en medio hace como que cose y borda.","En con esta sí, con esta no, señala a los de la ronda y escoge pareja en la última línea."]},
+  stanzas:[
+    [L("Arroz con leche,","Rice pudding,"),L("me quiero casar","I want to marry"),L("con una señorita","a young lady"),L("de la capital,","from the capital,")],
+    [L("que sepa coser,","who knows how to sew,"),L("que sepa bordar,","who knows how to embroider,"),L("que sepa abrir la puerta","who knows how to open the door"),L("para ir a jugar.","to go out and play.")],
+    [L("Yo soy la viudita","I am the little widow"),L("del barrio del rey,","from the king's neighborhood,"),L("me quiero casar","I want to marry"),L("y no sé con quién.","and I don't know whom.")],
+    [L("Con esta sí,","With this one, yes,"),L("con esta no,","with this one, no,"),L("con esta señorita","with this young lady"),L("me caso yo.","I'll marry.")]],
+  vocab:[L("arroz","rice"),L("leche","milk"),L("casarse","to get married"),L("puerta","door"),L("jugar","to play"),L("sí / no","yes / no")] },
+
+{ id:"muneca", cat:"jugar", title:"Tengo una muñeca",
+  note:{en:"The counting verse is how many Mexican kids first learned to add by eight. Watch the false friend: <b>constipado</b> means she caught a cold, nothing else.",
+        es:"La estrofa de los números es como muchos niños mexicanos aprendieron a sumar de ocho en ocho. Ojo con la palabra: <b>constipado</b> quiere decir resfriado."},
+  how:{en:["Cradle a doll or a stuffed animal in your arms.","Feed it pretend syrup with a fork on jarabe.","Hold up fingers for the sums, and cheer at treinta y dos."],
+       es:["Acuna una muñeca o un peluche en los brazos.","Dale jarabe de mentiras con un tenedor en jarabe.","Cuenta las sumas con los dedos y celebren en treinta y dos."]},
+  stanzas:[
+    [L("Tengo una muñeca","I have a doll"),L("vestida de azul,","dressed in blue,"),L("con su camisita","with her little blouse"),L("y su canesú.","and her bodice.")],
+    [L("La saqué a paseo,","I took her out for a walk,"),L("se me constipó,","she caught a cold,"),L("la tengo en la cama","I have her in bed"),L("con mucho dolor.","in a lot of pain.")],
+    [L("Esta mañanita","This morning"),L("me dijo el doctor","the doctor told me"),L("que le dé jarabe","to give her syrup"),L("con un tenedor.","with a fork.")],
+    [L("Dos y dos son cuatro,","Two and two are four,"),L("cuatro y dos son seis,","four and two are six,"),L("seis y dos son ocho","six and two are eight"),L("y ocho, dieciséis,","and eight, sixteen,")],
+    [L("y ocho, veinticuatro,","and eight, twenty-four,"),L("y ocho, treinta y dos;","and eight, thirty-two;"),L("ánimas benditas,","blessed souls,"),L("me arrodillo yo.","I kneel down.")]],
+  vocab:[L("muñeca","doll"),L("azul","blue"),L("paseo","a walk, an outing"),L("cama","bed"),L("doctor","doctor"),L("jarabe","syrup"),L("tenedor","fork"),L("dieciséis","sixteen")] },
+
+{ id:"barquito", cat:"jugar", title:"El barquito chiquitito",
+  note:{en:"A loop song: when it ends, it starts again, and children beg for <b>otra vez</b>. Chiquitito is chico made small twice over.",
+        es:"Una canción que da vuelta: cuando termina, vuelve a empezar, y los niños piden <b>otra vez</b>. Chiquitito es chico hecho pequeño dos veces."},
+  how:{en:["Rock side to side like a boat.","Count the weeks on your fingers.","Sing each round a little faster than the last."],
+       es:["Mécete de lado a lado como barquito.","Cuenta las semanas con los dedos.","Canten cada vuelta un poco más rápido que la anterior."]},
+  stanzas:[
+    [L("Había una vez","Once upon a time"),L("un barquito chiquitito,","there was a tiny little boat,"),L("había una vez","once upon a time"),L("un barquito chiquitito,","there was a tiny little boat,"),L("que no sabía, que no podía,","that didn't know how, that couldn't,"),L("que no podía navegar.","that couldn't sail.")],
+    [L("Pasaron un, dos, tres,","One, two, three,"),L("cuatro, cinco, seis semanas,","four, five, six weeks went by,"),L("pasaron un, dos, tres,","one, two, three,"),L("cuatro, cinco, seis semanas,","four, five, six weeks went by,"),L("y aquel barquito, y aquel barquito,","and that little boat, and that little boat,"),L("y aquel barquito navegó.","and that little boat sailed away.")],
+    [L("Y si esta historia","And if this story"),L("parece corta,","seems short,"),L("volveremos, volveremos","we'll go back, we'll go back"),L("a empezar.","to the beginning.")]],
+  vocab:[L("barco","boat"),L("chiquito","tiny"),L("navegar","to sail"),L("semana","week"),L("había una vez","once upon a time"),L("otra vez","again")] },
+
+{ id:"dedito", cat:"manos", title:"Este dedito",
+  note:{en:"A finger play that starts at the pinky and ends with the thumb, <b>el gordito</b>, eating the egg. Every Spanish-speaking family has its own version.",
+        es:"Un juego de dedos que empieza en el meñique y termina con el pulgar, <b>el gordito</b>, comiéndose el huevo. Cada familia tiene su versión."},
+  how:{en:["Take the child's hand and touch one finger per line, starting with the little one.","Wiggle the thumb on gordito goloso.","Tickle the palm on se lo comió."],
+       es:["Toma la mano del niño y toca un dedo por línea, empezando por el meñique.","Mueve el pulgar en gordito goloso.","Hazle cosquillas en la palma en se lo comió."]},
+  stanzas:[
+    [L("Este dedito compró un huevito,","This little finger bought a little egg,"),L("este dedito lo puso a cocer,","this little finger put it on to boil,"),L("este dedito le echó la sal,","this little finger salted it,"),L("este dedito lo revolvió,","this little finger stirred it,"),L("y este gordito goloso","and this chubby greedy one"),L("se lo comió.","ate it all up.")]],
+  vocab:[L("dedo","finger"),L("dedito","little finger"),L("huevo","egg"),L("sal","salt"),L("gordito","chubby one"),L("goloso","greedy for sweets"),L("comer","to eat")] },
+
+{ id:"sana", cat:"manos", title:"Sana, sana, colita de rana",
+  note:{en:"Not a song but the rhyme every Mexican parent says while rubbing a bumped knee. It works because it is said the same way every time. <b>Colita</b> is a little tail.",
+        es:"No es canción sino la rima que todo papá mexicano dice mientras soba una rodilla golpeada. Funciona porque se dice igual cada vez. <b>Colita</b> es una cola chiquita."},
+  how:{en:["Rub the sore spot in slow circles while you say it.","Kiss it on mañana.","Say it exactly the same way every time; that is the point."],
+       es:["Soba el golpe en círculos lentos mientras la dices.","Dale un beso en mañana.","Dila exactamente igual cada vez; de eso se trata."]},
+  stanzas:[
+    [L("Sana, sana,","Heal, heal,"),L("colita de rana,","little frog's tail,"),L("si no sanas hoy,","if you don't heal today,"),L("sanarás mañana.","you'll heal tomorrow.")]],
+  vocab:[L("sanar","to heal"),L("colita","little tail"),L("rana","frog"),L("hoy","today"),L("mañana","tomorrow")] },
+
+{ id:"aserrin", cat:"manos", title:"Aserrín, aserrán",
+  note:{en:"A see-saw rhyme. <b>Aserrín</b> is sawdust, and the back-and-forth of the words is the motion of a saw. Sung on a lap since before anyone can remember.",
+        es:"Una rima de sube y baja. <b>Aserrín</b> es el polvo de la madera, y el vaivén de las palabras es el movimiento del serrucho. Se canta en el regazo desde siempre."},
+  how:{en:["Sit facing the child, hold both hands, and rock forward and back like sawing.","Bounce on pan, dan, queso, hueso.","Tip the child back gently on llorar."],
+       es:["Siéntate frente al niño, tómale las dos manos y mézanse adelante y atrás como serruchando.","Brinquen en pan, dan, queso, hueso.","Inclina al niño hacia atrás con cuidado en llorar."]},
+  stanzas:[
+    [L("Aserrín, aserrán,","Sawdust, saw-saw,"),L("los maderos de San Juan","the woodcutters of San Juan"),L("piden pan, no les dan,","ask for bread, they get none,"),L("piden queso, les dan hueso,","ask for cheese, they get a bone,"),L("y se sientan a llorar","and they sit down to cry"),L("en la puerta del zaguán.","at the front door.")]],
+  vocab:[L("pan","bread"),L("queso","cheese"),L("hueso","bone"),L("piden","they ask for"),L("llorar","to cry"),L("puerta","door")] },
+
+{ id:"llueva", cat:"manos", title:"Que llueva, que llueva",
+  note:{en:"The song children sing to make it rain. <b>Chaparrón</b> is a downpour. Good for a rainy window and for weather words.",
+        es:"La canción que cantan los niños para que llueva. <b>Chaparrón</b> es un aguacero. Buena para una ventana con lluvia y para las palabras del clima."},
+  how:{en:["Flutter your fingers down like rain.","Nod on que sí, shake your head on que no.","One big clap on chaparrón."],
+       es:["Baja los dedos como gotas de lluvia.","Asiente en que sí, niega con la cabeza en que no.","Una palmada grande en chaparrón."]},
+  stanzas:[
+    [L("Que llueva, que llueva,","Let it rain, let it rain,"),L("la Virgen de la Cueva,","the Virgin of the Cave,"),L("los pajaritos cantan,","the little birds are singing,"),L("las nubes se levantan.","the clouds are rising.")],
+    [L("¡Que sí, que no,","Yes! No!"),L("que caiga un chaparrón!","Let a downpour fall!"),L("Con azúcar y turrón,","With sugar and nougat,"),L("que se rompan los cristales de la estación.","let the station's windows break.")]],
+  vocab:[L("llover","to rain"),L("lluvia","rain"),L("pajarito","little bird"),L("nube","cloud"),L("chaparrón","downpour"),L("azúcar","sugar")] },
+
+{ id:"mananitas", cat:"fiestas", title:"Las mañanitas",
+  note:{en:"The Mexican birthday song, sung before the cake and, in the old way, at dawn under the window. A child who knows Las mañanitas belongs at every family birthday. The first two verses are enough for a party.",
+        es:"La canción de cumpleaños de México, cantada antes del pastel y, a la antigua, al amanecer bajo la ventana. Un niño que se sabe Las mañanitas pertenece a cada cumpleaños familiar. Con las dos primeras estrofas alcanza para una fiesta."},
+  how:{en:["Learn verses one and two first; those are what everyone sings.","Sing the birthday person's name after despierta, mi bien.","Clap on the beat through the last line, then shout ¡Feliz cumpleaños!"],
+       es:["Aprende primero las estrofas uno y dos; esas son las que todos cantan.","Di el nombre del festejado después de despierta, mi bien.","Aplaudan al ritmo en la última línea y griten ¡Feliz cumpleaños!"]},
+  stanzas:[
+    [L("Estas son las mañanitas","These are the morning songs"),L("que cantaba el rey David.","that King David used to sing."),L("Hoy, por ser día de tu santo,","Today, because it's your saint's day,"),L("te las cantamos a ti.","we sing them to you.")],
+    [L("Despierta, mi bien, despierta,","Wake up, my dear, wake up,"),L("mira que ya amaneció.","see that the dawn has come."),L("Ya los pajarillos cantan,","The little birds are singing,"),L("la luna ya se metió.","the moon has already set.")],
+    [L("Qué linda está la mañana","How lovely is the morning"),L("en que vengo a saludarte.","when I come to greet you."),L("Venimos todos con gusto","We all come gladly"),L("y placer a felicitarte.","and with pleasure to congratulate you.")],
+    [L("El día en que tú naciste","The day you were born"),L("nacieron todas las flores,","all the flowers were born,"),L("y en la pila del bautismo","and at the baptismal font"),L("cantaron los ruiseñores.","the nightingales sang.")]],
+  vocab:[L("mañana","morning"),L("cantar","to sing"),L("despierta","wake up"),L("amaneció","dawn came"),L("luna","moon"),L("flores","flowers"),L("feliz cumpleaños","happy birthday")] },
+
+{ id:"piñata", cat:"fiestas", title:"Dale, dale, dale",
+  note:{en:"The piñata song. The blindfolded child swings while everyone sings, and the turn ends when the song does. <b>Tino</b> is your aim. Traditional piñatas have seven points, one for each sin, and the candy is the reward for beating them.",
+        es:"La canción de la piñata. El niño con los ojos vendados le pega mientras todos cantan, y el turno termina cuando termina la canción. <b>Tino</b> es la puntería. Las piñatas tradicionales tienen siete picos, uno por cada pecado, y los dulces son el premio por vencerlos."},
+  how:{en:["Everyone sings; the child with the stick swings on the beat.","Count una, dos, tres with fingers in the air.","Shout se acabó together and pass the stick."],
+       es:["Todos cantan; el niño del palo le pega al ritmo.","Cuenten una, dos, tres con los dedos en alto.","Griten se acabó juntos y pasen el palo."]},
+  stanzas:[
+    [L("Dale, dale, dale,","Hit it, hit it, hit it,"),L("no pierdas el tino,","don't lose your aim,"),L("porque si lo pierdes,","because if you lose it,"),L("pierdes el camino.","you lose your way.")],
+    [L("Ya le diste una,","You've hit it once,"),L("ya le diste dos,","you've hit it twice,"),L("ya le diste tres,","you've hit it three times,"),L("y tu tiempo se acabó.","and your time is up.")]],
+  vocab:[L("dale","hit it, go on"),L("tino","aim"),L("camino","way, road"),L("una, dos, tres","one, two, three"),L("tiempo","time"),L("se acabó","it's over")] },
+];
+
+const PHRASES = [
+  L("¿Cantamos?","Shall we sing?"), L("Otra vez.","Again."), L("Más despacito.","A little slower."), L("Ahora tú.","Now you."),
+  L("¡Muy bien!","Very good!"), L("Con las manos.","With your hands."), L("Escucha.","Listen."), L("Vamos a aplaudir.","Let's clap."),
+  L("Te toca a ti.","It's your turn."), L("¿Cuál quieres?","Which one do you want?"), L("Así se canta.","That's how you sing it."), L("Esta la cantaba tu abuela.","Your grandma used to sing this one."),
+];
+
+/* ================= melodies (hummed) ================= */
+const DEG = { do:0, re:2, mi:4, fa:5, sol:7, la:9, si:11 };
+const MELODIES = {
+  pollitos: { bpm: 78, base: 293.66, lines: [
+    { n:["do","re","mi","fa","sol","sol"], d:[.5,.5,.5,.5,1,1] },
+    { n:["la","la","la","la","sol","sol"], d:[.5,.5,.5,.5,1,1] },
+    { n:["fa","fa","fa","fa","mi","mi"], d:[.5,.5,.5,.5,1,1] },
+    { n:["re","re","re","re","do","do"], d:[.5,.5,.5,.5,1,1] } ] },
+  estrellita: { bpm: 86, base: 293.66, lines: [
+    { n:["do","do","sol","sol","la","la","sol"], d:[1,1,1,1,1,1,2] },
+    { n:["fa","fa","mi","mi","re","re","do"], d:[1,1,1,1,1,1,2] },
+    { n:["sol","sol","fa","fa","mi","mi","re"], d:[1,1,1,1,1,1,2] },
+    { n:["sol","sol","fa","fa","mi","mi","re"], d:[1,1,1,1,1,1,2] },
+    { n:["do","do","sol","sol","la","la","sol"], d:[1,1,1,1,1,1,2] },
+    { n:["fa","fa","mi","mi","re","re","do"], d:[1,1,1,1,1,1,2] } ] },
+};
+
+/* ================= state ================= */
+let LANG = "en";
+try { const s = localStorage.getItem("cantame-lang"); if (s === "es" || s === "en") LANG = s; } catch(e){}
+let GLOSS = true;
+try { GLOSS = localStorage.getItem("cantame-gloss") !== "off"; } catch(e){}
+let SLOW = false;
+let KNOWN = new Set();
+try { KNOWN = new Set(JSON.parse(localStorage.getItem("cantame-known") || "[]")); } catch(e){}
+let FILTER = "all";
+let TOUR_SEEN = false;
+try { TOUR_SEEN = localStorage.getItem("cantame-tour-seen") === "1"; } catch(e){}
+
+const T = o => o == null ? "" : (typeof o === "string" ? o : (o[LANG] || o.en || ""));
+const $ = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const catOf = id => CATS.find(c => c.id === id);
+const songOf = id => SONGS.find(s => s.id === id);
+const lineCount = s => s.stanzas.reduce((a, st) => a + st.length, 0);
+const norm = t => t.toLowerCase().replace(/[^a-záéíóúñü ]/g, "").trim();
+function firstLine(s){ const flat = []; s.stanzas.forEach(st => st.forEach(l => flat.push(l.es))); const tn = norm(s.title); const alt = flat.find(l => norm(l) !== tn && !tn.startsWith(norm(l))); return (alt || flat[0]).replace(/[,;:]$/, "") + "…"; }
+function saveKnown(){ try { localStorage.setItem("cantame-known", JSON.stringify([...KNOWN])); } catch(e){} }
+function toast(msg){ const t = $("#toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toast._t); toast._t = setTimeout(()=>t.classList.remove("on"), 1600); }
+
+/* ================= speech ================= */
+const SPEECH = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+let VOICE = null, VOICE_CHECKED = false;
+function pickVoice(){
+  if (!SPEECH) return;
+  const vs = speechSynthesis.getVoices();
+  if (!vs.length) return;
+  VOICE_CHECKED = true;
+  // skip novelty voices (macOS ships Eddy, Flo, Grandma… in every language) and prefer Mexico, then US/Latin America, then any Spanish
+  const novelty = /^(eddy|flo|grandma|grandpa|reed|rocko|sandy|shelley|bahh|bells|boing|bubbles|cellos|jester|organ|superstar|trinoids|whisper|wobble|zarvox|good news|bad news|albert|fred|junior|kathy|ralph)\b/i;
+  const es = vs.filter(v => /^es/i.test(v.lang));
+  const natural = es.filter(v => !novelty.test(v.name));
+  const pool = natural.length ? natural : es;
+  const by = re => pool.find(v => re.test(v.lang));
+  VOICE = pool.find(v => /paulina/i.test(v.name)) || by(/es[-_]MX/i) || by(/es[-_]US/i) || by(/es[-_]419/i) || pool[0] || null;
+  $$(".voice-note").forEach(el => { el.hidden = !!VOICE; });
+}
+if (SPEECH) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+let speakQueue = null;
+function stopSpeech(){ if (SPEECH) speechSynthesis.cancel(); speakQueue = null; }
+function utter(text, slow){
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = VOICE ? VOICE.lang : "es-MX";
+  if (VOICE) u.voice = VOICE;
+  u.rate = slow ? 0.5 : 0.9; u.pitch = 1.05;
+  return u;
+}
+function speak(text, slow){
+  if (!SPEECH) { toast(T(I.no_speech)); return; }
+  stopSpeech();
+  speechSynthesis.speak(utter(text, slow == null ? SLOW : slow));
+}
+// speak a list of lines, calling onLine(i) as each starts
+function speakLines(lines, onLine, onEnd, onWord){
+  if (!SPEECH) { toast(T(I.no_speech)); if (onEnd) onEnd(); return; }
+  stopSpeech();
+  const token = {}; speakQueue = token;
+  lines.forEach((txt, i) => {
+    const u = utter(txt, SLOW);
+    u.onstart = () => { if (speakQueue === token && onLine) onLine(i); };
+    if (onWord) u.onboundary = e => { if (speakQueue === token && e.name === "word") onWord(i, e.charIndex); };
+    if (i === lines.length - 1) u.onend = () => { if (speakQueue === token) { speakQueue = null; if (onEnd) onEnd(); } };
+    speechSynthesis.speak(u);
+  });
+}
+
+/* ================= hummed tune ================= */
+let ctx = null, master = null, tuneTimers = [], tuneToken = null, tuneBus = null;
+function audio(){
+  if (ctx) return ctx;
+  ctx = new (window.AudioContext || window.webkitAudioContext)();
+  master = ctx.createGain(); master.gain.value = 0.45; master.connect(ctx.destination);
+  return ctx;
+}
+function hum(freq, t0, dur, bus){
+  const c = audio();
+  const g = c.createGain(); g.gain.setValueAtTime(0.0001, t0);
+  const a = Math.min(0.08, dur*0.25), r = Math.min(0.12, dur*0.3);
+  g.gain.exponentialRampToValueAtTime(0.8, t0+a); g.gain.setValueAtTime(0.8, t0+dur-r); g.gain.exponentialRampToValueAtTime(0.0001, t0+dur);
+  const lp = c.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 900; lp.Q.value = 0.7;
+  const o1 = c.createOscillator(); o1.type = "sine"; o1.frequency.value = freq;
+  const o2 = c.createOscillator(); o2.type = "triangle"; o2.frequency.value = freq*2; const g2 = c.createGain(); g2.gain.value = 0.08;
+  const lfo = c.createOscillator(); lfo.frequency.value = 5.2; const lg = c.createGain(); lg.gain.value = freq*0.004; lfo.connect(lg); lg.connect(o1.frequency); lg.connect(o2.frequency);
+  o1.connect(lp); o2.connect(g2); g2.connect(lp); lp.connect(g); g.connect(bus || master);
+  o1.start(t0); o2.start(t0); lfo.start(t0); const end = t0+dur+0.05; o1.stop(end); o2.stop(end); lfo.stop(end);
+}
+// every performance plays through its own bus; stopping fades that bus out and disconnects it, which silences notes already scheduled on the audio clock
+function stopTune(){
+  tuneTimers.forEach(clearTimeout); tuneTimers = []; tuneToken = null;
+  if (tuneBus && ctx) { const b = tuneBus; tuneBus = null; b.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.02); setTimeout(()=>{ try { b.disconnect(); } catch(e){} }, 250); }
+}
+// play the song's melody through all stanzas; onLine(flatIndex)
+function playTune(song, onLine, onEnd, from){
+  stopTune(); stopSpeech();
+  const m = MELODIES[song.melody]; if (!m) return;
+  const c = audio(); if (c.state === "suspended") c.resume();
+  const beat = 60/(m.bpm * (SLOW ? 0.7 : 1)); let t = c.currentTime + 0.15; const token = {}; tuneToken = token; // Slow also slows the tune
+  const bus = c.createGain(); bus.gain.value = 1; bus.connect(master); tuneBus = bus;
+  const at = (when, fn) => tuneTimers.push(setTimeout(()=>{ if (tuneToken === token) fn(); }, Math.max(0, (when - c.currentTime)*1000)));
+  let flat = 0;
+  song.stanzas.forEach((st, si) => {
+    st.forEach((ln, li) => {
+      const ml = m.lines[li % m.lines.length];
+      const fi = flat; flat++;
+      if (from && fi < from) return; // start partway through
+      const durMs = ml.d.reduce((a, b) => a + b, 0) * beat * 1000;
+      const starts = []; let acc = 0; ml.d.forEach(d => { starts.push(Math.round(acc * beat * 1000)); acc += d; });
+      at(t, ()=>{ if (onLine) onLine(fi, durMs, starts); });
+      ml.n.forEach((deg, k) => { const f = m.base * Math.pow(2, DEG[deg]/12) * 0.5; const d = ml.d[k]*beat; hum(f, t, d*0.95, bus); t += d; });
+    });
+    if (!from || flat > from) t += beat*0.8;
+  });
+  at(t+0.1, ()=>{ tuneToken = null; tuneBus = null; if (onEnd) onEnd(); });
+}
+function stopAll(){ stopSpeech(); stopTune(); }
+
+/* ================= routing ================= */
+function route(){
+  const h = location.hash.replace(/^#\/?/, "");
+  const parts = h.split("/").filter(Boolean);
+  stopAll();
+  closeSing();
+  if (parts[0] === "song" && songOf(parts[1])) { renderSong(songOf(parts[1])); if (parts[2] === "sing") openSing(songOf(parts[1])); }
+  else if (parts[0] === "palabras" || parts[0] === "words") renderWords(parts[1] === "frases" ? "phrases" : "words");
+  else if (parts[0] === "tour") { if (!$("#view").children.length) renderLibrary(); openTour(parseInt(parts[1] || "0", 10) || 0); return; }
+  else renderLibrary();
+  closeTour();
+  window.scrollTo({ top: 0 });
+}
+function renderNav(){
+  const h = location.hash.replace(/^#\/?/, "");
+  const cur = h.startsWith("song") || h === "" ? "songs" : h.startsWith("palabras") || h.startsWith("words") ? "words" : h.startsWith("tour") ? "tour" : "";
+  $("#nav").innerHTML = `
+    <a href="#/" ${cur==="songs"?'aria-current="page"':""}>${T(I.nav_songs)}</a>
+    <a href="#/palabras" ${cur==="words"?'aria-current="page"':""}>${T(I.nav_words)}</a>
+    <a href="#/tour/0" ${cur==="tour"?'aria-current="page"':""}>${T(I.nav_tour)}</a>`;
+  $$(".langsw button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === LANG ? "true" : "false"));
+  document.documentElement.lang = LANG;
+  document.documentElement.dataset.lang = LANG;
+}
+function setLang(l){
+  LANG = l; try { localStorage.setItem("cantame-lang", l); } catch(e){}
+  renderNav(); route();
+}
+function setGloss(on){ GLOSS = on; try { localStorage.setItem("cantame-gloss", on ? "on" : "off"); } catch(e){} document.body.classList.toggle("no-gloss", !GLOSS); $$('[data-act="gloss"]').forEach(b => b.setAttribute("aria-pressed", GLOSS ? "true" : "false")); }
+
+/* ================= library ================= */
+function cardHTML(s){
+  const c = catOf(s.cat);
+  const known = KNOWN.has(s.id);
+  return `<a class="card stripe-${c.c}" href="#/song/${s.id}">
+    ${s.start ? `<span class="start">${T(I.start_here)}</span>` : ""}
+    ${known && !s.start ? `<span class="known" title="${T(I.know)}">${IC.check}</span>` : ""}
+    <h3>${esc(s.title)}</h3>
+    <p class="first">${esc(firstLine(s))}</p>
+    <div class="meta">
+      <span class="pill c-${c.c}">${IC[c.ic]} ${T(c.n)}</span>
+      ${s.melody ? `<span class="tag">${IC.note} ${T(I.has_tune)}</span>` : ""}
+      <span class="tag">${IC.hand} ${T(I.has_game)}</span>
+      <span class="tag">${lineCount(s)} ${T(I.lines)}</span>
+    </div></a>`;
+}
+function renderLibrary(){
+  const v = $("#view");
+  const groups = (FILTER === "all" ? CATS : CATS.filter(c => c.id === FILTER)).map(c => {
+    const list = SONGS.filter(s => s.cat === c.id);
+    return `<section class="group">
+      <h2><span class="pill c-${c.c}">${IC[c.ic]} ${T(c.n)}</span></h2>
+      <p class="desc">${T(c.d)}</p>
+      <div class="cards">${list.map(cardHTML).join("")}</div></section>`;
+  }).join("");
+  const starters = FILTER === "all" ? `<section class="group">
+      <h2><span class="pill c-rosa">${IC.star} ${T(I.start_here)}</span></h2>
+      <p class="desc">${T(I.start_desc)}</p>
+      <div class="cards">${SONGS.filter(s => s.start).map(cardHTML).join("")}</div></section>` : "";
+  v.innerHTML = `<div class="fade">
+    <div class="hero">
+      <div><h1>${T(I.hero_h)}</h1><p>${T(I.hero_p)}</p></div>
+      <div class="stat"><b>${KNOWN.size}</b>${T(I.stat)}</div>
+    </div>
+    ${!TOUR_SEEN ? `<div class="banner" id="tourBanner"><div class="pic">${PIC.picado}</div><p>${T(I.banner)}</p><a class="btn primary sm" href="#/tour/0">${T(I.take_tour)}</a><button class="x" type="button" aria-label="${T(I.dismiss)}" data-act="dismiss">×</button></div>` : ""}
+    <div class="filters" role="group">
+      <button type="button" data-f="all" aria-pressed="${FILTER==="all"}">${T(I.all)}</button>
+      ${CATS.map(c => `<button type="button" data-f="${c.id}" aria-pressed="${FILTER===c.id}">${IC[c.ic]} ${T(c.n)}</button>`).join("")}
+    </div>
+    ${starters}${groups}
+  </div>`;
+  $$(".filters button", v).forEach(b => b.addEventListener("click", ()=>{ FILTER = b.dataset.f; renderLibrary(); }));
+  const dis = $('[data-act="dismiss"]', v); if (dis) dis.addEventListener("click", ()=>{ TOUR_SEEN = true; try { localStorage.setItem("cantame-tour-seen","1"); } catch(e){} $("#tourBanner").remove(); });
+}
+
+/* ================= song page ================= */
+function flatLines(s){ const out = []; s.stanzas.forEach((st, si) => st.forEach((ln, li) => out.push({ si, li, ...ln }))); return out; }
+function lineHTML(ln, idx, extra){
+  return `<div class="ln ${extra||""}" data-i="${idx}" tabindex="0" role="button">
+    <span class="es">${esc(ln.es)}</span>
+    <button class="spk" type="button" tabindex="-1" aria-label="${T(I.hear)}: ${esc(ln.es)}">${IC.spk}</button>
+    <span class="en">${esc(ln.en)}</span></div>`;
+}
+function renderSong(s){
+  const c = catOf(s.cat);
+  const lines = flatLines(s);
+  const idx = SONGS.indexOf(s);
+  const prev = SONGS[(idx - 1 + SONGS.length) % SONGS.length], next = SONGS[(idx + 1) % SONGS.length];
+  let n = 0;
+  const stanzas = s.stanzas.map((st, si) => `<div class="stanza">
+      ${s.stanzas.length > 1 ? `<div class="cue">${T(I.cue_stanza)} ${si+1}</div>` : ""}
+      ${st.map(ln => lineHTML(ln, n++)).join("")}
+    </div>`).join("") + (s.open ? `<div class="repeat">${T(I.repeat_more)}</div>` : "");
+  $("#view").innerHTML = `<div class="fade">
+    <a class="back" href="#/">${IC.back} ${T(I.back)}</a>
+    <div class="song-head">
+      <span class="pill c-${c.c}">${IC[c.ic]} ${T(c.n)}</span>
+      <h1>${esc(s.title)}</h1>
+    </div>
+    <div class="note"><span class="ic">i</span><p>${T(s.note)}</p></div>
+    <div class="toolbar">
+      <button class="btn" type="button" data-act="hearall">${IC.play} <span>${T(I.hear_all)}</span></button>
+      ${s.melody ? `<button class="btn" type="button" data-act="tune">${IC.note} <span>${T(I.play_tune)}</span></button>` : ""}
+      <button class="btn primary" type="button" data-act="sing">${IC.singi} ${T(I.sing)}</button>
+      <span class="sep"></span>
+      <button class="btn sm" type="button" data-act="gloss" aria-pressed="${GLOSS}">${T(I.english)}</button>
+      <button class="btn sm" type="button" data-act="slow" aria-pressed="${SLOW}" title="${T(I.slow_title)}">${T(I.slow)}</button>
+      <p class="voice-note" ${(!VOICE_CHECKED || VOICE) ? "hidden" : ""}>${T(SPEECH ? I.no_voice : I.no_speech)}</p>
+    </div>
+    <div class="song-grid">
+      <div class="lyrics" id="lyrics">${stanzas}</div>
+      <aside class="side">
+        <div class="panel"><h2>${IC.hand} ${T(I.how)}</h2>
+          <ol class="howto">${T(s.how).map((h, i) => `<li><span class="n">${i+1}</span><span>${esc(h)}</span></li>`).join("")}</ol></div>
+        <div class="panel"><h2>${IC.chick} ${T(I.words)}</h2>
+          <div class="vocab">${s.vocab.map(w => `<button class="chip" type="button" data-w="${esc(w.es)}"><span class="es">${esc(w.es)}</span><span class="en">${esc(w.en)}</span></button>`).join("")}</div>
+          <p class="tip">${T(I.tap_word)}</p></div>
+        <div class="panel">
+          <button class="btn know" type="button" data-act="know" aria-pressed="${KNOWN.has(s.id)}">${IC.check} <span>${T(KNOWN.has(s.id) ? I.know_on : I.know)}</span></button>
+          <p class="tip">${T(I.know_tip)}</p></div>
+      </aside>
+    </div>
+    <div class="nextprev">
+      <a href="#/song/${prev.id}"><small>${T(I.prev)}</small><b>${esc(prev.title)}</b></a>
+      <a class="next" href="#/song/${next.id}"><small>${T(I.next)}</small><b>${esc(next.title)}</b></a>
+    </div>
+  </div>`;
+  document.body.classList.toggle("no-gloss", !GLOSS);
+  const v = $("#view");
+  const hot = i => { $$("#lyrics .ln.hot").forEach(x => x.classList.remove("hot")); if (i != null) { const el = $(`#lyrics .ln[data-i="${i}"]`); if (el) { el.classList.add("hot"); el.scrollIntoView({ block:"nearest", behavior:"smooth" }); } } };
+  const hearBtn = $('[data-act="hearall"]', v), tuneBtn = $('[data-act="tune"]', v);
+  const resetBtns = () => { hearBtn.setAttribute("aria-pressed","false"); hearBtn.innerHTML = `${IC.play} <span>${T(I.hear_all)}</span>`; if (tuneBtn) { tuneBtn.setAttribute("aria-pressed","false"); tuneBtn.innerHTML = `${IC.note} <span>${T(I.play_tune)}</span>`; } hot(null); };
+  $$("#lyrics .ln", v).forEach(el => {
+    const go = () => { stopAll(); resetBtns(); const i = +el.dataset.i; hot(i); speak(lines[i].es); };
+    el.addEventListener("click", go);
+    el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+  });
+  hearBtn.addEventListener("click", ()=>{
+    if (hearBtn.getAttribute("aria-pressed") === "true") { stopAll(); resetBtns(); return; }
+    stopAll(); resetBtns(); hearBtn.setAttribute("aria-pressed","true"); hearBtn.innerHTML = `${IC.stopi} <span>${T(I.stop)}</span>`;
+    speakLines(lines.map(l => l.es), hot, resetBtns);
+  });
+  if (tuneBtn) tuneBtn.addEventListener("click", ()=>{
+    if (tuneBtn.getAttribute("aria-pressed") === "true") { stopAll(); resetBtns(); return; }
+    stopAll(); resetBtns(); tuneBtn.setAttribute("aria-pressed","true"); tuneBtn.innerHTML = `${IC.stopi} <span>${T(I.stop)}</span>`;
+    playTune(s, hot, resetBtns);
+  });
+  $('[data-act="sing"]', v).addEventListener("click", ()=>{ history.replaceState(null, "", `#/song/${s.id}/sing`); openSing(s); });
+  $('[data-act="gloss"]', v).addEventListener("click", ()=> setGloss(!GLOSS));
+  $('[data-act="slow"]', v).addEventListener("click", e => { SLOW = !SLOW; e.currentTarget.setAttribute("aria-pressed", SLOW); });
+  $$(".chip", v).forEach(ch => ch.addEventListener("click", ()=>{ stopAll(); resetBtns(); $$(".chip.hot", v).forEach(x => x.classList.remove("hot")); ch.classList.add("hot"); speak(ch.dataset.w); }));
+  $('[data-act="know"]', v).addEventListener("click", e => {
+    const b = e.currentTarget; const on = !KNOWN.has(s.id);
+    if (on) KNOWN.add(s.id); else KNOWN.delete(s.id); saveKnown();
+    b.setAttribute("aria-pressed", on); b.innerHTML = `${IC.check} <span>${T(on ? I.know_on : I.know)}</span>`; toast(T(on ? I.saved : I.unsaved));
+  });
+}
+
+/* ================= syllables: line up words with notes ================= */
+const VOW = /[aeiouáéíóúü]/, STRONG = /[aeoáéó]/, ACC_WEAK = /[íú]/;
+function sylCount(word){
+  const w = word.toLowerCase().replace(/[^a-záéíóúüñ]/g, ""); if (!w) return 0;
+  let n = 0, prev = "";
+  for (const ch of w) {
+    const v = VOW.test(ch);
+    if (v) { if (!VOW.test(prev) || (STRONG.test(prev) && STRONG.test(ch)) || ACC_WEAK.test(ch) || ACC_WEAK.test(prev)) n++; }
+    prev = ch;
+  }
+  return Math.max(1, n);
+}
+// map each word of a line to the index of the note it starts on, given the line has N notes
+function wordNoteIndex(words, N){
+  const syl = words.map(w => sylCount(w.t));
+  let total = syl.reduce((a, b) => a + b, 0);
+  // synalepha: a word ending in a vowel runs into a following word that starts with a vowel (or h + vowel)
+  for (let k = 1; k < words.length && total > N; k++) {
+    const a = words[k - 1].t.toLowerCase().replace(/[^a-záéíóúüñy]/g, ""), b = words[k].t.toLowerCase().replace(/^h/, "");
+    if (a && b && /[aeiouáéíóúy]$/.test(a) && VOW.test(b[0]) && syl[k] > 0) { syl[k]--; total--; }
+  }
+  const idx = []; let acc = 0;
+  words.forEach((w, k) => { idx.push(Math.min(N - 1, Math.round(acc * N / Math.max(total, 1)))); acc += syl[k]; });
+  return idx;
+}
+
+/* ================= sing-along: a scrolling reel ================= */
+let singState = null;
+function wordsWithOffsets(text){ const out = []; const re = /\S+/g; let m; while ((m = re.exec(text))) out.push({ t: m[0], at: m.index }); return out; }
+function openSing(s){
+  closeSing(); stopAll();
+  const lines = flatLines(s);
+  const words = lines.map(l => wordsWithOffsets(l.es));
+  let i = 0, mode = null; // mode: null | "voice" | "tune"
+  let fbTimers = [], boundarySeen = false;
+  const o = document.createElement("div"); o.className = "sing" + (GLOSS ? "" : " no-gl"); o.setAttribute("role","dialog"); o.setAttribute("aria-modal","true");
+  o.innerHTML = `<div class="top">
+      <span class="title">${esc(s.title)}</span><span class="grow"></span>
+      <span class="count"><span id="singN">1</span> / ${lines.length}</span>
+      <button class="btn sm" type="button" data-act="gloss" aria-pressed="${GLOSS}">${T(I.english)}</button>
+      <button class="btn sm" type="button" data-act="slow" aria-pressed="${SLOW}">${T(I.slow)}</button>
+      <button class="btn sm" type="button" data-act="close">${T(I.close)}</button></div>
+    <div class="reelwrap" id="reelwrap"><div class="reel" id="reel">${lines.map((l, li) => `<div class="rline" data-i="${li}">
+        ${s.stanzas.length > 1 && l.li === 0 ? `<div class="rcue">${T(I.cue_stanza)} ${l.si + 1}</div>` : ""}
+        <div class="rtext">${words[li].map((w, k) => `<span class="w" data-k="${k}">${esc(w.t)}</span>`).join(" ")}</div>
+        <div class="rgl">${esc(l.en)}</div></div>`).join("")}</div></div>
+    <div class="bar"><i id="singBar"></i></div>
+    <div class="ctl">
+      <button class="btn" type="button" data-act="prev" aria-label="${T(I.prev)}">${IC.back}</button>
+      <button class="btn primary lg" type="button" data-act="play">${IC.play} <span>${T(I.play)}</span></button>
+      <button class="btn" type="button" data-act="next" aria-label="${T(I.next)}"><span style="display:inline-block;transform:scaleX(-1)">${IC.back}</span></button>
+    </div>
+    <p class="hint">${T(s.melody ? I.sing_hint : I.sing_hint_voice)}</p>`;
+  document.body.appendChild(o); document.body.style.overflow = "hidden";
+  const wrap = $("#reelwrap", o), reel = $("#reel", o), rlines = $$(".rline", o), bar = $("#singBar", o);
+  const playBtn = $('[data-act="play"]', o); const hasTune = !!s.melody;
+
+  const center = () => { const l = rlines[i]; const y = wrap.clientHeight / 2 - (l.offsetTop + l.offsetHeight / 2); reel.style.transform = `translateY(${Math.round(y)}px)`; };
+  const clearWord = () => $$(".w.on", o).forEach(w => w.classList.remove("on"));
+  const setWord = (li, k) => { clearWord(); const w = $(`.rline[data-i="${li}"] .w[data-k="${k}"]`, o); if (w) w.classList.add("on"); };
+  const clearFb = () => { fbTimers.forEach(clearTimeout); fbTimers = []; };
+  const show = n => {
+    i = Math.max(0, Math.min(lines.length - 1, n));
+    rlines.forEach((l, k) => { l.classList.toggle("cur", k === i); l.classList.toggle("near", Math.abs(k - i) === 1); });
+    $("#singN", o).textContent = i + 1; bar.style.width = ((i + 1) / lines.length * 100) + "%";
+    $('[data-act="prev"]', o).disabled = i === 0; $('[data-act="next"]', o).disabled = i === lines.length - 1;
+    clearWord(); clearFb(); center();
+  };
+  // evenly spaced word boxes, used only when the voice gives no word timings
+  const tickWords = (li, totalMs) => { clearFb(); const n = words[li].length; const step = totalMs / n; words[li].forEach((_, k) => fbTimers.push(setTimeout(()=> setWord(li, k), Math.round(k * step)))); };
+  // for the tune: each word lights on the note its first syllable is sung on, a hair early so the eye leads the ear
+  const LEAD = 70;
+  const tickToNotes = (li, starts) => { clearFb(); const idx = wordNoteIndex(words[li], starts.length); idx.forEach((ni, k) => fbTimers.push(setTimeout(()=> setWord(li, k), Math.max(0, starts[ni] - LEAD)))); };
+  const setButtons = () => {
+    playBtn.innerHTML = mode ? `${IC.stopi} <span>${T(I.stop)}</span>` : `${IC.play} <span>${T(I.play)}</span>`;
+    playBtn.setAttribute("aria-pressed", !!mode);
+    o.classList.toggle("playing", !!mode);
+  };
+  const stop = () => { stopAll(); clearFb(); mode = null; clearWord(); setButtons(); };
+  const playVoice = from => {
+    stop(); mode = "voice"; setButtons();
+    const idx = lines.slice(from).map((_, k) => from + k);
+    speakLines(idx.map(k => lines[k].es),
+      k => { show(from + k); if (!boundarySeen) fbTimers.push(setTimeout(()=>{ if (!boundarySeen) tickWords(from + k, words[from + k].length * (SLOW ? 640 : 340)); }, 250)); },
+      () => { if (mode === "voice") { mode = null; clearWord(); setButtons(); } },
+      (k, ci) => { const li = from + k; if (li !== i) return; if (!boundarySeen) { boundarySeen = true; clearFb(); } const ws = words[li]; let wi = 0; for (let q = 0; q < ws.length; q++) if (ws[q].at <= ci) wi = q; setWord(li, wi); });
+  };
+  const playTuneFrom = from => {
+    stop(); mode = "tune"; setButtons();
+    playTune(s, (fi, durMs, starts) => { if (fi < from) return; show(fi); tickToNotes(fi, starts); }, () => { if (mode === "tune") { mode = null; clearWord(); setButtons(); } }, from);
+  };
+  const jump = n => { const wasMode = mode; if (wasMode === "voice") playVoice(Math.max(0, Math.min(lines.length - 1, n))); else if (wasMode === "tune") playTuneFrom(Math.max(0, Math.min(lines.length - 1, n))); else show(n); };
+  const next = () => { if (i < lines.length - 1) jump(i + 1); };
+  const prev = () => { if (i > 0) jump(i - 1); };
+
+  rlines.forEach(l => l.addEventListener("click", ()=> jump(+l.dataset.i)));
+  $('[data-act="next"]', o).addEventListener("click", next);
+  $('[data-act="prev"]', o).addEventListener("click", prev);
+  const playFrom = n => hasTune ? playTuneFrom(n) : playVoice(n);
+  playBtn.addEventListener("click", ()=> mode ? stop() : playFrom(i));
+  $('[data-act="close"]', o).addEventListener("click", ()=> closeSing(true));
+  $('[data-act="gloss"]', o).addEventListener("click", e => { setGloss(!GLOSS); e.currentTarget.setAttribute("aria-pressed", GLOSS); o.classList.toggle("no-gl", !GLOSS); center(); });
+  $('[data-act="slow"]', o).addEventListener("click", e => { SLOW = !SLOW; e.currentTarget.setAttribute("aria-pressed", SLOW); $$('[data-act="slow"]').forEach(b => b.setAttribute("aria-pressed", SLOW)); if (mode === "voice") playVoice(i); else if (mode === "tune") playTuneFrom(i); });
+  const key = e => {
+    if (e.key === "ArrowRight") { e.preventDefault(); next(); }
+    else if (e.key === "ArrowLeft") { e.preventDefault(); prev(); }
+    else if (e.key === " " || e.key === "Enter") { if (e.target.tagName === "BUTTON" && e.target !== playBtn) return; e.preventDefault(); mode ? stop() : playFrom(i); }
+    else if (e.key === "Escape") closeSing(true);
+  };
+  document.addEventListener("keydown", key);
+  const onResize = () => center();
+  window.addEventListener("resize", onResize);
+  singState = { el:o, key, song:s, onResize, stop };
+  show(0); setTimeout(center, 120); setTimeout(center, 600);
+  playBtn.focus();
+  if (!$("#view").children.length) renderSong(s);
+}
+function closeSing(updateHash){
+  if (!singState) return;
+  singState.stop();
+  document.removeEventListener("keydown", singState.key);
+  window.removeEventListener("resize", singState.onResize);
+  singState.el.remove(); document.body.style.overflow = "";
+  const s = singState.song; singState = null;
+  if (updateHash) history.replaceState(null, "", `#/song/${s.id}`);
+}
+
+/* ================= words page ================= */
+function renderWords(tab){
+  const v = $("#view");
+  const all = [];
+  SONGS.forEach(s => s.vocab.forEach(w => all.push({ ...w, song: s })));
+  const seen = new Set(); const uniq = all.filter(w => { const k = w.es.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; });
+  uniq.sort((a, b) => a.es.localeCompare(b.es, "es"));
+  v.innerHTML = `<div class="fade">
+    <div class="hero"><div><h1>${T(I.nav_words)}</h1></div></div>
+    <div class="tabs"><button type="button" data-t="words" aria-pressed="${tab==="words"}">${T(I.tab_words)}</button><button type="button" data-t="phrases" aria-pressed="${tab==="phrases"}">${T(I.tab_phrases)}</button></div>
+    ${tab === "words" ? `<p class="wordhint">${T(I.words_hint)}</p><div class="flash">${uniq.map(w => `<button class="fc" type="button" data-w="${esc(w.es)}"><span class="hear" data-hear>${IC.spk}</span><span class="w">${esc(w.es)}</span><span class="m" hidden>${esc(w.en)}</span><span class="from">${T(I.from)} ${esc(w.song.title)}</span></button>`).join("")}</div>`
+      : `<p class="wordhint">${T(I.phrases_hint)}</p><div class="phrases">${PHRASES.map(p => `<div class="ph"><span class="es">${esc(p.es)}</span><button class="spk" type="button" data-w="${esc(p.es)}" aria-label="${T(I.hear)}">${IC.spk}</button><span class="en">${esc(p.en)}</span></div>`).join("")}</div>`}
+  </div>`;
+  $$(".tabs button", v).forEach(b => b.addEventListener("click", ()=>{ location.hash = b.dataset.t === "phrases" ? "#/palabras/frases" : "#/palabras"; }));
+  $$(".fc", v).forEach(fc => {
+    fc.addEventListener("click", e => {
+      if (e.target.closest("[data-hear]")) { speak(fc.dataset.w); return; }
+      const m = $(".m", fc); m.hidden = !m.hidden; fc.classList.toggle("flipped", !m.hidden);
+    });
+  });
+  $$(".ph .spk", v).forEach(b => b.addEventListener("click", ()=> speak(b.dataset.w)));
+}
+
+/* ================= tutorial ================= */
+const STEPS = [
+ { scene:"welcome", eye:{en:"Welcome",es:"Bienvenidos"},
+   h:{en:"Sing first. The Spanish follows.",es:"Primero cantar. El español viene después."},
+   lede:{en:"Twenty-one songs your family already knows. Here is how it works.",es:"Veintiuna canciones que tu familia ya conoce. Así funciona."} },
+ { scene:"lang", h:{en:"Choose your language",es:"Elige tu idioma"},
+   lede:{en:"The buttons change. The songs stay in Spanish.",es:"Los botones cambian. Las canciones siguen en español."} },
+ { scene:"browse", h:{en:"Find a song",es:"Busca una canción"},
+   lede:{en:"Tap a group. Start here is the easiest.",es:"Toca un grupo. Empieza aquí es lo más fácil."}, tryHash:"#/" },
+ { scene:"read", h:{en:"Read the words",es:"Lee la letra"},
+   lede:{en:"Big Spanish, small English. Hide the English when you are ready.",es:"Español grande, inglés chico. Esconde el inglés cuando estés listo."} },
+ { scene:"listen", h:{en:"Listen",es:"Escucha"},
+   lede:{en:"Tap a line to hear it. Slow stretches it out.",es:"Toca una línea para oírla. Despacio la alarga."} },
+ { scene:"sing", h:{en:"Sing together",es:"Canten juntos"},
+   lede:{en:"Press Play. The words light up and the lines scroll by themselves.",es:"Toca Reproducir. Las palabras se iluminan y las líneas avanzan solas."}, tryHash:"#/song/pollitos/sing" },
+ { scene:"play", h:{en:"Play it with your hands",es:"Juégala con las manos"},
+   lede:{en:"Every song has a game. Do the motion while you sing.",es:"Cada canción tiene un juego. Haz el movimiento mientras cantas."} },
+ { scene:"words", h:{en:"Keep the words",es:"Guarda las palabras"},
+   lede:{en:"Tap a card to flip it. Tap the speaker to hear it.",es:"Toca una tarjeta para voltearla. Toca la bocina para oírla."}, tryHash:"#/palabras" },
+ { scene:"track", h:{en:"One song a week",es:"Una canción por semana"},
+   lede:{en:"Same song, same moment, every day. Mark it on day seven.",es:"La misma canción, el mismo momento, todos los días. Márcala al séptimo día."} },
+ { scene:"talk", h:{en:"Talk around the song",es:"Habla alrededor de la canción"},
+   lede:{en:"A few phrases go a long way.",es:"Con pocas frases alcanza."}, tryHash:"#/palabras/frases" },
+ { scene:"ready", eye:{en:"Ready",es:"Listo"},
+   h:{en:"Start with Los pollitos dicen",es:"Empieza con Los pollitos dicen"},
+   lede:{en:"Short, with a tune, and they will ask for it again.",es:"Corta, con tonada, y la van a pedir otra vez."},
+   cta:{hash:"#/song/pollitos", en:"Open Los pollitos dicen", es:"Abrir Los pollitos dicen"} },
+];
+
+/* ---- scene helpers ---- */
+const RM = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+let tourTimers = [];
+function later(ms, fn){ tourTimers.push(setTimeout(fn, ms)); }
+function seq(steps, loopMs){ const run = ()=>{ steps.forEach(([at, fn]) => later(at, fn)); if (loopMs && !RM) later(loopMs, run); }; run(); }
+function clearTourAnim(){ tourTimers.forEach(clearTimeout); tourTimers = []; }
+const HAND = '<svg viewBox="0 0 40 48" aria-hidden="true"><path d="M13 3.5a3.5 3.5 0 0 1 7 0V24h1.5c0-2.2 1.8-3.5 4-3.5s4 1.3 4 3.5c2.2-.6 4.5.6 4.5 3 2.3-.3 4 1.4 4 3.5V36c0 6.5-5 10.5-11.5 10.5h-4.5c-4.6 0-8.4-2.4-10.6-6.4L5 28.6c-1.1-2 .3-4.1 2.4-4.1 1.2 0 2.3.6 3 1.6L13 29z" fill="#F6D2A8" stroke="#8A5A2B" stroke-width="2" stroke-linejoin="round"/></svg>';
+function addHand(scene){ const h = document.createElement("div"); h.className = "hand"; h.innerHTML = HAND; scene.appendChild(h); return h; }
+function handTo(scene, hand, el, fx, fy){
+  const r = el.getBoundingClientRect(), s = scene.getBoundingClientRect();
+  const x = r.left - s.left + r.width * (fx == null ? 0.5 : fx), y = r.top - s.top + r.height * (fy == null ? 0.6 : fy);
+  hand.style.transform = `translate(${Math.round(x - 14)}px, ${Math.round(y - 2)}px)`; hand.classList.add("show");
+}
+function tap(hand, el){
+  hand.classList.remove("tap"); void hand.offsetWidth; hand.classList.add("tap");
+  if (el) { el.classList.remove("press"); void el.offsetWidth; el.classList.add("press"); }
+}
+function wordsHTML(text){ return text.split(" ").map(w => `<span class="w">${esc(w)}</span>`).join(" "); }
+function waves(){ return `<span class="waves" aria-hidden="true"><i></i><i></i><i></i></span>`; }
+
+const SCENES = {
+  welcome: {
+    html: ()=> `<div class="scene sc-welcome" aria-hidden="true"><svg viewBox="0 0 320 120">
+      <path d="M0 18 Q160 34 320 18" fill="none" stroke="#8A7C64" stroke-width="2"/>
+      ${[["#F2A62C",18,20,'<circle cx="19" cy="14" r="5" fill="#FBF3E2"/><path d="M11 24h16" stroke="#FBF3E2" stroke-width="2.5"/>'],["#D6337B",74,25,'<path d="M19 6l4 6h-8zM19 22l-4-6h8z" fill="#FBF3E2"/>'],["#1F6F9E",130,28,'<path d="M8 14h22M19 3v22" stroke="#FBF3E2" stroke-width="2.5"/>'],["#4C9A5A",186,28,'<circle cx="12" cy="9" r="3" fill="#FBF3E2"/><circle cx="26" cy="9" r="3" fill="#FBF3E2"/><circle cx="19" cy="19" r="3.5" fill="#FBF3E2"/>'],["#F2A62C",242,25,'<circle cx="19" cy="14" r="5" fill="#FBF3E2"/><path d="M11 24h16" stroke="#FBF3E2" stroke-width="2.5"/>']].map(([c,x,y,cut],i)=>`<g class="flag" style="animation-delay:${i*-0.7}s;transform-origin:${x+19}px ${y}px"><g transform="translate(${x},${y})"><path d="M0 0h38v28l-4 4-5-4-5 4-5-4-5 4-5-4-5 4-4-4z" fill="${c}"/>${cut}</g></g>`).join("")}
+      <g class="chick-bob"><ellipse cx="160" cy="98" rx="22" ry="16" fill="#F2A62C"/><circle cx="144" cy="82" r="13" fill="#F2A62C"/><circle cx="140" cy="79" r="2" fill="#2A2418"/><path d="M129 84l-7 2 7 3z" fill="#D6337B"/><path d="M152 114v-4M168 114v-4" stroke="#C97C10" stroke-width="3" stroke-linecap="round"/></g>
+      <g class="note-float"><text x="120" y="70" font-size="18" fill="#1F6F9E">♪</text></g><g class="note-float" style="animation-delay:-1.2s"><text x="196" y="66" font-size="16" fill="#D6337B">♫</text></g>
+    </svg></div>`,
+    start(){}
+  },
+
+  lang: {
+    html: ()=> `<div class="scene sc-lang">
+      <div class="mock-hdr"><span class="brand">Cántame</span>
+        <span class="mock-nav"><b data-en="Songs" data-es="Canciones">Songs</b><b data-en="Words" data-es="Palabras">Words</b><b>Tutorial</b></span>
+        <span class="langsw"><button type="button" data-l="en" aria-pressed="true">English</button><button type="button" data-l="es" aria-pressed="false">Español</button></span></div>
+      <div class="mock-h" data-en="Songs your family already knows" data-es="Canciones que tu familia ya conoce">Songs your family already knows</div>
+      <div class="mock-line"><span class="es">Los pollitos dicen, pío, pío, pío</span><span class="stay" data-en="always in Spanish" data-es="siempre en español">always in Spanish</span></div>
+    </div>`,
+    start(sc){
+      const hand = addHand(sc); const en = $('[data-l="en"]', sc), es = $('[data-l="es"]', sc);
+      const set = l => { $$("[data-en]", sc).forEach(el => { el.textContent = el.dataset[l] || el.dataset.en; }); en.setAttribute("aria-pressed", l === "en"); es.setAttribute("aria-pressed", l === "es"); };
+      set("en");
+      seq([[200, ()=>handTo(sc, hand, es)], [1000, ()=>{ tap(hand, es); set("es"); }], [3000, ()=>handTo(sc, hand, en)], [3800, ()=>{ tap(hand, en); set("en"); }]], 5600);
+      [en, es].forEach(b => b.addEventListener("click", ()=> set(b.dataset.l)));
+    }
+  },
+
+  browse: {
+    html: ()=> {
+      const chips = [["all", I.all], ["arrullos", CATS[0].n], ["animales", CATS[1].n], ["jugar", CATS[2].n]];
+      const cards = [["pollitos","green","animales",true],["estrellita","blue","arrullos",true],["rorro","blue","arrullos",false],["vibora","rosa","jugar",false]];
+      return `<div class="scene sc-browse">
+        <div class="filters mini">${chips.map(([id, n]) => `<button type="button" data-f="${id}" aria-pressed="${id === "all"}">${T(n)}</button>`).join("")}</div>
+        <div class="mini-cards">${cards.map(([id, c, cat, st]) => `<div class="mc stripe-${c}" data-c="${cat}">${st ? `<span class="start">${T(I.start_here)}</span>` : ""}${esc(songOf(id).title)}</div>`).join("")}</div></div>`;
+    },
+    start(sc){
+      const hand = addHand(sc); const chip = id => $(`[data-f="${id}"]`, sc);
+      const set = id => { $$("[data-f]", sc).forEach(b => b.setAttribute("aria-pressed", b.dataset.f === id)); $$(".mc", sc).forEach(c => c.classList.toggle("dim", id !== "all" && c.dataset.c !== id)); };
+      set("all");
+      seq([[200, ()=>handTo(sc, hand, chip("arrullos"))], [1000, ()=>{ tap(hand, chip("arrullos")); set("arrullos"); }],
+           [2800, ()=>handTo(sc, hand, chip("animales"))], [3600, ()=>{ tap(hand, chip("animales")); set("animales"); }],
+           [5400, ()=>handTo(sc, hand, chip("all"))], [6200, ()=>{ tap(hand, chip("all")); set("all"); }]], 8000);
+      $$("[data-f]", sc).forEach(b => b.addEventListener("click", ()=> set(b.dataset.f)));
+    }
+  },
+
+  read: {
+    html: ()=> { const p = songOf("pollitos").stanzas[0];
+      return `<div class="scene sc-read">
+        ${p.slice(0, 2).map(l => `<div class="rl"><div class="es">${wordsHTML(l.es)}</div><div class="en">${esc(l.en)}</div></div>`).join("")}
+        <div class="row"><button class="btn sm" type="button" data-eng aria-pressed="true">${T(I.english)}</button></div></div>`; },
+    start(sc){
+      const hand = addHand(sc); const lines = $$(".rl", sc); const btn = $("[data-eng]", sc);
+      const steps = []; let t = 300;
+      const reset = ()=>{ $$(".w.on", sc).forEach(w => w.classList.remove("on")); lines.forEach(l => l.classList.remove("glossed")); sc.classList.remove("hide-en"); btn.setAttribute("aria-pressed", "true"); };
+      steps.push([0, reset]);
+      lines.forEach(l => {
+        $$(".w", l).forEach(w => { steps.push([t, ()=>{ handTo(sc, hand, w, 0.5, 1.05); w.classList.add("on"); }]); t += 520; });
+        steps.push([t, ()=> l.classList.add("glossed")]); t += 700;
+      });
+      steps.push([t + 300, ()=> handTo(sc, hand, btn)]); t += 1100;
+      steps.push([t, ()=>{ tap(hand, btn); sc.classList.add("hide-en"); btn.setAttribute("aria-pressed", "false"); }]); t += 1800;
+      steps.push([t, ()=>{ tap(hand, btn); sc.classList.remove("hide-en"); btn.setAttribute("aria-pressed", "true"); }]); t += 1600;
+      seq(steps, t);
+      btn.addEventListener("click", ()=>{ const on = sc.classList.toggle("hide-en"); btn.setAttribute("aria-pressed", !on); lines.forEach(l => l.classList.add("glossed")); });
+    }
+  },
+
+  listen: {
+    html: ()=> { const l = songOf("pollitos").stanzas[0][0];
+      return `<div class="scene sc-listen">
+        <div class="ll"><span class="es">${wordsHTML(l.es)}</span><button class="spk" type="button" data-w="${esc(l.es)}" aria-label="${T(I.hear)}">${IC.spk}</button>${waves()}</div>
+        <div class="row"><button class="btn sm" type="button" data-slowbtn aria-pressed="false">${T(I.slow)}</button><button class="btn sm" type="button" data-tunebtn>${IC.note} ${T(I.play_tune)}</button></div>
+        <div class="notes" aria-hidden="true"></div></div>`; },
+    start(sc){
+      const hand = addHand(sc); const spk = $(".spk", sc), slow = $("[data-slowbtn]", sc), tune = $("[data-tunebtn]", sc), ws = $(".waves", sc), notes = $(".notes", sc);
+      const words = $$(".w", sc);
+      const say = gap => { ws.classList.remove("on", "slow"); void ws.offsetWidth; ws.classList.add("on"); if (gap > 300) ws.classList.add("slow"); words.forEach((w, i) => { later(i * gap, ()=>{ words.forEach(x => x.classList.remove("on")); w.classList.add("on"); }); }); later(words.length * gap + 200, ()=>{ words.forEach(x => x.classList.remove("on")); ws.classList.remove("on"); }); };
+      const floatNotes = ()=>{ notes.innerHTML = ""; ["♪","♫","♪","♩"].forEach((n, i) => { const e = document.createElement("i"); e.textContent = n; e.style.left = (20 + i * 18) + "%"; e.style.animationDelay = (i * 0.18) + "s"; notes.appendChild(e); }); };
+      seq([[200, ()=>handTo(sc, hand, spk)], [900, ()=>{ tap(hand, spk); say(280); }],
+           [2600, ()=>handTo(sc, hand, slow)], [3300, ()=>{ tap(hand, slow); slow.setAttribute("aria-pressed", "true"); }],
+           [4000, ()=>handTo(sc, hand, spk)], [4700, ()=>{ tap(hand, spk); say(650); }],
+           [7300, ()=>{ slow.setAttribute("aria-pressed", "false"); handTo(sc, hand, tune); }], [8000, ()=>{ tap(hand, tune); floatNotes(); }]], 10400);
+      spk.addEventListener("click", ()=>{ say(slow.getAttribute("aria-pressed") === "true" ? 650 : 280); speak(spk.dataset.w, slow.getAttribute("aria-pressed") === "true"); });
+      slow.addEventListener("click", ()=> slow.setAttribute("aria-pressed", slow.getAttribute("aria-pressed") !== "true"));
+      tune.addEventListener("click", ()=>{ floatNotes(); const s = songOf("pollitos"); playTune({ ...s, stanzas:[[s.stanzas[0][0]]] }); });
+    }
+  },
+
+  sing: {
+    html: ()=> { const l = songOf("pollitos").stanzas[0];
+      return `<div class="scene sc-sing"><div class="phone">
+        <div class="preel"><div class="pinner">${l.map((ln, i) => `<div class="pl" data-i="${i}">${wordsHTML(ln.es)}</div>`).join("")}</div></div>
+        <div class="pplay">${IC.play} ${T(I.play)}</div></div></div>`; },
+    start(sc){
+      const hand = addHand(sc); const lines = songOf("pollitos").stanzas[0]; const pls = $$(".pl", sc), inner = $(".pinner", sc), wrap = $(".preel", sc), play = $(".pplay", sc);
+      const center = i => { pls.forEach((p, k) => { p.classList.toggle("cur", k === i); }); const y = wrap.clientHeight / 2 - (pls[i].offsetTop + pls[i].offsetHeight / 2); inner.style.transform = `translateY(${Math.round(y)}px)`; };
+      const steps = [[0, ()=>{ $$(".w.on", sc).forEach(w => w.classList.remove("on")); center(0); play.classList.remove("on"); }], [300, ()=> handTo(sc, hand, play)], [1000, ()=>{ tap(hand, play); play.classList.add("on"); hand.classList.remove("show"); }]];
+      let t = 1500; const step = 430;
+      lines.forEach((ln, i) => {
+        steps.push([t, ()=> center(i)]);
+        $$(".w", pls[i]).forEach((w, k) => steps.push([t + 150 + k * step, ()=>{ $$(".w.on", sc).forEach(x => x.classList.remove("on")); w.classList.add("on"); }]));
+        t += 150 + $$(".w", pls[i]).length * step + 350;
+      });
+      steps.push([t, ()=>{ $$(".w.on", sc).forEach(x => x.classList.remove("on")); play.classList.remove("on"); }]);
+      seq(steps, t + 1200);
+    }
+  },
+
+  play: {
+    html: ()=> `<div class="scene sc-play">
+      <div class="pat" aria-hidden="true">
+        <svg class="hl" viewBox="0 0 60 80"><path d="M14 78c-6-1-10-6-11-12L0 48c-.5-2.5 1.5-4.5 4-4l4 1.5V14a4 4 0 0 1 8 0v22h3V6a4 4 0 0 1 8 0v30h3V10a4 4 0 0 1 8 0v26h3V18a4 4 0 0 1 8 0v36c0 14-9 24-24 24z" fill="#F6D2A8" stroke="#8A5A2B" stroke-width="2.5" stroke-linejoin="round"/></svg>
+        <div class="tortilla"></div>
+        <svg class="hr" viewBox="0 0 60 80"><path d="M14 78c-6-1-10-6-11-12L0 48c-.5-2.5 1.5-4.5 4-4l4 1.5V14a4 4 0 0 1 8 0v22h3V6a4 4 0 0 1 8 0v30h3V10a4 4 0 0 1 8 0v26h3V18a4 4 0 0 1 8 0v36c0 14-9 24-24 24z" fill="#F6D2A8" stroke="#8A5A2B" stroke-width="2.5" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="syl">${[["Tor","ti","lli","tas","de","man","te","ca"],["pa'","ma","má","que es","tá","con","ten","ta"]].map(line => `<div class="sl">${line.map(s => `<span class="s">${esc(s)}</span>`).join("")}</div>`).join("")}</div>
+      <div class="cap">${esc(songOf("tortillitas").title)}</div></div>`,
+    start(sc){
+      const pat = $(".pat", sc); const lines = $$(".sl", sc); const steps = []; let t = 400; const beat = 460;
+      lines.forEach((l, li) => {
+        $$(".s", l).forEach(s => { steps.push([t, ()=>{ $$(".s.on", sc).forEach(x => x.classList.remove("on")); s.classList.add("on"); pat.classList.add("hit"); }]); steps.push([t + 200, ()=> pat.classList.remove("hit")]); t += beat; });
+        t += beat * 0.8;
+      });
+      steps.push([t, ()=> $$(".s.on", sc).forEach(x => x.classList.remove("on"))]);
+      seq(steps, t + 600);
+    }
+  },
+
+  words: {
+    flip(c, on){ c.classList.add("flipping"); setTimeout(()=>{ c.classList.toggle("flip", on); c.classList.remove("flipping"); }, 140); },
+    html: ()=> `<div class="scene sc-words"><div class="fcards">${[["gallina","hen"],["frío","cold"],["alas","wings"]].map(([a, b]) => `<div class="fcard" data-w="${a}" tabindex="0" role="button"><div class="in"><div class="f">${a}</div><div class="b">${b}</div></div><button class="spk" type="button" aria-label="${T(I.hear)}">${IC.spk}</button>${waves()}</div>`).join("")}</div></div>`,
+    start(sc){
+      const hand = addHand(sc); const cards = $$(".fcard", sc);
+      const spk = i => $(".spk", cards[i]), wave = i => { const w = $(".waves", cards[i]); w.classList.remove("on"); void w.offsetWidth; w.classList.add("on"); later(1400, ()=> w.classList.remove("on")); };
+      const flip = SCENES.words.flip;
+      seq([[0, ()=> cards.forEach(c => c.classList.contains("flip") && flip(c, false))], [300, ()=> handTo(sc, hand, cards[0], 0.5, 0.7)], [1000, ()=>{ tap(hand, cards[0]); flip(cards[0], true); }],
+           [2200, ()=> handTo(sc, hand, spk(0))], [2900, ()=>{ tap(hand, spk(0)); wave(0); }],
+           [4400, ()=> handTo(sc, hand, cards[1], 0.5, 0.7)], [5100, ()=>{ tap(hand, cards[1]); flip(cards[1], true); }],
+           [6400, ()=> handTo(sc, hand, cards[2], 0.5, 0.7)], [7100, ()=>{ tap(hand, cards[2]); flip(cards[2], true); }]], 9200);
+      cards.forEach((c, i) => { c.addEventListener("click", e => { if (e.target.closest(".spk")) { wave(i); speak(c.dataset.w); return; } flip(c, !c.classList.contains("flip")); }); });
+    }
+  },
+
+  track: {
+    html: ()=> `<div class="scene sc-track"><div class="tt">${esc(songOf("pollitos").title)}</div>
+      <div class="week">${T(I.weekdays).map(d => `<div class="day"><b>${d}</b><i>♪</i></div>`).join("")}</div>
+      <button class="btn know" type="button" aria-pressed="false">${IC.check} <span>${T(I.know)}</span></button></div>`,
+    start(sc){
+      const hand = addHand(sc); const days = $$(".day", sc), know = $(".know", sc); const label = $("span", know);
+      const steps = [[0, ()=>{ days.forEach(d => d.className = "day"); know.setAttribute("aria-pressed", "false"); label.textContent = T(I.know); }]];
+      days.forEach((d, i) => steps.push([300 + i * 420, ()=> d.classList.add(i === 6 ? "done" : "on")]));
+      steps.push([3600, ()=> handTo(sc, hand, know)], [4300, ()=>{ tap(hand, know); know.setAttribute("aria-pressed", "true"); label.textContent = T(I.know_on); }]);
+      seq(steps, 7000);
+      know.addEventListener("click", ()=>{ const on = know.getAttribute("aria-pressed") !== "true"; know.setAttribute("aria-pressed", on); label.textContent = T(on ? I.know_on : I.know); });
+    }
+  },
+
+  talk: {
+    html: ()=> { const lines = [["p","¿Cantamos?","Shall we sing?"],["c","¡Sí!","Yes!"],["p","Ahora tú.","Now you."],["c","Pío, pío, pío…","Peep, peep, peep…"],["p","¡Muy bien! Otra vez.","Very good! Again."]];
+      const who = { p: T({en:"You",es:"Tú"}), c: T({en:"Your child",es:"Tu hijo"}) };
+      return `<div class="scene sc-talk"><div class="convo">${lines.map(([w, es, en]) => `<div class="turn ${w}"><small>${who[w]}</small><span class="es">${esc(es)}</span><span class="en">${esc(en)}</span></div>`).join("")}</div></div>`; },
+    start(sc){
+      const turns = $$(".turn", sc); const steps = [[0, ()=> turns.forEach(t => t.classList.remove("on"))]];
+      turns.forEach((t, i) => steps.push([400 + i * 1300, ()=> t.classList.add("on")]));
+      seq(steps, 400 + turns.length * 1300 + 1800);
+    }
+  },
+
+  ready: {
+    html: ()=> `<div class="scene sc-ready" aria-hidden="true"><svg viewBox="0 0 200 120"><g class="chick-bob"><ellipse cx="110" cy="84" rx="40" ry="30" fill="#F2A62C"/><circle cx="80" cy="56" r="24" fill="#F2A62C"/><circle cx="73" cy="51" r="3.5" fill="#2A2418"/><path d="M52 58l-12 4 12 4z" fill="#D6337B"/><path d="M108 66c12-8 26-5 34 6" fill="none" stroke="#C97C10" stroke-width="3.5" stroke-linecap="round"/><path d="M96 112v6M124 112v6" stroke="#C97C10" stroke-width="4" stroke-linecap="round"/></g>
+      <g class="note-float"><text x="150" y="40" font-size="20" fill="#1F6F9E">♪</text></g><g class="note-float" style="animation-delay:-1.1s"><text x="30" y="34" font-size="18" fill="#D6337B">♫</text></g></svg></div>`,
+    start(){}
+  },
+};
+
+let tourState = null;
+function openTour(n){
+  if (!tourState) {
+    const o = document.createElement("div"); o.className = "tour"; o.setAttribute("role","dialog"); o.setAttribute("aria-modal","true");
+    document.body.appendChild(o); document.body.style.overflow = "hidden";
+    const key = e => { if (!tourState) return; if (e.key === "Escape") { location.hash = "#/"; } else if (e.key === "ArrowRight") tourGo(tourState.i + 1); else if (e.key === "ArrowLeft") tourGo(tourState.i - 1); };
+    document.addEventListener("keydown", key);
+    tourState = { el:o, key, i:0 };
+  }
+  tourState.i = Math.max(0, Math.min(STEPS.length - 1, n));
+  drawTour();
+}
+function tourGo(n){
+  if (n >= STEPS.length) { finishTour("#/"); return; }
+  if (n < 0) return;
+  location.hash = `#/tour/${n}`;
+}
+function finishTour(hash){
+  TOUR_SEEN = true; try { localStorage.setItem("cantame-tour-seen","1"); } catch(e){}
+  location.hash = hash;
+}
+function closeTour(){
+  if (!tourState) return;
+  stopAll(); clearTourAnim();
+  document.removeEventListener("keydown", tourState.key);
+  tourState.el.remove(); document.body.style.overflow = ""; tourState = null;
+}
+function drawTour(){
+  clearTourAnim(); stopAll();
+  const i = tourState.i, st = STEPS[i], o = tourState.el;
+  const stepsTotal = STEPS.length - 2;
+  const eyebrow = st.eye ? T(st.eye) : `${T(I.step)} ${i} ${T(I.of)} ${stepsTotal}`;
+  const sc = SCENES[st.scene];
+  o.innerHTML = `<div class="thdr"><div class="in">
+      <span class="brand">Cántame <small>${T(I.nav_tour)}</small></span><span class="grow"></span>
+      <div class="langsw" role="group"><button type="button" data-tl="en" aria-pressed="${LANG==="en"}">English</button><button type="button" data-tl="es" aria-pressed="${LANG==="es"}">Español</button></div>
+      <button class="x" type="button" data-act="close" aria-label="${T(I.close)}">×</button></div>
+      <div class="bar"><div class="rail"><i style="width:${Math.round((i+1)/STEPS.length*100)}%"></i></div></div></div>
+    <div class="tstage"><div class="tcard anim">
+      <span class="eyebrow">${eyebrow}</span>
+      <h1>${T(st.h)}</h1>
+      <p class="lede">${T(st.lede)}</p>
+      ${sc ? sc.html() : ""}
+      ${st.tryHash ? `<div class="row" style="justify-content:center;margin-top:.9rem"><button class="btn sm" type="button" data-try="${st.tryHash}">${T(I.try_it)} →</button></div>` : ""}
+      ${st.cta ? `<div class="row" style="justify-content:center;margin-top:1.2rem"><button class="btn primary" type="button" data-try="${st.cta.hash}" style="padding:.8rem 1.5rem;font-size:1.08rem">${T(st.cta)}</button></div>` : ""}
+    </div></div>
+    <div class="tfoot">
+      <button class="btn ghost" type="button" data-act="prev" ${i === 0 ? "disabled" : ""}>${IC.back} ${T(I.tour_back)}</button>
+      <button class="btn ghost sm" type="button" data-act="skip" style="color:var(--muted)">${i === STEPS.length - 1 ? "" : T(I.tour_skip)}</button>
+      <button class="btn primary" type="button" data-act="next">${i === 0 ? T(I.tour_start) : i === STEPS.length - 1 ? T(I.close) : T(I.tour_next)} →</button>
+    </div>`;
+  $('[data-act="close"]', o).addEventListener("click", ()=> finishTour("#/"));
+  $('[data-act="skip"]', o).addEventListener("click", ()=> finishTour("#/"));
+  $('[data-act="prev"]', o).addEventListener("click", ()=> tourGo(i - 1));
+  $('[data-act="next"]', o).addEventListener("click", ()=> tourGo(i + 1));
+  $$("[data-tl]", o).forEach(b => b.addEventListener("click", ()=>{ LANG = b.dataset.tl; try { localStorage.setItem("cantame-lang", LANG); } catch(e){} renderNav(); drawTour(); }));
+  $$("[data-try]", o).forEach(b => b.addEventListener("click", ()=> finishTour(b.dataset.try)));
+  $(".tstage", o).scrollTop = 0;
+  const sceneEl = $(".scene", o);
+  if (sc && sceneEl) later(60, ()=> sc.start(sceneEl));
+  $('[data-act="next"]', o).focus();
+}
+
+/* ================= boot ================= */
+$$(".langsw button").forEach(b => b.addEventListener("click", ()=> setLang(b.dataset.lang)));
+window.addEventListener("hashchange", ()=>{ renderNav(); route(); });
+document.body.classList.toggle("no-gloss", !GLOSS);
+renderNav(); route();
+})();
+</script>
+</body>
+</html>

@@ -120,6 +120,16 @@
   .banner p { margin: 0; flex: 1; min-width: 14rem; }
   .banner .x { background: none; border: 0; color: var(--muted); font-size: 1.2rem; padding: 0.2rem 0.5rem; }
 
+  .kinds { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin-bottom: 0.9rem; }
+  .kinds button { text-align: left; background: var(--card); border: 2px solid var(--line); border-radius: 16px; padding: 0.7rem 0.9rem; display: flex; flex-direction: column; gap: 0.15rem; box-shadow: var(--shadow); }
+  .kinds button b { font-size: 1.05rem; }
+  .kinds button small { color: var(--muted); font-size: 0.82rem; line-height: 1.3; }
+  .kinds button:hover { border-color: var(--marigold); }
+  .kinds button[aria-pressed="true"] { border-color: var(--marigold); background: var(--soft); }
+  .kinds button[aria-pressed="true"] small { color: var(--ink-2); }
+  @media (max-width: 560px) { .kinds { grid-template-columns: 1fr; } .kinds button { flex-direction: row; align-items: baseline; gap: 0.5rem; } }
+  .card .meta .tag.kind-song { color: var(--marigold-deep); font-weight: 700; }
+  .card .meta .tag.kind-game { color: var(--rosa); font-weight: 700; }
   .filters { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
   .filters button { border: 2px solid transparent; background: var(--soft2); border-radius: 999px; padding: 0.35rem 0.9rem; font-weight: 700; font-size: 0.92rem; color: var(--ink-2); display: inline-flex; align-items: center; gap: 0.4rem; }
   .filters button svg { width: 1em; height: 1em; }
@@ -494,11 +504,13 @@
 const I = {
   nav_songs:{en:"Songs",es:"Canciones"}, nav_words:{en:"Words",es:"Palabras"}, nav_tour:{en:"Tutorial",es:"Tutorial"},
   hero_h:{en:"Songs your family already knows",es:"Canciones que tu familia ya conoce"},
-  hero_p:{en:"Twenty-one Mexican songs and rhymes for singing with a child. Spanish in big letters, English underneath, a voice to copy, and the game that goes with each one.",es:"Veintiuna canciones y rimas mexicanas para cantar con un niño. El español en grande, el inglés debajo, una voz para copiar y el juego que va con cada una."},
+  hero_p:{en:"Eleven Mexican songs and eleven games and rhymes for singing with a child. Spanish in big letters, English underneath, a voice to copy, and the game that goes with each one.",es:"Once canciones mexicanas y once juegos y rimas para cantar con un niño. El español en grande, el inglés debajo, una voz para copiar y el juego que va con cada una."},
   stat:{en:"songs you know",es:"canciones que ya saben"},
   banner:{en:"New here? A two-minute tour shows you how to read, listen, sing and play.",es:"¿Es tu primera vez? Un recorrido de dos minutos te enseña a leer, escuchar, cantar y jugar."},
   take_tour:{en:"Take the tour",es:"Ver el recorrido"}, dismiss:{en:"Dismiss",es:"Cerrar"},
   all:{en:"All",es:"Todas"}, start_here:{en:"Start here",es:"Empieza aquí"},
+  kind_all:{en:"Everything",es:"Todo"}, kind_song:{en:"Songs",es:"Canciones"}, kind_game:{en:"Games",es:"Juegos"}, k_song:{en:"Song",es:"Canción"}, k_game:{en:"Game",es:"Juego"},
+  kind_song_desc:{en:"Sung to a tune. Play hums it.",es:"Se cantan con tonada. Reproducir la tararea."}, kind_game_desc:{en:"Chanted or sung while you play: hands, laps, rounds, the piñata.",es:"Se dicen o cantan mientras juegas: manos, regazo, rondas, la piñata."},
   start_desc:{en:"Three short songs with a tune or a hand game. Learn these first.",es:"Tres canciones cortas con tonada o juego de manos. Aprende estas primero."},
   has_tune:{en:"tune",es:"tonada"}, has_game:{en:"game",es:"juego"}, lines:{en:"lines",es:"líneas"},
   back:{en:"All songs",es:"Todas las canciones"},
@@ -571,7 +583,7 @@ const PIC = {
 /* ================= songs ================= */
 const L = (es,en)=>({es,en});
 const SONGS = [
-{ id:"pollitos", cat:"animales", title:"Los pollitos dicen", start:true, melody:"pollitos",
+{ id:"pollitos", kind:"song", cat:"animales", title:"Los pollitos dicen", start:true, melody:"pollitos",
   note:{en:"The most-sung nursery song in Mexico and across Latin America. Listen for <b>acurrucaditos</b>: a diminutive stacked on a diminutive, which is a very Mexican way of talking to small children.",
         es:"La canción infantil más cantada en México y en toda Latinoamérica. Fíjate en <b>acurrucaditos</b>: un diminutivo encima de otro, una forma muy mexicana de hablarle a los niños chiquitos."},
   how:{en:["Make beaks with your fingers and open them on every pío.","Hug your arms and shiver on frío.","Fold your arms like wings over the child on the last verse, and sing it softer."],
@@ -582,7 +594,7 @@ const SONGS = [
     [L("Bajo sus dos alas,","Under her two wings,"),L("acurrucaditos,","all snuggled up,"),L("hasta el otro día","until the next day"),L("duermen los pollitos.","the little chicks sleep.")]],
   vocab:[L("pollito","little chick"),L("gallina","hen"),L("hambre","hunger"),L("frío","cold"),L("maíz","corn"),L("alas","wings"),L("acurrucados","snuggled up")] },
 
-{ id:"tortillitas", cat:"manos", title:"Tortillitas de manteca", start:true,
+{ id:"tortillitas", melody:"tortillitas", kind:"game", cat:"manos", title:"Tortillitas de manteca", start:true,
   note:{en:"The Mexican pat-a-cake. The clap is the tortilla pat, the same motion an abuela makes at the comal. The second verse swaps who is grumpy so nobody stays <b>enojado</b>.",
         es:"El pat-a-cake mexicano. La palmada es la de hacer tortillas, el mismo movimiento de la abuela en el comal. La segunda estrofa cambia quién está enojado para que nadie se quede <b>enojado</b>."},
   how:{en:["Sit facing the child. Hold their hands and pat them together like making tortillas.","Point to mamá or papá when you name them.","Make a happy face on contenta and feliz, a grumpy face on enojado."],
@@ -592,7 +604,7 @@ const SONGS = [
     [L("Tortillitas de cebada","Little tortillas made with barley"),L("pa' mamá que está enojada.","for mama, who is grumpy."),L("Tortillitas de maíz","Little tortillas made with corn"),L("pa' papá que está feliz.","for papa, who is happy.")]],
   vocab:[L("tortilla","tortilla"),L("manteca","lard"),L("mamá","mom"),L("papá","dad"),L("contenta","happy (she)"),L("enojado","grumpy, angry (he)"),L("feliz","happy")] },
 
-{ id:"estrellita", cat:"arrullos", title:"Estrellita, ¿dónde estás?", start:true, melody:"estrellita",
+{ id:"estrellita", kind:"song", cat:"arrullos", title:"Estrellita, ¿dónde estás?", start:true, melody:"estrellita",
   note:{en:"Same tune as Twinkle, Twinkle. A bridge song: your child already knows the melody, so the Spanish rides in on it for free. <b>Titilar</b> is to twinkle.",
         es:"La misma tonada que Twinkle, Twinkle. Una canción puente: tu hijo ya conoce la melodía, así que el español entra solo. <b>Titilar</b> es parpadear como una estrella."},
   how:{en:["Open and close your hands above your head on estrellita.","Shade your eyes and look around on ¿dónde estás?","Point up on cielo and make waves on mar."],
@@ -601,7 +613,7 @@ const SONGS = [
     [L("Estrellita, ¿dónde estás?","Little star, where are you?"),L("Quiero verte titilar.","I want to see you twinkle."),L("En el cielo o en el mar,","In the sky or in the sea,"),L("un diamante de verdad.","a real diamond."),L("Estrellita, ¿dónde estás?","Little star, where are you?"),L("Quiero verte titilar.","I want to see you twinkle.")]],
   vocab:[L("estrella","star"),L("estrellita","little star"),L("¿dónde?","where?"),L("cielo","sky"),L("mar","sea"),L("diamante","diamond"),L("quiero","I want")] },
 
-{ id:"rorro", cat:"arrullos", title:"A la rorro niño",
+{ id:"rorro", melody:"rorro", kind:"song", cat:"arrullos", title:"A la rorro niño",
   note:{en:"The lullaby most Mexican grandmothers sang. <b>Rorro</b> is an old, tender word for a baby. The verses are little jokes: the baby born by day wants ice cream, the baby born by night wants a ride.",
         es:"El arrullo que cantaban casi todas las abuelas mexicanas. <b>Rorro</b> es una palabra vieja y tierna para bebé. Las estrofas son bromitas: el que nació de día quiere nieve, el que nació de noche quiere paseo."},
   how:{en:["Rock side to side, one sway per rorro.","Sing it a little slower each time through.","Hum the last verse with your lips closed."],
@@ -612,7 +624,7 @@ const SONGS = [
     [L("Este niño lindo","This pretty baby"),L("que nació de noche,","who was born at night"),L("quiere que lo lleven","wants to be taken"),L("a pasear en coche.","for a ride in the car.")]],
   vocab:[L("niño","child, baby"),L("duérmete","go to sleep"),L("mi amor","my love"),L("día","day"),L("noche","night"),L("coche","car"),L("nevería","ice-cream shop")] },
 
-{ id:"santaana", cat:"arrullos", title:"Señora Santa Ana",
+{ id:"santaana", melody:"santaana", kind:"song", cat:"arrullos", title:"Señora Santa Ana",
   note:{en:"A lullaby from colonial times, still sung all over Mexico. The last line, <b>pedazo de mi corazón</b>, is something parents say to children to this day.",
         es:"Un arrullo de la época colonial que todavía se canta en todo México. La última línea, <b>pedazo de mi corazón</b>, es algo que los papás siguen diciendo a sus hijos."},
   how:{en:["Pat the child's back slowly on the beat.","Lower your voice on each verse; the last one is almost a whisper.","Hold the last word as long as you can."],
@@ -623,7 +635,7 @@ const SONGS = [
     [L("Duérmete, mi niño,","Sleep, my child,"),L("duérmete, mi sol,","sleep, my sunshine,"),L("duérmete, pedazo","sleep, little piece"),L("de mi corazón.","of my heart.")]],
   vocab:[L("llorar","to cry"),L("manzana","apple"),L("huerta","orchard"),L("sol","sun"),L("corazón","heart"),L("pedazo","piece")] },
 
-{ id:"elefante", cat:"animales", title:"Un elefante se balanceaba", open:true,
+{ id:"elefante", melody:"elefante", kind:"game", cat:"animales", title:"Un elefante se balanceaba", open:true,
   note:{en:"A counting song that goes as high as you like. The fun is the ending: the web finally gives way and everyone tumbles. <b>Tela de araña</b> is a spider's web.",
         es:"Una canción para contar hasta donde quieran. Lo divertido es el final: la telaraña por fin se rompe y todos se caen. <b>Tela de araña</b> es telaraña."},
   how:{en:["Sway side to side like an elephant on a wobbly web.","Hold up fingers for the number.","Decide together which number breaks the web, then fall down laughing."],
@@ -634,7 +646,7 @@ const SONGS = [
     [L("Tres elefantes se balanceaban","Three elephants were swinging"),L("sobre la tela de una araña.","on a spider's web."),L("Como veían que resistía,","When they saw that it held,"),L("fueron a llamar a otro elefante.","they went to call another elephant.")]],
   vocab:[L("elefante","elephant"),L("araña","spider"),L("tela de araña","spider's web"),L("uno, dos, tres","one, two, three"),L("otro","another"),L("llamar","to call")] },
 
-{ id:"rana", cat:"animales", title:"Cucú, cantaba la rana",
+{ id:"rana", melody:"rana", kind:"song", cat:"animales", title:"Cucú, cantaba la rana",
   note:{en:"In Spanish a frog does not say ribbit, it says <b>cucú</b>. The song is a parade of people passing by, so it teaches who and what without trying.",
         es:"En español la rana no dice ribbit, dice <b>cucú</b>. La canción es un desfile de gente que pasa, así que enseña quién y qué sin esfuerzo."},
   how:{en:["The child sings every cucú, cucú. You sing the rest.","Act out each passer-by: tip a hat, swish a gown, sell rosemary.","Pretend to cry on the last line, then laugh."],
@@ -645,7 +657,7 @@ const SONGS = [
     [L("Cucú, cucú, le pidió un ramito,","Ribbit, ribbit, she asked him for a sprig,"),L("cucú, cucú, no le quiso dar,","ribbit, ribbit, he would not give her one,"),L("cucú, cucú, y se echó a llorar.","ribbit, ribbit, and she burst into tears.")]],
   vocab:[L("rana","frog"),L("agua","water"),L("caballero","gentleman"),L("sombrero","hat"),L("señora","lady"),L("marinero","sailor"),L("llorar","to cry")] },
 
-{ id:"perritos", cat:"animales", title:"Los diez perritos",
+{ id:"perritos", melody:"perritos", kind:"song", cat:"animales", title:"Los diez perritos",
   note:{en:"Counting down from ten with a rhyme for every number. Each puppy leaves for a silly reason. This is how a lot of Mexican kids learned <b>nueve, ocho, siete</b>.",
         es:"Cuenta regresiva del diez con una rima para cada número. Cada perrito se va por una razón chistosa. Así aprendieron muchos niños mexicanos <b>nueve, ocho, siete</b>."},
   how:{en:["Start with ten fingers up. Fold one down each verse.","Let the child shout the number at the end of each verse.","Bark once when the last puppy goes."],
@@ -663,7 +675,7 @@ const SONGS = [
     [L("Y el uno que tenía","And the one I had"),L("se fue al campo un día,","went off to the countryside one day,"),L("y ya no me queda ninguno.","and now I have none at all.")]],
   vocab:[L("perrito","puppy"),L("diez","ten"),L("nueve","nine"),L("ocho","eight"),L("siete","seven"),L("nieve","snow"),L("brinco","jump"),L("ninguno","none")] },
 
-{ id:"colores", cat:"animales", title:"De colores",
+{ id:"colores", melody:"colores", kind:"song", cat:"animales", title:"De colores",
   note:{en:"An old song that came to Mexico from Spain and became the anthem of the farmworkers' movement in California. For Mexican-American families it carries both places at once. The second verse is a barnyard.",
         es:"Una canción vieja que llegó a México de España y se volvió el himno del movimiento campesino en California. Para las familias mexicoamericanas lleva los dos lugares a la vez. La segunda estrofa es un corral."},
   how:{en:["Paint the air with big brushstrokes on de colores.","Make a rainbow arch with both arms on arcoíris.","Crow, cluck and peep with the rooster, the hen and the chicks."],
@@ -673,7 +685,7 @@ const SONGS = [
     [L("Canta el gallo, canta el gallo","The rooster sings, the rooster sings"),L("con el quiri, quiri, quiri, quiri, quiri.","with his cock-a-doodle-doo."),L("La gallina, la gallina","The hen, the hen"),L("con el cara, cara, cara, cara, cara.","with her cluck, cluck, cluck."),L("Los pollitos, los pollitos","The chicks, the chicks"),L("con el pío, pío, pío, pío, pí.","with their peep, peep, peep."),L("Y por eso los grandes amores","And that is why the great loves"),L("de muchos colores me gustan a mí.","of many colors are the ones I like.")]],
   vocab:[L("colores","colors"),L("campo","field, countryside"),L("primavera","spring"),L("pajarito","little bird"),L("arcoíris","rainbow"),L("gallo","rooster"),L("me gustan","I like them")] },
 
-{ id:"caballito", cat:"animales", title:"Caballito blanco",
+{ id:"caballito", melody:"caballito", kind:"song", cat:"animales", title:"Caballito blanco",
   note:{en:"A song about the <b>pueblo</b> you come from. A natural moment to name the town where abuela or abuelo was born.",
         es:"Una canción sobre el <b>pueblo</b> de donde uno viene. Un momento natural para nombrar el pueblo donde nació la abuela o el abuelo."},
   how:{en:["Bounce the child on your knee like a horse.","Say the name of your family's town on mi pueblo.","Count three sheep on your fingers."],
@@ -684,7 +696,7 @@ const SONGS = [
     [L("Una me da leche,","One gives me milk,"),L("otra me da lana,","another gives me wool,"),L("y otra me mantiene","and the other keeps me fed"),L("toda la semana.","all week long.")]],
   vocab:[L("caballo","horse"),L("blanco","white"),L("pueblo","town, village"),L("oveja","sheep"),L("leche","milk"),L("lana","wool"),L("semana","week")] },
 
-{ id:"vibora", cat:"jugar", title:"A la víbora de la mar",
+{ id:"vibora", melody:"vibora", kind:"game", cat:"jugar", title:"A la víbora de la mar",
   note:{en:"The game at every Mexican wedding: the couple stand on chairs holding the veil as a bridge and the guests snake underneath. At home two grown-ups make the arch. Whoever gets caught on <b>tras, tras, tras</b> picks melón or sandía.",
         es:"El juego de toda boda mexicana: los novios se suben a las sillas con el velo como puente y los invitados pasan en fila debajo. En casa, dos adultos hacen el arco. A quien atrapan en <b>tras, tras, tras</b> escoge melón o sandía."},
   how:{en:["Two people join hands high to make an arch.","Everyone else holds hands in a line and runs under, again and again.","The arch drops on tras, tras, tras and traps someone.","The trapped one whispers melón or sandía and joins that side."],
@@ -697,7 +709,7 @@ const SONGS = [
     [L("Será melón, será sandía,","Will it be melon, will it be watermelon,"),L("será la vieja del otro día,","will it be the old lady from the other day,"),L("día, día, día, día.","day, day, day, day.")]],
   vocab:[L("víbora","snake"),L("mar","sea"),L("fruta","fruit"),L("ciruela","plum"),L("chabacano","apricot (Mexico)"),L("melón","melon"),L("sandía","watermelon"),L("campanita","little bell")] },
 
-{ id:"naranja", cat:"jugar", title:"Naranja dulce",
+{ id:"naranja", melody:"naranja", kind:"game", cat:"jugar", title:"Naranja dulce",
   note:{en:"A circle game with a hug in the middle of it. <b>Sololoy</b> is how children said celuloide, the plastic old dolls were made of. The tacos line at the end always gets a laugh.",
         es:"Una ronda con un abrazo a la mitad. <b>Sololoy</b> es como los niños decían celuloide, el plástico de las muñecas de antes. La línea de los tacos al final siempre da risa."},
   how:{en:["Hold hands in a circle and walk around while singing.","On dame un abrazo, hug the person next to you.","March in place on toca la marcha.","On no le doy, everyone sits down fast."],
@@ -709,7 +721,7 @@ const SONGS = [
     [L("a mi casita","to my little house"),L("de sololoy,","made of celluloid,"),L("a comer tacos","to eat tacos"),L("y no le doy.","and I won't share.")]],
   vocab:[L("naranja","orange"),L("dulce","sweet"),L("limón","lemon, lime"),L("abrazo","hug"),L("adiós","goodbye"),L("casita","little house"),L("tacos","tacos")] },
 
-{ id:"blanca", cat:"jugar", title:"Doña Blanca",
+{ id:"blanca", melody:"blanca", kind:"game", cat:"jugar", title:"Doña Blanca",
   note:{en:"A Mexican <b>ronda</b> known since colonial times. A jicote is a big wasp, from the Nahuatl xicotli, so this game carries an indigenous word in it.",
         es:"Una <b>ronda</b> mexicana conocida desde la época colonial. Un jicote es una avispa grande, del náhuatl xicotli, así que este juego lleva una palabra indígena."},
   how:{en:["One child is Doña Blanca and stands in the middle.","The others hold hands around her: they are the pillars.","One child outside is the jicotillo. On the last line it tries to break through the pillars to reach Doña Blanca."],
@@ -719,7 +731,7 @@ const SONGS = [
     [L("¿Quién es ese jicotillo","Who is that little wasp"),L("que anda en pos de Doña Blanca?","chasing after Doña Blanca?"),L("Yo soy ese jicotillo","I am that little wasp"),L("que anda en pos de Doña Blanca.","chasing after Doña Blanca.")]],
   vocab:[L("oro","gold"),L("plata","silver"),L("pilar","pillar"),L("romper","to break"),L("jicote","big wasp (Mexico)"),L("¿quién?","who?")] },
 
-{ id:"arroz", cat:"jugar", title:"Arroz con leche",
+{ id:"arroz", melody:"arroz", kind:"game", cat:"jugar", title:"Arroz con leche",
   note:{en:"Also a dessert: rice cooked in milk with cinnamon and sugar. Sing it, then make it together and you have a whole afternoon. The line <b>con esta sí, con esta no</b> is for choosing.",
         es:"También es un postre: arroz cocido en leche con canela y azúcar. Cántenla y luego háganlo juntos y ya tienen una tarde entera. La línea <b>con esta sí, con esta no</b> es para escoger."},
   how:{en:["Circle, holding hands, one child in the middle.","The middle child mimes sewing and embroidering.","On con esta sí, con esta no, they point at people in the circle and pick a partner on the last line."],
@@ -731,7 +743,7 @@ const SONGS = [
     [L("Con esta sí,","With this one, yes,"),L("con esta no,","with this one, no,"),L("con esta señorita","with this young lady"),L("me caso yo.","I'll marry.")]],
   vocab:[L("arroz","rice"),L("leche","milk"),L("casarse","to get married"),L("puerta","door"),L("jugar","to play"),L("sí / no","yes / no")] },
 
-{ id:"muneca", cat:"jugar", title:"Tengo una muñeca",
+{ id:"muneca", melody:"muneca", kind:"song", cat:"jugar", title:"Tengo una muñeca",
   note:{en:"The counting verse is how many Mexican kids first learned to add by eight. Watch the false friend: <b>constipado</b> means she caught a cold, nothing else.",
         es:"La estrofa de los números es como muchos niños mexicanos aprendieron a sumar de ocho en ocho. Ojo con la palabra: <b>constipado</b> quiere decir resfriado."},
   how:{en:["Cradle a doll or a stuffed animal in your arms.","Feed it pretend syrup with a fork on jarabe.","Hold up fingers for the sums, and cheer at treinta y dos."],
@@ -744,7 +756,7 @@ const SONGS = [
     [L("y ocho, veinticuatro,","and eight, twenty-four,"),L("y ocho, treinta y dos;","and eight, thirty-two;"),L("ánimas benditas,","blessed souls,"),L("me arrodillo yo.","I kneel down.")]],
   vocab:[L("muñeca","doll"),L("azul","blue"),L("paseo","a walk, an outing"),L("cama","bed"),L("doctor","doctor"),L("jarabe","syrup"),L("tenedor","fork"),L("dieciséis","sixteen")] },
 
-{ id:"barquito", cat:"jugar", title:"El barquito chiquitito",
+{ id:"barquito", melody:"barquito", kind:"song", cat:"jugar", title:"El barquito chiquitito",
   note:{en:"A loop song: when it ends, it starts again, and children beg for <b>otra vez</b>. Chiquitito is chico made small twice over.",
         es:"Una canción que da vuelta: cuando termina, vuelve a empezar, y los niños piden <b>otra vez</b>. Chiquitito es chico hecho pequeño dos veces."},
   how:{en:["Rock side to side like a boat.","Count the weeks on your fingers.","Sing each round a little faster than the last."],
@@ -755,7 +767,7 @@ const SONGS = [
     [L("Y si esta historia","And if this story"),L("parece corta,","seems short,"),L("volveremos, volveremos","we'll go back, we'll go back"),L("a empezar.","to the beginning.")]],
   vocab:[L("barco","boat"),L("chiquito","tiny"),L("navegar","to sail"),L("semana","week"),L("había una vez","once upon a time"),L("otra vez","again")] },
 
-{ id:"dedito", cat:"manos", title:"Este dedito",
+{ id:"dedito", kind:"game", cat:"manos", title:"Este dedito",
   note:{en:"A finger play that starts at the pinky and ends with the thumb, <b>el gordito</b>, eating the egg. Every Spanish-speaking family has its own version.",
         es:"Un juego de dedos que empieza en el meñique y termina con el pulgar, <b>el gordito</b>, comiéndose el huevo. Cada familia tiene su versión."},
   how:{en:["Take the child's hand and touch one finger per line, starting with the little one.","Wiggle the thumb on gordito goloso.","Tickle the palm on se lo comió."],
@@ -764,7 +776,7 @@ const SONGS = [
     [L("Este dedito compró un huevito,","This little finger bought a little egg,"),L("este dedito lo puso a cocer,","this little finger put it on to boil,"),L("este dedito le echó la sal,","this little finger salted it,"),L("este dedito lo revolvió,","this little finger stirred it,"),L("y este gordito goloso","and this chubby greedy one"),L("se lo comió.","ate it all up.")]],
   vocab:[L("dedo","finger"),L("dedito","little finger"),L("huevo","egg"),L("sal","salt"),L("gordito","chubby one"),L("goloso","greedy for sweets"),L("comer","to eat")] },
 
-{ id:"sana", cat:"manos", title:"Sana, sana, colita de rana",
+{ id:"sana", kind:"game", cat:"manos", title:"Sana, sana, colita de rana",
   note:{en:"Not a song but the rhyme every Mexican parent says while rubbing a bumped knee. It works because it is said the same way every time. <b>Colita</b> is a little tail.",
         es:"No es canción sino la rima que todo papá mexicano dice mientras soba una rodilla golpeada. Funciona porque se dice igual cada vez. <b>Colita</b> es una cola chiquita."},
   how:{en:["Rub the sore spot in slow circles while you say it.","Kiss it on mañana.","Say it exactly the same way every time; that is the point."],
@@ -773,7 +785,7 @@ const SONGS = [
     [L("Sana, sana,","Heal, heal,"),L("colita de rana,","little frog's tail,"),L("si no sanas hoy,","if you don't heal today,"),L("sanarás mañana.","you'll heal tomorrow.")]],
   vocab:[L("sanar","to heal"),L("colita","little tail"),L("rana","frog"),L("hoy","today"),L("mañana","tomorrow")] },
 
-{ id:"aserrin", cat:"manos", title:"Aserrín, aserrán",
+{ id:"aserrin", melody:"aserrin", kind:"game", cat:"manos", title:"Aserrín, aserrán",
   note:{en:"A see-saw rhyme. <b>Aserrín</b> is sawdust, and the back-and-forth of the words is the motion of a saw. Sung on a lap since before anyone can remember.",
         es:"Una rima de sube y baja. <b>Aserrín</b> es el polvo de la madera, y el vaivén de las palabras es el movimiento del serrucho. Se canta en el regazo desde siempre."},
   how:{en:["Sit facing the child, hold both hands, and rock forward and back like sawing.","Bounce on pan, dan, queso, hueso.","Tip the child back gently on llorar."],
@@ -782,7 +794,7 @@ const SONGS = [
     [L("Aserrín, aserrán,","Sawdust, saw-saw,"),L("los maderos de San Juan","the woodcutters of San Juan"),L("piden pan, no les dan,","ask for bread, they get none,"),L("piden queso, les dan hueso,","ask for cheese, they get a bone,"),L("y se sientan a llorar","and they sit down to cry"),L("en la puerta del zaguán.","at the front door.")]],
   vocab:[L("pan","bread"),L("queso","cheese"),L("hueso","bone"),L("piden","they ask for"),L("llorar","to cry"),L("puerta","door")] },
 
-{ id:"llueva", cat:"manos", title:"Que llueva, que llueva",
+{ id:"llueva", melody:"llueva", kind:"game", cat:"manos", title:"Que llueva, que llueva",
   note:{en:"The song children sing to make it rain. <b>Chaparrón</b> is a downpour. Good for a rainy window and for weather words.",
         es:"La canción que cantan los niños para que llueva. <b>Chaparrón</b> es un aguacero. Buena para una ventana con lluvia y para las palabras del clima."},
   how:{en:["Flutter your fingers down like rain.","Nod on que sí, shake your head on que no.","One big clap on chaparrón."],
@@ -792,7 +804,7 @@ const SONGS = [
     [L("¡Que sí, que no,","Yes! No!"),L("que caiga un chaparrón!","Let a downpour fall!"),L("Con azúcar y turrón,","With sugar and nougat,"),L("que se rompan los cristales de la estación.","let the station's windows break.")]],
   vocab:[L("llover","to rain"),L("lluvia","rain"),L("pajarito","little bird"),L("nube","cloud"),L("chaparrón","downpour"),L("azúcar","sugar")] },
 
-{ id:"mananitas", cat:"fiestas", title:"Las mañanitas",
+{ id:"mananitas", melody:"mananitas", kind:"song", cat:"fiestas", title:"Las mañanitas",
   note:{en:"The Mexican birthday song, sung before the cake and, in the old way, at dawn under the window. A child who knows Las mañanitas belongs at every family birthday. The first two verses are enough for a party.",
         es:"La canción de cumpleaños de México, cantada antes del pastel y, a la antigua, al amanecer bajo la ventana. Un niño que se sabe Las mañanitas pertenece a cada cumpleaños familiar. Con las dos primeras estrofas alcanza para una fiesta."},
   how:{en:["Learn verses one and two first; those are what everyone sings.","Sing the birthday person's name after despierta, mi bien.","Clap on the beat through the last line, then shout ¡Feliz cumpleaños!"],
@@ -804,7 +816,7 @@ const SONGS = [
     [L("El día en que tú naciste","The day you were born"),L("nacieron todas las flores,","all the flowers were born,"),L("y en la pila del bautismo","and at the baptismal font"),L("cantaron los ruiseñores.","the nightingales sang.")]],
   vocab:[L("mañana","morning"),L("cantar","to sing"),L("despierta","wake up"),L("amaneció","dawn came"),L("luna","moon"),L("flores","flowers"),L("feliz cumpleaños","happy birthday")] },
 
-{ id:"piñata", cat:"fiestas", title:"Dale, dale, dale",
+{ id:"piñata", melody:"piñata", kind:"game", cat:"fiestas", title:"Dale, dale, dale",
   note:{en:"The piñata song. The blindfolded child swings while everyone sings, and the turn ends when the song does. <b>Tino</b> is your aim. Traditional piñatas have seven points, one for each sin, and the candy is the reward for beating them.",
         es:"La canción de la piñata. El niño con los ojos vendados le pega mientras todos cantan, y el turno termina cuando termina la canción. <b>Tino</b> es la puntería. Las piñatas tradicionales tienen siete picos, uno por cada pecado, y los dulces son el premio por vencerlos."},
   how:{en:["Everyone sings; the child with the stick swings on the beat.","Count una, dos, tres with fingers in the air.","Shout se acabó together and pass the stick."],
@@ -823,6 +835,8 @@ const PHRASES = [
 
 /* ================= melodies (hummed) ================= */
 const DEG = { do:0, re:2, mi:4, fa:5, sol:7, la:9, si:11 };
+// "do" = tonic; "#"/"b" raise or lower a semitone; each "'" is an octave up, each "," an octave down
+function semi(name){ const m = /^(do|re|mi|fa|sol|la|si)(#|b)?('*|,*)$/.exec(name); if (!m) return 0; return DEG[m[1]] + (m[2] === "#" ? 1 : m[2] === "b" ? -1 : 0) + 12 * ((m[3].match(/'/g) || []).length - (m[3].match(/,/g) || []).length); }
 const MELODIES = {
   pollitos: { bpm: 78, base: 293.66, lines: [
     { n:["do","re","mi","fa","sol","sol"], d:[.5,.5,.5,.5,1,1] },
@@ -836,6 +850,154 @@ const MELODIES = {
     { n:["sol","sol","fa","fa","mi","mi","re"], d:[1,1,1,1,1,1,2] },
     { n:["do","do","sol","sol","la","la","sol"], d:[1,1,1,1,1,1,2] },
     { n:["fa","fa","mi","mi","re","re","do"], d:[1,1,1,1,1,1,2] } ] },
+  "mananitas": { bpm: 84, base: 293.66, lines: [
+    { n:["sol,", "sol,", "do", "do", "si,", "do", "re", "si,"], d:[0.5, 0.5, 1.5, 0.5, 0.5, 0.5, 1.5, 0.5] },
+    { n:["do", "re", "mi", "do", "re", "mi", "fa"], d:[0.5, 0.5, 1.5, 0.5, 0.5, 0.5, 2.0] },
+    { n:["fa", "fa", "mi", "re", "do", "si,", "re", "do"], d:[0.5, 0.5, 1.5, 0.5, 0.5, 0.5, 1.0, 0.5] },
+    { n:["si,", "do", "re", "mi", "fa", "re", "do"], d:[0.5, 0.5, 0.5, 1.0, 1.0, 1.0, 2.0] },
+    { n:["mi", "re", "si,", "si,", "do", "re", "mi", "do"], d:[1.0, 1.0, 0.5, 0.5, 0.5, 0.5, 1.0, 1.0] },
+    { n:["mi", "re", "si,", "si,", "do", "re", "mi"], d:[1.0, 1.0, 0.5, 0.5, 0.5, 0.5, 2.0] },
+    { n:["do", "do", "fa", "fa", "fa", "fa", "mi", "do"], d:[0.5, 0.5, 1.5, 0.5, 0.5, 0.5, 1.0, 0.5] },
+    { n:["si,", "do", "re", "mi", "fa", "re", "do"], d:[0.5, 0.5, 0.5, 1.0, 1.0, 1.0, 2.0] },
+    { n:["do", "re", "mi", "mi", "do", "re", "mi", "fa"], d:[0.5, 0.5, 1.0, 0.5, 0.5, 0.5, 0.5, 2.0] },
+    { n:["si,", "do", "re", "mi", "mi", "fa", "re", "do"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 1.0, 1.0, 2.0] },
+    { n:["sol,", "do", "si,", "do", "do", "si,", "do", "do"], d:[0.5, 1.5, 0.5, 0.5, 0.5, 1.5, 0.5, 0.5] },
+    { n:["do", "mi", "re", "do", "si,", "do", "re", "re"], d:[0.5, 1.5, 0.5, 0.5, 0.5, 1.5, 0.5, 1.0] },
+    { n:["sol,", "sol,", "do", "re", "re", "do", "re", "re"], d:[0.5, 0.5, 1.5, 0.5, 0.5, 0.5, 1.5, 1.5] },
+    { n:["mi", "fa", "mi", "mi", "re", "re", "si,", "do", "do"], d:[0.5, 1.5, 0.5, 0.5, 0.5, 1.0, 1.0, 1.0, 2.0] } ], map:[[0, 1, 2, 3], [4, 5, 6, 7], [10, 11, 12, 13], [0, 8, 2, 9]] },
+  "rorro": { bpm: 76, base: 293.66, lines: [
+    { n:["do", "re", "mi", "fa", "sol", "sol"], d:[0.5, 0.5, 0.5, 0.5, 1.0, 1.0] },
+    { n:["la", "sol", "fa", "mi", "re"], d:[0.5, 0.5, 0.5, 0.5, 2.0] },
+    { n:["sol", "la", "sol", "fa", "mi", "do"], d:[0.5, 0.5, 0.5, 0.5, 1.0, 1.0] },
+    { n:["re", "mi", "re", "do", "do"], d:[0.5, 0.5, 0.5, 0.5, 2.0] },
+    { n:["la", "sol", "fa", "mi", "re", "re"], d:[0.5, 0.5, 0.5, 0.5, 1.0, 1.0] },
+    { n:["re", "mi", "re", "do", "sol", "sol"], d:[0.5, 0.5, 0.5, 0.5, 1.0, 1.0] },
+    { n:["re", "mi", "re", "do", "do", "do"], d:[0.5, 0.5, 0.5, 0.5, 1.0, 1.0] },
+    { n:["re", "mi", "re", "do", "sol"], d:[0.5, 0.5, 0.5, 0.5, 2.0] } ], map:[[0, 1, 2, 3], [0, 4, 2, 5], [0, 4, 2, 6]] },
+  "santaana": { bpm: 80, base: 293.66, lines: [
+    { n:["do", "do", "do", "mi", "sol", "sol"], d:[0.75, 0.25, 0.5, 0.5, 1.0, 1.0] },
+    { n:["la", "si", "do'", "la", "sol", "sol"], d:[0.75, 0.25, 0.5, 0.5, 1.0, 1.0] },
+    { n:["mi", "sol", "la", "fa", "mi", "sol"], d:[0.75, 0.25, 0.5, 0.5, 1.0, 1.0] },
+    { n:["re", "fa", "mi", "re", "do", "do"], d:[0.75, 0.25, 0.5, 0.5, 1.0, 1.0] },
+    { n:["la", "si", "do'", "la", "sol"], d:[0.75, 0.25, 0.5, 0.5, 2.0] },
+    { n:["re", "fa", "mi", "re", "do"], d:[0.75, 0.25, 0.5, 0.5, 2.0] } ], map:[[0, 1, 2, 3], [0, 4, 2, 5], [0, 4, 2, 5]] },
+  "caballito": { bpm: 96, base: 293.66, lines: [
+    { n:["sol", "sol", "sol", "sol", "sol", "mi"], d:[0.5, 0.5, 0.5, 0.5, 1.0, 1.0] },
+    { n:["do'", "do'", "si", "la", "si"], d:[0.5, 0.5, 0.5, 0.5, 2.0] },
+    { n:["fa", "fa", "fa", "fa", "fa", "re"], d:[0.5, 0.5, 0.5, 0.5, 1.0, 1.0] },
+    { n:["si", "si", "la", "sol", "do'"], d:[0.5, 0.5, 0.5, 0.5, 2.0] },
+    { n:["do'", "do'", "si", "la", "si", "si"], d:[0.5, 0.5, 0.5, 0.5, 1.0, 1.0] },
+    { n:["si", "si", "la", "sol", "do'", "do'"], d:[0.5, 0.5, 0.5, 0.5, 1.0, 1.0] } ], map:[[0, 1, 2, 3], [0, 4, 2, 5], [0, 4, 2, 5]] },
+  "colores": { bpm: 100, base: 293.66, lines: [
+    { n:["la", "fa", "fa", "mi", "mi", "fa", "sol", "sol"], d:[2.5, 0.5, 0.5, 1.5, 0.5, 0.5, 0.5, 0.5] },
+    { n:["sol", "sol", "fa", "mi", "sol", "sol", "sol", "sol", "fa", "mi", "sol", "fa"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 2.0] },
+    { n:["fa", "mi", "mi", "re", "fa", "sol", "la", "la"], d:[2.5, 0.5, 0.5, 1.5, 0.5, 0.5, 0.5, 0.5] },
+    { n:["la", "la", "sol", "fa", "la", "la", "la", "la", "sol", "fa", "la", "sol"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 2.0] },
+    { n:["sol", "fa", "fa", "mi", "mi", "fa", "sol", "sol"], d:[2.5, 0.5, 0.5, 1.5, 0.5, 0.5, 0.5, 0.5] },
+    { n:["sol", "sol", "fa", "mi", "sol", "sol", "sol", "sol", "la", "sib", "la"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 2.0] },
+    { n:["fa", "sol", "la", "la", "la", "la", "si", "la", "la", "sol"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] },
+    { n:["sol", "sol", "la", "sol", "sol", "fa", "sol", "sol", "sol", "fa", "mi"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 2.0] },
+    { n:["sol", "sol", "la", "sol", "sol", "fa", "sol", "la", "la", "sol", "do'"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 3.0] } ], map:[[0, 1, 2, 3, 4, 5, 6, 8], [0, 1, 2, 3, 4, 5, 6, 8]] },
+  "elefante": { bpm: 100, base: 293.66, lines: [
+    { n:["sol", "sol", "fa", "mi", "mi", "sol", "sol", "sol", "fa", "mi", "mi"], d:[1, 0.5, 0.5, 1, 1, 0.5, 0.5, 0.5, 0.5, 1, 1] },
+    { n:["sol", "sol", "sol", "la", "sol", "fa", "mi", "fa", "mi", "re"], d:[1, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1.5, 0.5, 2] },
+    { n:["fa", "fa", "mi", "re", "re", "fa", "fa", "mi", "re", "re"], d:[1, 0.5, 0.5, 1, 1, 1, 0.5, 0.5, 1, 1] },
+    { n:["sol", "sol", "sol", "la", "sol", "fa", "mi", "re", "mi", "re", "do"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1.5, 0.5, 2] } ], map:[[0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3]] },
+  "rana": { bpm: 116, base: 293.66, lines: [
+    { n:["sol", "do'", "sol", "do'", "mi", "fa", "mi", "re", "mi", "do"], d:[0.5, 1, 0.5, 1, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] },
+    { n:["sol", "do'", "sol", "do'", "mi", "fa", "mi", "re", "do"], d:[0.5, 1, 0.5, 1, 0.5, 0.5, 0.5, 0.5, 1] },
+    { n:["sol", "do'", "sol", "do'", "mi", "fa", "mi", "re", "do"], d:[0.5, 1, 0.5, 1, 0.5, 0.5, 0.5, 0.5, 1.5] } ], map:[[0, 0, 0, 0], [0, 0, 0, 0], [0, 1, 2]] },
+  "perritos": { bpm: 96, base: 293.66, lines: [
+    { n:["sol", "sol", "sol", "do'", "si", "la", "sol", "mi"], d:[0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 0.5, 1] },
+    { n:["mi", "fa", "sol", "fa", "mi", "re", "sol", "sol"], d:[0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 0.5, 1] },
+    { n:["mi", "fa", "sol", "fa", "mi", "re", "do", "do"], d:[0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 0.5, 1] },
+    { n:["sol", "sol", "sol", "do'", "si", "la", "sol", "mi"], d:[0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 0.5, 1] },
+    { n:["mi", "fa", "sol", "fa", "mi", "re", "sol"], d:[0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 1.5] },
+    { n:["mi", "fa", "sol", "fa", "mi", "re", "do"], d:[0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 1.5] } ], map:[[0, 0, 1, 2], [0, 1, 2], [0, 1, 2], [0, 1, 5], [3, 1, 2], [0, 1, 2], [0, 1, 5], [3, 1, 5], [3, 4, 2], [0, 1, 2]] },
+  "muneca": { bpm: 100, base: 293.66, lines: [
+    { n:["sol", "sol", "sol", "la", "sol", "mi"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5] },
+    { n:["do", "mi", "sol", "la", "sol"], d:[0.5, 0.5, 1, 1, 2] },
+    { n:["fa", "fa", "fa", "sol", "fa", "mi"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5] },
+    { n:["re", "mi", "fa", "re", "do"], d:[0.5, 0.5, 1, 1, 2] } ], map:[[0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3]] },
+  "barquito": { bpm: 100, base: 293.66, lines: [
+    { n:["sol,", "do", "do", "re", "re", "mi"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 1] },
+    { n:["mi", "mi", "re", "fa", "mi", "re", "mi", "do"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5] },
+    { n:["do", "fa", "fa", "fa", "fa", "do", "mi", "mi", "mi", "mi"], d:[0.5, 1, 1, 1, 0.5, 0.5, 1, 1, 1, 0.5] },
+    { n:["do", "re", "re", "re", "fa", "mi", "re", "do"], d:[0.5, 1, 1, 0.5, 0.5, 0.5, 0.5, 3] },
+    { n:["do", "fa", "fa", "fa", "fa"], d:[0.5, 1, 1, 1, 0.5] },
+    { n:["do", "mi", "mi", "mi", "mi"], d:[0.5, 1, 1, 1, 0.5] },
+    { n:["do", "re", "re", "re", "re", "re", "re", "re"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] },
+    { n:["fa", "mi", "re", "do"], d:[0.5, 0.5, 0.5, 3] } ], map:[[0, 1, 0, 1, 2, 3], [0, 1, 0, 1, 2, 3], [4, 5, 6, 7]] },
+  "vibora": { bpm: 104, base: 293.66, lines: [
+    { n:["sol,", "sol,", "do", "sol,", "sol,", "do", "sol,", "sol,"], d:[0.5, 0.5, 0.5, 0.25, 0.25, 0.5, 0.25, 0.25] },
+    { n:["do", "re", "mi", "do", "re", "mi"], d:[0.5, 0.5, 1, 0.5, 0.5, 1] },
+    { n:["do", "do", "re", "re", "sol,", "sol,", "do"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1] },
+    { n:["sol,", "sol,", "sol,", "do", "sol,", "do", "re", "mi", "mi"], d:[0.5, 0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] },
+    { n:["do", "do", "do", "re", "re", "sol,", "sol,", "do"], d:[0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 0.5, 1] },
+    { n:["do", "do", "do", "do"], d:[1, 1, 1, 1] },
+    { n:["sol", "sol", "sol", "fa", "mi", "mi"], d:[0.5, 0.5, 0.5, 0.5, 1, 0.5] },
+    { n:["mi", "la", "la", "sol", "fa", "fa"], d:[0.5, 1, 0.5, 0.5, 1, 0.5] },
+    { n:["fa", "fa", "fa", "fa", "mi", "re", "re"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5] },
+    { n:["re", "sol", "sol", "fa", "mi", "mi"], d:[0.5, 1, 0.5, 0.5, 1, 0.5] },
+    { n:["sol", "sol", "mi", "sol", "sol", "mi"], d:[0.5, 1, 0.5, 0.5, 1, 0.5] },
+    { n:["sol", "la", "sol", "fa", "mi", "fa", "re"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5] },
+    { n:["fa", "fa", "re", "fa", "fa", "re"], d:[0.5, 1, 0.5, 0.5, 1, 0.5] },
+    { n:["fa", "sol", "fa", "mi", "re", "mi", "do"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 1, 1] },
+    { n:["sol", "sol", "sol", "fa", "mi", "mi"], d:[0.5, 0.5, 0.5, 0.5, 1, 1] },
+    { n:["la", "la", "la", "sol", "fa"], d:[0.5, 0.5, 0.5, 0.5, 2] },
+    { n:["fa", "fa", "fa", "mi", "re", "re"], d:[0.5, 0.5, 0.5, 0.5, 1, 1] },
+    { n:["sol", "sol", "sol", "fa", "mi"], d:[0.5, 0.5, 0.5, 0.5, 1] },
+    { n:["mi", "mi", "mi", "mi"], d:[1, 1, 1, 1] },
+    { n:["mi", "mi", "mi", "mi", "mi", "mi", "mi", "mi", "mi"], d:[0.5, 1, 1, 1.5, 0.5, 1, 1, 0.5, 1.5] },
+    { n:["mi", "mi", "mi", "mi", "mi", "mi", "mi", "mi", "mi", "mi"], d:[0.5, 1, 1, 0.5, 1.5, 0.5, 1, 1, 0.5, 0.5] },
+    { n:["mi", "mi", "mi", "mi", "mi", "mi", "mi", "mi"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] } ], map:[[0, 1, 2, 3, 4, 5], [6, 7, 8, 9], [10, 11, 12, 13], [14, 15, 16, 17, 18], [19, 20, 21]] },
+  "naranja": { bpm: 96, base: 293.66, lines: [
+    { n:["sol,", "do", "mi", "sol", "sol"], d:[0.5, 0.5, 0.5, 1, 0.5] },
+    { n:["la", "sol", "mi", "do", "do"], d:[0.5, 0.5, 0.5, 1, 0.5] },
+    { n:["mi", "re", "do", "re", "re"], d:[0.5, 0.5, 0.5, 1, 0.5] },
+    { n:["fa", "mi", "re", "mi", "do"], d:[0.5, 0.5, 0.5, 1, 0.5] },
+    { n:["fa", "mi", "re", "do"], d:[0.5, 0.5, 0.5, 1.5] },
+    { n:["la", "sol", "mi", "do"], d:[0.5, 0.5, 0.5, 1.5] },
+    { n:["fa", "mi", "re", "do"], d:[0.5, 0.5, 0.5, 3] } ], map:[[0, 1, 2, 3], [0, 1, 2, 4], [0, 1, 2, 4], [0, 5, 2, 6]] },
+  "arroz": { bpm: 92, base: 293.66, lines: [
+    { n:["sol,", "do", "mi", "do", "do"], d:[0.5, 1.5, 0.5, 1, 0.5] },
+    { n:["sol,", "do", "do", "mi", "re"], d:[0.5, 1, 0.5, 0.5, 1.5] },
+    { n:["mi", "fa", "mi", "re", "do", "si,", "si,"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5] },
+    { n:["sol,", "la,", "si,", "si,", "do"], d:[0.5, 1, 0.5, 0.5, 1.5] },
+    { n:["sol,", "do", "do", "mi", "do", "do"], d:[0.5, 1, 0.5, 0.5, 1, 0.5] },
+    { n:["sol,", "do", "mi", "do"], d:[0.5, 1.5, 0.5, 1.5] },
+    { n:["sol,", "do", "mi", "re"], d:[0.5, 1.5, 0.5, 1.5] },
+    { n:["sol,", "la,", "si,", "do"], d:[0.5, 1, 1, 1.5] } ], map:[[0, 1, 2, 3], [0, 1, 2, 3], [4, 1, 1, 3], [5, 6, 2, 7]] },
+  "blanca": { bpm: 92, base: 293.66, lines: [
+    { n:["mi,", "fa,", "sol,", "do", "mi,", "fa,", "sol,", "do"], d:[0.5, 0.5, 1, 1, 0.5, 0.5, 1, 1] },
+    { n:["mi,", "fa,", "sol,", "do", "si,", "do", "re", "la,"], d:[0.5, 0.5, 1, 1, 0.5, 0.5, 1, 2] },
+    { n:["fa", "mi", "re", "do", "si,", "la,", "sol,"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1] },
+    { n:["sol,", "sol,", "la,", "sol,", "la,", "si,", "re", "do"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1, 1] },
+    { n:["fa", "mi", "re", "do", "si,", "la,", "sol,", "sol,"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] } ], map:[[0, 1, 2, 3], [0, 1, 4, 3]] },
+  "pi\u00f1ata": { bpm: 96, base: 293.66, lines: [
+    { n:["sol", "sol", "sol", "mi", "la", "la"], d:[0.5, 0.5, 0.5, 0.5, 1, 1] },
+    { n:["si", "si", "si", "sol", "do'", "do'"], d:[0.5, 0.5, 0.5, 0.5, 1, 1] },
+    { n:["si", "si", "si", "sol", "do'"], d:[0.5, 0.5, 0.5, 0.5, 2] },
+    { n:["sol", "sol", "sol", "mi", "la"], d:[0.5, 0.5, 0.5, 0.5, 2] },
+    { n:["si", "si", "si", "sol", "do'", "do'", "do'"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 2] } ], map:[[0, 1, 0, 1], [0, 2, 3, 4]] },
+  "llueva": { bpm: 92, base: 293.66, lines: [
+    { n:["mi", "sol", "sol", "la", "sol", "sol"], d:[0.5, 1, 0.5, 0.5, 1, 0.5] },
+    { n:["mi", "sol", "sol", "sol", "la", "sol", "sol"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5] },
+    { n:["mi", "sol", "sol", "sol", "la", "sol", "sol"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5] },
+    { n:["mi", "sol", "sol", "sol", "la", "sol", "sol"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5] },
+    { n:["mi", "sol", "mi", "sol"], d:[0.5, 1.5, 0.5, 1.5] },
+    { n:["mi", "sol", "la", "sol", "mi", "sol"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 1.5] },
+    { n:["mi", "sol", "la", "sol", "mi", "sol", "sol"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1.5] },
+    { n:["mi", "sol", "la", "sol", "mi", "sol", "sol", "sol", "fa", "mi", "re", "do"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1] } ], map:[[0, 1, 2, 3], [4, 5, 6, 7]] },
+  "tortillitas": { bpm: 84, base: 293.66, lines: [
+    { n:["fa", "sol", "sol", "sol", "mi", "la", "sol", "mi"], d:[0.5, 0.5, 0.25, 0.25, 0.5, 0.5, 1, 0.5] },
+    { n:["mi", "fa", "sol", "sol", "mi", "la", "sol", "mi"], d:[0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 1, 0.5] },
+    { n:["fa", "sol", "sol", "sol", "mi", "la", "sol"], d:[0.5, 0.5, 0.25, 0.25, 0.5, 0.5, 1.5] },
+    { n:["mi", "fa", "sol", "sol", "mi", "la", "sol"], d:[0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 1.5] } ], map:[[0, 1, 0, 1], [0, 1, 2, 3]] },
+  "aserrin": { bpm: 88, base: 293.66, lines: [
+    { n:["sol", "sol", "do'", "sol", "sol", "mi"], d:[0.5, 0.5, 1, 0.5, 0.5, 1] },
+    { n:["sol", "sol", "la", "sol", "la", "si", "do'"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1] },
+    { n:["sol", "sol", "la", "sol", "la", "si", "do'", "do'"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] } ], map:[[0, 1, 0, 2, 1, 1]] },
 };
 
 /* ================= state ================= */
@@ -846,7 +1008,7 @@ try { GLOSS = localStorage.getItem("cantame-gloss") !== "off"; } catch(e){}
 let SLOW = false;
 let KNOWN = new Set();
 try { KNOWN = new Set(JSON.parse(localStorage.getItem("cantame-known") || "[]")); } catch(e){}
-let FILTER = "all";
+let FILTER = "all", KIND = "all";
 let TOUR_SEEN = false;
 try { TOUR_SEEN = localStorage.getItem("cantame-tour-seen") === "1"; } catch(e){}
 
@@ -944,13 +1106,14 @@ function playTune(song, onLine, onEnd, from){
   let flat = 0;
   song.stanzas.forEach((st, si) => {
     st.forEach((ln, li) => {
-      const ml = m.lines[li % m.lines.length];
+      const mi = m.map && m.map[si] ? m.map[si][li] : li % m.lines.length;
+      const ml = m.lines[mi == null ? li % m.lines.length : mi];
       const fi = flat; flat++;
       if (from && fi < from) return; // start partway through
       const durMs = ml.d.reduce((a, b) => a + b, 0) * beat * 1000;
       const starts = []; let acc = 0; ml.d.forEach(d => { starts.push(Math.round(acc * beat * 1000)); acc += d; });
       at(t, ()=>{ if (onLine) onLine(fi, durMs, starts); });
-      ml.n.forEach((deg, k) => { const f = m.base * Math.pow(2, DEG[deg]/12) * 0.5; const d = ml.d[k]*beat; hum(f, t, d*0.95, bus); t += d; });
+      ml.n.forEach((deg, k) => { const f = m.base * Math.pow(2, semi(deg)/12) * 0.5; const d = ml.d[k]*beat; hum(f, t, d*0.95, bus); t += d; });
     });
     if (!from || flat > from) t += beat*0.8;
   });
@@ -960,7 +1123,8 @@ function stopAll(){ stopSpeech(); stopTune(); }
 
 /* ================= routing ================= */
 function route(){
-  const h = location.hash.replace(/^#\/?/, "");
+  let h = location.hash.replace(/^#\/?/, "");
+  try { h = decodeURIComponent(h); } catch(e){} // ids like "piñata" arrive percent-encoded
   const parts = h.split("/").filter(Boolean);
   stopAll();
   closeSing();
@@ -972,7 +1136,7 @@ function route(){
   window.scrollTo({ top: 0 });
 }
 function renderNav(){
-  const h = location.hash.replace(/^#\/?/, "");
+  let h = location.hash.replace(/^#\/?/, ""); try { h = decodeURIComponent(h); } catch(e){}
   const cur = h.startsWith("song") || h === "" ? "songs" : h.startsWith("palabras") || h.startsWith("words") ? "words" : h.startsWith("tour") ? "tour" : "";
   $("#nav").innerHTML = `
     <a href="#/" ${cur==="songs"?'aria-current="page"':""}>${T(I.nav_songs)}</a>
@@ -999,6 +1163,7 @@ function cardHTML(s){
     <p class="first">${esc(firstLine(s))}</p>
     <div class="meta">
       <span class="pill c-${c.c}">${IC[c.ic]} ${T(c.n)}</span>
+      <span class="tag kind-${s.kind}">${s.kind === "song" ? IC.note : IC.ring} ${T(s.kind === "song" ? I.k_song : I.k_game)}</span>
       ${s.melody ? `<span class="tag">${IC.note} ${T(I.has_tune)}</span>` : ""}
       <span class="tag">${IC.hand} ${T(I.has_game)}</span>
       <span class="tag">${lineCount(s)} ${T(I.lines)}</span>
@@ -1006,14 +1171,16 @@ function cardHTML(s){
 }
 function renderLibrary(){
   const v = $("#view");
+  const byKind = s => KIND === "all" || s.kind === KIND;
   const groups = (FILTER === "all" ? CATS : CATS.filter(c => c.id === FILTER)).map(c => {
-    const list = SONGS.filter(s => s.cat === c.id);
+    const list = SONGS.filter(s => s.cat === c.id && byKind(s));
+    if (!list.length) return "";
     return `<section class="group">
       <h2><span class="pill c-${c.c}">${IC[c.ic]} ${T(c.n)}</span></h2>
       <p class="desc">${T(c.d)}</p>
       <div class="cards">${list.map(cardHTML).join("")}</div></section>`;
   }).join("");
-  const starters = FILTER === "all" ? `<section class="group">
+  const starters = FILTER === "all" && KIND === "all" ? `<section class="group">
       <h2><span class="pill c-rosa">${IC.star} ${T(I.start_here)}</span></h2>
       <p class="desc">${T(I.start_desc)}</p>
       <div class="cards">${SONGS.filter(s => s.start).map(cardHTML).join("")}</div></section>` : "";
@@ -1023,6 +1190,9 @@ function renderLibrary(){
       <div class="stat"><b>${KNOWN.size}</b>${T(I.stat)}</div>
     </div>
     ${!TOUR_SEEN ? `<div class="banner" id="tourBanner"><div class="pic">${PIC.picado}</div><p>${T(I.banner)}</p><a class="btn primary sm" href="#/tour/0">${T(I.take_tour)}</a><button class="x" type="button" aria-label="${T(I.dismiss)}" data-act="dismiss">×</button></div>` : ""}
+    <div class="kinds" role="group">
+      ${[["all", I.kind_all, null], ["song", I.kind_song, I.kind_song_desc], ["game", I.kind_game, I.kind_game_desc]].map(([k, n, d]) => `<button type="button" data-k="${k}" aria-pressed="${KIND===k}"><b>${T(n)}</b>${d ? `<small>${T(d)}</small>` : `<small>${SONGS.length}</small>`}</button>`).join("")}
+    </div>
     <div class="filters" role="group">
       <button type="button" data-f="all" aria-pressed="${FILTER==="all"}">${T(I.all)}</button>
       ${CATS.map(c => `<button type="button" data-f="${c.id}" aria-pressed="${FILTER===c.id}">${IC[c.ic]} ${T(c.n)}</button>`).join("")}
@@ -1030,6 +1200,7 @@ function renderLibrary(){
     ${starters}${groups}
   </div>`;
   $$(".filters button", v).forEach(b => b.addEventListener("click", ()=>{ FILTER = b.dataset.f; renderLibrary(); }));
+  $$(".kinds button", v).forEach(b => b.addEventListener("click", ()=>{ KIND = b.dataset.k; renderLibrary(); }));
   const dis = $('[data-act="dismiss"]', v); if (dis) dis.addEventListener("click", ()=>{ TOUR_SEEN = true; try { localStorage.setItem("cantame-tour-seen","1"); } catch(e){} $("#tourBanner").remove(); });
 }
 
@@ -1270,7 +1441,7 @@ function renderWords(tab){
 const STEPS = [
  { scene:"welcome", eye:{en:"Welcome",es:"Bienvenidos"},
    h:{en:"Sing first. The Spanish follows.",es:"Primero cantar. El español viene después."},
-   lede:{en:"Twenty-one songs your family already knows. Here is how it works.",es:"Veintiuna canciones que tu familia ya conoce. Así funciona."} },
+   lede:{en:"Songs and games your family already knows. Here is how it works.",es:"Canciones y juegos que tu familia ya conoce. Así funciona."} },
  { scene:"lang", h:{en:"Choose your language",es:"Elige tu idioma"},
    lede:{en:"The buttons change. The songs stay in Spanish.",es:"Los botones cambian. Las canciones siguen en español."} },
  { scene:"browse", h:{en:"Find a song",es:"Busca una canción"},

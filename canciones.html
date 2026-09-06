@@ -590,8 +590,8 @@ const I = {
   prev:{en:"Previous",es:"Anterior"}, next:{en:"Next",es:"Siguiente"},
   cue_stanza:{en:"Verse",es:"Estrofa"}, repeat_more:{en:"…and keep counting up, as far as you like.",es:"…y sigan contando, hasta donde quieran."},
   close:{en:"Close",es:"Cerrar"}, hear:{en:"Hear it",es:"Oír"}, play:{en:"Play",es:"Reproducir"}, tune:{en:"Tune",es:"Tonada"},
-  sing_hint:{en:"Play hums the tune and scrolls by itself. With Play off, drag a finger under the words to read them.",es:"Reproducir tararea la tonada y avanza sola. Sin Reproducir, arrastra un dedo bajo las palabras para leerlas."},
-  sing_hint_voice:{en:"This rhyme is spoken, so Play reads it aloud and scrolls by itself. With Play off, drag a finger under the words to read them.",es:"Esta rima se dice, así que Reproducir la lee en voz alta y avanza sola. Sin Reproducir, arrastra un dedo bajo las palabras para leerlas."}, tap_stage:{en:"Tap the words or press the arrow keys to move.",es:"Toca las palabras o usa las flechas para avanzar."},
+  sing_hint:{en:"Drag a finger under the words as you read. Play hums the tune and scrolls by itself.",es:"Arrastra un dedo bajo las palabras mientras lees. Reproducir tararea la tonada y avanza sola."},
+  sing_hint_voice:{en:"Drag a finger under the words as you read. This rhyme is spoken, so Play reads it aloud and scrolls by itself.",es:"Arrastra un dedo bajo las palabras mientras lees. Esta rima se dice, así que Reproducir la lee en voz alta y avanza sola."}, tap_stage:{en:"Tap the words or press the arrow keys to move.",es:"Toca las palabras o usa las flechas para avanzar."},
   tab_words:{en:"Song words",es:"Palabras de las canciones"}, tab_phrases:{en:"Phrases for grown-ups",es:"Frases para los grandes"},
   words_hint:{en:"Every key word from every song. Tap a card to flip it, or the speaker to hear it. Words you have heard in a song you know are marked.",es:"Todas las palabras clave de todas las canciones. Toca una tarjeta para voltearla, o la bocina para oírla."},
   phrases_hint:{en:"You do not need long sentences. These cover most of what you will say while singing.",es:"No necesitas oraciones largas. Estas cubren casi todo lo que dirás mientras cantan."},
@@ -1754,15 +1754,12 @@ function openSing(s){
   document.body.appendChild(o); document.body.style.overflow = "hidden";
   const wrap = $("#reelwrap", o), reel = $("#reel", o), rlines = $$(".rline", o), bar = $("#singBar", o);
   const glitter = RM ? null : makeGlitter(wrap);
-  let trailTimer = null;
   const wordPos = w => { const r = w.getBoundingClientRect(), b = wrap.getBoundingClientRect(); return { x: r.left - b.left + r.width / 2, y: r.top - b.top + 4, w: r.width }; };
-  const startTrail = w => { stopTrail(); if (!glitter) return; const p = wordPos(w); glitter.emit(p.x, p.y, 22, p.w); trailTimer = setInterval(()=>{ const q = wordPos(w); glitter.emit(q.x + (Math.random() - .5) * q.w, q.y + 2, 3, 8); }, 55); };
-  const stopTrail = () => { if (trailTimer) clearInterval(trailTimer); trailTimer = null; };
   const playBtn = $('[data-act="play"]', o); const hasTune = !!s.melody;
 
   const center = () => { const l = rlines[i]; const y = wrap.clientHeight / 2 - (l.offsetTop + l.offsetHeight / 2); reel.style.transform = `translateY(${Math.round(y)}px)`; };
-  const clearWord = () => { stopTrail(); $$(".w.on, .w.lit", o).forEach(w => w.classList.remove("on", "lit")); };
-  const setWord = (li, k) => { clearWord(); const w = $(`.rline[data-i="${li}"] .w[data-k="${k}"]`, o); if (w) { w.classList.add("on"); startTrail(w); } };
+  const clearWord = () => { $$(".w.on, .w.lit", o).forEach(w => w.classList.remove("on", "lit")); };
+  const setWord = (li, k) => { $$(".w.on", o).forEach(w => w.classList.remove("on")); const w = $(`.rline[data-i="${li}"] .w[data-k="${k}"]`, o); if (w) w.classList.add("on"); };
   const clearFb = () => { fbTimers.forEach(clearTimeout); fbTimers = []; };
   const show = n => {
     i = Math.max(0, Math.min(lines.length - 1, n));
@@ -1799,7 +1796,7 @@ function openSing(s){
   const prev = () => { if (i > 0) jump(i - 1); };
 
   rlines.forEach(l => l.addEventListener("click", ()=>{ if (+l.dataset.i === i) return; jump(+l.dataset.i); }));
-  // finger reading: with Play off, drag a finger under the words; sparkles follow the fingertip and words light as you pass them (no box)
+  // finger reading, always on: drag a finger under the words; sparkles follow the fingertip and words light as you pass them. Only the finger makes sparkles.
   let pointing = false;
   const fingerAt = e => {
     const b = wrap.getBoundingClientRect(); const x = e.clientX - b.left, y = e.clientY - b.top;
@@ -1807,7 +1804,7 @@ function openSing(s){
     const el = document.elementFromPoint(e.clientX, e.clientY); const w = el && el.closest(".rline.cur .w");
     if (w && !w.classList.contains("lit")) { w.classList.add("lit"); if (glitter) { const p = wordPos(w); glitter.emit(p.x, p.y, 18, p.w); } }
   };
-  wrap.addEventListener("pointerdown", e => { if (mode || e.button > 0) return; pointing = true; o.classList.add("pointing"); fingerAt(e); });
+  wrap.addEventListener("pointerdown", e => { if (e.button > 0) return; pointing = true; o.classList.add("pointing"); fingerAt(e); });
   wrap.addEventListener("pointermove", e => { if (pointing) fingerAt(e); });
   const endPoint = () => { pointing = false; o.classList.remove("pointing"); };
   wrap.addEventListener("pointerup", endPoint); wrap.addEventListener("pointercancel", endPoint); wrap.addEventListener("pointerleave", endPoint);

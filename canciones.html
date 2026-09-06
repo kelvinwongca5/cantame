@@ -192,7 +192,9 @@
   .howto li { display: flex; gap: 0.65rem; align-items: flex-start; font-size: 0.98rem; }
   .howto li .n { flex: none; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--marigold); color: var(--on-marigold); display: grid; place-items: center; font-weight: 700; font-size: 0.85rem; margin-top: 0.05rem; }
   .vocab { display: flex; flex-wrap: wrap; gap: 0.45rem; }
-  .chip { border: 2px solid var(--line); background: var(--soft2); border-radius: 12px; padding: 0.35rem 0.7rem; text-align: left; line-height: 1.15; display: flex; flex-direction: column; gap: 0.05rem; }
+  .chip { border: 2px solid var(--line); background: var(--soft2); border-radius: 12px; padding: 0.3rem 0.7rem 0.3rem 0.45rem; text-align: left; line-height: 1.15; display: flex; align-items: center; gap: 0.45rem; }
+  .chip .tx { display: flex; flex-direction: column; gap: 0.05rem; }
+  .chip .ico { width: 2.1rem; height: 2.1rem; flex: none; } .chip .ico svg { width: 100%; height: 100%; display: block; }
   .chip:hover { border-color: var(--marigold); }
   .chip.hot { border-color: var(--marigold); background: var(--marigold-soft); }
   .chip .es { font-family: "Alegreya", Georgia, serif; font-size: 1.12rem; font-weight: 500; }
@@ -224,8 +226,68 @@
   .sing .rgl { font-size: clamp(1rem, 2.3vw, 1.4rem); color: var(--muted); margin-top: 0.45rem; opacity: 0; transition: opacity 400ms; max-width: 44ch; margin-left: auto; margin-right: auto; }
   .sing .rline.cur .rgl { opacity: 1; }
   .sing.no-gl .rgl { display: none; }
-  .sing .w { display: inline-block; padding: 0 0.12em; border-radius: 0.2em; transition: background 140ms, box-shadow 140ms; }
+  .sing .w { display: inline-block; padding: 0 0.12em; border-radius: 0.2em; transition: background 140ms, box-shadow 140ms; position: relative; }
   .sing .rline.cur .w.on { background: var(--marigold-soft); box-shadow: 0 0 0 3px var(--marigold); }
+  .sing .rline.cur .w.lit .t { color: var(--marigold-deep); }
+  .sing .w .art { position: absolute; left: 50%; bottom: calc(100% - 0.12em); width: 1.05em; height: 1.05em; transform: translateX(-50%) scale(.9); opacity: 0; transition: opacity 300ms, transform 300ms; pointer-events: none; }
+  .sing .w .art svg { width: 100%; height: 100%; display: block; }
+  .sing .rline.cur .w .art { opacity: 1; }
+  .sing .rline.cur .w.on .art, .sing .rline.cur .w.lit .art { transform: translateX(-50%) scale(1.28) translateY(-3px); }
+  .sing .rline.has-art .rtext { padding-top: 1.1em; }
+  .sing .reelwrap { touch-action: none; }
+  .sing .glitter { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
+  .sing.pointing .reelwrap { cursor: none; }
+  /* drawn art: parts animate only while their word is active */
+  .a .beak-lo { transform-origin: 13px 29px; animation: a-chirp 0.42s ease-in-out infinite alternate paused; }
+  .a .chirp { opacity: 0; animation: a-blink 0.42s ease-in-out infinite alternate paused; }
+  .a-rain .drops { animation: a-fall 0.7s linear infinite paused; }
+  .a-cold .shiver { animation: a-shiver 0.12s linear infinite alternate paused; }
+  .a-cry .tears { animation: a-fall 0.8s linear infinite paused; }
+  .a-sleep .zzz { animation: a-rise 1.4s ease-in-out infinite paused; }
+  .a-sing .notes { animation: a-rise 1.2s ease-in-out infinite paused; }
+  .a-heart .beat, .a-heal { transform-origin: 32px 32px; animation: a-beat 0.6s ease-in-out infinite alternate paused; }
+  .a-star .big { transform-origin: 32px 30px; animation: a-twinkle 0.9s ease-in-out infinite alternate paused; }
+  .a .twinkle { animation: a-blink 0.7s ease-in-out infinite alternate paused; }
+  .a-sun .rays { transform-origin: 32px 32px; animation: a-spin 9s linear infinite paused; }
+  .a-sea .waves, .a-boat .waves { animation: a-wave 1.4s ease-in-out infinite alternate paused; }
+  .a-boat .boat { transform-origin: 32px 44px; animation: a-bob 1.4s ease-in-out infinite alternate paused; }
+  .a-elephant { transform-origin: 32px 58px; animation: a-sway 1.2s ease-in-out infinite alternate paused; }
+  .a-frog, .a-jump .jumper { animation: a-hop 0.7s ease-in-out infinite alternate paused; }
+  .a-puppy .tail { transform-origin: 48px 44px; animation: a-wag 0.3s ease-in-out infinite alternate paused; }
+  .a-bird .wing, .a-wasp .wing { transform-origin: 32px 40px; animation: a-flap 0.25s ease-in-out infinite alternate paused; }
+  .a-wings .wl { transform-origin: 30px 34px; animation: a-flapl 0.5s ease-in-out infinite alternate paused; }
+  .a-wings .wr { transform-origin: 34px 34px; animation: a-flapr 0.5s ease-in-out infinite alternate paused; }
+  .a-bell .bell, .a-pinata .swing { transform-origin: 32px 6px; animation: a-swing 0.8s ease-in-out infinite alternate paused; }
+  .a .ring, .a-hungry .grumble { animation: a-blink 0.5s ease-in-out infinite alternate paused; }
+  .a-hug { transform-origin: 32px 48px; animation: a-squeeze 1s ease-in-out infinite alternate paused; }
+  .a-wave .hand { transform-origin: 40px 36px; animation: a-hello 0.5s ease-in-out infinite alternate paused; }
+  .a-cake .flames { transform-origin: 32px 20px; animation: a-flicker 0.3s ease-in-out infinite alternate paused; }
+  .a-snow .flake { transform-origin: 32px 18px; animation: a-spin 6s linear infinite paused; }
+  .a-moon { transform-origin: 32px 32px; animation: a-sway 2s ease-in-out infinite alternate paused; }
+  .a-horse, .a-sheep, .a-hen, .a-rooster, .a-doll, .a-child, .a-mom, .a-dad, .a-walk { transform-origin: 32px 60px; animation: a-bounce 0.5s ease-in-out infinite alternate paused; }
+  .w.on .a *, .w.lit .a *, .w.on .a, .w.lit .a, .chip.hot .a *, .chip.hot .a, .chip:hover .a *, .chip:hover .a, .fc:hover .a *, .fc:hover .a, .fc.flipped .a *, .fc.flipped .a { animation-play-state: running; }
+  @keyframes a-chirp { to { transform: rotate(16deg); } }
+  @keyframes a-blink { from { opacity: 0.1; } to { opacity: 1; } }
+  @keyframes a-fall { from { transform: translateY(-3px); opacity: 1; } to { transform: translateY(9px); opacity: 0; } }
+  @keyframes a-shiver { from { transform: translateX(-1.4px); } to { transform: translateX(1.4px); } }
+  @keyframes a-rise { from { transform: translateY(2px); opacity: 0.3; } to { transform: translateY(-6px); opacity: 1; } }
+  @keyframes a-beat { to { transform: scale(1.12); } }
+  @keyframes a-twinkle { from { transform: scale(0.94) rotate(-4deg); } to { transform: scale(1.06) rotate(4deg); } }
+  @keyframes a-spin { to { transform: rotate(360deg); } }
+  @keyframes a-wave { from { transform: translateX(-4px); } to { transform: translateX(4px); } }
+  @keyframes a-bob { from { transform: rotate(-5deg) translateY(1px); } to { transform: rotate(5deg) translateY(-1px); } }
+  @keyframes a-sway { from { transform: rotate(-5deg); } to { transform: rotate(5deg); } }
+  @keyframes a-hop { from { transform: translateY(0); } to { transform: translateY(-6px); } }
+  @keyframes a-wag { from { transform: rotate(-18deg); } to { transform: rotate(18deg); } }
+  @keyframes a-flap { from { transform: scaleY(0.5); } to { transform: scaleY(1.1); } }
+  @keyframes a-flapl { from { transform: scaleX(0.7) rotate(8deg); } to { transform: scaleX(1) rotate(-6deg); } }
+  @keyframes a-flapr { from { transform: scaleX(0.7) rotate(-8deg); } to { transform: scaleX(1) rotate(6deg); } }
+  @keyframes a-swing { from { transform: rotate(-9deg); } to { transform: rotate(9deg); } }
+  @keyframes a-squeeze { to { transform: scale(1.06, 0.96); } }
+  @keyframes a-hello { from { transform: rotate(-14deg); } to { transform: rotate(14deg); } }
+  @keyframes a-flicker { from { transform: scale(0.9, 0.85); } to { transform: scale(1.05, 1.15); } }
+  @keyframes a-bounce { from { transform: translateY(0); } to { transform: translateY(-3px); } }
+  @media (prefers-reduced-motion: reduce) { .a, .a * { animation: none !important; } }
   .sing .bar { height: 5px; background: var(--soft2); margin: 0.4rem 1.4rem 0; border-radius: 999px; overflow: hidden; }
   .sing .bar i { display: block; height: 100%; width: 0; background: var(--marigold); border-radius: 999px; transition: width 400ms; }
   .sing .ctl { display: flex; gap: 0.6rem; justify-content: center; align-items: center; padding: 0.9rem 1.2rem 0.3rem; flex-wrap: wrap; }
@@ -241,8 +303,9 @@
   .tabs button { border: 2px solid transparent; background: var(--soft2); border-radius: 999px; padding: 0.4rem 1rem; font-weight: 700; color: var(--ink-2); }
   .tabs button[aria-pressed="true"] { background: var(--card); border-color: var(--marigold); color: var(--ink); box-shadow: var(--shadow); }
   .flash { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: 0.7rem; }
-  .fc { position: relative; min-height: 7.4rem; border: 0; background: var(--card); border-radius: 18px; box-shadow: var(--shadow); padding: 0.9rem 0.9rem 0.8rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between; gap: 0.3rem; }
+  .fc { position: relative; min-height: 8.6rem; border: 0; background: var(--card); border-radius: 18px; box-shadow: var(--shadow); padding: 0.9rem 0.9rem 0.8rem; text-align: left; display: flex; flex-direction: column; justify-content: space-between; gap: 0.3rem; }
   .fc .w { font-family: "Alegreya", Georgia, serif; font-size: 1.5rem; font-weight: 500; line-height: 1.15; }
+  .fc .fico { width: 2.8rem; height: 2.8rem; display: block; } .fc .fico svg { width: 100%; height: 100%; display: block; }
   .fc .m { font-size: 0.92rem; color: var(--muted); min-height: 1.3em; }
   .fc .from { font-size: 0.75rem; color: var(--muted); font-style: italic; font-family: "Alegreya", Georgia, serif; }
   .fc.flipped { background: var(--soft); }
@@ -527,8 +590,8 @@ const I = {
   prev:{en:"Previous",es:"Anterior"}, next:{en:"Next",es:"Siguiente"},
   cue_stanza:{en:"Verse",es:"Estrofa"}, repeat_more:{en:"…and keep counting up, as far as you like.",es:"…y sigan contando, hasta donde quieran."},
   close:{en:"Close",es:"Cerrar"}, hear:{en:"Hear it",es:"Oír"}, play:{en:"Play",es:"Reproducir"}, tune:{en:"Tune",es:"Tonada"},
-  sing_hint:{en:"Play hums the tune and scrolls by itself. Tap any line to jump there.",es:"Reproducir tararea la tonada y avanza sola. Toca cualquier línea para ir ahí."},
-  sing_hint_voice:{en:"This song has no tune yet, so Play reads it aloud and scrolls by itself. Tap any line to jump there.",es:"Esta canción aún no tiene tonada, así que Reproducir la lee en voz alta y avanza sola. Toca cualquier línea para ir ahí."}, tap_stage:{en:"Tap the words or press the arrow keys to move.",es:"Toca las palabras o usa las flechas para avanzar."},
+  sing_hint:{en:"Play hums the tune and scrolls by itself. With Play off, drag a finger under the words to read them.",es:"Reproducir tararea la tonada y avanza sola. Sin Reproducir, arrastra un dedo bajo las palabras para leerlas."},
+  sing_hint_voice:{en:"This rhyme is spoken, so Play reads it aloud and scrolls by itself. With Play off, drag a finger under the words to read them.",es:"Esta rima se dice, así que Reproducir la lee en voz alta y avanza sola. Sin Reproducir, arrastra un dedo bajo las palabras para leerlas."}, tap_stage:{en:"Tap the words or press the arrow keys to move.",es:"Toca las palabras o usa las flechas para avanzar."},
   tab_words:{en:"Song words",es:"Palabras de las canciones"}, tab_phrases:{en:"Phrases for grown-ups",es:"Frases para los grandes"},
   words_hint:{en:"Every key word from every song. Tap a card to flip it, or the speaker to hear it. Words you have heard in a song you know are marked.",es:"Todas las palabras clave de todas las canciones. Toca una tarjeta para voltearla, o la bocina para oírla."},
   phrases_hint:{en:"You do not need long sentences. These cover most of what you will say while singing.",es:"No necesitas oraciones largas. Estas cubren casi todo lo que dirás mientras cantan."},
@@ -1000,6 +1063,354 @@ const MELODIES = {
     { n:["sol", "sol", "la", "sol", "la", "si", "do'", "do'"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] } ], map:[[0, 1, 0, 2, 1, 1]] },
 };
 
+/* ================= drawn art for words ================= */
+// Small hand-drawn style illustrations, 64x64. Ink outline, flat fills from the site palette.
+// Each entry is an SVG string; a class on the root group (a-xxx) lets CSS animate parts while the word is active.
+const INK = "#4A3318", SKIN = "#F6D2A8", MAR = "#F2A62C", MARD = "#C97C10", ROSA = "#D6337B", ROSAL = "#F4A7C9", BLUE = "#1F6F9E", BLUEL = "#9CCBE6", GREEN = "#4C9A5A", GREENL = "#A9D8A6", CREAM = "#FBF3E2", BROWN = "#9C6A3A", GREY = "#B8B2A8", WHITE = "#FFFFFF", RED = "#C8352E";
+const ST = `fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"`;
+const STF = c => `fill="${c}" stroke="${INK}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"`;
+const svg = (cls, body) => `<svg viewBox="0 0 64 64" aria-hidden="true"><g class="a ${cls}">${body}</g></svg>`;
+const eye = (x, y, r = 1.9) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${INK}"/>`;
+const smile = (x, y, w = 6) => `<path d="M${x - w / 2} ${y} q${w / 2} ${w * 0.55} ${w} 0" ${ST}/>`;
+const frown = (x, y, w = 6) => `<path d="M${x - w / 2} ${y + 2} q${w / 2} ${-w * 0.55} ${w} 0" ${ST}/>`;
+const face = (cx, cy, r, extra = "") => `<circle cx="${cx}" cy="${cy}" r="${r}" ${STF(SKIN)}/>${eye(cx - r * 0.35, cy - r * 0.15)}${eye(cx + r * 0.35, cy - r * 0.15)}${extra}`;
+const notes = (cls = "") => `<g class="notes ${cls}"><path d="M44 14v10a3 3 0 1 1-2-2.8" ${ST}/><path d="M44 14l6-2v9" ${ST}/><path d="M54 8v7a2.5 2.5 0 1 1-2-2.3" ${ST}/></g>`;
+
+const ART = {
+  chick: svg("a-chick", `<path d="M20 41c-1-10 7-17 17-16c10 1 15 9 13 18c-2 9-12 14-22 11c-6-2-8-8-8-13z" ${STF(MAR)}/>
+    <path class="wing" d="M35 40c5-4 11-3 12 2c-3 3-9 4-13 1z" ${STF(MARD)}/>
+    <path d="M14 27c-1-7 4-12 11-12c7 0 11 5 10 12c-1 6-6 9-11 9c-6 0-9-3-10-9z" ${STF(MAR)}/>${eye(20, 25)}
+    <path class="beak-hi" d="M13 27l-8 1l8 2z" ${STF("#E0742A")}/><path class="beak-lo" d="M13 29l-7 2l7 1z" ${STF("#E0742A")}/>
+    <path d="M30 54l-1 6M38 54l1 6M24 60h10M34 60h10" ${ST}/>
+    <g class="chirp" stroke="${ROSA}" stroke-width="2.2" fill="none" stroke-linecap="round"><path d="M6 16q3 5 0 10"/><path d="M1 13q6 8 0 16"/></g>`),
+  hen: svg("a-hen", `<path d="M14 40c0-12 10-19 22-18c12 1 18 9 16 19c-2 10-11 14-21 13c-9-1-17-6-17-14z" ${STF(CREAM)}/>
+    <path d="M50 34c6-6 8-12 6-16c-3 4-7 6-11 8z" ${STF(BROWN)}/><path d="M46 38c6-4 10-5 12-3c-3 3-7 5-11 6z" ${STF(BROWN)}/>
+    <path d="M12 26c-1-6 4-11 10-11c6 0 10 5 9 11c-1 5-5 8-10 8c-5 0-8-3-9-8z" ${STF(CREAM)}/>
+    <path d="M14 15c1-4 4-6 6-4c1-4 5-5 7-2c2-2 5 0 4 3z" ${STF(RED)}/><path d="M10 27l-6 2l6 2z" ${STF("#E0742A")}/>
+    <path d="M12 31q-3 4 0 6q2-2 3-6z" ${STF(RED)}/>${eye(18, 24)}
+    <path d="M28 54l-1 6M40 54l1 6M22 60h10M36 60h10" ${ST}/>`),
+  rooster: svg("a-rooster", `<path d="M18 40c0-12 9-19 20-18c11 1 16 9 14 19c-2 9-10 14-19 13c-9-1-15-6-15-14z" ${STF(CREAM)}/>
+    <path d="M48 34c8-10 12-16 6-22c-2 8-6 12-12 16z" ${STF(GREEN)}/><path d="M50 40c8-4 12-6 14-2c-4 3-9 5-13 6z" ${STF(BLUE)}/>
+    <path d="M14 24c-1-7 4-12 10-12c7 0 11 5 10 12c-1 6-5 9-10 9c-6 0-9-3-10-9z" ${STF(CREAM)}/>
+    <path d="M15 12c0-4 3-7 6-5c0-4 4-6 7-3c2-3 6-1 5 3z" ${STF(RED)}/><path d="M11 25l-7 2l7 3z" ${STF("#E0742A")}/>
+    <path d="M14 30q-4 5 0 8q3-2 4-8z" ${STF(RED)}/>${eye(20, 22)}
+    <path d="M30 54l-1 6M42 54l1 6M24 60h10M38 60h10" ${ST}/>`),
+  bird: svg("a-bird", `<path d="M6 50q22-6 52-2" ${ST}/><path d="M20 44c-2-9 5-16 14-15c8 1 12 8 10 16c-2 6-8 9-14 8c-6-1-9-4-10-9z" ${STF(BLUE)}/>
+    <path d="M14 30c0-6 5-10 10-9c5 1 8 5 7 10c-1 4-5 6-9 6c-5 0-8-3-8-7z" ${STF(BLUE)}/>${eye(20, 29)}
+    <path d="M12 32l-7 1l7 2z" ${STF(MAR)}/><path class="wing" d="M30 40c5-6 12-6 15-1c-4 3-10 4-15 1z" ${STF(BLUEL)}/>
+    <path d="M42 46c6-4 10-4 12-1c-3 1-7 3-12 1z" ${STF(BLUEL)}/><path d="M26 52v6M32 52v6" ${ST}/>`),
+  frog: svg("a-frog", `<path d="M12 46c-2-12 6-22 20-22c14 0 22 10 20 22c-2 8-12 12-20 12c-8 0-18-4-20-12z" ${STF(GREEN)}/>
+    <circle cx="22" cy="24" r="7" ${STF(GREEN)}/><circle cx="42" cy="24" r="7" ${STF(GREEN)}/><circle cx="22" cy="24" r="3.5" fill="${WHITE}"/><circle cx="42" cy="24" r="3.5" fill="${WHITE}"/>${eye(23, 24, 1.6)}${eye(43, 24, 1.6)}
+    <path d="M22 42q10 8 20 0" ${ST}/><path d="M8 54q6-6 12-2M56 54q-6-6-12-2" ${ST}/>
+    <path d="M28 40c0-3 3-4 4-1c1-3 4-2 4 1" fill="${ROSAL}" stroke="none"/>`),
+  elephant: svg("a-elephant", `<path d="M8 40c0-14 10-22 26-22c14 0 22 8 22 20c0 8-4 12-8 12h-32c-6 0-8-4-8-10z" ${STF(GREY)}/>
+    <path d="M6 30c-2 12 0 26 4 30c3-2 5-8 6-14" ${STF(GREY)}/><path d="M4 22c-2-6 2-12 8-12c6 0 10 4 10 10c0 6-4 10-8 10c-4 0-9-3-10-8z" ${STF("#CFC9BF")}/>
+    ${eye(20, 26)}<path d="M18 50v8M28 50v8M40 50v8M50 50v8" ${ST}/><path d="M56 32q6-2 4 4" ${ST}/>`),
+  spider: svg("a-spider", `<g ${ST} stroke-width="1.5" opacity=".85"><path d="M32 4v56M4 32h56M12 12l40 40M52 12L12 52"/><path d="M20 32q0-8 12-12q12 4 12 12q0 8-12 12q-12-4-12-12z"/><path d="M10 32q0-14 22-22q22 8 22 22q0 14-22 22q-22-8-22-22z"/></g>
+    <ellipse cx="32" cy="32" rx="7" ry="6" ${STF(INK)}/><circle cx="32" cy="24" r="4" ${STF(INK)}/>${eye(30.5, 23.5, 1)}${eye(33.5, 23.5, 1)}
+    <path d="M25 30l-8-6M25 33l-9 2M25 36l-7 6M39 30l8-6M39 33l9 2M39 36l7 6" ${ST}/>`),
+  puppy: svg("a-puppy", `<path d="M16 44c-2-10 6-18 16-18c10 0 18 8 16 18c-2 8-10 12-16 12c-6 0-14-4-16-12z" ${STF(BROWN)}/>
+    <path d="M16 26c-1-8 5-14 14-14c9 0 15 6 14 14c-1 7-7 10-14 10c-7 0-13-3-14-10z" ${STF(BROWN)}/>
+    <path d="M14 18c-6 2-8 12-4 18c3-2 5-8 6-14z" ${STF("#6E4423")}/><path d="M46 18c6 2 8 12 4 18c-3-2-5-8-6-14z" ${STF("#6E4423")}/>
+    <path d="M26 36c0-5 12-5 12 0c0 3-6 4-6 4s-6-1-6-4z" ${STF(CREAM)}/><path d="M30 33c0-2 4-2 4 0c0 1-2 2-2 2s-2-1-2-2z" fill="${INK}"/>${eye(25, 26)}${eye(39, 26)}
+    <path class="tail" d="M48 44q8-6 6-14" ${ST}/><path d="M24 56v4M40 56v4" ${ST}/>`),
+  horse: svg("a-horse", `<path d="M14 46c0-10 6-16 18-16h12c6 0 10 4 10 10v8H14z" ${STF(WHITE)}/>
+    <path d="M44 32l4-14c1-3 4-5 7-4l6 6c2 2 0 4-2 4h-4l-2 8" ${STF(WHITE)}/><path d="M48 18c-4-4 0-10 4-8" ${STF(GREY)}/>${eye(53, 20)}<path d="M59 24l-3 1" ${ST}/>
+    <path d="M40 30c-6-4-14-6-22-2" ${STF(GREY)}/><path d="M14 40c-6 2-8 8-4 12" ${ST} stroke="${GREY}" stroke-width="4"/>
+    <path d="M20 48v10M28 48v10M40 48v10M48 48v10" ${ST} stroke-width="4"/><path d="M18 58h5M26 58h5M38 58h5M46 58h5" ${ST}/>`),
+  sheep: svg("a-sheep", `<path d="M14 40c-6 0-8-8-2-11c-2-6 6-10 10-6c2-6 12-6 14 0c4-4 12 0 10 6c6 3 4 11-2 11z" ${STF(WHITE)}/>
+    <path d="M14 40h30v6H14z" fill="${WHITE}" stroke="none"/><path d="M14 46v-6M44 46v-6" ${ST}/>
+    <path d="M44 30c-8 0-10 8-4 12c2 2 8 2 10-2c2-6-1-10-6-10z" ${STF(INK)}/><circle cx="45" cy="36" r="1.6" fill="${WHITE}"/>
+    <path d="M20 46v10M28 46v10M36 46v10" ${ST}/>`),
+  snake: svg("a-snake", `<path d="M10 48c0-8 8-10 16-8s14 4 18-2c4-6 0-12-6-12s-10 4-8 10" ${ST} stroke="${INK}" stroke-width="11"/><path d="M10 48c0-8 8-10 16-8s14 4 18-2c4-6 0-12-6-12s-10 4-8 10" ${ST} stroke="${GREEN}" stroke-width="7"/>
+    <path d="M16 44c4 0 8 1 12 2M34 40c4-1 6-3 8-6" ${ST} stroke="${GREENL}" stroke-width="2"/>
+    <path d="M6 44c-4 6 0 12 8 10c4-1 6-4 6-8c0-6-10-8-14-2z" ${STF(GREEN)}/>${eye(9, 46)}${eye(15, 45)}<path d="M6 52l-4 2M6 52l-3-3" ${ST} stroke="${ROSA}"/>`),
+  wasp: svg("a-wasp", `<path d="M14 40c0-8 8-14 18-14c12 0 20 6 20 14c0 6-6 10-18 10c-12 0-20-4-20-10z" ${STF(MAR)}/>
+    <path d="M26 27v22M36 27v22M46 30v18" ${ST} stroke-width="4"/><circle cx="14" cy="36" r="8" ${STF(INK)}/><circle cx="12" cy="34" r="1.8" fill="${WHITE}"/>
+    <path d="M10 28l-4-8M16 27l2-9" ${ST}/><path class="wing" d="M28 26c-2-10 8-16 14-10c2 4-4 10-14 10z" fill="${WHITE}" stroke="${INK}" stroke-width="2" opacity=".85"/>
+    <path d="M52 44l8 4" ${ST}/>`),
+  sun: svg("a-sun", `<g class="rays" ${ST}><path d="M32 6v8M32 50v8M6 32h8M50 32h8M13 13l6 6M45 45l6 6M13 51l6-6M45 19l6-6"/></g>
+    <circle cx="32" cy="32" r="13" ${STF(MAR)}/>${eye(27, 30)}${eye(37, 30)}${smile(32, 35)}`),
+  moon: svg("a-moon", `<path d="M40 8c-14 2-22 14-18 28c4 12 16 18 28 14c-12-2-20-10-20-22c0-8 4-15 10-20z" ${STF(MAR)}/>
+    <g class="twinkle"><path d="M12 14l1 3l3 1l-3 1l-1 3l-1-3l-3-1l3-1z" fill="${MAR}"/><path d="M50 50l1 3l3 1l-3 1l-1 3l-1-3l-3-1l3-1z" fill="${MAR}"/></g>${eye(30, 26)}${smile(30, 32, 5)}`),
+  star: svg("a-star", `<path class="big" d="M32 6l7 16l17 2l-13 11l4 17l-15-9l-15 9l4-17L8 24l17-2z" ${STF(MAR)}/>${eye(27, 27)}${eye(37, 27)}${smile(32, 33)}
+    <g class="twinkle"><path d="M8 50l1 3l3 1l-3 1l-1 3l-1-3l-3-1l3-1z" fill="${MAR}"/><path d="M54 10l1 3l3 1l-3 1l-1 3l-1-3l-3-1l3-1z" fill="${MAR}"/></g>`),
+  sky: svg("a-sky", `<circle cx="46" cy="18" r="9" ${STF(MAR)}/><path d="M12 42c-6 0-8-8-2-10c0-8 12-10 16-4c6-4 14 0 12 6c6 0 6 8 0 8z" ${STF(WHITE)}/>
+    <path d="M40 44q4-4 8 0M50 40q4-4 8 0" ${ST}/>`),
+  sea: svg("a-sea", `<g class="waves"><path d="M2 30q8-8 16 0t16 0t16 0t16 0" ${ST} stroke="${BLUE}" stroke-width="3"/><path d="M-6 42q8-8 16 0t16 0t16 0t16 0t16 0" ${ST} stroke="${BLUE}" stroke-width="3"/><path d="M2 54q8-8 16 0t16 0t16 0t16 0" ${ST} stroke="${BLUE}" stroke-width="3"/></g>
+    <circle cx="50" cy="14" r="7" ${STF(MAR)}/>`),
+  boat: svg("a-boat", `<g class="boat"><path d="M10 40h44l-8 12H18z" ${STF(RED)}/><path d="M32 12v28" ${ST}/><path d="M32 14l18 22H32z" ${STF(WHITE)}/><path d="M32 18L18 34h14z" ${STF(MAR)}/></g>
+    <g class="waves"><path d="M2 56q8-6 16 0t16 0t16 0t16 0" ${ST} stroke="${BLUE}" stroke-width="3"/></g>`),
+  rain: svg("a-rain", `<path d="M14 30c-8 0-10-10-2-12c0-10 14-12 18-4c8-4 18 0 16 8c8 0 8 8 0 8z" ${STF(GREY)}/>
+    <g class="drops" ${ST} stroke="${BLUE}" stroke-width="3"><path d="M18 38v8"/><path d="M28 40v8"/><path d="M38 38v8"/><path d="M48 40v8"/><path d="M23 50v6"/><path d="M43 50v6"/></g>`),
+  cloud: svg("a-cloud", `<path d="M14 44c-8 0-10-10-2-12c0-10 14-12 18-4c8-4 18 0 16 8c8 0 8 8 0 8z" ${STF(WHITE)}/>${eye(26, 36)}${eye(38, 36)}${smile(32, 40, 5)}`),
+  rainbow: svg("a-rainbow", `<path d="M6 52a26 26 0 0 1 52 0" ${ST} stroke="${ROSA}" stroke-width="5"/><path d="M13 52a19 19 0 0 1 38 0" ${ST} stroke="${MAR}" stroke-width="5"/><path d="M20 52a12 12 0 0 1 24 0" ${ST} stroke="${GREEN}" stroke-width="5"/><path d="M27 52a5 5 0 0 1 10 0" ${ST} stroke="${BLUE}" stroke-width="5"/>
+    <path d="M4 52h56" ${ST}/>`),
+  colors: svg("a-colors", `<path d="M10 20c4-6 12-4 12 2c0 6-10 8-12 2z" ${STF(ROSA)}/><path d="M26 12c6-4 12 2 10 8c-2 6-12 4-12 0c0-4 0-6 2-8z" ${STF(MAR)}/><path d="M42 20c6-2 10 4 8 8c-2 6-12 4-12-2c0-3 2-5 4-6z" ${STF(BLUE)}/>
+    <path d="M14 40c6-6 14-4 14 2c0 8-14 8-14-2z" ${STF(GREEN)}/><path d="M36 40c6-4 12 0 12 6c0 6-14 6-12-6z" ${STF("#7B4FA0")}/>
+    <path d="M6 56l52-2" ${ST}/>`),
+  field: svg("a-field", `<path d="M2 48q16-14 32-4q14-10 30 0v12H2z" ${STF(GREENL)}/><path d="M2 58h60" ${ST}/>
+    <g fill="${ROSA}"><circle cx="14" cy="50" r="2.5"/><circle cx="30" cy="54" r="2.5"/><circle cx="48" cy="50" r="2.5"/></g><path d="M14 52v5M30 56v3M48 52v5" ${ST} stroke="${GREEN}"/>
+    <circle cx="50" cy="16" r="7" ${STF(MAR)}/>`),
+  flower: svg("a-flower", `<path d="M32 30v26" ${ST} stroke="${GREEN}" stroke-width="3"/><path d="M32 46c-6 0-10-4-10-8c6 0 10 4 10 8z" ${STF(GREEN)}/>
+    <g fill="${ROSA}" stroke="${INK}" stroke-width="2"><ellipse cx="32" cy="14" rx="5" ry="7"/><ellipse cx="32" cy="32" rx="5" ry="7"/><ellipse cx="23" cy="23" rx="7" ry="5"/><ellipse cx="41" cy="23" rx="7" ry="5"/></g>
+    <circle cx="32" cy="23" r="5" ${STF(MAR)}/>`),
+  snow: svg("a-snow", `<path d="M2 56q14-10 30-6q16-6 30 6z" ${STF(WHITE)}/>
+    <g class="flake" ${ST} stroke-width="1.8"><path d="M32 8v20M22 13l20 10M22 23l20-10M28 10l4 3l4-3M28 26l4-3l4 3M20 17l3 1l-3 1M44 17l-3 1l3 1"/></g>
+    <path d="M12 30l1 3l3 1l-3 1l-1 3l-1-3l-3-1l3-1z" fill="${BLUEL}"/><path d="M52 36l1 3l3 1l-3 1l-1 3l-1-3l-3-1l3-1z" fill="${BLUEL}"/>`),
+  tortilla: svg("a-tortilla", `<ellipse cx="32" cy="44" rx="24" ry="8" ${STF("#EBCB8B")}/><ellipse cx="32" cy="38" rx="24" ry="8" ${STF("#F0D59A")}/><ellipse cx="32" cy="32" rx="24" ry="8" ${STF("#F5DFA8")}/>
+    <g fill="${BROWN}" opacity=".7"><circle cx="20" cy="31" r="1.6"/><circle cx="34" cy="28" r="1.4"/><circle cx="44" cy="33" r="1.8"/><circle cx="28" cy="35" r="1.2"/></g>
+    <path d="M14 20q4-6 0-12M32 18q4-6 0-12M50 20q4-6 0-12" ${ST} stroke="${GREY}"/>`),
+  corn: svg("a-corn", `<path d="M26 10c-8 2-12 22-8 40c2 8 14 8 16 0c4-18 0-38-8-40z" ${STF(MAR)}/>
+    <g ${ST} stroke-width="1.6"><path d="M22 20q4 2 8 0M20 28q6 2 12 0M20 36q6 2 12 0M22 44q4 2 8 0"/><path d="M26 12v40"/></g>
+    <path d="M18 52c-8-8-10-30-2-40c2 12 2 26 2 40z" ${STF(GREEN)}/><path d="M36 52c8-8 10-30 2-40c-2 12-2 26-2 40z" ${STF(GREEN)}/>`),
+  apple: svg("a-apple", `<path d="M32 22c-6-6-18-4-20 8c-2 12 6 24 14 24c3 0 4-2 6-2s3 2 6 2c8 0 16-12 14-24c-2-12-14-14-20-8z" ${STF(RED)}/>
+    <path d="M32 22v-8" ${ST}/><path d="M33 16c4-6 10-6 12-2c-4 4-8 4-12 2z" ${STF(GREEN)}/><path d="M22 30q-4 6 0 14" ${ST} stroke="${WHITE}" opacity=".6"/>`),
+  orange: svg("a-orange", `<circle cx="32" cy="36" r="20" ${STF("#F4901E")}/><path d="M32 16v-6" ${ST}/><path d="M33 12c4-6 10-6 12-2c-4 4-8 4-12 2z" ${STF(GREEN)}/>
+    <g fill="${INK}" opacity=".25"><circle cx="24" cy="30" r="1"/><circle cx="38" cy="26" r="1"/><circle cx="42" cy="40" r="1"/><circle cx="26" cy="44" r="1"/></g>`),
+  lemon: svg("a-lemon", `<path d="M14 36c0-12 10-20 22-18c10 2 16 10 14 20c-2 10-12 14-22 12c-8-2-14-6-14-14z" ${STF("#DDE24A")}/>
+    <path d="M32 34c-6 0-10 4-10 8" ${ST} opacity=".4"/><path d="M50 30l6-4M12 44l-6 4" ${ST}/><path d="M22 20c-2-6 2-10 6-8c-2 2-4 4-6 8z" ${STF(GREEN)}/>`),
+  plum: svg("a-plum", `<path d="M32 20c-12 0-20 10-18 22c2 10 10 14 18 14c8 0 16-4 18-14c2-12-6-22-18-22z" ${STF("#6B3F8F")}/>
+    <path d="M32 30v20" ${ST} stroke="${INK}" opacity=".35"/><path d="M32 20v-8" ${ST}/><path d="M33 12c4-6 10-6 12-2c-4 4-8 4-12 2z" ${STF(GREEN)}/>`),
+  apricot: svg("a-apricot", `<path d="M32 20c-12 0-20 10-18 22c2 10 10 14 18 14c8 0 16-4 18-14c2-12-6-22-18-22z" ${STF("#F7B267")}/>
+    <path d="M32 24q-2 14 0 30" ${ST} opacity=".35"/><path d="M32 20v-7" ${ST}/><path d="M31 13c-4-6-10-6-12-2c4 4 8 4 12 2z" ${STF(GREEN)}/>`),
+  melon: svg("a-melon", `<path d="M6 30a26 26 0 0 0 52 0z" ${STF("#F4C27B")}/><path d="M12 30a20 20 0 0 0 40 0z" fill="${GREENL}" stroke="none"/><path d="M6 30h52" ${ST}/>
+    <g fill="${INK}" opacity=".6"><ellipse cx="24" cy="40" rx="2" ry="1.2"/><ellipse cx="32" cy="44" rx="2" ry="1.2"/><ellipse cx="40" cy="40" rx="2" ry="1.2"/></g>`),
+  watermelon: svg("a-watermelon", `<path d="M6 30a26 26 0 0 0 52 0z" ${STF(GREEN)}/><path d="M11 30a21 21 0 0 0 42 0z" fill="${ROSA}" stroke="none"/><path d="M6 30h52" ${ST}/>
+    <g fill="${INK}"><ellipse cx="22" cy="38" rx="1.8" ry="2.6"/><ellipse cx="32" cy="44" rx="1.8" ry="2.6"/><ellipse cx="42" cy="38" rx="1.8" ry="2.6"/></g>`),
+  fruit: svg("a-fruit", `<path d="M8 36h48l-6 20H14z" ${STF(BROWN)}/><path d="M8 36q24 6 48 0" ${ST}/>
+    <circle cx="20" cy="30" r="8" ${STF(RED)}/><circle cx="36" cy="26" r="9" ${STF("#F4901E")}/><path d="M42 30c6-8 16-6 16 2c0 6-10 8-16-2z" ${STF("#DDE24A")}/><circle cx="26" cy="20" r="6" ${STF("#6B3F8F")}/>`),
+  egg: svg("a-egg", `<path d="M32 8c-12 0-20 16-20 30c0 12 8 18 20 18c12 0 20-6 20-18c0-14-8-30-20-30z" ${STF(CREAM)}/>
+    <path d="M22 26q-4 8 0 18" ${ST} stroke="${WHITE}"/>`),
+  bread: svg("a-bread", `<path d="M8 36c0-12 12-18 24-18c12 0 24 6 24 18c0 6-4 10-10 10H18c-6 0-10-4-10-10z" ${STF("#E0A55C")}/>
+    <path d="M20 28q4-6 8 0M32 24q4-6 8 0" ${ST} stroke="${BROWN}"/><path d="M12 48h40" ${ST}/>`),
+  cheese: svg("a-cheese", `<path d="M6 44l24-24l28 10v18H6z" ${STF(MAR)}/><path d="M6 44l24-24l28 10" ${ST}/>
+    <g fill="${MARD}" opacity=".6"><circle cx="20" cy="40" r="3"/><circle cx="36" cy="34" r="2.5"/><circle cx="46" cy="42" r="3"/></g>`),
+  bone: svg("a-bone", `<path d="M14 20c-6 0-8 8-3 11c-5 3-3 11 3 11c4 0 6-3 8-5l20-12c2 2 4 5 8 5c6 0 8-8 3-11c5-3 3-11-3-11c-4 0-6 3-8 5L22 25c-2-2-4-5-8-5z" ${STF(WHITE)}/>`),
+  milk: svg("a-milk", `<path d="M22 10h20l6 14v30H16V24z" ${STF(WHITE)}/><path d="M16 24h32" ${ST}/><path d="M22 10v-4h20v4" ${ST}/>
+    <circle cx="32" cy="40" r="7" ${STF(BLUEL)}/>`),
+  ricepudding: svg("a-ricepudding", `<path d="M8 30h48c0 14-10 24-24 24S8 44 8 30z" ${STF(BLUE)}/><ellipse cx="32" cy="30" rx="24" ry="6" ${STF(CREAM)}/>
+    <path d="M22 28h4M32 27h5M42 29h4" ${ST} stroke="${BROWN}" stroke-width="2.5"/><path d="M44 12c-6 4-6 10 0 14" ${ST} stroke="${GREY}"/>`),
+  sugar: svg("a-sugar", `<path d="M14 40l14-8l14 8v14l-14 8l-14-8z" ${STF(WHITE)}/><path d="M28 32v14l14-8M28 46l-14-8" ${ST}/>
+    <path d="M32 22l14-8l14 8v10l-14 8l-14-8z" ${STF(WHITE)}/><path d="M46 14v14l14-8M46 28l-14-8" ${ST}/>`),
+  tacos: svg("a-tacos", `<path d="M6 46a18 18 0 0 1 36 0z" ${STF("#F0D59A")}/><path d="M12 44c6-8 18-8 24 0" ${ST} stroke="${GREEN}" stroke-width="3"/><path d="M16 42c4-6 12-6 16 0" ${ST} stroke="${BROWN}" stroke-width="4"/>
+    <path d="M26 54a18 18 0 0 1 36 0z" ${STF("#F5DFA8")}/><path d="M32 52c6-8 18-8 24 0" ${ST} stroke="${GREEN}" stroke-width="3"/><path d="M36 50c4-6 12-6 16 0" ${ST} stroke="${BROWN}" stroke-width="4"/>`),
+  icecream: svg("a-icecream", `<path d="M20 30h24l-12 28z" ${STF("#E0A55C")}/><path d="M24 34l16 0M26 40h12M28 46h8" ${ST} stroke="${BROWN}" stroke-width="1.6"/>
+    <circle cx="24" cy="22" r="9" ${STF(ROSAL)}/><circle cx="40" cy="22" r="9" ${STF(CREAM)}/><circle cx="32" cy="14" r="8" ${STF("#8DC7B0")}/>`),
+  syrup: svg("a-syrup", `<path d="M22 22h12v-8h-12z" ${STF(BROWN)}/><path d="M18 22h20l4 6v28H14V28z" ${STF(ROSAL)}/><path d="M18 34h20v14H18z" fill="${WHITE}" stroke="${INK}" stroke-width="1.6"/>
+    <path d="M46 16l10 12" ${ST}/><ellipse cx="44" cy="14" rx="4" ry="3" ${STF(GREY)}/>`),
+  fork: svg("a-fork", `<path d="M32 30v28" ${ST} stroke-width="4"/><path d="M22 6v14c0 6 4 10 10 10s10-4 10-10V6" ${STF(GREY)}/><path d="M28 6v12M36 6v12" ${ST}/>`),
+  salt: svg("a-salt", `<path d="M22 18h20v34c0 4-4 6-10 6s-10-2-10-6z" ${STF(WHITE)}/><path d="M22 18c0-8 20-8 20 0" ${STF(GREY)}/>
+    <g fill="${INK}"><circle cx="28" cy="12" r="1.2"/><circle cx="32" cy="10" r="1.2"/><circle cx="36" cy="12" r="1.2"/></g><path d="M22 34h20" ${ST} stroke="${BLUE}"/>`),
+  lard: svg("a-lard", `<path d="M16 22h32v30c0 4-4 6-16 6s-16-2-16-6z" ${STF(CREAM)}/><path d="M14 18h36v6H14z" ${STF(GREY)}/><path d="M20 34h24v12H20z" ${STF(WHITE)}/>
+    <path d="M24 40h16" ${ST} stroke="${MAR}" stroke-width="3"/>`),
+  mom: svg("a-mom", `<path d="M14 60c0-14 8-20 18-20s18 6 18 20z" ${STF(ROSA)}/><path d="M16 26c-2-12 6-20 16-20s18 8 16 20c-6-2-10-6-16-10c-6 4-10 8-16 10z" ${STF(INK)}/>
+    ${face(32, 30, 12, smile(32, 35, 7))}<circle cx="18" cy="34" r="2.5" fill="${MAR}"/><circle cx="46" cy="34" r="2.5" fill="${MAR}"/>`),
+  dad: svg("a-dad", `<path d="M14 60c0-14 8-20 18-20s18 6 18 20z" ${STF(BLUE)}/><path d="M18 24c-2-10 6-16 14-16s16 6 14 16c-8-4-20-4-28 0z" ${STF(INK)}/>
+    ${face(32, 30, 12, smile(32, 37, 6))}<path d="M24 34q8-4 16 0" ${ST} stroke-width="3"/>`),
+  child: svg("a-child", `<path d="M18 60c0-10 6-16 14-16s14 6 14 16z" ${STF(GREEN)}/>${face(32, 30, 11, smile(32, 34, 6))}
+    <path d="M22 24c0-8 6-12 10-12s10 4 10 12" ${STF(BROWN)}/><path d="M28 12q4-6 8 0" ${ST}/>`),
+  doll: svg("a-doll", `<path d="M16 60l6-24h20l6 24z" ${STF(BLUE)}/><path d="M22 36h20" ${ST} stroke="${WHITE}"/>
+    ${face(32, 22, 11, smile(32, 27, 5))}<path d="M20 20c0-10 6-14 12-14s12 4 12 14c-4-4-8-6-12-6s-8 2-12 6z" ${STF(MAR)}/>
+    <circle cx="20" cy="22" r="3" ${STF(MAR)}/><circle cx="44" cy="22" r="3" ${STF(MAR)}/><path d="M26 30l-8 12M38 30l8 12" ${ST}/>`),
+  doctor: svg("a-doctor", `<path d="M14 60c0-14 8-20 18-20s18 6 18 20z" ${STF(WHITE)}/><path d="M26 42l6 18l6-18" ${ST}/>
+    ${face(32, 28, 12, smile(32, 33, 6))}<path d="M20 22c0-10 6-14 12-14s12 4 12 14" ${STF(INK)}/>
+    <path d="M22 44q-6 8 0 12q4 2 6-2" ${ST}/><circle cx="26" cy="56" r="3" ${STF(GREY)}/><path d="M18 8h8v6h-8z" ${STF(WHITE)}/><path d="M22 9v4M20 11h4" ${ST} stroke="${RED}"/>`),
+  gentleman: svg("a-gentleman", `<path d="M12 60c0-16 10-22 20-22s20 6 20 22z" ${STF(INK)}/><path d="M32 38c-8 0-14 4-16 12" ${STF(RED)}/>
+    ${face(32, 28, 11, smile(32, 33, 5))}<path d="M24 30q8-4 16 0" ${ST} stroke-width="2.6"/>
+    <path d="M14 18h36l-6-2V8H20v8z" ${STF(INK)}/><path d="M20 12h24" ${ST} stroke="${MAR}"/>`),
+  lady: svg("a-lady", `<path d="M20 60c-4-16 6-22 12-22s16 6 12 22" ${STF(ROSA)}/><path d="M44 60c6-6 12-6 16-2c-8 2-12 2-16 2z" ${STF(ROSA)}/>
+    ${face(32, 26, 11, smile(32, 31, 5))}<path d="M20 22c-2-12 6-18 12-18s14 6 12 18c-4-6-8-8-12-8s-8 2-12 8z" ${STF(BROWN)}/>
+    <path d="M14 8h36" ${ST} stroke="${MAR}" stroke-width="3"/><circle cx="32" cy="6" r="3" fill="${ROSA}"/>`),
+  sailor: svg("a-sailor", `<path d="M14 60c0-14 8-20 18-20s18 6 18 20z" ${STF(WHITE)}/><path d="M22 44h20l-4 8h-12z" ${STF(BLUE)}/>
+    ${face(32, 28, 12, smile(32, 33, 6))}<path d="M18 18c0-4 6-6 14-6s14 2 14 6H18z" ${STF(WHITE)}/><path d="M18 18h28v4H18z" ${STF(BLUE)}/>`),
+  hat: svg("a-hat", `<path d="M4 44c10-8 46-8 56 0c-6 8-50 8-56 0z" ${STF(MAR)}/><path d="M20 40c0-16 6-24 12-24s12 8 12 24" ${STF(MAR)}/>
+    <path d="M20 36q12 6 24 0" ${ST} stroke="${RED}" stroke-width="3"/><path d="M12 42q20-4 40 0" ${ST} stroke="${MARD}"/>`),
+  heart: svg("a-heart", `<path class="beat" d="M32 56C18 44 6 36 6 22C6 12 14 8 20 10c5 2 8 4 12 10c4-6 7-8 12-10c6-2 14 2 14 12c0 14-12 22-26 34z" ${STF(ROSA)}/>
+    <path d="M14 22q0-6 6-8" ${ST} stroke="${WHITE}" opacity=".7"/>`),
+  hug: svg("a-hug", `<path d="M8 60c0-14 6-20 14-20c4 0 6 2 8 4c2-2 4-4 8-4c8 0 14 6 14 20z" ${STF(MAR)}/><path d="M30 60c0-12 2-16 2-16" ${ST}/>
+    ${face(22, 24, 10, smile(22, 28, 5))}${face(42, 24, 9, smile(42, 28, 5))}<path d="M16 40c8 4 24 4 32 0" ${ST}/>
+    <path d="M14 46q18 12 36 0" ${ST} stroke="${SKIN}" stroke-width="5"/><path d="M14 46q18 12 36 0" ${ST}/>`),
+  cry: svg("a-cry", `${face(32, 32, 20, frown(32, 42, 10))}<g class="tears" ${ST} stroke="${BLUE}" stroke-width="3"><path d="M24 36v8"/><path d="M40 36v8"/></g>
+    <path d="M22 24q4-3 8 0M34 24q4-3 8 0" ${ST}/>`),
+  sleep: svg("a-sleep", `<path d="M6 46h52v10H6z" ${STF(BLUE)}/><path d="M6 46c0-8 20-12 40-10c6 0 12 4 12 10" ${STF(BLUEL)}/>
+    <circle cx="18" cy="38" r="9" ${STF(SKIN)}/><path d="M13 37q2-2 4 0M19 37q2-2 4 0" ${ST}/><path d="M14 30c0-6 4-8 8-8" ${STF(BROWN)}/>
+    <g class="zzz" fill="${INK}" font-family="Alegreya Sans, sans-serif" font-weight="700"><text x="34" y="30" font-size="10">z</text><text x="42" y="22" font-size="13">z</text><text x="52" y="14" font-size="16">z</text></g>`),
+  wake: svg("a-wake", `<circle cx="50" cy="14" r="8" ${STF(MAR)}/><path d="M50 2v4M62 14h-4M58 6l-3 3" ${ST}/>
+    ${face(26, 34, 12, `<ellipse cx="26" cy="40" rx="3" ry="4" fill="${INK}"/>`)}<path d="M16 28c0-10 6-14 10-14s10 4 10 14" ${STF(BROWN)}/>
+    <path class="arm" d="M12 44l-6-14M40 44l6-14" ${ST} stroke="${SKIN}" stroke-width="5"/><path class="arm" d="M12 44l-6-14M40 44l6-14" ${ST}/><path d="M14 60c0-10 5-14 12-14s12 4 12 14z" ${STF(GREEN)}/>`),
+  happy: svg("a-happy", `${face(32, 32, 20, `<path d="M22 38q10 10 20 0" ${STF(WHITE)}/>`)}<path d="M22 24q4-3 8 0M34 24q4-3 8 0" ${ST}/><circle cx="18" cy="36" r="3" fill="${ROSAL}"/><circle cx="46" cy="36" r="3" fill="${ROSAL}"/>`),
+  angry: svg("a-angry", `${face(32, 32, 20, frown(32, 42, 10))}<path d="M20 22l10 4M44 22l-10 4" ${ST} stroke-width="2.8"/>
+    <path d="M52 12l4-6M56 16l6-2" ${ST} stroke="${RED}"/>`),
+  cold: svg("a-cold", `<g class="shiver">${face(32, 30, 18, `<path d="M26 36q6-2 12 0" ${ST}/><path d="M27 38q5 3 10 0" ${ST}/>`)}
+    <path d="M14 42q18 8 36 0v8q-18 8-36 0z" ${STF(RED)}/><path d="M42 46l4 12" ${ST} stroke="${RED}" stroke-width="5"/></g>
+    <path d="M6 14l1 3l3 1l-3 1l-1 3l-1-3l-3-1l3-1z" fill="${BLUEL}"/><path d="M56 10l1 3l3 1l-3 1l-1 3l-1-3l-3-1l3-1z" fill="${BLUEL}"/>`),
+  hungry: svg("a-hungry", `${face(32, 28, 16, `<ellipse cx="32" cy="34" rx="4" ry="3" fill="${INK}"/>`)}<path d="M8 44h48c0 8-4 12-10 12H18c-6 0-10-4-10-12z" ${STF(WHITE)}/><path d="M8 44h48" ${ST}/>
+    <g class="grumble" ${ST} stroke="${MARD}"><path d="M4 30q3 3 0 6M60 30q-3 3 0 6"/></g>`),
+  wings: svg("a-wings", `<path class="wl" d="M30 34c-6-14-16-20-26-16c2 8 8 12 10 12c-4 2-6 6-4 10c6 0 14-2 20-6z" ${STF(MAR)}/><path class="wr" d="M34 34c6-14 16-20 26-16c-2 8-8 12-10 12c4 2 6 6 4 10c-6 0-14-2-20-6z" ${STF(MAR)}/>
+    <ellipse cx="32" cy="38" rx="6" ry="10" ${STF(MARD)}/>`),
+  snuggle: svg("a-snuggle", `<path d="M8 42c0-14 12-22 26-20c14 2 22 10 22 20c0 6-4 10-8 10H14c-4 0-6-4-6-10z" ${STF(CREAM)}/>
+    <path d="M4 36c-2-6 2-12 8-12c6 0 10 4 8 10" ${STF(CREAM)}/>${eye(10, 28)}<path d="M4 30l-3 1l3 1z" ${STF("#E0742A")}/>
+    <path d="M14 40c8-6 30-6 38 0c-4 8-34 8-38 0z" ${STF(MAR)}/>
+    <circle cx="24" cy="46" r="5" ${STF(MAR)}/><circle cx="36" cy="46" r="5" ${STF(MAR)}/><circle cx="46" cy="46" r="4" ${STF(MAR)}/>${eye(23, 45, 1.2)}${eye(35, 45, 1.2)}${eye(45, 45, 1.2)}`),
+  car: svg("a-car", `<path d="M6 42c0-6 4-8 8-8l6-10c2-4 4-4 8-4h12c4 0 6 2 8 6l4 8c4 0 6 2 6 8v6H6z" ${STF(RED)}/><path d="M22 34l4-8h12l4 8z" ${STF(BLUEL)}/>
+    <circle cx="18" cy="48" r="6" ${STF(INK)}/><circle cx="46" cy="48" r="6" ${STF(INK)}/><circle cx="18" cy="48" r="2" fill="${WHITE}"/><circle cx="46" cy="48" r="2" fill="${WHITE}"/>`),
+  house: svg("a-house", `<path d="M12 30l20-18l20 18v26H12z" ${STF(CREAM)}/><path d="M6 32l26-24l26 24" ${ST} stroke="${RED}" stroke-width="4"/>
+    <path d="M26 56V42h12v14" ${STF(BROWN)}/><path d="M16 36h8v8h-8zM40 36h8v8h-8z" ${STF(BLUEL)}/><path d="M44 10h6v10" ${STF(BROWN)}/>`),
+  door: svg("a-door", `<path d="M16 58V14a16 16 0 0 1 32 0v44z" ${STF(BROWN)}/><path d="M22 54V16a10 10 0 0 1 20 0v38" ${ST} opacity=".5"/><circle cx="40" cy="36" r="2.5" fill="${MAR}"/>
+    <path d="M10 58h44" ${ST}/>`),
+  bed: svg("a-bed", `<path d="M6 40h52v12H6z" ${STF(BLUE)}/><path d="M6 40c0-10 4-14 14-14h32c4 0 6 2 6 6v8" ${STF(BLUEL)}/>
+    <path d="M10 26v-10M54 30v-8" ${ST}/><path d="M10 52v6M54 52v6" ${ST}/><path d="M12 32h14v6H12z" ${STF(WHITE)}/>`),
+  town: svg("a-town", `<path d="M4 56V36l10-8l10 8v20z" ${STF(CREAM)}/><path d="M24 56V30h16v26z" ${STF(ROSAL)}/><path d="M40 56V40l10-10l10 10v16z" ${STF(CREAM)}/>
+    <path d="M32 30V16l4-4l4 4v14" ${STF(WHITE)}/><path d="M36 8v6M33 11h6" ${ST}/><path d="M2 56h60" ${ST}/>
+    <path d="M10 42h6v6h-6zM28 38h8v6h-8zM46 44h6v6h-6z" ${STF(BLUEL)}/>`),
+  orchard: svg("a-orchard", `<path d="M28 58V36" ${ST} stroke="${BROWN}" stroke-width="5"/><path d="M10 34c-4-14 8-24 18-22c12-2 22 8 18 22c-2 8-10 10-18 10s-16-2-18-10z" ${STF(GREEN)}/>
+    <g fill="${RED}"><circle cx="18" cy="28" r="3.5"/><circle cx="32" cy="22" r="3.5"/><circle cx="42" cy="32" r="3.5"/><circle cx="28" cy="36" r="3.5"/></g><path d="M2 58h60" ${ST}/>`),
+  road: svg("a-road", `<path d="M4 58c20-10 6-26 26-32s10-16 30-18" ${ST} stroke="${GREY}" stroke-width="10"/><path d="M4 58c20-10 6-26 26-32s10-16 30-18" ${ST} stroke="${WHITE}" stroke-width="2" stroke-dasharray="5 5"/>
+    <circle cx="52" cy="40" r="6" ${STF(GREEN)}/><path d="M52 46v8" ${ST}/>`),
+  bell: svg("a-bell", `<g class="bell"><path d="M32 8v6" ${ST}/><path d="M14 44c0-14 2-26 18-26s18 12 18 26z" ${STF(MAR)}/><path d="M10 44h44v6H10z" ${STF(MARD)}/><circle cx="32" cy="54" r="4" ${STF(INK)}/></g>
+    <g class="ring" ${ST}><path d="M6 24q-3 4 0 8M58 24q3 4 0 8"/></g>`),
+  gold: svg("a-gold", `<circle cx="32" cy="32" r="22" ${STF(MAR)}/><circle cx="32" cy="32" r="15" ${ST} stroke="${MARD}"/><path d="M32 22v20M26 27h12M26 37h12" ${ST} stroke="${MARD}" stroke-width="3"/>
+    <path d="M14 20l1 3l3 1l-3 1l-1 3l-1-3l-3-1l3-1z" fill="${WHITE}"/>`),
+  silver: svg("a-silver", `<circle cx="32" cy="32" r="22" ${STF("#D7D9DC")}/><circle cx="32" cy="32" r="15" ${ST} stroke="${GREY}"/><path d="M32 22v20M26 27h12M26 37h12" ${ST} stroke="${GREY}" stroke-width="3"/>
+    <path d="M14 20l1 3l3 1l-3 1l-1 3l-1-3l-3-1l3-1z" fill="${WHITE}"/>`),
+  pillar: svg("a-pillar", `<path d="M18 10h28v6H18zM22 16h20v34H22zM16 50h32v8H16z" ${STF(CREAM)}/><path d="M28 18v30M36 18v30" ${ST} opacity=".35"/>`),
+  finger: svg("a-finger", `<path d="M22 60c-6 0-10-4-11-10l-2-14c0-3 3-4 5-2l3 4V10a4 4 0 0 1 8 0v18h2c0-3 3-4 5-3s3 3 3 4c2-1 5 0 5 3c3 0 5 2 5 5v12c0 6-5 11-11 11z" ${STF(SKIN)}/>
+    <path d="M25 30v8M32 32v6M38 36v4" ${ST} opacity=".5"/>`),
+  thumb: svg("a-thumb", `<path d="M20 30h8l6-18c2-4 8-3 8 2v12h12c4 0 6 3 5 6l-4 18c-1 4-3 6-7 6H28z" ${STF(SKIN)}/><path d="M8 30h12v26H8z" ${STF(SKIN)}/>
+    <path d="M42 38h12M42 46h10" ${ST} opacity=".4"/>`),
+  jump: svg("a-jump", `<g class="jumper">${face(32, 18, 9, smile(32, 22, 5))}<path d="M24 12c0-6 4-8 8-8s8 2 8 8" ${STF(BROWN)}/>
+    <path d="M22 44c0-10 4-16 10-16s10 6 10 16z" ${STF(ROSA)}/><path d="M22 34l-10-10M42 34l10-10" ${ST} stroke="${SKIN}" stroke-width="5"/><path d="M22 34l-10-10M42 34l10-10" ${ST}/>
+    <path d="M26 44l-4 10M38 44l4 10" ${ST} stroke-width="4"/></g><path d="M8 60q24-4 48 0" ${ST} stroke="${GREY}"/>`),
+  walk: svg("a-walk", `${face(30, 16, 9, smile(30, 20, 5))}<path d="M22 10c0-6 4-8 8-8s8 2 8 8" ${STF(BROWN)}/>
+    <path d="M22 42c0-10 4-16 8-16s8 6 8 16z" ${STF(BLUE)}/><path d="M22 30l-6 8M38 30l8 4" ${ST} stroke="${SKIN}" stroke-width="5"/><path d="M22 30l-6 8M38 30l8 4" ${ST}/>
+    <path d="M26 42l-6 14M34 42l8 12" ${ST} stroke-width="4"/><path d="M4 58h56" ${ST} stroke="${GREY}"/>`),
+  sing: svg("a-sing", `${face(28, 34, 18, `<ellipse cx="28" cy="42" rx="5" ry="6" fill="${INK}"/><ellipse cx="28" cy="44" rx="3" ry="2.5" fill="${ROSA}"/>`)}
+    <path d="M12 26c0-14 8-18 16-18s16 4 16 18" ${STF(BROWN)}/>${notes("float")}`),
+  play: svg("a-play", `<circle cx="32" cy="34" r="20" ${STF(WHITE)}/><path d="M32 14c-8 6-8 34 0 40M32 14c8 6 8 34 0 40M12 34h40M16 24q16 6 32 0M16 44q16-6 32 0" ${ST} stroke="${ROSA}"/>`),
+  eat: svg("a-eat", `${face(26, 34, 16, `<ellipse cx="26" cy="42" rx="5" ry="4" fill="${INK}"/>`)}<path d="M14 26c0-10 6-14 12-14s12 4 12 14" ${STF(BROWN)}/>
+    <path d="M46 42l12-24" ${ST} stroke-width="3"/><ellipse cx="46" cy="44" rx="7" ry="5" ${STF(GREY)}/><path d="M42 42q4-3 8 0" ${ST} stroke="${MAR}" stroke-width="3"/>`),
+  heal: svg("a-heal", `<path d="M32 56C18 44 6 36 6 22C6 12 14 8 20 10c5 2 8 4 12 10c4-6 7-8 12-10c6-2 14 2 14 12c0 14-12 22-26 34z" ${STF(ROSA)}/>
+    <path d="M14 36l24-16" ${ST} stroke="${SKIN}" stroke-width="9"/><path d="M14 36l24-16" ${ST} stroke="${INK}" stroke-width="10" fill="none" opacity="0"/><path d="M22 30h4M26 26h4" ${ST} opacity=".5"/>`),
+  breakit: svg("a-break", `<path d="M18 10h12v20l-4 4l4 4v20H18z" ${STF(CREAM)}/><path d="M36 10h12v48H36V38l-4-4l4-4z" ${STF(CREAM)}/>
+    <path d="M32 30l-4 4l4 4" ${ST}/><g ${ST} stroke="${MAR}"><path d="M8 24l-4-4M8 40l-4 4M56 24l4-4M56 40l4 4"/></g>`),
+  call: svg("a-call", `${face(26, 30, 16, `<ellipse cx="26" cy="36" rx="4" ry="5" fill="${INK}"/>`)}<path d="M14 22c0-10 6-14 12-14s12 4 12 14" ${STF(BROWN)}/>
+    <path d="M40 38c6-2 10 0 10 4c0 4-4 6-8 4" ${STF(SKIN)}/><g class="ring" ${ST} stroke="${ROSA}"><path d="M52 26q3 4 0 8M58 22q5 8 0 16"/></g>`),
+  pinata: svg("a-pinata", `<g class="swing"><path d="M32 2v8" ${ST}/><path d="M32 10l6 10l12-2l-6 10l10 6l-12 4l4 12l-12-6l-2 12l-8-10l-10 6l2-12l-12-4l10-6l-6-10l12 2z" ${STF(ROSA)}/>
+    <path d="M22 26q10-4 20 0M20 34q12 6 24 0" ${ST} stroke="${MAR}" stroke-width="3"/><path d="M26 20q6 3 12 0" ${ST} stroke="${BLUE}" stroke-width="3"/>
+    <g ${ST} stroke="${GREEN}" stroke-width="2.5"><path d="M22 52v8M32 54v8M42 52v8"/></g></g>`),
+  calendar: svg("a-calendar", `<path d="M8 16h48v40H8z" ${STF(WHITE)}/><path d="M8 16h48v10H8z" ${STF(ROSA)}/><path d="M18 10v10M46 10v10" ${ST}/>
+    <g ${ST} stroke-width="1.6"><path d="M14 34h8M24 34h8M34 34h8M44 34h8M14 44h8M24 44h8M34 44h8"/></g><circle cx="48" cy="44" r="4" fill="${MAR}"/>`),
+  sunrise: svg("a-sunrise", `<path d="M2 44q30-16 60 0v12H2z" ${STF(GREENL)}/><path d="M14 40a18 18 0 0 1 36 0" ${STF(MAR)}/>
+    <g ${ST}><path d="M32 8v6M10 22l4 4M54 22l-4 4M6 40h4M54 40h4"/></g><path d="M2 56h60" ${ST}/>`),
+  clock: svg("a-clock", `<circle cx="32" cy="32" r="24" ${STF(WHITE)}/><circle cx="32" cy="32" r="18" ${ST} stroke="${GREY}"/><path d="M32 18v14l9 6" ${ST} stroke-width="3"/>
+    <circle cx="32" cy="32" r="2" fill="${INK}"/><path d="M32 12v3M32 49v3M12 32h3M49 32h3" ${ST}/>`),
+  hourglass: svg("a-hourglass", `<path d="M16 8h32M16 56h32" ${ST} stroke-width="4"/><path d="M20 10c0 12 8 18 12 22c4-4 12-10 12-22z" ${STF(WHITE)}/><path d="M20 54c0-12 8-18 12-22c4 4 12 10 12 22z" ${STF(WHITE)}/>
+    <path d="M24 12c0 8 6 12 8 14c2-2 8-6 8-14z" fill="${MAR}" stroke="none"/><path d="M26 54c0-4 4-6 6-8c2 2 6 4 6 8z" fill="${MAR}" stroke="none"/>`),
+  yarn: svg("a-yarn", `<circle cx="30" cy="34" r="20" ${STF(ROSAL)}/><g ${ST} stroke="${ROSA}"><path d="M12 28q18-8 36 4M12 40q18-10 36 0M18 20q10 20 20 32M28 14q-6 20 8 38"/></g><path d="M48 22l12-8" ${ST} stroke="${ROSA}" stroke-width="3"/>`),
+  diamond: svg("a-diamond", `<path d="M16 22l8-10h16l8 10l-16 30z" ${STF(BLUEL)}/><path d="M16 22h32M24 12l8 10l8-10M24 22l8 30M40 22l-8 30" ${ST} stroke="${WHITE}"/><path d="M16 22h32M32 22v30" ${ST} opacity=".3"/>
+    <path d="M52 10l1 3l3 1l-3 1l-1 3l-1-3l-3-1l3-1z" fill="${MAR}"/>`),
+  cake: svg("a-cake", `<path d="M10 36h44v18H10z" ${STF(ROSAL)}/><path d="M10 36c8 6 14-6 22 0s14-6 22 0" ${STF(WHITE)}/><path d="M6 54h52" ${ST}/>
+    <path d="M22 36V22M32 36V20M42 36V22" ${ST} stroke="${BLUE}" stroke-width="3"/><g class="flames"><path d="M22 20c-3-4 0-8 0-8s3 4 0 8z" fill="${MAR}"/><path d="M32 18c-3-4 0-8 0-8s3 4 0 8z" fill="${MAR}"/><path d="M42 20c-3-4 0-8 0-8s3 4 0 8z" fill="${MAR}"/></g>`),
+  water: svg("a-water", `<path d="M32 6c-8 12-16 20-16 32a16 16 0 0 0 32 0c0-12-8-20-16-32z" ${STF(BLUE)}/><path d="M24 40q0 8 6 10" ${ST} stroke="${WHITE}"/>`),
+  candy: svg("a-candy", `<circle cx="32" cy="32" r="12" ${STF(ROSA)}/><path d="M20 26l-12-8v28l12-8" ${STF(ROSAL)}/><path d="M44 26l12-8v28l-12-8" ${STF(ROSAL)}/><path d="M26 24q6 8 12 16M24 34q8 0 16-4" ${ST} stroke="${WHITE}"/>`),
+  rings: svg("a-rings", `<circle cx="24" cy="36" r="14" ${ST} stroke="${MAR}" stroke-width="5"/><circle cx="40" cy="36" r="14" ${ST} stroke="${MARD}" stroke-width="5"/><path d="M40 22l-3-6h6z" ${STF(BLUEL)}/>
+    <path d="M12 12l1 3l3 1l-3 1l-1 3l-1-3l-3-1l3-1z" fill="${MAR}"/>`),
+  yesno: svg("a-yesno", `<circle cx="18" cy="32" r="13" ${STF(GREENL)}/><path d="M11 33l5 5l9-11" ${ST} stroke-width="3.5"/><circle cx="46" cy="32" r="13" ${STF(ROSAL)}/><path d="M40 26l12 12M52 26L40 38" ${ST} stroke-width="3.5"/>`),
+  greedy: svg("a-greedy", `${face(32, 32, 20, `<path d="M22 38q10 8 20 0" ${STF(WHITE)}/><path d="M30 42q4 6 6 0" ${STF(ROSA)}/>`)}<path d="M14 26c0-14 8-18 18-18s18 4 18 18" ${STF(BROWN)}/>
+    <circle cx="56" cy="16" r="6" ${STF(ROSA)}/><path d="M52 12l-4-4M60 12l4-4" ${ST} stroke="${ROSA}"/>`),
+  tiny: svg("a-tiny", `<path d="M10 22c-6 12 0 30 14 30c8 0 12-6 12-14c0-10-8-16-16-14" ${STF(GREY)}/>
+    <path d="M4 26c2-8 12-10 16-4" ${STF(GREY)}/><path d="M4 26c-2 12 2 20 6 24" ${ST} stroke="${GREY}" stroke-width="5"/>${eye(12, 26)}<path d="M14 52v6M24 52v6" ${ST}/>
+    <ellipse cx="50" cy="52" rx="7" ry="5" ${STF(GREY)}/><circle cx="44" cy="50" r="4" ${STF(GREY)}/>${eye(43, 49, 1)}<path d="M40 50l-3 1" ${ST}/><path d="M57 52q4-2 4-6" ${ST}/>`),
+  book: svg("a-book", `<path d="M8 14q12-4 24 4q12-8 24-4v38q-12-4-24 4q-12-8-24-4z" ${STF(CREAM)}/><path d="M32 18v38" ${ST}/><g ${ST} stroke="${BLUE}" stroke-width="1.8"><path d="M14 24h12M14 32h12M14 40h8M38 24h12M38 32h12M38 40h8"/></g>`),
+  again: svg("a-again", `<path d="M48 26a18 18 0 1 0 4 14" ${ST} stroke="${BLUE}" stroke-width="5"/><path d="M50 14v14H36" ${ST} stroke="${BLUE}" stroke-width="5"/>`),
+  bandage: svg("a-bandage", `<path d="M10 40l30-30l14 14l-30 30z" ${STF(SKIN)}/><path d="M22 28l14 14" ${ST} opacity=".4"/><g fill="${INK}" opacity=".4"><circle cx="30" cy="28" r="1.3"/><circle cx="36" cy="34" r="1.3"/><circle cx="28" cy="36" r="1.3"/><circle cx="34" cy="42" r="1.3"/></g>
+    <path d="M10 40l8 8M40 10l8 8" ${ST}/>`),
+  target: svg("a-target", `<circle cx="32" cy="32" r="22" ${STF(WHITE)}/><circle cx="32" cy="32" r="14" ${STF(ROSA)}/><circle cx="32" cy="32" r="6" ${STF(WHITE)}/><path d="M32 32L52 12" ${ST} stroke-width="3"/><path d="M52 12l-2 8M52 12l-8 2" ${ST} stroke="${MAR}" stroke-width="3"/>`),
+  search: svg("a-search", `<circle cx="28" cy="28" r="16" ${STF(BLUEL)}/><circle cx="28" cy="28" r="10" fill="${WHITE}" stroke="none" opacity=".6"/><path d="M40 40l14 14" ${ST} stroke-width="6"/><path d="M40 40l14 14" ${ST} stroke="${BROWN}" stroke-width="3"/>`),
+  who: svg("a-who", `${face(32, 34, 18, `<ellipse cx="32" cy="42" rx="3" ry="3.5" fill="${INK}"/>`)}<path d="M14 28c0-14 8-18 18-18s18 4 18 18" ${STF(INK)}/>
+    <path d="M46 14c0-6 4-8 8-8s8 2 8 6c0 4-4 4-6 8v2" ${ST} stroke="${ROSA}" stroke-width="3"/><circle cx="56" cy="26" r="1.8" fill="${ROSA}"/>`),
+  wave: svg("a-wave", `${face(24, 34, 14, smile(24, 38, 6))}<path d="M14 28c0-12 6-16 10-16s10 4 10 16" ${STF(BROWN)}/><path d="M12 60c0-10 5-14 12-14s12 4 12 14z" ${STF(MAR)}/>
+    <g class="hand"><path d="M40 36l10-16" ${ST} stroke="${SKIN}" stroke-width="5"/><path d="M40 36l10-16" ${ST}/><path d="M46 20c-2-4 2-8 4-6c2-3 6-2 6 2c3 0 4 4 2 6l-4 6z" ${STF(SKIN)}/></g>`),
+  asking: svg("a-asking", `${face(30, 24, 12, `<ellipse cx="30" cy="30" rx="3" ry="2.5" fill="${INK}"/>`)}<path d="M18 20c0-10 6-14 12-14s12 4 12 14" ${STF(BROWN)}/>
+    <path d="M12 52c4-8 10-8 18-6c8-2 14-2 18 6c-6 4-30 4-36 0z" ${STF(SKIN)}/><path d="M30 46v-8" ${ST}/>`),
+  zero: svg("a-zero", `<circle cx="32" cy="32" r="18" ${ST} stroke-width="5" stroke-dasharray="4 4"/><path d="M22 22l20 20" ${ST} stroke="${ROSA}" stroke-width="4"/>`),
+  paintblue: svg("a-paintblue", `<path d="M10 30c4-14 20-20 34-14c12 6 12 22 2 30c-8 6-24 6-32-4c-4-4-5-8-4-12z" ${STF(BLUE)}/><path d="M18 26q6-6 14-4" ${ST} stroke="${WHITE}" opacity=".6"/>`),
+  paintwhite: svg("a-paintwhite", `<path d="M10 30c4-14 20-20 34-14c12 6 12 22 2 30c-8 6-24 6-32-4c-4-4-5-8-4-12z" ${STF(WHITE)}/><path d="M18 26q6-6 14-4" ${ST} stroke="${GREY}"/>`),
+  slice: svg("a-slice", `<path d="M32 56C18 44 6 36 6 22C6 12 14 8 20 10c5 2 8 4 12 10c4-6 7-8 12-10c6-2 14 2 14 12c0 14-12 22-26 34z" ${STF(ROSA)}/>
+    <path d="M32 20l6 12l-8 10l8 14" ${ST} stroke="${CREAM}" stroke-width="3"/>`),
+};
+// numbers: a big numeral with counting dots
+function numArt(n, label){
+  const dots = Math.min(n, 10);
+  const pts = []; for (let i = 0; i < dots; i++) pts.push(`<circle cx="${10 + (i % 5) * 11}" cy="${i < 5 ? 50 : 58}" r="3.2" fill="${i % 2 ? ROSA : MAR}" stroke="${INK}" stroke-width="1.6"/>`);
+  return svg("a-num", `<text x="32" y="38" text-anchor="middle" font-family="Alegreya, Georgia, serif" font-size="38" font-weight="700" fill="${BLUE}" stroke="${INK}" stroke-width="1.2">${label}</text>${pts.join("")}`);
+}
+["uno:1","dos:2","tres:3","cuatro:4","cinco:5","seis:6","siete:7","ocho:8","nueve:9","diez:10","dieciséis:16","dieciseis:16"].forEach(p => { const [w, n] = p.split(":"); ART["num" + n] = numArt(+n, n); });
+ART.num123 = svg("a-num", `<text x="32" y="40" text-anchor="middle" font-family="Alegreya, Georgia, serif" font-size="26" font-weight="700" fill="${BLUE}" stroke="${INK}" stroke-width="1">1 2 3</text><circle cx="16" cy="54" r="3.2" fill="${MAR}" stroke="${INK}" stroke-width="1.6"/><circle cx="32" cy="54" r="3.2" fill="${ROSA}" stroke="${INK}" stroke-width="1.6"/><circle cx="48" cy="54" r="3.2" fill="${MAR}" stroke="${INK}" stroke-width="1.6"/>`);
+
+// word (normalized: lowercase, no accents or punctuation) -> art key
+const WORD_ART = {
+  pollito:"chick", pollitos:"chick", pio:"chick", gallina:"hen", gallo:"rooster", pajarito:"bird", pajaritos:"bird", pajarillos:"bird", ruisenores:"bird",
+  rana:"frog", colita:"frog", elefante:"elephant", elefantes:"elephant", arana:"spider", tela:"spider", telarana:"spider", perrito:"puppy", perritos:"puppy",
+  caballo:"horse", caballito:"horse", oveja:"sheep", ovejas:"sheep", vibora:"snake", jicote:"wasp", jicotillo:"wasp",
+  sol:"sun", dia:"sun", luna:"moon", noche:"moon", estrella:"star", estrellita:"star", cielo:"sky", mar:"sea", barco:"boat", barquito:"boat", navegar:"boat", navego:"boat",
+  llover:"rain", llueva:"rain", lluvia:"rain", chaparron:"rain", nube:"cloud", nubes:"cloud", arcoiris:"rainbow", colores:"colors", campo:"field", campos:"field",
+  primavera:"flower", flores:"flower", flor:"flower", nieve:"snow",
+  tortilla:"tortilla", tortillitas:"tortilla", tortillas:"tortilla", maiz:"corn", manzana:"apple", naranja:"orange", limon:"lemon", ciruela:"plum", chabacano:"apricot", melon:"melon", sandia:"watermelon", fruta:"fruit",
+  huevo:"egg", huevito:"egg", pan:"bread", queso:"cheese", hueso:"bone", leche:"milk", arroz:"ricepudding", azucar:"sugar", tacos:"tacos", neveria:"icecream", jarabe:"syrup", tenedor:"fork", sal:"salt", manteca:"lard",
+  mama:"mom", papa:"dad", nino:"child", ninos:"child", muneca:"doll", doctor:"doctor", caballero:"gentleman", senora:"lady", senorita:"lady", marinero:"sailor", sombrero:"hat",
+  corazon:"heart", amor:"heart", gustan:"heart", abrazo:"hug", llorar:"cry", llora:"cry", duermete:"sleep", duermen:"sleep", despierta:"wake", feliz:"happy", contenta:"happy", contento:"happy", enojado:"angry", enojada:"angry",
+  frio:"cold", hambre:"hungry", alas:"wings", acurrucados:"snuggle", acurrucaditos:"snuggle", abrigo:"snuggle",
+  coche:"car", casita:"house", casa:"house", puerta:"door", cama:"bed", pueblo:"town", huerta:"orchard", camino:"road", campanita:"bell", oro:"gold", plata:"silver", pilar:"pillar", pilares:"pillar",
+  dedo:"finger", dedito:"finger", gordito:"thumb", brinco:"jump", paseo:"walk", cantar:"sing", canta:"sing", cantaba:"sing", cantamos:"sing", jugar:"play", comer:"eat", comio:"eat", sanar:"bandage", sana:"bandage", sanaras:"bandage", romper:"breakit", romperemos:"breakit", llamar:"call",
+  dale:"pinata", semana:"calendar", hoy:"calendar", manana:"sunrise", mananitas:"sunrise", amanecio:"sunrise", tiempo:"clock", acabo:"hourglass", lana:"yarn", diamante:"diamond", cumpleanos:"cake",
+  agua:"water", dulce:"candy", casarse:"rings", casar:"rings", caso:"rings", si:"yesno", no:"yesno", goloso:"greedy", chiquito:"tiny", chiquitito:"tiny", habia:"book", vez:"again", tino:"target", donde:"search", quien:"who", adios:"wave", piden:"asking", ninguno:"zero", pedazo:"slice",
+  azul:"paintblue", blanco:"paintwhite",
+  uno:"num1", dos:"num2", tres:"num3", cuatro:"num4", cinco:"num5", seis:"num6", siete:"num7", ocho:"num8", nueve:"num9", diez:"num10", dieciseis:"num16",
+};
+const normWord = w => w.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z]/g, "");
+function artFor(text){
+  const t = String(text).trim();
+  if (/^(uno|una), ?dos, ?tres$/i.test(t)) return ART.num123;
+  const parts = t.split(/[\s/]+/).map(normWord).filter(Boolean);
+  // multi-word entries: first try the whole phrase's distinctive word
+  for (const p of parts) { const k = WORD_ART[p]; if (k && ART[k]) return ART[k]; }
+  return "";
+}
+
+/* ================= glitter: a canvas of sparkles over the reel ================= */
+function makeGlitter(host){
+  const c = document.createElement("canvas"); c.className = "glitter"; host.appendChild(c);
+  const ctx = c.getContext("2d"); const dpr = Math.min(2, window.devicePixelRatio || 1);
+  let ps = [], raf = null;
+  function size(){ const r = host.getBoundingClientRect(); c.width = Math.max(1, r.width * dpr); c.height = Math.max(1, r.height * dpr); c.style.width = r.width + "px"; c.style.height = r.height + "px"; }
+  size(); const ro = window.ResizeObserver ? new ResizeObserver(size) : null; if (ro) ro.observe(host);
+  const COLORS = ["#F2A62C", "#FBD97A", "#FFFFFF", "#D6337B", "#F4A7C9", "#7FC3E8", "#FFF3C4"];
+  function emit(x, y, n, spread){
+    for (let i = 0; i < n; i++) {
+      const a = Math.random() * Math.PI * 2, sp = 0.25 + Math.random() * 1.3;
+      ps.push({ x: x + (Math.random() - .5) * (spread || 12), y: y + (Math.random() - .5) * (spread || 12) * 0.4, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 0.7,
+        life: 1, decay: 0.011 + Math.random() * 0.018, r: 1.5 + Math.random() * 2.8, c: COLORS[(Math.random() * COLORS.length) | 0], star: Math.random() < 0.5, rot: Math.random() * Math.PI, tw: Math.random() * 6.28 });
+    }
+    if (ps.length > 420) ps.splice(0, ps.length - 420);
+    if (!raf) raf = requestAnimationFrame(tick);
+  }
+  function starPath(x, y, r, rot){ ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.beginPath(); for (let i = 0; i < 8; i++) { const rr = i % 2 ? r * 0.38 : r; const a = i * Math.PI / 4; ctx.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); } ctx.closePath(); ctx.fill(); ctx.restore(); }
+  function tick(){
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, c.width, c.height);
+    ps = ps.filter(p => p.life > 0);
+    for (const p of ps) {
+      p.x += p.vx; p.y += p.vy; p.vy += 0.028; p.vx *= 0.985; p.life -= p.decay; p.tw += 0.35; p.rot += 0.05;
+      ctx.globalAlpha = Math.max(0, p.life) * (0.55 + 0.45 * Math.sin(p.tw)); ctx.fillStyle = p.c;
+      if (p.star) starPath(p.x, p.y, p.r * 1.7, p.rot); else { ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill(); }
+    }
+    ctx.globalAlpha = 1; raf = ps.length ? requestAnimationFrame(tick) : null;
+  }
+  return { emit, clear(){ ps = []; }, destroy(){ if (ro) ro.disconnect(); if (raf) cancelAnimationFrame(raf); c.remove(); } };
+}
+
+
 /* ================= state ================= */
 let LANG = "en";
 try { const s = localStorage.getItem("cantame-lang"); if (s === "es" || s === "en") LANG = s; } catch(e){}
@@ -1244,7 +1655,7 @@ function renderSong(s){
         <div class="panel"><h2>${IC.hand} ${T(I.how)}</h2>
           <ol class="howto">${T(s.how).map((h, i) => `<li><span class="n">${i+1}</span><span>${esc(h)}</span></li>`).join("")}</ol></div>
         <div class="panel"><h2>${IC.chick} ${T(I.words)}</h2>
-          <div class="vocab">${s.vocab.map(w => `<button class="chip" type="button" data-w="${esc(w.es)}"><span class="es">${esc(w.es)}</span><span class="en">${esc(w.en)}</span></button>`).join("")}</div>
+          <div class="vocab">${s.vocab.map(w => { const a = artFor(w.es); return `<button class="chip" type="button" data-w="${esc(w.es)}">${a ? `<span class="ico">${a}</span>` : ""}<span class="tx"><span class="es">${esc(w.es)}</span><span class="en">${esc(w.en)}</span></span></button>`; }).join("")}</div>
           <p class="tip">${T(I.tap_word)}</p></div>
         <div class="panel">
           <button class="btn know" type="button" data-act="know" aria-pressed="${KNOWN.has(s.id)}">${IC.check} <span>${T(KNOWN.has(s.id) ? I.know_on : I.know)}</span></button>
@@ -1329,9 +1740,9 @@ function openSing(s){
       <button class="btn sm" type="button" data-act="gloss" aria-pressed="${GLOSS}">${T(I.english)}</button>
       <button class="btn sm" type="button" data-act="slow" aria-pressed="${SLOW}">${T(I.slow)}</button>
       <button class="btn sm" type="button" data-act="close">${T(I.close)}</button></div>
-    <div class="reelwrap" id="reelwrap"><div class="reel" id="reel">${lines.map((l, li) => `<div class="rline" data-i="${li}">
+    <div class="reelwrap" id="reelwrap"><div class="reel" id="reel">${lines.map((l, li) => `<div class="rline${words[li].some(w => artFor(w.t)) ? " has-art" : ""}" data-i="${li}">
         ${s.stanzas.length > 1 && l.li === 0 ? `<div class="rcue">${T(I.cue_stanza)} ${l.si + 1}</div>` : ""}
-        <div class="rtext">${words[li].map((w, k) => `<span class="w" data-k="${k}">${esc(w.t)}</span>`).join(" ")}</div>
+        <div class="rtext">${words[li].map((w, k) => { const a = artFor(w.t); return `<span class="w${a ? " has" : ""}" data-k="${k}">${a ? `<i class="art">${a}</i>` : ""}<span class="t">${esc(w.t)}</span></span>`; }).join(" ")}</div>
         <div class="rgl">${esc(l.en)}</div></div>`).join("")}</div></div>
     <div class="bar"><i id="singBar"></i></div>
     <div class="ctl">
@@ -1342,11 +1753,16 @@ function openSing(s){
     <p class="hint">${T(s.melody ? I.sing_hint : I.sing_hint_voice)}</p>`;
   document.body.appendChild(o); document.body.style.overflow = "hidden";
   const wrap = $("#reelwrap", o), reel = $("#reel", o), rlines = $$(".rline", o), bar = $("#singBar", o);
+  const glitter = RM ? null : makeGlitter(wrap);
+  let trailTimer = null;
+  const wordPos = w => { const r = w.getBoundingClientRect(), b = wrap.getBoundingClientRect(); return { x: r.left - b.left + r.width / 2, y: r.top - b.top + 4, w: r.width }; };
+  const startTrail = w => { stopTrail(); if (!glitter) return; const p = wordPos(w); glitter.emit(p.x, p.y, 22, p.w); trailTimer = setInterval(()=>{ const q = wordPos(w); glitter.emit(q.x + (Math.random() - .5) * q.w, q.y + 2, 3, 8); }, 55); };
+  const stopTrail = () => { if (trailTimer) clearInterval(trailTimer); trailTimer = null; };
   const playBtn = $('[data-act="play"]', o); const hasTune = !!s.melody;
 
   const center = () => { const l = rlines[i]; const y = wrap.clientHeight / 2 - (l.offsetTop + l.offsetHeight / 2); reel.style.transform = `translateY(${Math.round(y)}px)`; };
-  const clearWord = () => $$(".w.on", o).forEach(w => w.classList.remove("on"));
-  const setWord = (li, k) => { clearWord(); const w = $(`.rline[data-i="${li}"] .w[data-k="${k}"]`, o); if (w) w.classList.add("on"); };
+  const clearWord = () => { stopTrail(); $$(".w.on, .w.lit", o).forEach(w => w.classList.remove("on", "lit")); };
+  const setWord = (li, k) => { clearWord(); const w = $(`.rline[data-i="${li}"] .w[data-k="${k}"]`, o); if (w) { w.classList.add("on"); startTrail(w); } };
   const clearFb = () => { fbTimers.forEach(clearTimeout); fbTimers = []; };
   const show = n => {
     i = Math.max(0, Math.min(lines.length - 1, n));
@@ -1382,7 +1798,19 @@ function openSing(s){
   const next = () => { if (i < lines.length - 1) jump(i + 1); };
   const prev = () => { if (i > 0) jump(i - 1); };
 
-  rlines.forEach(l => l.addEventListener("click", ()=> jump(+l.dataset.i)));
+  rlines.forEach(l => l.addEventListener("click", ()=>{ if (+l.dataset.i === i) return; jump(+l.dataset.i); }));
+  // finger reading: with Play off, drag a finger under the words; sparkles follow the fingertip and words light as you pass them (no box)
+  let pointing = false;
+  const fingerAt = e => {
+    const b = wrap.getBoundingClientRect(); const x = e.clientX - b.left, y = e.clientY - b.top;
+    if (glitter) glitter.emit(x, y - 22, 6, 18);
+    const el = document.elementFromPoint(e.clientX, e.clientY); const w = el && el.closest(".rline.cur .w");
+    if (w && !w.classList.contains("lit")) { w.classList.add("lit"); if (glitter) { const p = wordPos(w); glitter.emit(p.x, p.y, 18, p.w); } }
+  };
+  wrap.addEventListener("pointerdown", e => { if (mode || e.button > 0) return; pointing = true; o.classList.add("pointing"); fingerAt(e); });
+  wrap.addEventListener("pointermove", e => { if (pointing) fingerAt(e); });
+  const endPoint = () => { pointing = false; o.classList.remove("pointing"); };
+  wrap.addEventListener("pointerup", endPoint); wrap.addEventListener("pointercancel", endPoint); wrap.addEventListener("pointerleave", endPoint);
   $('[data-act="next"]', o).addEventListener("click", next);
   $('[data-act="prev"]', o).addEventListener("click", prev);
   const playFrom = n => hasTune ? playTuneFrom(n) : playVoice(n);
@@ -1399,14 +1827,14 @@ function openSing(s){
   document.addEventListener("keydown", key);
   const onResize = () => center();
   window.addEventListener("resize", onResize);
-  singState = { el:o, key, song:s, onResize, stop };
+  singState = { el:o, key, song:s, onResize, stop, glitter };
   show(0); setTimeout(center, 120); setTimeout(center, 600);
   playBtn.focus();
   if (!$("#view").children.length) renderSong(s);
 }
 function closeSing(updateHash){
   if (!singState) return;
-  singState.stop();
+  singState.stop(); if (singState.glitter) singState.glitter.destroy();
   document.removeEventListener("keydown", singState.key);
   window.removeEventListener("resize", singState.onResize);
   singState.el.remove(); document.body.style.overflow = "";
@@ -1424,7 +1852,7 @@ function renderWords(tab){
   v.innerHTML = `<div class="fade">
     <div class="hero"><div><h1>${T(I.nav_words)}</h1></div></div>
     <div class="tabs"><button type="button" data-t="words" aria-pressed="${tab==="words"}">${T(I.tab_words)}</button><button type="button" data-t="phrases" aria-pressed="${tab==="phrases"}">${T(I.tab_phrases)}</button></div>
-    ${tab === "words" ? `<p class="wordhint">${T(I.words_hint)}</p><div class="flash">${uniq.map(w => `<button class="fc" type="button" data-w="${esc(w.es)}"><span class="hear" data-hear>${IC.spk}</span><span class="w">${esc(w.es)}</span><span class="m" hidden>${esc(w.en)}</span><span class="from">${T(I.from)} ${esc(w.song.title)}</span></button>`).join("")}</div>`
+    ${tab === "words" ? `<p class="wordhint">${T(I.words_hint)}</p><div class="flash">${uniq.map(w => `<button class="fc" type="button" data-w="${esc(w.es)}"><span class="hear" data-hear>${IC.spk}</span>${artFor(w.es) ? `<span class="fico">${artFor(w.es)}</span>` : ""}<span class="w">${esc(w.es)}</span><span class="m" hidden>${esc(w.en)}</span><span class="from">${T(I.from)} ${esc(w.song.title)}</span></button>`).join("")}</div>`
       : `<p class="wordhint">${T(I.phrases_hint)}</p><div class="phrases">${PHRASES.map(p => `<div class="ph"><span class="es">${esc(p.es)}</span><button class="spk" type="button" data-w="${esc(p.es)}" aria-label="${T(I.hear)}">${IC.spk}</button><span class="en">${esc(p.en)}</span></div>`).join("")}</div>`}
   </div>`;
   $$(".tabs button", v).forEach(b => b.addEventListener("click", ()=>{ location.hash = b.dataset.t === "phrases" ? "#/palabras/frases" : "#/palabras"; }));

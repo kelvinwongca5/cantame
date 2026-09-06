@@ -298,6 +298,19 @@
   .sing.playing .hint { opacity: 0; }
   @media (prefers-reduced-motion: reduce) { .sing .reel, .sing .rline { transition: none; } }
 
+  /* ---------- coach ---------- */
+  .coach { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1rem; }
+  .cc { background: var(--card); border-radius: 20px; padding: 1.1rem 1.2rem; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 0.5rem; }
+  .cc h2 { font-size: 1.6rem; } .cc h2 a { color: inherit; text-decoration: none; } .cc h2 a:hover { color: var(--marigold-deep); }
+  .cc p { margin: 0; color: var(--ink-2); } .cc .tip { color: var(--muted); font-size: 0.9rem; margin-top: auto; }
+  .cc .row { margin-top: 0.4rem; }
+  .cphrases { display: flex; flex-direction: column; gap: 0.5rem; }
+  .cphrases .ph { box-shadow: none; background: var(--soft2); padding: 0.6rem 0.8rem; }
+  .cphrases .ph .es { font-size: 1.25rem; }
+  .hard { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+  .hard li { display: flex; gap: 0.7rem; align-items: flex-start; }
+  .hard .hart { width: 2.6rem; height: 2.6rem; flex: none; } .hard .hart svg { width: 100%; height: 100%; display: block; }
+  .hard b { font-family: "Alegreya", Georgia, serif; font-size: 1.2rem; font-weight: 500; } .hard .muted { color: var(--muted); font-size: 0.9rem; }
   /* ---------- words: the collection ---------- */
   .wtop { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; margin: 0.4rem 0 1.4rem; }
   .wtop h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); font-style: italic; }
@@ -670,6 +683,21 @@ const I = {
   hum_line:{en:"Hum the line",es:"Tararear la línea"}, read_line:{en:"Read the line",es:"Leer la línea"}, said_it:{en:"Said it",es:"La dijo"}, not_yet:{en:"Not yet",es:"Todavía no"},
   kept_toast:{en:"Kept:",es:"Guardada:"}, unkept_toast:{en:"Back to practice: ",es:"Vuelve a practicar: "},
   done_title:{en:"Done for today",es:"Listo por hoy"}, done_kept:{en:"kept",es:"guardadas"}, done_left:{en:"for next time",es:"para la próxima"}, see_words:{en:"See my words",es:"Ver mis palabras"}, back_song:{en:"Back to the song",es:"Volver a la canción"},
+  nav_coach:{en:"Tonight",es:"Hoy"},
+  coach_title:{en:"Tonight's two minutes",es:"Los dos minutos de hoy"},
+  coach_p:{en:"A small plan built from what you have sung and kept. Same song, same moment, every day.",es:"Un plan pequeño hecho con lo que han cantado y guardado. La misma canción, el mismo momento, todos los días."},
+  coach_streak:{en:"days in a row",es:"días seguidos"}, coach_kept_week:{en:"words kept this week",es:"palabras guardadas esta semana"},
+  coach_sing:{en:"Sing tonight",es:"Canten hoy"},
+  coach_why_continue:{en:"You are in the middle of this one: {n} words still to keep. Sing it through, then keep one or two.",es:"Van a la mitad de esta: faltan {n} palabras por guardar. Cántenla completa y luego guarden una o dos."},
+  coach_why_next:{en:"Last song done. This is the next one to start. Just sing it tonight; keep words tomorrow.",es:"La anterior ya quedó. Esta es la siguiente. Hoy solo cántenla; mañana guarden palabras."},
+  coach_why_first:{en:"A good first song: short, with a tune, and they will ask for it again. Just sing it tonight.",es:"Una buena primera canción: corta, con tonada, y la van a pedir otra vez. Hoy solo cántenla."},
+  coach_phrases:{en:"Say these at dinner",es:"Digan esto en la cena"},
+  coach_phrases_tip:{en:"Built from the words you kept most recently. Ask, wait, and let the child answer with one word.",es:"Hechas con las últimas palabras guardadas. Pregunta, espera, y deja que el niño conteste con una palabra."},
+  coach_phrases_none:{en:"Keep a few words and phrases will appear here.",es:"Guarden algunas palabras y aquí aparecerán frases."},
+  coach_notice:{en:"What we noticed",es:"Lo que notamos"},
+  coach_notice_good:{en:"No word needed more than one try this week. Keep going.",es:"Ninguna palabra necesitó más de un intento esta semana. Sigan así."},
+  coach_notice_none:{en:"Nothing yet. After a few sessions this card will show the words that needed more than one try, with a tip for each.",es:"Todavía nada. Después de unas sesiones, aquí saldrán las palabras que necesitaron más de un intento, con un consejo para cada una."},
+  coach_due:{en:"{n} kept words have not been seen in three days. A review keeps them.",es:"{n} palabras guardadas llevan tres días sin verse. Un repaso las mantiene."},
   tab_words:{en:"My words",es:"Mis palabras"}, tab_phrases:{en:"Phrases for grown-ups",es:"Frases para los grandes"},
   words_hint:{en:"Every key word from every song. Tap a card to flip it, or the speaker to hear it. Words you have heard in a song you know are marked.",es:"Todas las palabras clave de todas las canciones. Toca una tarjeta para voltearla, o la bocina para oírla."},
   phrases_hint:{en:"You do not need long sentences. These cover most of what you will say while singing.",es:"No necesitas oraciones largas. Estas cubren casi todo lo que dirás mientras cantan."},
@@ -1622,6 +1650,7 @@ function route(){
   closePractice();
   if (parts[0] === "song" && songOf(parts[1])) { const sg = songOf(parts[1]); renderSong(sg); if (parts[2] === "sing") openSing(sg); if (parts[2] === "keep") openPractice({ song: sg, items: toKeep(sg).length ? toKeep(sg) : keepable(sg), mode: "keep" }); }
   else if (parts[0] === "palabras" || parts[0] === "words") { renderWords(parts[1] === "frases" ? "phrases" : "words"); if (parts[1] === "repaso") openReview(); }
+  else if (parts[0] === "hoy" || parts[0] === "tonight") renderCoach();
   else if (parts[0] === "tour") { if (!$("#view").children.length) renderLibrary(); openTour(parseInt(parts[1] || "0", 10) || 0); return; }
   else renderLibrary();
   closeTour();
@@ -1629,10 +1658,11 @@ function route(){
 }
 function renderNav(){
   let h = location.hash.replace(/^#\/?/, ""); try { h = decodeURIComponent(h); } catch(e){}
-  const cur = h.startsWith("song") || h === "" ? "songs" : h.startsWith("palabras") || h.startsWith("words") ? "words" : h.startsWith("tour") ? "tour" : "";
+  const cur = h.startsWith("song") || h === "" ? "songs" : h.startsWith("palabras") || h.startsWith("words") ? "words" : h.startsWith("hoy") || h.startsWith("tonight") ? "coach" : h.startsWith("tour") ? "tour" : "";
   $("#nav").innerHTML = `
     <a href="#/" ${cur==="songs"?'aria-current="page"':""}>${T(I.nav_songs)}</a>
     <a href="#/palabras" ${cur==="words"?'aria-current="page"':""}>${T(I.nav_words)}</a>
+    <a href="#/hoy" ${cur==="coach"?'aria-current="page"':""}>${T(I.nav_coach)}</a>
     <a href="#/tour/0" ${cur==="tour"?'aria-current="page"':""}>${T(I.nav_tour)}</a>`;
   $$(".langsw button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === LANG ? "true" : "false"));
   document.documentElement.lang = LANG;
@@ -1777,7 +1807,7 @@ function renderSong(s){
   $$(".chip", v).forEach(ch => ch.addEventListener("click", ()=>{ stopAll(); resetBtns(); $$(".chip.hot", v).forEach(x => x.classList.remove("hot")); ch.classList.add("hot"); speak(ch.dataset.w); }));
   $('[data-act="know"]', v).addEventListener("click", e => {
     const b = e.currentTarget; const on = !KNOWN.has(s.id);
-    if (on) KNOWN.add(s.id); else KNOWN.delete(s.id); saveKnown();
+    if (on) { KNOWN.add(s.id); logEvent("known", { song: s.id }); } else KNOWN.delete(s.id); saveKnown();
     b.setAttribute("aria-pressed", on); b.innerHTML = `${IC.check} <span>${T(on ? I.know_on : I.know)}</span>`; toast(T(on ? I.saved : I.unsaved));
   });
 }
@@ -1868,12 +1898,12 @@ function openSing(s){
     const idx = lines.slice(from).map((_, k) => from + k);
     speakLines(idx.map(k => lines[k].es),
       k => { show(from + k); if (!boundarySeen) fbTimers.push(setTimeout(()=>{ if (!boundarySeen) tickWords(from + k, words[from + k].length * (SLOW ? 640 : 340)); }, 250)); },
-      () => { if (mode === "voice") { mode = null; clearWord(); setButtons(); } },
+      () => { if (mode === "voice") { mode = null; clearWord(); setButtons(); logEvent("sing", { song: s.id }); } },
       (k, ci) => { const li = from + k; if (li !== i) return; if (!boundarySeen) { boundarySeen = true; clearFb(); } const ws = words[li]; let wi = 0; for (let q = 0; q < ws.length; q++) if (ws[q].at <= ci) wi = q; setWord(li, wi); });
   };
   const playTuneFrom = from => {
     stop(); mode = "tune"; setButtons();
-    playTune(s, (fi, durMs, starts) => { if (fi < from) return; show(fi); tickToNotes(fi, starts); }, () => { if (mode === "tune") { mode = null; clearWord(); setButtons(); } }, from);
+    playTune(s, (fi, durMs, starts) => { if (fi < from) return; show(fi); tickToNotes(fi, starts); }, () => { if (mode === "tune") { mode = null; clearWord(); setButtons(); logEvent("sing", { song: s.id }); } }, from);
   };
   const jump = n => { const wasMode = mode; if (wasMode === "voice") playVoice(Math.max(0, Math.min(lines.length - 1, n))); else if (wasMode === "tune") playTuneFrom(Math.max(0, Math.min(lines.length - 1, n))); else show(n); };
   const next = () => { if (i < lines.length - 1) jump(i + 1); };
@@ -2021,7 +2051,7 @@ function openPractice({ song, items, mode }){
       findTries = 0; setTimeout(()=> speak("¿Dónde está? " + w.es), 400);
       $$(".pcard", o).forEach(c => c.addEventListener("click", ()=>{
         if (c.dataset.ok === "true") { c.classList.add("ok"); $$(".pcard", o).forEach(x => x.disabled = true); speak(w.es); setTimeout(()=>{ step = 2; draw(); }, 900); }
-        else { c.classList.remove("no"); void c.offsetWidth; c.classList.add("no"); findTries++; if (mode === "review" && findTries === 1) miss(w, false); }
+        else { c.classList.remove("no"); void c.offsetWidth; c.classList.add("no"); findTries++; if (findTries === 1) logEvent(mode === "review" ? "review_miss" : "miss", { song: s.id, word: wkey(w.es) }); if (mode === "review" && findTries === 1) miss(w, false); }
       }));
     }
     if (step === 2) {
@@ -2030,12 +2060,13 @@ function openPractice({ song, items, mode }){
         if (!(s.melody && humGap(s, hit.li, hit.k, hit.toks))) { const txt = hit.toks.map((t, k) => k === hit.k ? "…" : t.t).join(" "); speak(txt); }
       });
       $('[data-act="said"]', o).addEventListener("click", ()=>{ said(w, s); });
-      $('[data-act="notyet"]', o).addEventListener("click", ()=>{ miss(w, true); leftNow++; results.push({ w, kept: false }); idx++; step = mode === "review" ? 1 : 0; draw(); });
+      $('[data-act="notyet"]', o).addEventListener("click", ()=>{ logEvent(mode === "review" ? "review_miss" : "miss", { song: s.id, word: wkey(w.es) }); miss(w, true); leftNow++; results.push({ w, kept: false }); idx++; step = mode === "review" ? 1 : 0; draw(); });
     }
   };
   const said = (w, s) => {
     const was = isKept(w.es);
     if (!was) keepWord(w, s); else { const r = WORDS[wkey(w.es)]; r.lastReview = Date.now(); r.misses = 0; saveWords(); }
+    logEvent(mode === "review" ? "review" : "keep", { song: s.id, word: wkey(w.es) });
     keptNow++; results.push({ w, kept: true });
     flyToJar(o, artFor(w.es)); toast(T(I.kept_toast) + " " + w.es);
     setTimeout(()=>{ idx++; step = mode === "review" ? 1 : 0; draw(); }, 900);
@@ -2112,6 +2143,108 @@ function renderWords(tab){
   $$(".spk[data-w]", v).forEach(b => b.addEventListener("click", ()=> speak(b.dataset.w)));
   const rv = $('[data-act="review"]', v); if (rv) rv.addEventListener("click", openReview);
   const gl = $('[data-act="gloss"]', v); if (gl) gl.addEventListener("click", ()=> setGloss(!GLOSS));
+}
+
+/* ================= session log ================= */
+let LOG = [];
+try { LOG = JSON.parse(localStorage.getItem("cantame-log") || "[]") || []; } catch(e){ LOG = []; }
+function logEvent(type, data){ LOG.push({ t: Date.now(), type, ...(data || {}) }); if (LOG.length > 600) LOG = LOG.slice(-600); try { localStorage.setItem("cantame-log", JSON.stringify(LOG)); } catch(e){} }
+const DAY = 86400000;
+const dayOf = t => Math.floor((t - new Date().getTimezoneOffset() * 60000) / DAY);
+function streakDays(){ const days = new Set(LOG.map(e => dayOf(e.t))); let n = 0, d = dayOf(Date.now()); if (!days.has(d)) d--; while (days.has(d)) { n++; d--; } return n; }
+
+/* ================= the coach: tonight's two minutes (rules; a model can replace `coachPlan` later) ================= */
+const ART_GROUP = {
+  animal: ["chick","hen","rooster","bird","frog","elephant","spider","puppy","horse","sheep","snake","wasp"],
+  food: ["tortilla","corn","apple","orange","lemon","plum","apricot","melon","watermelon","fruit","egg","bread","cheese","milk","ricepudding","sugar","tacos","icecream","syrup","salt","lard","candy","water","cake"],
+  nature: ["sun","moon","star","sky","sea","rain","cloud","rainbow","snow","field","flower","boat","sunrise"],
+  person: ["mom","dad","child","doll","doctor","gentleman","lady","sailor"],
+  feeling: ["happy","angry","cold","hungry","cry","sleep","wake"],
+  action: ["jump","walk","sing","play","eat","hug","call","wave","asking"],
+  number: ["num1","num2","num3","num4","num5","num6","num7","num8","num9","num10","num16","num123"],
+};
+function groupOf(es){ const a = artFor(es); if (!a) return "other"; const key = Object.keys(ART).find(k => ART[k] === a); for (const g in ART_GROUP) if (ART_GROUP[g].includes(key)) return g; return "object"; }
+const FEM_EXC = new Set(["dia","mapa","sofa"]), MASC_A = new Set();
+const SING_S = new Set(["adios","tres","seis","diez","dieciseis","arroz","maiz","feliz","lapiz"]);
+function isPlural(es){ const w = wkey(es).split(" ")[0]; return /s$/.test(w) && w.length > 3 && !SING_S.has(w); }
+function gender(es){ let w = wkey(es).split(" ")[0]; if (isPlural(es)) w = w.replace(/es$/, "").replace(/s$/, ""); if (FEM_EXC.has(w)) return "m"; if (/(a|cion|sion|dad)$/.test(w)) return "f"; return "m"; }
+const el = es => (gender(es) === "f" ? "la" : "el") + (isPlural(es) ? "s" : ""), un = es => (gender(es) === "f" ? "una" : "un") + (isPlural(es) ? "s" : "");
+const esta = es => isPlural(es) ? "están" : "está";
+const bare = es => String(es).replace(/^(el|la|un|una|los|las)\s+/i, "").replace(/\s*\/.*$/, "").trim();
+// carrier phrases by group: [spanish template, english template]
+const CARRIERS = {
+  animal: [["¿Qué dice {el} {w}?", "What does the {en} say?"], ["¿Dónde {esta} {el} {w}?", "Where {is} the {en}?"], ["Mira, {un} {w}.", "Look, a {en}."]],
+  food: [["¿Quieres {w}?", "Do you want {en}?"], ["Vamos a comer {w}.", "Let's eat {en}."], ["Dame {el} {w}, por favor.", "Give me the {en}, please."]],
+  nature: [["Mira {el} {w}.", "Look at the {en}."], ["¿Ves {el} {w}?", "Do you see the {en}?"]],
+  person: [["¿Dónde {esta} {w}?", "Where {is} {en}?"], ["Dile hola a {w}.", "Say hello to {en}."]],
+  feeling: [["¿Tienes {w}?", "Are you {en}?"], ["Yo también tengo {w}.", "I am {en} too."]],
+  action: [["Vamos a {w}.", "Let's {en}."], ["¿Quieres {w}?", "Do you want to {en}?"]],
+  number: [["Cuenta hasta {w}.", "Count to {en}."], ["¿Cuántos hay? {w}.", "How many are there? {en}."]],
+  object: [["¿Dónde {esta} {el} {w}?", "Where {is} the {en}?"], ["Toca {el} {w}.", "Touch the {en}."]],
+  other: [["Di: {w}.", "Say: {en}."]],
+};
+const FEEL_ESTAR = new Set(["feliz","contenta","contento","enojado","enojada"]);
+function phraseFor(rec, i){
+  const g = groupOf(rec.es); let list = CARRIERS[g] || CARRIERS.other; const w = bare(rec.es), en = String(rec.en).replace(/\s*\(.*\)/, "").split(",")[0].trim();
+  let pair = list[i % list.length];
+  if (g === "feeling") pair = FEEL_ESTAR.has(wkey(w)) ? ["¿Estás {w}?", "Are you {en}?"] : pair;
+  const fill = t => t.replace("{el}", el(w)).replace("{un}", un(w)).replace("{esta}", esta(w)).replace("{is}", isPlural(w) ? "are" : "is").replace("{w}", w).replace("{en}", en);
+  return { es: fill(pair[0]), en: fill(pair[1]), word: w };
+}
+const TIPS = {
+  animal: { en: "Make the animal's sound first, then say the word.", es: "Primero el sonido del animal, luego la palabra." },
+  food: { en: "Say it at the table when the real thing is in front of you.", es: "Dila en la mesa cuando tengan la cosa enfrente." },
+  nature: { en: "Point at it outside or in the window, then say it.", es: "Señálalo afuera o en la ventana, y luego dilo." },
+  feeling: { en: "Act it out with your face and body while you say it.", es: "Actúalo con la cara y el cuerpo mientras lo dices." },
+  action: { en: "Do the action together while you say it.", es: "Hagan la acción juntos mientras lo dicen." },
+  number: { en: "Count fingers out loud, slowly.", es: "Cuenten los dedos en voz alta, despacio." },
+  person: { en: "Point at the real person or a photo.", es: "Señala a la persona o una foto." },
+  object: { en: "Find one at home and touch it while you say the word.", es: "Busquen uno en casa y tóquenlo mientras dicen la palabra." },
+  other: { en: "Sing the line and stop right before the word.", es: "Canta la línea y para justo antes de la palabra." },
+};
+function coachPlan(){
+  const now = Date.now(), week = now - 7 * DAY;
+  const recent = LOG.filter(e => e.t > week);
+  const kept = keptList().sort((a, b) => b.kept - a.kept);
+  const keptWeek = kept.filter(w => w.kept > week);
+  // the song for tonight: last practiced song with words left, else the next Start-here song not fully kept, else the next song in the library
+  const lastSong = [...LOG].reverse().find(e => e.song && (e.type === "keep" || e.type === "miss" || e.type === "sing"));
+  let song = lastSong ? songOf(lastSong.song) : null, why = "continue";
+  if (!song || !toKeep(song).length) { song = SONGS.find(s => s.start && toKeep(s).length) || SONGS.find(s => toKeep(s).length) || SONGS[0]; why = lastSong ? "next" : "first"; }
+  // words that needed more than one try this week
+  const missed = {}; recent.filter(e => e.type === "miss" || e.type === "review_miss").forEach(e => { missed[e.word] = (missed[e.word] || 0) + 1; });
+  const hard = Object.entries(missed).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([w]) => { const s = SONGS.find(x => x.vocab.some(v => wkey(v.es) === w)); const v = s && s.vocab.find(v => wkey(v.es) === w); return v ? { es: v.es, en: v.en, group: groupOf(v.es) } : null; }).filter(Boolean);
+  const due = kept.filter(w => now - (w.lastReview || w.kept) > 3 * DAY).length;
+  const phrases = kept.slice(0, 3).map((w, i) => phraseFor(w, i));
+  return { song, why, left: toKeep(song).length, keptWeek: keptWeek.length, keptTotal: kept.length, hard, due, phrases, streak: streakDays(), sangWeek: new Set(recent.filter(e => e.type === "sing").map(e => e.song)).size };
+}
+function renderCoach(){
+  const v = $("#view"); const p = coachPlan();
+  const whyText = { continue: I.coach_why_continue, next: I.coach_why_next, first: I.coach_why_first }[p.why];
+  v.innerHTML = `<div class="fade">
+    <div class="hero"><div><h1>${T(I.coach_title)}</h1><p>${T(I.coach_p)}</p></div>
+      <div class="stats"><div class="stat"><b>${p.streak}</b>${T(I.coach_streak)}</div><div class="stat"><b>${p.keptWeek}</b>${T(I.coach_kept_week)}</div></div></div>
+    <div class="coach">
+      <section class="cc">
+        <div class="label">${T(I.coach_sing)}</div>
+        <h2><a href="#/song/${p.song.id}">${esc(p.song.title)}</a></h2>
+        <p>${T(whyText).replace("{n}", p.left)}</p>
+        <div class="row"><a class="btn primary" href="#/song/${p.song.id}/sing">${IC.singi} ${T(I.sing)}</a>${p.left ? `<a class="btn" href="#/song/${p.song.id}/keep">${IC.check} ${T(I.keep_btn)} · ${p.left}</a>` : ""}${p.due >= 3 ? `<a class="btn" href="#/palabras/repaso">${IC.play} ${T(I.review)} · ${p.due}</a>` : ""}</div>
+      </section>
+      <section class="cc">
+        <div class="label">${T(I.coach_phrases)}</div>
+        ${p.phrases.length ? `<div class="cphrases">${p.phrases.map(ph => `<div class="ph"><span class="es">${esc(ph.es)}</span><button class="spk" type="button" data-w="${esc(ph.es)}" aria-label="${T(I.hear)}">${IC.spk}</button><span class="en">${esc(ph.en)}</span></div>`).join("")}</div><p class="tip">${T(I.coach_phrases_tip)}</p>`
+          : `<p class="tip">${T(I.coach_phrases_none)}</p>`}
+      </section>
+      <section class="cc">
+        <div class="label">${T(I.coach_notice)}</div>
+        ${p.hard.length ? `<ul class="hard">${p.hard.map(h => `<li><span class="hart">${artFor(h.es)}</span><div><b>${esc(h.es)}</b> <span class="muted">${esc(h.en)}</span><br><span>${T(TIPS[h.group] || TIPS.other)}</span></div></li>`).join("")}</ul>`
+          : `<p>${T(p.keptTotal ? I.coach_notice_good : I.coach_notice_none)}</p>`}
+        ${p.due ? `<p class="tip">${T(I.coach_due).replace("{n}", p.due)}</p>` : ""}
+      </section>
+    </div>
+  </div>`;
+  $$(".spk[data-w]", v).forEach(b => b.addEventListener("click", ()=> speak(b.dataset.w)));
 }
 
 /* ================= tutorial ================= */

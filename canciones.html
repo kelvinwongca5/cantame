@@ -298,6 +298,70 @@
   .sing.playing .hint { opacity: 0; }
   @media (prefers-reduced-motion: reduce) { .sing .reel, .sing .rline { transition: none; } }
 
+  /* ---------- words: the collection ---------- */
+  .wtop { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; margin: 0.4rem 0 1.4rem; }
+  .wtop h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); font-style: italic; }
+  .wcount { margin: 0.2rem 0 0; color: var(--muted); } .wcount b { color: var(--marigold-deep); font-size: 1.3rem; font-variant-numeric: lining-nums; }
+  .jar-wrap { width: 4.6rem; height: 5.8rem; } .jar-wrap svg { width: 100%; height: 100%; display: block; }
+  .jar.mini { width: 1.9rem; height: 2.4rem; display: block; }
+  .jar-mini { display: inline-block; transition: transform 200ms; } .jar-mini.pop { animation: jarpop 500ms ease; }
+  @keyframes jarpop { 40% { transform: scale(1.3) rotate(-6deg); } }
+  .wgroup { margin-bottom: 1.5rem; }
+  .wgroup h2 { font-size: 1.25rem; margin-bottom: 0.6rem; } .wgroup h2 a { color: inherit; text-decoration: none; } .wgroup h2 a:hover { color: var(--marigold-deep); }
+  .kcards { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0.7rem; }
+  .kc { display: grid; grid-template-columns: 3.2rem 1fr auto; gap: 0.7rem; align-items: center; background: var(--card); border-radius: 16px; padding: 0.7rem 0.8rem; box-shadow: var(--shadow); }
+  .kc .kart { width: 3.2rem; height: 3.2rem; } .kc .kart svg { width: 100%; height: 100%; display: block; }
+  .kc:hover .a, .kc:hover .a * { animation-play-state: running; }
+  .kc .ktx { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+  .kc .es { font-family: "Alegreya", Georgia, serif; font-size: 1.35rem; font-weight: 500; }
+  .kc .en { font-size: 0.85rem; color: var(--muted); } .no-gloss .kc .en { display: none; }
+  .kc .ctx { font-family: "Alegreya", Georgia, serif; font-style: italic; font-size: 0.9rem; color: var(--muted); margin-top: 0.15rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .kc .spk { background: none; border: 0; color: var(--muted); padding: 0.3rem; } .kc .spk svg { width: 1.3rem; height: 1.3rem; display: block; } .kc:hover .spk { color: var(--marigold-deep); }
+  .wempty { background: var(--card); border-radius: 20px; padding: 1.6rem; text-align: center; box-shadow: var(--shadow); max-width: 34rem; margin: 0 auto; }
+  .wempty p { margin: 0 0 1rem; color: var(--ink-2); font-size: 1.05rem; }
+  /* song page: keep panel */
+  .chip.kept { border-color: var(--green); background: var(--green-soft); }
+  .chip.kept .tx::after { content: "✓"; color: var(--green); font-weight: 700; font-size: 0.8rem; }
+  .keeprow { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.8rem; }
+  .keeprow .btn { justify-content: center; }
+  .hero .stats { display: flex; gap: 1.6rem; }
+  /* ---------- practice overlay ---------- */
+  .practice { position: fixed; inset: 0; background: var(--ground); z-index: 55; display: flex; flex-direction: column; overflow-y: auto; }
+  .practice .ptop { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1.1rem; flex-wrap: wrap; }
+  .practice .ptop .title { font-family: "Alegreya", Georgia, serif; font-style: italic; font-size: 1.15rem; color: var(--marigold-deep); }
+  .practice .ptop .count { color: var(--muted); font-weight: 700; font-variant-numeric: lining-nums tabular-nums; }
+  .psteps { display: flex; justify-content: center; gap: 0.4rem; padding: 0 1rem; }
+  .psteps span { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); padding: 0.2rem 0.7rem; border-radius: 999px; background: var(--soft2); }
+  .psteps span.on { background: var(--marigold); color: var(--on-marigold); } .psteps span.done { background: var(--green-soft); color: var(--green); }
+  .pstage { flex: 1; max-width: 40rem; width: 100%; margin: 0 auto; padding: 1.2rem 1.2rem 2rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; }
+  .bigart { width: min(52vw, 13rem); height: min(52vw, 13rem); } .bigart svg { width: 100%; height: 100%; display: block; }
+  .bigart.on .a, .bigart.on .a * { animation-play-state: running; }
+  .pword { font-family: "Alegreya", Georgia, serif; font-size: clamp(2.4rem, 8vw, 4rem); line-height: 1.1; }
+  .pgl { color: var(--muted); font-size: 1.1rem; }
+  .pprompt { color: var(--ink-2); background: var(--soft); border-radius: 14px; padding: 0.6rem 1rem; font-size: 1rem; margin: 0.4rem 0; max-width: 32rem; }
+  .pask { font-family: "Alegreya", Georgia, serif; font-size: clamp(1.6rem, 5vw, 2.4rem); display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+  .pask b { color: var(--marigold-deep); font-weight: 500; }
+  .pask .spk { background: var(--soft2); border: 0; border-radius: 50%; width: 2.4rem; height: 2.4rem; display: grid; place-items: center; color: var(--marigold-deep); } .pask .spk svg { width: 1.3rem; height: 1.3rem; }
+  .pfind { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; width: 100%; max-width: 30rem; margin: 0.6rem 0; }
+  .pcard { aspect-ratio: 1; background: var(--card); border: 3px solid var(--line); border-radius: 22px; padding: 0.8rem; box-shadow: var(--shadow); transition: transform 120ms, border-color 120ms; }
+  .pcard svg { width: 100%; height: 100%; display: block; }
+  .pcard:hover { border-color: var(--marigold); transform: translateY(-2px); }
+  .pcard.ok { border-color: var(--green); background: var(--green-soft); animation: pokk 500ms ease; } .pcard.ok .a, .pcard.ok .a * { animation-play-state: running; }
+  .pcard.no { animation: shake 380ms ease; border-color: var(--rosa); }
+  .pcard:disabled { cursor: default; }
+  @keyframes shake { 20%, 60% { transform: translateX(-7px); } 40%, 80% { transform: translateX(7px); } }
+  @keyframes pokk { 40% { transform: scale(1.1); } }
+  .pline { font-family: "Alegreya", Georgia, serif; font-size: clamp(1.8rem, 6vw, 3rem); line-height: 1.5; display: flex; flex-wrap: wrap; justify-content: center; gap: 0 0.3em; align-items: baseline; }
+  .pline .gap { display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; width: 2.2em; height: 1.35em; border-bottom: 4px dashed var(--marigold); border-radius: 6px 6px 0 0; background: var(--marigold-soft); }
+  .pline .gap .art { width: 1.2em; height: 1.2em; display: block; } .pline .gap .art svg { width: 100%; height: 100%; display: block; }
+  .pline .gap .a, .pline .gap .a * { animation-play-state: running; }
+  .pline .gap.big { width: 5em; height: 3em; } .pline .gap.big .art { width: 2.6em; height: 2.6em; }
+  .pend h1 { font-size: clamp(1.8rem, 5vw, 2.4rem); } .pend .lede { font-size: 1.15rem; color: var(--ink-2); } .pend .lede b { color: var(--marigold-deep); }
+  .jar-big { width: 7rem; height: 8.8rem; } .jar-big svg { width: 100%; height: 100%; display: block; }
+  .fly { position: fixed; width: 48px; height: 48px; z-index: 99; pointer-events: none; transition: transform 700ms cubic-bezier(.3,.8,.3,1), opacity 700ms; }
+  .fly svg { width: 100%; height: 100%; }
+  @media (max-width: 480px) { .pfind { gap: 0.5rem; } .pcard { border-radius: 16px; padding: 0.5rem; } }
+
   /* ---------- words page ---------- */
   .tabs { display: flex; gap: 0.4rem; margin: 0.4rem 0 1.2rem; }
   .tabs button { border: 2px solid transparent; background: var(--soft2); border-radius: 999px; padding: 0.4rem 1rem; font-weight: 700; color: var(--ink-2); }
@@ -592,7 +656,21 @@ const I = {
   close:{en:"Close",es:"Cerrar"}, hear:{en:"Hear it",es:"Oír"}, play:{en:"Play",es:"Reproducir"}, tune:{en:"Tune",es:"Tonada"},
   sing_hint:{en:"Drag a finger under the words as you read. Play hums the tune and scrolls by itself.",es:"Arrastra un dedo bajo las palabras mientras lees. Reproducir tararea la tonada y avanza sola."},
   sing_hint_voice:{en:"Drag a finger under the words as you read. This rhyme is spoken, so Play reads it aloud and scrolls by itself.",es:"Arrastra un dedo bajo las palabras mientras lees. Esta rima se dice, así que Reproducir la lee en voz alta y avanza sola."}, tap_stage:{en:"Tap the words or press the arrow keys to move.",es:"Toca las palabras o usa las flechas para avanzar."},
-  tab_words:{en:"Song words",es:"Palabras de las canciones"}, tab_phrases:{en:"Phrases for grown-ups",es:"Frases para los grandes"},
+  words_title:{en:"My words",es:"Mis palabras"}, jar_label:{en:"of {n} words with a picture",es:"de {n} palabras con dibujo"}, stat_words:{en:"words kept",es:"palabras guardadas"},
+  words_empty:{en:"No words yet. Sing a song, then tap Keep the words to practice its words: see it, find it, say it. Kept words live here.",es:"Todavía no hay palabras. Canta una canción y toca Guardar las palabras para practicarlas: míralo, búscalo, dilo. Las guardadas viven aquí."},
+  start_with:{en:"Start with Los pollitos dicen",es:"Empieza con Los pollitos dicen"},
+  review:{en:"Review",es:"Repaso"}, review_hint:{en:"Review takes five kept words, the ones you have not seen longest. Miss a word twice and it goes back to practice.",es:"El repaso toma cinco palabras guardadas, las que llevan más tiempo sin verse. Si una falla dos veces, vuelve a practicar."},
+  review_none:{en:"Keep at least three words to review.",es:"Guarda al menos tres palabras para repasar."},
+  keep_btn:{en:"Keep the words",es:"Guardar las palabras"}, keep_left:{en:"to keep",es:"por guardar"}, all_kept:{en:"All kept",es:"Todas guardadas"}, practice_again:{en:"Practice again",es:"Practicar otra vez"},
+  step_show:{en:"See it",es:"Míralo"}, step_find:{en:"Find it",es:"Búscalo"}, step_say:{en:"Say it",es:"Dilo"},
+  prompt_show:{en:"Say it together, twice. Point at the picture.",es:"Díganlo juntos, dos veces. Señalen el dibujo."},
+  prompt_find:{en:"Ask the question. The child taps the picture.",es:"Haz la pregunta. El niño toca el dibujo."},
+  prompt_say:{en:"Hum the line and stop at the gap. The child says the missing word. You decide.",es:"Tararea la línea y para en el hueco. El niño dice la palabra que falta. Tú decides."},
+  say_alone:{en:"Ask: ¿Qué es? The child names it.",es:"Pregunta: ¿Qué es? El niño lo nombra."},
+  hum_line:{en:"Hum the line",es:"Tararear la línea"}, read_line:{en:"Read the line",es:"Leer la línea"}, said_it:{en:"Said it",es:"La dijo"}, not_yet:{en:"Not yet",es:"Todavía no"},
+  kept_toast:{en:"Kept:",es:"Guardada:"}, unkept_toast:{en:"Back to practice: ",es:"Vuelve a practicar: "},
+  done_title:{en:"Done for today",es:"Listo por hoy"}, done_kept:{en:"kept",es:"guardadas"}, done_left:{en:"for next time",es:"para la próxima"}, see_words:{en:"See my words",es:"Ver mis palabras"}, back_song:{en:"Back to the song",es:"Volver a la canción"},
+  tab_words:{en:"My words",es:"Mis palabras"}, tab_phrases:{en:"Phrases for grown-ups",es:"Frases para los grandes"},
   words_hint:{en:"Every key word from every song. Tap a card to flip it, or the speaker to hear it. Words you have heard in a song you know are marked.",es:"Todas las palabras clave de todas las canciones. Toca una tarjeta para voltearla, o la bocina para oírla."},
   phrases_hint:{en:"You do not need long sentences. These cover most of what you will say while singing.",es:"No necesitas oraciones largas. Estas cubren casi todo lo que dirás mientras cantan."},
   from:{en:"from",es:"de"},
@@ -1507,7 +1585,8 @@ function stopTune(){
   if (tuneBus && ctx) { const b = tuneBus; tuneBus = null; b.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.02); setTimeout(()=>{ try { b.disconnect(); } catch(e){} }, 250); }
 }
 // play the song's melody through all stanzas; onLine(flatIndex)
-function playTune(song, onLine, onEnd, from){
+function playTune(song, onLine, onEnd, from, opts){
+  opts = opts || {};
   stopTune(); stopSpeech();
   const m = MELODIES[song.melody]; if (!m) return;
   const c = audio(); if (c.state === "suspended") c.resume();
@@ -1521,12 +1600,13 @@ function playTune(song, onLine, onEnd, from){
       const ml = m.lines[mi == null ? li % m.lines.length : mi];
       const fi = flat; flat++;
       if (from && fi < from) return; // start partway through
+      if (opts.only != null && fi !== opts.only) return; // just one line
       const durMs = ml.d.reduce((a, b) => a + b, 0) * beat * 1000;
       const starts = []; let acc = 0; ml.d.forEach(d => { starts.push(Math.round(acc * beat * 1000)); acc += d; });
       at(t, ()=>{ if (onLine) onLine(fi, durMs, starts); });
-      ml.n.forEach((deg, k) => { const f = m.base * Math.pow(2, semi(deg)/12) * 0.5; const d = ml.d[k]*beat; hum(f, t, d*0.95, bus); t += d; });
+      ml.n.forEach((deg, k) => { const f = m.base * Math.pow(2, semi(deg)/12) * 0.5; const d = ml.d[k]*beat; if (!(opts.mute && opts.mute.has(k))) hum(f, t, d*0.95, bus); t += d; });
     });
-    if (!from || flat > from) t += beat*0.8;
+    if ((!from || flat > from) && opts.only == null) t += beat*0.8;
   });
   at(t+0.1, ()=>{ tuneToken = null; tuneBus = null; if (onEnd) onEnd(); });
 }
@@ -1539,8 +1619,9 @@ function route(){
   const parts = h.split("/").filter(Boolean);
   stopAll();
   closeSing();
-  if (parts[0] === "song" && songOf(parts[1])) { renderSong(songOf(parts[1])); if (parts[2] === "sing") openSing(songOf(parts[1])); }
-  else if (parts[0] === "palabras" || parts[0] === "words") renderWords(parts[1] === "frases" ? "phrases" : "words");
+  closePractice();
+  if (parts[0] === "song" && songOf(parts[1])) { const sg = songOf(parts[1]); renderSong(sg); if (parts[2] === "sing") openSing(sg); if (parts[2] === "keep") openPractice({ song: sg, items: toKeep(sg).length ? toKeep(sg) : keepable(sg), mode: "keep" }); }
+  else if (parts[0] === "palabras" || parts[0] === "words") { renderWords(parts[1] === "frases" ? "phrases" : "words"); if (parts[1] === "repaso") openReview(); }
   else if (parts[0] === "tour") { if (!$("#view").children.length) renderLibrary(); openTour(parseInt(parts[1] || "0", 10) || 0); return; }
   else renderLibrary();
   closeTour();
@@ -1598,7 +1679,7 @@ function renderLibrary(){
   v.innerHTML = `<div class="fade">
     <div class="hero">
       <div><h1>${T(I.hero_h)}</h1><p>${T(I.hero_p)}</p></div>
-      <div class="stat"><b>${KNOWN.size}</b>${T(I.stat)}</div>
+      <div class="stats"><div class="stat"><b>${KNOWN.size}</b>${T(I.stat)}</div><div class="stat"><b>${keptList().length}</b>${T(I.stat_words)}</div></div>
     </div>
     ${!TOUR_SEEN ? `<div class="banner" id="tourBanner"><div class="pic">${PIC.picado}</div><p>${T(I.banner)}</p><a class="btn primary sm" href="#/tour/0">${T(I.take_tour)}</a><button class="x" type="button" aria-label="${T(I.dismiss)}" data-act="dismiss">×</button></div>` : ""}
     <div class="kinds" role="group">
@@ -1655,8 +1736,9 @@ function renderSong(s){
         <div class="panel"><h2>${IC.hand} ${T(I.how)}</h2>
           <ol class="howto">${T(s.how).map((h, i) => `<li><span class="n">${i+1}</span><span>${esc(h)}</span></li>`).join("")}</ol></div>
         <div class="panel"><h2>${IC.chick} ${T(I.words)}</h2>
-          <div class="vocab">${s.vocab.map(w => { const a = artFor(w.es); return `<button class="chip" type="button" data-w="${esc(w.es)}">${a ? `<span class="ico">${a}</span>` : ""}<span class="tx"><span class="es">${esc(w.es)}</span><span class="en">${esc(w.en)}</span></span></button>`; }).join("")}</div>
-          <p class="tip">${T(I.tap_word)}</p></div>
+          <div class="vocab">${s.vocab.map(w => { const a = artFor(w.es); return `<button class="chip${isKept(w.es) ? " kept" : ""}" type="button" data-w="${esc(w.es)}">${a ? `<span class="ico">${a}</span>` : ""}<span class="tx"><span class="es">${esc(w.es)}</span><span class="en">${esc(w.en)}</span></span></button>`; }).join("")}</div>
+          <p class="tip">${T(I.tap_word)}</p>
+          <div class="keeprow">${toKeep(s).length ? `<button class="btn primary" type="button" data-act="keep">${IC.check} ${T(I.keep_btn)} · ${toKeep(s).length} ${T(I.keep_left)}</button>` : `<button class="btn" type="button" data-act="keep" aria-pressed="true">${IC.check} ${T(I.all_kept)}</button><button class="btn sm ghost" type="button" data-act="keepagain">${T(I.practice_again)}</button>`}</div></div>
         <div class="panel">
           <button class="btn know" type="button" data-act="know" aria-pressed="${KNOWN.has(s.id)}">${IC.check} <span>${T(KNOWN.has(s.id) ? I.know_on : I.know)}</span></button>
           <p class="tip">${T(I.know_tip)}</p></div>
@@ -1690,6 +1772,8 @@ function renderSong(s){
   $('[data-act="sing"]', v).addEventListener("click", ()=>{ history.replaceState(null, "", `#/song/${s.id}/sing`); openSing(s); });
   $('[data-act="gloss"]', v).addEventListener("click", ()=> setGloss(!GLOSS));
   $('[data-act="slow"]', v).addEventListener("click", e => { SLOW = !SLOW; e.currentTarget.setAttribute("aria-pressed", SLOW); });
+  const kb = $('[data-act="keep"]', v); if (kb) kb.addEventListener("click", ()=>{ const items = toKeep(s).length ? toKeep(s) : keepable(s); history.replaceState(null, "", `#/song/${s.id}/keep`); openPractice({ song: s, items, mode: "keep" }); });
+  const ka = $('[data-act="keepagain"]', v); if (ka) ka.addEventListener("click", ()=>{ history.replaceState(null, "", `#/song/${s.id}/keep`); openPractice({ song: s, items: keepable(s), mode: "keep" }); });
   $$(".chip", v).forEach(ch => ch.addEventListener("click", ()=>{ stopAll(); resetBtns(); $$(".chip.hot", v).forEach(x => x.classList.remove("hot")); ch.classList.add("hot"); speak(ch.dataset.w); }));
   $('[data-act="know"]', v).addEventListener("click", e => {
     const b = e.currentTarget; const on = !KNOWN.has(s.id);
@@ -1839,27 +1923,195 @@ function closeSing(updateHash){
   if (updateHash) history.replaceState(null, "", `#/song/${s.id}`);
 }
 
-/* ================= words page ================= */
+/* ================= word states: practice, keep, review ================= */
+// WORDS[key] = { es, en, song, kept: ts, lastReview: ts, misses: n }
+let WORDS = {};
+try { WORDS = JSON.parse(localStorage.getItem("cantame-words") || "{}") || {}; } catch(e){ WORDS = {}; }
+function saveWords(){ try { localStorage.setItem("cantame-words", JSON.stringify(WORDS)); } catch(e){} }
+const wkey = es => String(es).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z ]/g, "").trim();
+const isKept = es => !!(WORDS[wkey(es)] && WORDS[wkey(es)].kept);
+const keepable = s => s.vocab.filter(w => artFor(w.es));            // only words with a drawing enter the keep flow
+const toKeep = s => keepable(s).filter(w => !isKept(w.es));
+const keptList = () => Object.values(WORDS).filter(w => w.kept);
+const TOTAL_KEEPABLE = (()=>{ const seen = new Set(); SONGS.forEach(s => keepable(s).forEach(w => seen.add(wkey(w.es)))); return seen.size; })();
+function keepWord(w, song){ const k = wkey(w.es); WORDS[k] = { es: w.es, en: w.en, song: song.id, kept: Date.now(), lastReview: Date.now(), misses: 0 }; saveWords(); }
+function unkeepWord(es){ delete WORDS[wkey(es)]; saveWords(); }
+
+// the lyric line that carries a word, and which token it is
+function lineForWord(song, es){
+  const target = artFor(es); const first = wkey(es).split(" ")[0];
+  const lines = flatLines(song);
+  for (let li = 0; li < lines.length; li++) {
+    const toks = wordsWithOffsets(lines[li].es);
+    for (let k = 0; k < toks.length; k++) { const n = normWord(toks[k].t); if (n === first || (n.startsWith(first) && n.length - first.length <= 3)) return { li, k, toks, line: lines[li] }; }
+  }
+  for (let li = 0; li < lines.length; li++) {
+    const toks = wordsWithOffsets(lines[li].es);
+    for (let k = 0; k < toks.length; k++) if (target && artFor(toks[k].t) === target) return { li, k, toks, line: lines[li] };
+  }
+  return null;
+}
+// two other drawings to hide the target among, same song first
+function distractors(song, w){
+  const a = artFor(w.es); const pick = list => list.filter(x => { const b = artFor(x.es); return b && b !== a; });
+  const own = pick(song.vocab).sort(() => Math.random() - .5), others = pick(SONGS.flatMap(s => s.vocab)).sort(() => Math.random() - .5);
+  const out = []; const seen = new Set([a]);
+  for (const x of own.concat(others)) { const b = artFor(x.es); if (seen.has(b)) continue; seen.add(b); out.push(x); if (out.length === 2) break; }
+  return out;
+}
+// hum one line with the target word's notes left silent
+function humGap(song, li, k, toks){
+  const m = MELODIES[song.melody]; if (!m) return false;
+  // find the melody line for this flat index
+  let flat = 0, ml = null;
+  song.stanzas.forEach((st, si) => st.forEach((ln, l) => { if (flat === li) { const mi = m.map && m.map[si] ? m.map[si][l] : l % m.lines.length; ml = m.lines[mi == null ? l % m.lines.length : mi]; } flat++; }));
+  if (!ml) return false;
+  const idx = wordNoteIndex(toks, ml.n.length); const start = idx[k], end = (k + 1 < idx.length ? idx[k + 1] : ml.n.length) - 1;
+  const mute = new Set(); for (let q = start; q <= end; q++) mute.add(q);
+  playTune(song, null, null, li, { only: li, mute });
+  return true;
+}
+
+let practiceState = null;
+function openPractice({ song, items, mode }){
+  closePractice(); stopAll();
+  if (!items.length) return;
+  const o = document.createElement("div"); o.className = "practice"; o.setAttribute("role", "dialog"); o.setAttribute("aria-modal", "true");
+  document.body.appendChild(o); document.body.style.overflow = "hidden";
+  let idx = 0, step = mode === "review" ? 1 : 0, keptNow = 0, leftNow = 0, findTries = 0; const results = [];
+  const glit = RM ? null : null;
+  const key = e => { if (e.key === "Escape") closePractice(true); };
+  document.addEventListener("keydown", key);
+  practiceState = { el: o, key, song, mode };
+  const stepNames = [I.step_show, I.step_find, I.step_say];
+  const draw = () => {
+    stopAll();
+    if (idx >= items.length) return drawEnd();
+    const w = items[idx]; const art = artFor(w.es); const s = w.songObj || song;
+    const head = `<div class="ptop"><span class="title">${esc(s.title)}</span><span class="grow"></span>
+        <span class="count">${idx + 1} / ${items.length}</span><span class="jar-mini" id="jarMini">${jarSVG(keptList().length, TOTAL_KEEPABLE, true)}</span>
+        <button class="btn sm" type="button" data-act="close">${T(I.close)}</button></div>
+      <div class="psteps">${[0,1,2].filter(n => mode !== "review" || n > 0).map(n => `<span class="${n === step ? "on" : n < step ? "done" : ""}">${T(stepNames[n])}</span>`).join("")}</div>`;
+    let body = "";
+    if (step === 0) {
+      body = `<div class="pstage anim"><div class="bigart on">${art}</div><div class="pword">${esc(w.es)}</div><div class="pgl" ${GLOSS ? "" : "hidden"}>${esc(w.en)}</div>
+        <button class="btn" type="button" data-act="hear">${IC.spk} ${T(I.hear)}</button>
+        <p class="pprompt">${T(I.prompt_show)}</p>
+        <div class="row" style="justify-content:center"><button class="btn primary lg" type="button" data-act="next">${T(I.next)} →</button></div></div>`;
+    } else if (step === 1) {
+      const opts = [w, ...distractors(s, w)].sort(() => Math.random() - .5);
+      body = `<div class="pstage anim"><div class="pask"><span>¿Dónde está…</span> <b>${esc(w.es)}</b>?<button class="spk" type="button" data-act="hear" aria-label="${T(I.hear)}">${IC.spk}</button></div>
+        <div class="pfind">${opts.map(x => `<button class="pcard" type="button" data-w="${esc(x.es)}" data-ok="${x === w}">${artFor(x.es)}</button>`).join("")}</div>
+        <p class="pprompt">${T(I.prompt_find)}</p></div>`;
+    } else {
+      const hit = lineForWord(s, w.es);
+      const lineHTML = hit ? `<div class="pline">${hit.toks.map((t, k) => k === hit.k ? `<span class="gap"><i class="art">${art}</i></span>` : `<span class="w">${esc(t.t)}</span>`).join(" ")}</div><div class="pgl" ${GLOSS ? "" : "hidden"}>${esc(hit.line.en)}</div>`
+        : `<div class="pline"><span class="gap big"><i class="art">${art}</i></span></div><div class="pgl">${T(I.say_alone)}</div>`;
+      body = `<div class="pstage anim">${lineHTML}
+        <div class="row" style="justify-content:center;margin-top:.9rem">${hit ? `<button class="btn" type="button" data-act="hum">${s.melody ? IC.note + " " + T(I.hum_line) : IC.spk + " " + T(I.read_line)}</button>` : `<button class="btn" type="button" data-act="hear">${IC.spk} ${T(I.hear)}</button>`}</div>
+        <p class="pprompt">${T(I.prompt_say)}</p>
+        <div class="row" style="justify-content:center;gap:.8rem"><button class="btn lg" type="button" data-act="notyet">${T(I.not_yet)}</button><button class="btn primary lg" type="button" data-act="said">${IC.check} ${T(I.said_it)}</button></div></div>`;
+    }
+    o.innerHTML = head + body;
+    $('[data-act="close"]', o).addEventListener("click", ()=> closePractice(true));
+    $$('[data-act="hear"]', o).forEach(b => b.addEventListener("click", ()=> speak(w.es)));
+    const nx = $('[data-act="next"]', o); if (nx) nx.addEventListener("click", ()=>{ step = 1; draw(); });
+    if (step === 0) setTimeout(()=> speak(w.es), 350);
+    if (step === 1) {
+      findTries = 0; setTimeout(()=> speak("¿Dónde está? " + w.es), 400);
+      $$(".pcard", o).forEach(c => c.addEventListener("click", ()=>{
+        if (c.dataset.ok === "true") { c.classList.add("ok"); $$(".pcard", o).forEach(x => x.disabled = true); speak(w.es); setTimeout(()=>{ step = 2; draw(); }, 900); }
+        else { c.classList.remove("no"); void c.offsetWidth; c.classList.add("no"); findTries++; if (mode === "review" && findTries === 1) miss(w, false); }
+      }));
+    }
+    if (step === 2) {
+      const hit = lineForWord(s, w.es);
+      const hum = $('[data-act="hum"]', o); if (hum) hum.addEventListener("click", ()=>{
+        if (!(s.melody && humGap(s, hit.li, hit.k, hit.toks))) { const txt = hit.toks.map((t, k) => k === hit.k ? "…" : t.t).join(" "); speak(txt); }
+      });
+      $('[data-act="said"]', o).addEventListener("click", ()=>{ said(w, s); });
+      $('[data-act="notyet"]', o).addEventListener("click", ()=>{ miss(w, true); leftNow++; results.push({ w, kept: false }); idx++; step = mode === "review" ? 1 : 0; draw(); });
+    }
+  };
+  const said = (w, s) => {
+    const was = isKept(w.es);
+    if (!was) keepWord(w, s); else { const r = WORDS[wkey(w.es)]; r.lastReview = Date.now(); r.misses = 0; saveWords(); }
+    keptNow++; results.push({ w, kept: true });
+    flyToJar(o, artFor(w.es)); toast(T(I.kept_toast) + " " + w.es);
+    setTimeout(()=>{ idx++; step = mode === "review" ? 1 : 0; draw(); }, 900);
+  };
+  const miss = (w, final) => {
+    const r = WORDS[wkey(w.es)]; if (!r || !r.kept) return;
+    r.misses = (r.misses || 0) + 1; saveWords();
+    if (r.misses >= 2) { unkeepWord(w.es); toast(T(I.unkept_toast) + w.es); }
+  };
+  const drawEnd = () => {
+    const left = mode === "review" ? 0 : toKeep(song).length;
+    o.innerHTML = `<div class="ptop"><span class="title">${esc(song ? song.title : T(I.review))}</span><span class="grow"></span><button class="btn sm" type="button" data-act="close">${T(I.close)}</button></div>
+      <div class="pstage anim pend"><div class="jar-big">${jarSVG(keptList().length, TOTAL_KEEPABLE)}</div>
+        <h1>${T(I.done_title)}</h1>
+        <p class="lede"><b>${keptNow}</b> ${T(I.done_kept)}${leftNow ? ` · <b>${leftNow}</b> ${T(I.done_left)}` : ""}</p>
+        <div class="row" style="justify-content:center;gap:.7rem;margin-top:1rem">
+          ${song ? `<button class="btn" type="button" data-act="close">${T(I.back_song)}</button>` : ""}
+          <a class="btn primary" href="#/palabras" data-act="words">${T(I.see_words)}</a></div></div>`;
+    $$('[data-act="close"]', o).forEach(b => b.addEventListener("click", ()=> closePractice(true)));
+    $('[data-act="words"]', o).addEventListener("click", ()=> closePractice(false));
+  };
+  draw();
+}
+function closePractice(updateHash){
+  if (!practiceState) return;
+  stopAll(); document.removeEventListener("keydown", practiceState.key);
+  practiceState.el.remove(); document.body.style.overflow = "";
+  const st = practiceState; practiceState = null;
+  if (updateHash) { if (st.song) { history.replaceState(null, "", `#/song/${st.song.id}`); renderSong(st.song); } else { history.replaceState(null, "", "#/palabras"); renderWords("words"); } }
+}
+function openReview(){
+  const list = keptList().sort((a, b) => (a.lastReview || 0) - (b.lastReview || 0)).slice(0, 5).map(r => ({ es: r.es, en: r.en, songObj: songOf(r.song) || SONGS[0] }));
+  if (list.length < 3) { toast(T(I.review_none)); return; }
+  openPractice({ song: null, items: list, mode: "review" });
+}
+// the word jar
+function jarSVG(n, total, mini){
+  const ratio = Math.max(0, Math.min(1, total ? n / total : 0)); const fillH = 34 * ratio; const y = 50 - fillH;
+  return `<svg viewBox="0 0 48 60" class="jar${mini ? " mini" : ""}" aria-hidden="true"><path d="M14 4h20v6h-20z" fill="#C97C10" stroke="#4A3318" stroke-width="2"/>
+    <defs><clipPath id="jc${mini ? "m" : ""}"><path d="M10 12h28c2 0 4 2 4 4v34c0 4-2 6-6 6H12c-4 0-6-2-6-6V16c0-2 2-4 4-4z"/></clipPath></defs>
+    <path d="M10 12h28c2 0 4 2 4 4v34c0 4-2 6-6 6H12c-4 0-6-2-6-6V16c0-2 2-4 4-4z" fill="#FFFFFF" fill-opacity=".55" stroke="#4A3318" stroke-width="2"/>
+    <g clip-path="url(#jc${mini ? "m" : ""})"><rect x="6" y="${y}" width="36" height="${fillH + 6}" fill="#F2A62C"/><path d="M6 ${y} q9 -3 18 0 t18 0" fill="#FBD97A"/></g>
+    ${mini ? "" : `<text x="24" y="40" text-anchor="middle" font-family="Alegreya, Georgia, serif" font-size="14" font-weight="700" fill="#4A3318">${n}</text>`}
+    </svg>`;
+}
+function flyToJar(o, art){
+  const from = $(".bigart, .gap .art, .pcard.ok", o); const jar = $("#jarMini", o); if (!jar) return;
+  const f = (from || o).getBoundingClientRect(), j = jar.getBoundingClientRect();
+  const el = document.createElement("div"); el.className = "fly"; el.innerHTML = art; document.body.appendChild(el);
+  el.style.left = (f.left + f.width / 2 - 24) + "px"; el.style.top = (f.top + f.height / 2 - 24) + "px";
+  requestAnimationFrame(()=>{ el.style.transform = `translate(${j.left + j.width / 2 - (f.left + f.width / 2)}px, ${j.top + j.height / 2 - (f.top + f.height / 2)}px) scale(.35)`; el.style.opacity = "0.2"; });
+  setTimeout(()=>{ el.remove(); jar.innerHTML = jarSVG(keptList().length, TOTAL_KEEPABLE, true); jar.classList.remove("pop"); void jar.offsetWidth; jar.classList.add("pop"); }, 750);
+}
+
+/* ================= words page: the collection ================= */
 function renderWords(tab){
   const v = $("#view");
-  const all = [];
-  SONGS.forEach(s => s.vocab.forEach(w => all.push({ ...w, song: s })));
-  const seen = new Set(); const uniq = all.filter(w => { const k = w.es.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; });
-  uniq.sort((a, b) => a.es.localeCompare(b.es, "es"));
+  const kept = keptList();
+  const groups = SONGS.map(s => ({ s, ws: kept.filter(w => w.song === s.id) })).filter(g => g.ws.length);
+  const header = `<div class="wtop">
+      <div class="jar-wrap">${jarSVG(kept.length, TOTAL_KEEPABLE)}</div>
+      <div><h1>${T(I.words_title)}</h1><p class="wcount"><b>${kept.length}</b> ${T(I.jar_label).replace("{n}", TOTAL_KEEPABLE)}</p></div>
+      <div class="row" style="margin-left:auto">${kept.length >= 3 ? `<button class="btn primary" type="button" data-act="review">${IC.play} ${T(I.review)}</button>` : ""}<button class="btn sm" type="button" data-act="gloss" aria-pressed="${GLOSS}">${T(I.english)}</button></div></div>`;
+  const cards = kept.length ? groups.map(g => `<section class="wgroup"><h2><a href="#/song/${g.s.id}">${esc(g.s.title)}</a></h2>
+      <div class="kcards">${g.ws.map(w => { const hit = lineForWord(g.s, w.es); return `<div class="kc"><span class="kart">${artFor(w.es)}</span><span class="ktx"><b class="es">${esc(w.es)}</b><span class="en">${esc(w.en)}</span>${hit ? `<span class="ctx">${esc(hit.line.es)}</span>` : ""}</span><button class="spk" type="button" data-w="${esc(w.es)}" aria-label="${T(I.hear)}">${IC.spk}</button></div>`; }).join("")}</div></section>`).join("")
+    : `<div class="wempty"><p>${T(I.words_empty)}</p><a class="btn primary" href="#/song/pollitos">${T(I.start_with)}</a></div>`;
   v.innerHTML = `<div class="fade">
-    <div class="hero"><div><h1>${T(I.nav_words)}</h1></div></div>
     <div class="tabs"><button type="button" data-t="words" aria-pressed="${tab==="words"}">${T(I.tab_words)}</button><button type="button" data-t="phrases" aria-pressed="${tab==="phrases"}">${T(I.tab_phrases)}</button></div>
-    ${tab === "words" ? `<p class="wordhint">${T(I.words_hint)}</p><div class="flash">${uniq.map(w => `<button class="fc" type="button" data-w="${esc(w.es)}"><span class="hear" data-hear>${IC.spk}</span>${artFor(w.es) ? `<span class="fico">${artFor(w.es)}</span>` : ""}<span class="w">${esc(w.es)}</span><span class="m" hidden>${esc(w.en)}</span><span class="from">${T(I.from)} ${esc(w.song.title)}</span></button>`).join("")}</div>`
+    ${tab === "words" ? header + cards + (kept.length >= 3 ? `<p class="wordhint" style="margin-top:1rem">${T(I.review_hint)}</p>` : "")
       : `<p class="wordhint">${T(I.phrases_hint)}</p><div class="phrases">${PHRASES.map(p => `<div class="ph"><span class="es">${esc(p.es)}</span><button class="spk" type="button" data-w="${esc(p.es)}" aria-label="${T(I.hear)}">${IC.spk}</button><span class="en">${esc(p.en)}</span></div>`).join("")}</div>`}
   </div>`;
+  document.body.classList.toggle("no-gloss", !GLOSS);
   $$(".tabs button", v).forEach(b => b.addEventListener("click", ()=>{ location.hash = b.dataset.t === "phrases" ? "#/palabras/frases" : "#/palabras"; }));
-  $$(".fc", v).forEach(fc => {
-    fc.addEventListener("click", e => {
-      if (e.target.closest("[data-hear]")) { speak(fc.dataset.w); return; }
-      const m = $(".m", fc); m.hidden = !m.hidden; fc.classList.toggle("flipped", !m.hidden);
-    });
-  });
-  $$(".ph .spk", v).forEach(b => b.addEventListener("click", ()=> speak(b.dataset.w)));
+  $$(".spk[data-w]", v).forEach(b => b.addEventListener("click", ()=> speak(b.dataset.w)));
+  const rv = $('[data-act="review"]', v); if (rv) rv.addEventListener("click", openReview);
+  const gl = $('[data-act="gloss"]', v); if (gl) gl.addEventListener("click", ()=> setGloss(!GLOSS));
 }
 
 /* ================= tutorial ================= */
@@ -1880,7 +2132,7 @@ const STEPS = [
  { scene:"play", h:{en:"Play it with your hands",es:"Juégala con las manos"},
    lede:{en:"Every song has a game. Do the motion while you sing.",es:"Cada canción tiene un juego. Haz el movimiento mientras cantas."} },
  { scene:"words", h:{en:"Keep the words",es:"Guarda las palabras"},
-   lede:{en:"Tap a card to flip it. Tap the speaker to hear it.",es:"Toca una tarjeta para voltearla. Toca la bocina para oírla."}, tryHash:"#/palabras" },
+   lede:{en:"After a song, keep its words: see it, find it, say it. Kept words fill your jar.",es:"Después de la canción, guarda sus palabras: míralo, búscalo, dilo. Las guardadas llenan tu frasco."}, tryHash:"#/song/pollitos/keep" },
  { scene:"track", h:{en:"One song a week",es:"Una canción por semana"},
    lede:{en:"Same song, same moment, every day. Mark it on day seven.",es:"La misma canción, el mismo momento, todos los días. Márcala al séptimo día."} },
  { scene:"talk", h:{en:"Talk around the song",es:"Habla alrededor de la canción"},

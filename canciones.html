@@ -622,6 +622,114 @@
 
   @media (prefers-reduced-motion: reduce) { .flag, .chick-bob, .note-float, .waves.on i { animation: none; } .waves.on i { height: 12px; } .hand { transition: none; } }
 
+  /* ---------- grounded: paper, rules, stickers, stamps ---------- */
+  body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.07; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  :root[data-theme="dark"] body::before { opacity: 0.12; mix-blend-mode: screen; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) body::before { opacity: 0.12; mix-blend-mode: screen; } }
+  main, .sing, .practice, .tour { position: relative; z-index: 1; }
+  .rule { display: block; width: 100%; height: 12px; color: var(--line); margin: 1.4rem 0 1rem; }
+  .fade { animation: none; }
+  .quiet { color: var(--muted); font-size: 0.92rem; margin: 0.6rem 0 0; }
+  .link { background: none; border: 0; padding: 0; color: var(--muted); font: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line); cursor: pointer; }
+  .link[aria-pressed="true"] { color: var(--marigold-deep); text-decoration-color: var(--marigold); }
+  /* home */
+  .hero { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin: 0.6rem 0 0.6rem; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-style: italic; max-width: 14ch; }
+  .banner { margin: 0.4rem 0 1rem; color: var(--ink-2); display: flex; align-items: center; gap: 0.5rem; }
+  .banner a { color: var(--marigold-deep); text-decoration-color: var(--marigold); text-underline-offset: 3px; }
+  .banner .x { background: none; border: 0; color: var(--muted); font-size: 1.1rem; padding: 0 0.3rem; }
+  .filters { display: flex; flex-direction: column; gap: 0.2rem; margin: 0.4rem 0 1.2rem; }
+  .frow { display: flex; flex-wrap: wrap; gap: 0.2rem 1rem; }
+  .frow button { background: none; border: 0; padding: 0.1rem 0; font: inherit; font-weight: 700; color: var(--muted); border-bottom: 2px solid transparent; }
+  .frow button:hover { color: var(--ink); }
+  .frow button[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--marigold); }
+  .group { margin-bottom: 1.8rem; } .group h2 { font-size: 1.5rem; font-style: italic; } .group .rule { margin: 0.3rem 0 0.9rem; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0.9rem 1rem; }
+  .card { position: relative; display: block; text-decoration: none; color: inherit; background: var(--card); border: 1px solid var(--line); border-left: 1px solid var(--line); border-radius: 4px 14px 6px 12px; padding: 0.9rem 1rem 0.9rem 1rem; box-shadow: none; transition: none; }
+  .card:nth-child(3n+1) { transform: rotate(-0.35deg); } .card:nth-child(3n+2) { transform: rotate(0.25deg); } .card:nth-child(3n) { transform: rotate(-0.15deg); }
+  .card:hover { transform: none; box-shadow: none; border-color: var(--marigold); }
+  .card h3 { font-size: 1.3rem; padding-right: 2rem; }
+  .card .first { font-family: "Alegreya", Georgia, serif; font-style: italic; color: var(--muted); font-size: 1rem; margin: 0.2rem 0 0; }
+  .card .glyph { position: absolute; top: 0.8rem; right: 0.8rem; width: 1.3rem; height: 1.3rem; background: none; opacity: 0.7; }
+  .card .glyph svg { width: 100%; height: 100%; }
+  .sticker { position: absolute; top: -0.6rem; left: 0.7rem; background: var(--rosa); color: #fff; font-family: "Alegreya Sans", system-ui, sans-serif; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.15rem 0.55rem; border-radius: 3px; transform: rotate(-3deg); box-shadow: 0 1px 2px rgba(0,0,0,.15); }
+  .stampmini { position: absolute; bottom: 0.6rem; right: 0.7rem; font-family: "Alegreya Sans", system-ui, sans-serif; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--green); border: 2px solid var(--green); border-radius: 4px; padding: 0.05rem 0.4rem; transform: rotate(-6deg); opacity: 0.85; }
+  /* song page */
+  .song { max-width: 42rem; }
+  .song-head .kindline { margin: 0.4rem 0 0; color: var(--muted); font-size: 0.95rem; }
+  .song-head h1 { font-size: clamp(2.1rem, 5.5vw, 3rem); margin: 0 0 0.6rem; }
+  .memo { position: relative; background: var(--soft); padding: 0.9rem 1.2rem 1rem; margin: 0.6rem 0 1.1rem; clip-path: polygon(0 4px, 3% 0, 9% 5px, 17% 1px, 26% 6px, 35% 0, 44% 5px, 55% 1px, 63% 6px, 72% 0, 81% 5px, 90% 1px, 100% 4px, 100% calc(100% - 5px), 92% 100%, 83% calc(100% - 4px), 74% 100%, 62% calc(100% - 6px), 51% 100%, 40% calc(100% - 5px), 29% 100%, 18% calc(100% - 4px), 8% 100%, 0 calc(100% - 6px)); transform: rotate(-0.4deg); }
+  .memo p { margin: 0; max-width: 60ch; } .memo .es { font-family: "Alegreya", Georgia, serif; font-size: 1.15rem; line-height: 1.35; } .memo .en { color: var(--muted); font-size: 0.92rem; margin-top: 0.35rem; }
+  .no-gloss .memo .en { display: none; }
+  .actions { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .btn.lg { padding: 0.75rem 1.4rem; font-size: 1.05rem; }
+  .song .lyrics { background: none; box-shadow: none; padding: 0; border-radius: 0; }
+  .song .stanza + .stanza { border-top: 0; margin-top: 0.9rem; padding-top: 0; }
+  .song .ln .es { font-size: 1.5rem; }
+  .sec h2 { font-size: 1.35rem; font-style: italic; margin-bottom: 0.5rem; }
+  .sec p { max-width: 62ch; color: var(--ink-2); margin: 0; }
+  .howto { margin: 0; padding-left: 1.3rem; display: flex; flex-direction: column; gap: 0.35rem; color: var(--ink-2); }
+  .howto li { font-size: 1rem; padding-left: 0.2rem; }
+  .vocab { gap: 0.55rem 0.6rem; }
+  .chip { background: var(--card); border: 1px solid var(--line); border-radius: 3px 10px 4px 9px; box-shadow: 0 1px 2px rgba(60,40,10,.08); }
+  .chip:nth-child(odd) { transform: rotate(-0.8deg); } .chip:nth-child(even) { transform: rotate(0.7deg); }
+  .chip:hover, .chip.hot { border-color: var(--marigold); transform: none; }
+  .keeprow { flex-direction: row; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+  .stamp { background: none; border: 3px solid var(--line); color: var(--muted); border-radius: 6px; padding: 0.3rem 0.8rem; font-family: "Alegreya Sans", system-ui, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85rem; transform: rotate(-4deg); transition: color 150ms, border-color 150ms; }
+  .stamp:hover { border-color: var(--green); color: var(--green); }
+  .stamp[aria-pressed="true"] { border-color: var(--green); color: var(--green); border-style: double; border-width: 4px; }
+  .origin p { font-size: 1rem; line-height: 1.6; }
+  .nextprev { margin-top: 1.6rem; justify-content: space-between; }
+  .nextprev a { background: none; box-shadow: none; padding: 0.4rem 0; font-family: "Alegreya", Georgia, serif; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 0.3rem; color: var(--ink-2); min-width: 0; flex: none; }
+  .nextprev a svg { width: 1em; height: 1em; } .nextprev .fwd { display: inline-block; transform: scaleX(-1); }
+  /* reel */
+  .sing .top .title { font-size: 1.2rem; }
+  .sing .hint { font-size: 0.85rem; }
+  /* words */
+  .wtop { margin: 0.6rem 0 1.2rem; } .wtop h1 { font-style: italic; }
+  .wgroup h2 { font-style: italic; } .wgroup .rule { margin: 0.2rem 0 0.7rem; }
+  .kc { box-shadow: none; border: 1px solid var(--line); border-radius: 4px 12px 5px 10px; }
+  .wempty { box-shadow: none; border: 1px solid var(--line); }
+  /* tonight */
+  .coach1 { max-width: 42rem; } .coach1 .sec h2 { font-size: 1.7rem; font-style: normal; } .coach1 .sec h2 a { color: inherit; text-decoration: none; } .coach1 .sec h2 a:hover { color: var(--marigold-deep); }
+  .coach1 .row { margin-top: 0.7rem; }
+  .cphrases .ph { background: var(--card); border: 1px solid var(--line); box-shadow: none; }
+  /* practice */
+  .psteps { display: none; }
+  /* tutorial scenes */
+  .tcard { max-width: 42rem; }
+  .tcard .lede { max-width: 34em; }
+  .scene { position: relative; box-shadow: none; border: 1px solid var(--line); }
+  .sc-welcome, .sc-ready { border: 0; padding: 0; max-width: 24rem; }
+  .sc-welcome .pipo-host, .sc-ready .pipo-host { width: 13rem; }
+  .mini-line { font-family: "Alegreya", Georgia, serif; font-size: 1.9rem; text-align: center; margin-top: 0.2rem; }
+  .mini-line .w { display: inline-block; padding: 0 0.12em; border-radius: 0.2em; }
+  .mini-line .w.on { background: var(--marigold-soft); box-shadow: 0 0 0 3px var(--marigold); }
+  .filters.mini { margin: 0 0 0.8rem; } .filters.mini .frow button { font-size: 0.9rem; }
+  .mc { border: 1px solid var(--line); background: var(--card); border-left: 1px solid var(--line); border-radius: 4px 12px 5px 10px; position: relative; padding-top: 0.75rem; }
+  .mc .sticker { top: -0.55rem; left: 0.6rem; }
+  .pipo-mini { position: absolute; right: 0.5rem; bottom: 0.3rem; width: 5.5rem; aspect-ratio: 200 / 230; pointer-events: none; }
+  .sc-browse { padding-bottom: 0.6rem; padding-right: 6rem; }
+  .sc-sing2 { display: flex; gap: 1rem; align-items: center; justify-content: center; background: transparent; border: 0; padding: 0.4rem 0 0; }
+  .sc-sing2 .pipo-host { width: clamp(7rem, 30%, 11rem); aspect-ratio: 200 / 230; flex: none; }
+  .sc-sing2 .phone { width: min(60%, 15rem); }
+  .sc-sing2 .preel { position: relative; } .sc-sing2 .glit { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
+  .sc-sing2 .pl .w.lit { color: var(--marigold-deep); }
+  .sc-play2 { display: flex; gap: 1rem; align-items: center; justify-content: center; }
+  .sc-play2 .pipo-host { width: clamp(6rem, 28%, 9rem); aspect-ratio: 200 / 230; flex: none; }
+  .sc-play2 .patside { text-align: center; flex: 1; }
+  .sc-play2 .pat { height: 6rem; }
+  .sc-keep2 { display: flex; gap: 1rem; align-items: center; }
+  .sc-keep2 .pipo-host { width: clamp(6rem, 26%, 8.5rem); aspect-ratio: 200 / 230; flex: none; }
+  .sc-keep2 .kstage { flex: 1; text-align: center; min-height: 11rem; display: flex; flex-direction: column; justify-content: center; }
+  .sc-keep2 .bigart { width: 5.5rem; height: 5.5rem; margin: 0 auto; } .sc-keep2 .bigart svg { width: 100%; height: 100%; }
+  .sc-keep2 .pword { font-family: "Alegreya", Georgia, serif; font-size: 1.9rem; } .sc-keep2 .pgl { color: var(--muted); }
+  .sc-keep2 .pask { font-size: 1.3rem; justify-content: center; margin-bottom: 0.5rem; }
+  .sc-keep2 .pfind { max-width: 16rem; margin: 0 auto; gap: 0.5rem; } .sc-keep2 .pcard { padding: 0.5rem; border-radius: 14px; }
+  .sc-keep2 .pline { font-size: 1.5rem; } .sc-keep2 .jar-mini { display: block; margin: 0.5rem auto 0; width: 2rem; }
+  @media (max-width: 560px) { .sc-sing2, .sc-play2, .sc-keep2 { flex-direction: column; } .sc-browse { padding-right: 1.2rem; padding-bottom: 5rem; } }
+
   /* toast */
   .toast { position: fixed; left: 50%; bottom: 1.4rem; transform: translateX(-50%); background: var(--ink); color: var(--ground); padding: 0.55rem 1.1rem; border-radius: 999px; font-weight: 700; font-size: 0.95rem; z-index: 90; opacity: 0; transition: opacity 200ms; pointer-events: none; }
   .toast.on { opacity: 1; }
@@ -682,66 +790,67 @@ const I = {
   hero_h:{en:"Songs your family already knows",es:"Canciones que tu familia ya conoce"},
   hero_p:{en:"Eleven Mexican songs and eleven games and rhymes for singing with a child. Spanish in big letters, English underneath, a voice to copy, and the game that goes with each one.",es:"Once canciones mexicanas y once juegos y rimas para cantar con un niño. El español en grande, el inglés debajo, una voz para copiar y el juego que va con cada una."},
   stat:{en:"songs you know",es:"canciones que ya saben"},
-  banner:{en:"New here? A two-minute tour shows you how to read, listen, sing and play.",es:"¿Es tu primera vez? Un recorrido de dos minutos te enseña a leer, escuchar, cantar y jugar."},
+  banner:{en:"New here? Pipo can show you around.",es:"¿Primera vez? Pipo te enseña cómo va."},
   take_tour:{en:"Take the tour",es:"Ver el recorrido"}, dismiss:{en:"Dismiss",es:"Cerrar"},
   all:{en:"All",es:"Todas"}, start_here:{en:"Start here",es:"Empieza aquí"},
   kind_all:{en:"Everything",es:"Todo"}, kind_song:{en:"Songs",es:"Canciones"}, kind_game:{en:"Games",es:"Juegos"}, k_song:{en:"Song",es:"Canción"}, k_game:{en:"Game",es:"Juego"},
   kind_song_desc:{en:"Sung to a tune. Play hums it.",es:"Se cantan con tonada. Reproducir la tararea."}, kind_game_desc:{en:"Chanted or sung while you play: hands, laps, rounds, the piñata.",es:"Se dicen o cantan mientras juegas: manos, regazo, rondas, la piñata."},
   start_desc:{en:"Three short songs with a tune or a hand game. Learn these first.",es:"Tres canciones cortas con tonada o juego de manos. Aprende estas primero."},
   has_tune:{en:"tune",es:"tonada"}, has_game:{en:"game",es:"juego"}, lines:{en:"lines",es:"líneas"},
-  back:{en:"All songs",es:"Todas las canciones"},
+  back:{en:"Songs",es:"Canciones"},
   hear_all:{en:"Hear the whole song",es:"Oír toda la canción"}, stop:{en:"Stop",es:"Parar"},
   play_tune:{en:"Play the tune",es:"Tocar la tonada"},
   sing:{en:"Sing together",es:"Cantar juntos"},
   english:{en:"English",es:"Inglés"}, slow:{en:"Slow",es:"Despacio"}, slow_title:{en:"Slow down the voice and the tune",es:"Hace más lenta la voz y la tonada"},
   no_voice:{en:"No Spanish voice is installed on this device, so the speaker buttons will use a different accent. Adding a Spanish (Mexico) voice in your system settings fixes this.",es:"Este aparato no tiene una voz en español instalada, así que los botones de bocina usarán otro acento. Agrega una voz de Español (México) en los ajustes del sistema para arreglarlo."},
   no_speech:{en:"This browser cannot read text aloud. The lyrics and tune still work.",es:"Este navegador no puede leer en voz alta. La letra y la tonada sí funcionan."},
-  how:{en:"How to play",es:"Cómo se juega"}, words:{en:"Words to keep",es:"Palabras para guardar"},
+  how:{en:"How to play it",es:"Cómo se juega"}, words:{en:"Words to keep",es:"Palabras para guardar"},
   tap_word:{en:"Tap a word to hear it.",es:"Toca una palabra para oírla."},
-  know:{en:"We know this one",es:"Ya la sabemos"}, know_on:{en:"We know this one ✓",es:"Ya la sabemos ✓"},
+  know:{en:"Ya la sabemos",es:"Ya la sabemos"}, know_on:{en:"We know this one ✓",es:"Ya la sabemos ✓"},
   know_tip:{en:"Sing it every day for a week, then mark it.",es:"Cántala todos los días una semana y luego márcala."},
   prev:{en:"Previous",es:"Anterior"}, next:{en:"Next",es:"Siguiente"},
   cue_stanza:{en:"Verse",es:"Estrofa"}, repeat_more:{en:"…and keep counting up, as far as you like.",es:"…y sigan contando, hasta donde quieran."},
-  close:{en:"Close",es:"Cerrar"}, hear:{en:"Hear it",es:"Oír"}, play:{en:"Play",es:"Reproducir"}, tune:{en:"Tune",es:"Tonada"},
-  sing_hint:{en:"Drag a finger under the words as you read. Play hums the tune and scrolls by itself.",es:"Arrastra un dedo bajo las palabras mientras lees. Reproducir tararea la tonada y avanza sola."},
-  sing_hint_voice:{en:"Drag a finger under the words as you read. This rhyme is spoken, so Play reads it aloud and scrolls by itself.",es:"Arrastra un dedo bajo las palabras mientras lees. Esta rima se dice, así que Reproducir la lee en voz alta y avanza sola."}, tap_stage:{en:"Tap the words or press the arrow keys to move.",es:"Toca las palabras o usa las flechas para avanzar."},
+  close:{en:"Close",es:"Cerrar"}, hear:{en:"Hear it",es:"Óyela"}, play:{en:"Play",es:"Reproducir"}, tune:{en:"Tune",es:"Tonada"},
+  sing_hint:{en:"Play sings the tune. Drag a finger under the words to read.",es:"Reproducir canta la tonada. Arrastra un dedo bajo las palabras para leer."},
+  sing_hint_voice:{en:"Play reads it aloud. Drag a finger under the words to read.",es:"Reproducir la lee en voz alta. Arrastra un dedo bajo las palabras para leer."}, tap_stage:{en:"Tap the words or press the arrow keys to move.",es:"Toca las palabras o usa las flechas para avanzar."},
   words_title:{en:"My words",es:"Mis palabras"}, jar_label:{en:"of {n} words with a picture",es:"de {n} palabras con dibujo"}, stat_words:{en:"words kept",es:"palabras guardadas"},
-  words_empty:{en:"No words yet. Sing a song, then tap Keep the words to practice its words: see it, find it, say it. Kept words live here.",es:"Todavía no hay palabras. Canta una canción y toca Guardar las palabras para practicarlas: míralo, búscalo, dilo. Las guardadas viven aquí."},
+  words_empty:{en:"Nothing here yet. Sing a song, then keep its words. They come to live here.",es:"Todavía nada. Canta una canción y guarda sus palabras. Aquí se quedan a vivir."},
   start_with:{en:"Start with Los pollitos dicen",es:"Empieza con Los pollitos dicen"},
   review:{en:"Review",es:"Repaso"}, review_hint:{en:"Review takes five kept words, the ones you have not seen longest. Miss a word twice and it goes back to practice.",es:"El repaso toma cinco palabras guardadas, las que llevan más tiempo sin verse. Si una falla dos veces, vuelve a practicar."},
   review_none:{en:"Keep at least three words to review.",es:"Guarda al menos tres palabras para repasar."},
   keep_btn:{en:"Keep the words",es:"Guardar las palabras"}, keep_left:{en:"to keep",es:"por guardar"}, all_kept:{en:"All kept",es:"Todas guardadas"}, practice_again:{en:"Practice again",es:"Practicar otra vez"},
   step_show:{en:"See it",es:"Míralo"}, step_find:{en:"Find it",es:"Búscalo"}, step_say:{en:"Say it",es:"Dilo"},
-  prompt_show:{en:"Say it together, twice. Point at the picture.",es:"Díganlo juntos, dos veces. Señalen el dibujo."},
-  prompt_find:{en:"Ask the question. The child taps the picture.",es:"Haz la pregunta. El niño toca el dibujo."},
-  prompt_say:{en:"Hum the line and stop at the gap. The child says the missing word. You decide.",es:"Tararea la línea y para en el hueco. El niño dice la palabra que falta. Tú decides."},
+  prompt_show:{en:"Say it together, twice.",es:"Díganla juntos, dos veces."},
+  prompt_find:{en:"Ask, and let the child tap.",es:"Pregunta, y deja que el niño toque."},
+  prompt_say:{en:"Hum the line and stop at the gap. You decide.",es:"Tararea la línea y para en el hueco. Tú decides."},
   say_alone:{en:"Ask: ¿Qué es? The child names it.",es:"Pregunta: ¿Qué es? El niño lo nombra."},
   hum_line:{en:"Hum the line",es:"Tararear la línea"}, read_line:{en:"Read the line",es:"Leer la línea"}, said_it:{en:"Said it",es:"La dijo"}, not_yet:{en:"Not yet",es:"Todavía no"},
   kept_toast:{en:"Kept:",es:"Guardada:"}, unkept_toast:{en:"Back to practice: ",es:"Vuelve a practicar: "},
   done_title:{en:"Done for today",es:"Listo por hoy"}, done_kept:{en:"kept",es:"guardadas"}, done_left:{en:"for next time",es:"para la próxima"}, see_words:{en:"See my words",es:"Ver mis palabras"}, back_song:{en:"Back to the song",es:"Volver a la canción"},
   nav_coach:{en:"Tonight",es:"Hoy"},
-  coach_title:{en:"Tonight's two minutes",es:"Los dos minutos de hoy"},
+  coach_title:{en:"Tonight",es:"Hoy"},
   coach_p:{en:"A small plan built from what you have sung and kept. Same song, same moment, every day.",es:"Un plan pequeño hecho con lo que han cantado y guardado. La misma canción, el mismo momento, todos los días."},
   coach_streak:{en:"days in a row",es:"días seguidos"}, coach_kept_week:{en:"words kept this week",es:"palabras guardadas esta semana"},
   coach_sing:{en:"Sing tonight",es:"Canten hoy"},
-  coach_why_continue:{en:"You are in the middle of this one: {n} words still to keep. Sing it through, then keep one or two.",es:"Van a la mitad de esta: faltan {n} palabras por guardar. Cántenla completa y luego guarden una o dos."},
-  coach_why_next:{en:"Last song done. This is the next one to start. Just sing it tonight; keep words tomorrow.",es:"La anterior ya quedó. Esta es la siguiente. Hoy solo cántenla; mañana guarden palabras."},
-  coach_why_first:{en:"A good first song: short, with a tune, and they will ask for it again. Just sing it tonight.",es:"Una buena primera canción: corta, con tonada, y la van a pedir otra vez. Hoy solo cántenla."},
+  coach_why_continue:{en:"You are in the middle of this one. Sing it through, then keep a word or two.",es:"Van a la mitad de esta. Cántenla completa y luego guarden una o dos palabras."},
+  coach_why_next:{en:"The last one is done. Just sing this one tonight.",es:"La anterior ya quedó. Hoy solo canten esta."},
+  coach_why_first:{en:"A good first song. Just sing it tonight.",es:"Una buena primera canción. Hoy solo cántenla."},
   coach_phrases:{en:"Say these at dinner",es:"Digan esto en la cena"},
   coach_phrases_tip:{en:"Built from the words you kept most recently. Ask, wait, and let the child answer with one word.",es:"Hechas con las últimas palabras guardadas. Pregunta, espera, y deja que el niño conteste con una palabra."},
   coach_phrases_none:{en:"Keep a few words and phrases will appear here.",es:"Guarden algunas palabras y aquí aparecerán frases."},
-  coach_notice:{en:"What we noticed",es:"Lo que notamos"},
+  coach_notice:{en:"Worth another try",es:"Vale la pena otro intento"},
   coach_notice_good:{en:"No word needed more than one try this week. Keep going.",es:"Ninguna palabra necesitó más de un intento esta semana. Sigan así."},
   coach_notice_none:{en:"Nothing yet. After a few sessions this card will show the words that needed more than one try, with a tip for each.",es:"Todavía nada. Después de unas sesiones, aquí saldrán las palabras que necesitaron más de un intento, con un consejo para cada una."},
-  coach_due:{en:"{n} kept words have not been seen in three days. A review keeps them.",es:"{n} palabras guardadas llevan tres días sin verse. Un repaso las mantiene."},
+  coach_due:{en:"{n} words are ready for a review",es:"{n} palabras esperan un repaso"},
   tab_words:{en:"My words",es:"Mis palabras"}, tab_phrases:{en:"Phrases for grown-ups",es:"Frases para los grandes"},
   words_hint:{en:"Every key word from every song. Tap a card to flip it, or the speaker to hear it. Words you have heard in a song you know are marked.",es:"Todas las palabras clave de todas las canciones. Toca una tarjeta para voltearla, o la bocina para oírla."},
   phrases_hint:{en:"You do not need long sentences. These cover most of what you will say while singing.",es:"No necesitas oraciones largas. Estas cubren casi todo lo que dirás mientras cantan."},
   from:{en:"from",es:"de"},
   step:{en:"Step",es:"Paso"}, of:{en:"of",es:"de"},
-  tour_back:{en:"Back",es:"Atrás"}, tour_next:{en:"Next",es:"Siguiente"}, tour_start:{en:"Start",es:"Empezar"}, tour_skip:{en:"Skip the tour",es:"Saltar el recorrido"},
+  tour_back:{en:"Back",es:"Atrás"}, tour_next:{en:"Next",es:"Siguiente"}, tour_start:{en:"Start",es:"Empezar"}, tour_skip:{en:"Skip",es:"Saltar"},
   try_it:{en:"Try it",es:"Pruébalo"},
   saved:{en:"Marked as known",es:"Marcada como conocida"}, unsaved:{en:"Unmarked",es:"Desmarcada"},
+  origin_h:{en:"Where it comes from",es:"De dónde viene"}, know_short:{en:"known",es:"sabida"}, coach_streak1:{en:"day in a row",es:"día seguido"},
   weekdays:{en:["M","T","W","T","F","S","S"],es:["L","M","M","J","V","S","D"]},
 };
 
@@ -1879,60 +1988,6 @@ function setLang(l){
 function setGloss(on){ GLOSS = on; try { localStorage.setItem("cantame-gloss", on ? "on" : "off"); } catch(e){} document.body.classList.toggle("no-gloss", !GLOSS); $$('[data-act="gloss"]').forEach(b => b.setAttribute("aria-pressed", GLOSS ? "true" : "false")); }
 
 /* ================= library ================= */
-function cardHTML(s){
-  const c = catOf(s.cat);
-  const known = KNOWN.has(s.id);
-  return `<a class="card stripe-${c.c}" href="#/song/${s.id}">
-    ${s.start ? `<span class="start">${T(I.start_here)}</span>` : ""}
-    ${known && !s.start ? `<span class="known" title="${T(I.know)}">${IC.check}</span>` : ""}
-    <h3>${esc(s.title)}</h3>
-    <p class="first">${esc(firstLine(s))}</p>
-    <div class="meta">
-      <span class="pill c-${c.c}">${IC[c.ic]} ${T(c.n)}</span>
-      <span class="tag kind-${s.kind}">${s.kind === "song" ? IC.note : IC.ring} ${T(s.kind === "song" ? I.k_song : I.k_game)}</span>
-      ${s.melody ? `<span class="tag">${IC.note} ${T(I.has_tune)}</span>` : ""}
-      <span class="tag">${IC.hand} ${T(I.has_game)}</span>
-      <span class="tag">${lineCount(s)} ${T(I.lines)}</span>
-    </div></a>`;
-}
-function renderLibrary(){
-  const v = $("#view");
-  const byKind = s => KIND === "all" || s.kind === KIND;
-  const groups = (FILTER === "all" ? CATS : CATS.filter(c => c.id === FILTER)).map(c => {
-    const list = SONGS.filter(s => s.cat === c.id && byKind(s));
-    if (!list.length) return "";
-    return `<section class="group">
-      <h2><span class="pill c-${c.c}">${IC[c.ic]} ${T(c.n)}</span></h2>
-      <p class="desc">${T(c.d)}</p>
-      <div class="cards">${list.map(cardHTML).join("")}</div></section>`;
-  }).join("");
-  const starters = FILTER === "all" && KIND === "all" ? `<section class="group">
-      <h2><span class="pill c-rosa">${IC.star} ${T(I.start_here)}</span></h2>
-      <p class="desc">${T(I.start_desc)}</p>
-      <div class="cards">${SONGS.filter(s => s.start).map(cardHTML).join("")}</div></section>` : "";
-  v.innerHTML = `<div class="fade">
-    <div class="hero">
-      <div><h1>${T(I.hero_h)}</h1><p>${T(I.hero_p)}</p></div>
-      <div class="stats"><div class="stat"><b>${KNOWN.size}</b>${T(I.stat)}</div><div class="stat"><b>${keptList().length}</b>${T(I.stat_words)}</div></div>
-      <div class="pipo-hero" id="pipoHero"></div>
-    </div>
-    ${!TOUR_SEEN ? `<div class="banner" id="tourBanner"><div class="pic">${PIC.picado}</div><p>${T(I.banner)}</p><a class="btn primary sm" href="#/tour/0">${T(I.take_tour)}</a><button class="x" type="button" aria-label="${T(I.dismiss)}" data-act="dismiss">×</button></div>` : ""}
-    <div class="kinds" role="group">
-      ${[["all", I.kind_all, null], ["song", I.kind_song, I.kind_song_desc], ["game", I.kind_game, I.kind_game_desc]].map(([k, n, d]) => `<button type="button" data-k="${k}" aria-pressed="${KIND===k}"><b>${T(n)}</b>${d ? `<small>${T(d)}</small>` : `<small>${SONGS.length}</small>`}</button>`).join("")}
-    </div>
-    <div class="filters" role="group">
-      <button type="button" data-f="all" aria-pressed="${FILTER==="all"}">${T(I.all)}</button>
-      ${CATS.map(c => `<button type="button" data-f="${c.id}" aria-pressed="${FILTER===c.id}">${IC[c.ic]} ${T(c.n)}</button>`).join("")}
-    </div>
-    ${starters}${groups}
-  </div>`;
-  killPagePipo(); pagePipo = makePipo($("#pipoHero", v)); pagePipo.set("wave"); setTimeout(()=>{ if (pagePipo) pagePipo.set("idle"); }, 2200);
-  $$(".filters button", v).forEach(b => b.addEventListener("click", ()=>{ FILTER = b.dataset.f; renderLibrary(); }));
-  $$(".kinds button", v).forEach(b => b.addEventListener("click", ()=>{ KIND = b.dataset.k; renderLibrary(); }));
-  const dis = $('[data-act="dismiss"]', v); if (dis) dis.addEventListener("click", ()=>{ TOUR_SEEN = true; try { localStorage.setItem("cantame-tour-seen","1"); } catch(e){} $("#tourBanner").remove(); });
-}
-
-/* ================= song page ================= */
 function flatLines(s){ const out = []; s.stanzas.forEach((st, si) => st.forEach((ln, li) => out.push({ si, li, ...ln }))); return out; }
 function lineHTML(ln, idx, extra){
   return `<div class="ln ${extra||""}" data-i="${idx}" tabindex="0" role="button">
@@ -1940,84 +1995,6 @@ function lineHTML(ln, idx, extra){
     <button class="spk" type="button" tabindex="-1" aria-label="${T(I.hear)}: ${esc(ln.es)}">${IC.spk}</button>
     <span class="en">${esc(ln.en)}</span></div>`;
 }
-function renderSong(s){
-  const c = catOf(s.cat);
-  const lines = flatLines(s);
-  const idx = SONGS.indexOf(s);
-  const prev = SONGS[(idx - 1 + SONGS.length) % SONGS.length], next = SONGS[(idx + 1) % SONGS.length];
-  let n = 0;
-  const stanzas = s.stanzas.map((st, si) => `<div class="stanza">
-      ${s.stanzas.length > 1 ? `<div class="cue">${T(I.cue_stanza)} ${si+1}</div>` : ""}
-      ${st.map(ln => lineHTML(ln, n++)).join("")}
-    </div>`).join("") + (s.open ? `<div class="repeat">${T(I.repeat_more)}</div>` : "");
-  $("#view").innerHTML = `<div class="fade">
-    <a class="back" href="#/">${IC.back} ${T(I.back)}</a>
-    <div class="song-head">
-      <span class="pill c-${c.c}">${IC[c.ic]} ${T(c.n)}</span>
-      <h1>${esc(s.title)}</h1>
-    </div>
-    <div class="note"><span class="ic">i</span><p>${T(s.note)}</p></div>
-    <div class="toolbar">
-      <button class="btn" type="button" data-act="hearall">${IC.play} <span>${T(I.hear_all)}</span></button>
-      ${s.melody ? `<button class="btn" type="button" data-act="tune">${IC.note} <span>${T(I.play_tune)}</span></button>` : ""}
-      <button class="btn primary" type="button" data-act="sing">${IC.singi} ${T(I.sing)}</button>
-      <span class="sep"></span>
-      <button class="btn sm" type="button" data-act="gloss" aria-pressed="${GLOSS}">${T(I.english)}</button>
-      <button class="btn sm" type="button" data-act="slow" aria-pressed="${SLOW}" title="${T(I.slow_title)}">${T(I.slow)}</button>
-      <p class="voice-note" ${(!VOICE_CHECKED || VOICE) ? "hidden" : ""}>${T(SPEECH ? I.no_voice : I.no_speech)}</p>
-    </div>
-    <div class="song-grid">
-      <div class="lyrics" id="lyrics">${stanzas}</div>
-      <aside class="side">
-        <div class="panel"><h2>${IC.hand} ${T(I.how)}</h2>
-          <ol class="howto">${T(s.how).map((h, i) => `<li><span class="n">${i+1}</span><span>${esc(h)}</span></li>`).join("")}</ol></div>
-        <div class="panel"><h2>${IC.chick} ${T(I.words)}</h2>
-          <div class="vocab">${s.vocab.map(w => { const a = artFor(w.es); return `<button class="chip${isKept(w.es) ? " kept" : ""}" type="button" data-w="${esc(w.es)}">${a ? `<span class="ico">${a}</span>` : ""}<span class="tx"><span class="es">${esc(w.es)}</span><span class="en">${esc(w.en)}</span></span></button>`; }).join("")}</div>
-          <p class="tip">${T(I.tap_word)}</p>
-          <div class="keeprow">${toKeep(s).length ? `<button class="btn primary" type="button" data-act="keep">${IC.check} ${T(I.keep_btn)} · ${toKeep(s).length} ${T(I.keep_left)}</button>` : `<button class="btn" type="button" data-act="keep" aria-pressed="true">${IC.check} ${T(I.all_kept)}</button><button class="btn sm ghost" type="button" data-act="keepagain">${T(I.practice_again)}</button>`}</div></div>
-        <div class="panel">
-          <button class="btn know" type="button" data-act="know" aria-pressed="${KNOWN.has(s.id)}">${IC.check} <span>${T(KNOWN.has(s.id) ? I.know_on : I.know)}</span></button>
-          <p class="tip">${T(I.know_tip)}</p></div>
-      </aside>
-    </div>
-    <div class="nextprev">
-      <a href="#/song/${prev.id}"><small>${T(I.prev)}</small><b>${esc(prev.title)}</b></a>
-      <a class="next" href="#/song/${next.id}"><small>${T(I.next)}</small><b>${esc(next.title)}</b></a>
-    </div>
-  </div>`;
-  document.body.classList.toggle("no-gloss", !GLOSS);
-  const v = $("#view");
-  const hot = i => { $$("#lyrics .ln.hot").forEach(x => x.classList.remove("hot")); if (i != null) { const el = $(`#lyrics .ln[data-i="${i}"]`); if (el) { el.classList.add("hot"); el.scrollIntoView({ block:"nearest", behavior:"smooth" }); } } };
-  const hearBtn = $('[data-act="hearall"]', v), tuneBtn = $('[data-act="tune"]', v);
-  const resetBtns = () => { hearBtn.setAttribute("aria-pressed","false"); hearBtn.innerHTML = `${IC.play} <span>${T(I.hear_all)}</span>`; if (tuneBtn) { tuneBtn.setAttribute("aria-pressed","false"); tuneBtn.innerHTML = `${IC.note} <span>${T(I.play_tune)}</span>`; } hot(null); };
-  $$("#lyrics .ln", v).forEach(el => {
-    const go = () => { stopAll(); resetBtns(); const i = +el.dataset.i; hot(i); speak(lines[i].es); };
-    el.addEventListener("click", go);
-    el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
-  });
-  hearBtn.addEventListener("click", ()=>{
-    if (hearBtn.getAttribute("aria-pressed") === "true") { stopAll(); resetBtns(); return; }
-    stopAll(); resetBtns(); hearBtn.setAttribute("aria-pressed","true"); hearBtn.innerHTML = `${IC.stopi} <span>${T(I.stop)}</span>`;
-    speakLines(lines.map(l => l.es), hot, resetBtns);
-  });
-  if (tuneBtn) tuneBtn.addEventListener("click", ()=>{
-    if (tuneBtn.getAttribute("aria-pressed") === "true") { stopAll(); resetBtns(); return; }
-    stopAll(); resetBtns(); tuneBtn.setAttribute("aria-pressed","true"); tuneBtn.innerHTML = `${IC.stopi} <span>${T(I.stop)}</span>`;
-    playTune(s, hot, resetBtns);
-  });
-  $('[data-act="sing"]', v).addEventListener("click", ()=>{ history.replaceState(null, "", `#/song/${s.id}/sing`); openSing(s); });
-  $('[data-act="gloss"]', v).addEventListener("click", ()=> setGloss(!GLOSS));
-  $('[data-act="slow"]', v).addEventListener("click", e => { SLOW = !SLOW; e.currentTarget.setAttribute("aria-pressed", SLOW); });
-  const kb = $('[data-act="keep"]', v); if (kb) kb.addEventListener("click", ()=>{ const items = toKeep(s).length ? toKeep(s) : keepable(s); history.replaceState(null, "", `#/song/${s.id}/keep`); openPractice({ song: s, items, mode: "keep" }); });
-  const ka = $('[data-act="keepagain"]', v); if (ka) ka.addEventListener("click", ()=>{ history.replaceState(null, "", `#/song/${s.id}/keep`); openPractice({ song: s, items: keepable(s), mode: "keep" }); });
-  $$(".chip", v).forEach(ch => ch.addEventListener("click", ()=>{ stopAll(); resetBtns(); $$(".chip.hot", v).forEach(x => x.classList.remove("hot")); ch.classList.add("hot"); speak(ch.dataset.w); }));
-  $('[data-act="know"]', v).addEventListener("click", e => {
-    const b = e.currentTarget; const on = !KNOWN.has(s.id);
-    if (on) { KNOWN.add(s.id); logEvent("known", { song: s.id }); } else KNOWN.delete(s.id); saveKnown();
-    b.setAttribute("aria-pressed", on); b.innerHTML = `${IC.check} <span>${T(on ? I.know_on : I.know)}</span>`; toast(T(on ? I.saved : I.unsaved));
-  });
-}
-
 /* ================= syllables: line up words with notes ================= */
 const VOW = /[aeiouáéíóúü]/, STRONG = /[aeoáéó]/, ACC_WEAK = /[íú]/;
 function sylCount(word){
@@ -2057,9 +2034,6 @@ function openSing(s){
   o.innerHTML = `<div class="top">
       <span class="title">${esc(s.title)}</span><span class="grow"></span>
       <span class="count"><span id="singN">1</span> / ${lines.length}</span>
-      <button class="btn sm" type="button" data-act="gloss" aria-pressed="${GLOSS}">${T(I.english)}</button>
-      <button class="btn sm" type="button" data-act="slow" aria-pressed="${SLOW}">${T(I.slow)}</button>
-      <button class="btn sm" type="button" data-act="pipo" aria-pressed="${PIPO_ON}">Pipo</button>
       <button class="btn sm" type="button" data-act="close">${T(I.close)}</button></div>
     <div class="stagewrap"><div class="pipo-stage" id="pipoSide"></div><div class="reelwrap" id="reelwrap"><div class="reel" id="reel">${lines.map((l, li) => `<div class="rline${words[li].some(w => artFor(w.t)) ? " has-art" : ""}" data-i="${li}">
         ${s.stanzas.length > 1 && l.li === 0 ? `<div class="rcue">${T(I.cue_stanza)} ${l.si + 1}</div>` : ""}
@@ -2071,7 +2045,7 @@ function openSing(s){
       <button class="btn primary lg" type="button" data-act="play">${IC.play} <span>${T(I.play)}</span></button>
       <button class="btn" type="button" data-act="next" aria-label="${T(I.next)}"><span style="display:inline-block;transform:scaleX(-1)">${IC.back}</span></button>
     </div>
-    <p class="hint">${T(s.melody ? I.sing_hint : I.sing_hint_voice)}</p>`;
+    <p class="hint">${T(s.melody ? I.sing_hint : I.sing_hint_voice)} · <button type="button" class="link" data-act="gloss" aria-pressed="${GLOSS}">${T(I.english)}</button> · <button type="button" class="link" data-act="slow" aria-pressed="${SLOW}">${T(I.slow)}</button> · <button type="button" class="link" data-act="pipo" aria-pressed="${PIPO_ON}">Pipo</button></p>`;
   document.body.appendChild(o); document.body.style.overflow = "hidden";
   const wrap = $("#reelwrap", o), reel = $("#reel", o), rlines = $$(".rline", o), bar = $("#singBar", o);
   const glitter = RM ? null : makeGlitter(wrap);
@@ -2339,29 +2313,6 @@ function flyToJar(o, art){
 }
 
 /* ================= words page: the collection ================= */
-function renderWords(tab){
-  const v = $("#view");
-  const kept = keptList();
-  const groups = SONGS.map(s => ({ s, ws: kept.filter(w => w.song === s.id) })).filter(g => g.ws.length);
-  const header = `<div class="wtop">
-      <div class="jar-wrap">${jarSVG(kept.length, TOTAL_KEEPABLE)}</div>
-      <div><h1>${T(I.words_title)}</h1><p class="wcount"><b>${kept.length}</b> ${T(I.jar_label).replace("{n}", TOTAL_KEEPABLE)}</p></div>
-      <div class="row" style="margin-left:auto">${kept.length >= 3 ? `<button class="btn primary" type="button" data-act="review">${IC.play} ${T(I.review)}</button>` : ""}<button class="btn sm" type="button" data-act="gloss" aria-pressed="${GLOSS}">${T(I.english)}</button></div></div>`;
-  const cards = kept.length ? groups.map(g => `<section class="wgroup"><h2><a href="#/song/${g.s.id}">${esc(g.s.title)}</a></h2>
-      <div class="kcards">${g.ws.map(w => { const hit = lineForWord(g.s, w.es); return `<div class="kc"><span class="kart">${artFor(w.es)}</span><span class="ktx"><b class="es">${esc(w.es)}</b><span class="en">${esc(w.en)}</span>${hit ? `<span class="ctx">${esc(hit.line.es)}</span>` : ""}</span><button class="spk" type="button" data-w="${esc(w.es)}" aria-label="${T(I.hear)}">${IC.spk}</button></div>`; }).join("")}</div></section>`).join("")
-    : `<div class="wempty"><p>${T(I.words_empty)}</p><a class="btn primary" href="#/song/pollitos">${T(I.start_with)}</a></div>`;
-  v.innerHTML = `<div class="fade">
-    <div class="tabs"><button type="button" data-t="words" aria-pressed="${tab==="words"}">${T(I.tab_words)}</button><button type="button" data-t="phrases" aria-pressed="${tab==="phrases"}">${T(I.tab_phrases)}</button></div>
-    ${tab === "words" ? header + cards + (kept.length >= 3 ? `<p class="wordhint" style="margin-top:1rem">${T(I.review_hint)}</p>` : "")
-      : `<p class="wordhint">${T(I.phrases_hint)}</p><div class="phrases">${PHRASES.map(p => `<div class="ph"><span class="es">${esc(p.es)}</span><button class="spk" type="button" data-w="${esc(p.es)}" aria-label="${T(I.hear)}">${IC.spk}</button><span class="en">${esc(p.en)}</span></div>`).join("")}</div>`}
-  </div>`;
-  document.body.classList.toggle("no-gloss", !GLOSS);
-  $$(".tabs button", v).forEach(b => b.addEventListener("click", ()=>{ location.hash = b.dataset.t === "phrases" ? "#/palabras/frases" : "#/palabras"; }));
-  $$(".spk[data-w]", v).forEach(b => b.addEventListener("click", ()=> speak(b.dataset.w)));
-  const rv = $('[data-act="review"]', v); if (rv) rv.addEventListener("click", openReview);
-  const gl = $('[data-act="gloss"]', v); if (gl) gl.addEventListener("click", ()=> setGloss(!GLOSS));
-}
-
 /* ================= session log ================= */
 let LOG = [];
 try { LOG = JSON.parse(localStorage.getItem("cantame-log") || "[]") || []; } catch(e){ LOG = []; }
@@ -2435,70 +2386,298 @@ function coachPlan(){
   const phrases = kept.slice(0, 3).map((w, i) => phraseFor(w, i));
   return { song, why, left: toKeep(song).length, keptWeek: keptWeek.length, keptTotal: kept.length, hard, due, phrases, streak: streakDays(), sangWeek: new Set(recent.filter(e => e.type === "sing").map(e => e.song)).size };
 }
+/* ================= where each song comes from, and a line for the house ================= */
+const ORIGEN = {
+  pollitos: { en: "Nobody knows who wrote it. It appears in songbooks from Mexico, Colombia and Chile by the early 1900s, and every country claims it. In Mexico it is the first song most children learn, in kindergarten and at home alike.", es: "Nadie sabe quién la escribió. Aparece en cancioneros de México, Colombia y Chile desde principios del siglo XX, y cada país la reclama como suya. En México es la primera canción que aprenden casi todos los niños, en el kínder y en la casa." },
+  tortillitas: { en: "A clapping rhyme from the kitchen. The pat is the motion of shaping tortillas by hand at the comal, and versions of it have been sung across Mexico and the Southwest of the United States for generations.", es: "Una rima de palmas que viene de la cocina. La palmada es el movimiento de hacer tortillas a mano en el comal, y hay versiones en todo México y el suroeste de Estados Unidos desde hace generaciones." },
+  estrellita: { en: "The tune is a French folk melody from the 1700s; Mozart wrote variations on it, and English speakers know it as Twinkle, Twinkle. Spanish words were fitted to it long ago, and in Mexico it is the lullaby a child hears in both languages.", es: "La tonada es una melodía popular francesa del siglo XVIII; Mozart escribió variaciones sobre ella, y en inglés es Twinkle, Twinkle. Hace mucho le pusieron letra en español, y en México es el arrullo que un niño oye en los dos idiomas." },
+  rorro: { en: "One of the oldest Mexican lullabies, sung since colonial times. Rorro is an old word for a baby in arms. The verses about the nevería and the coche were added as the world changed around the cradle.", es: "Uno de los arrullos mexicanos más viejos, cantado desde la época colonial. Rorro es una palabra antigua para el bebé en brazos. Las estrofas de la nevería y el coche se fueron agregando conforme el mundo cambiaba alrededor de la cuna." },
+  santaana: { en: "A lullaby that came with the Spanish and settled all over Mexico, with a different tune in almost every region. Santa Ana is the grandmother of Jesus, which is why she is the one asked about the crying child.", es: "Un arrullo que llegó con los españoles y se quedó en todo México, con una tonada distinta casi en cada región. Santa Ana es la abuela de Jesús, por eso a ella se le pregunta por el niño que llora." },
+  elefante: { en: "A counting song sung across the Spanish-speaking world, most likely from Spain, that Mexican children learned in kindergartens through the last century. It has no ending: you add elephants until the web gives way.", es: "Una canción para contar que se canta en todo el mundo hispanohablante, seguramente de España, y que los niños mexicanos aprendieron en el kínder durante el siglo pasado. No tiene final: se agregan elefantes hasta que la telaraña se rompe." },
+  rana: { en: "A Spanish children's song that crossed the ocean and became a classroom favorite in Mexico. Cucú is the frog's call in Spanish, and each verse adds someone walking past the pond, an old game of naming who goes by.", es: "Una canción infantil española que cruzó el mar y se volvió favorita en las escuelas de México. Cucú es el canto de la rana en español, y cada estrofa agrega a alguien que pasa junto al charco, un viejo juego de nombrar a quien pasa." },
+  perritos: { en: "A countdown song loved in Mexico and Argentina since at least the middle of the last century, with a different silly fate for each puppy in every family's version. It is how many children first learned to count backwards.", es: "Una canción de cuenta regresiva querida en México y Argentina desde al menos mediados del siglo pasado, con un destino chistoso distinto para cada perrito en cada familia. Así aprendieron muchos niños a contar hacia atrás." },
+  colores: { en: "An old Spanish folk song that Mexican families have sung for centuries. In the 1960s the farmworkers of California, led by César Chávez, made it their anthem, and it is still sung at marches and at mass on both sides of the border.", es: "Una canción popular española muy vieja que las familias mexicanas cantan desde hace siglos. En los años sesenta los campesinos de California, con César Chávez, la hicieron su himno, y todavía se canta en marchas y en misa a los dos lados de la frontera." },
+  caballito: { en: "A children's song from Spain that Mexico made its own, sung while bouncing a child on the knee. The rider asks the little white horse to carry him home to the town where he was born, which is why grandparents sing it with their own pueblo in mind.", es: "Una canción infantil de España que México hizo suya, cantada brincando al niño en la rodilla. El jinete le pide al caballito blanco que lo lleve al pueblo donde nació, por eso los abuelos la cantan pensando en su propio pueblo." },
+  vibora: { en: "A Mexican ronda with roots in a Spanish game from the 1500s, found in old songbooks and still played in every schoolyard. In Mexico it became the game of weddings: the couple stand on chairs holding the bride's veil as a bridge while the guests snake underneath, and whoever falls is next to marry.", es: "Una ronda mexicana con raíces en un juego español del siglo XVI, que aparece en cancioneros viejos y todavía se juega en todos los patios de escuela. En México se volvió el juego de las bodas: los novios se suben a las sillas con el velo como puente mientras los invitados pasan en fila por debajo, y quien se cae es el que sigue en casarse." },
+  naranja: { en: "A ronda sung in Mexico since the 1800s. The marcha is the military march that ends the game; sololoy is how children said celuloide, the plastic old dolls were made of; and the line about tacos is Mexico's own.", es: "Una ronda que se canta en México desde el siglo XIX. La marcha es la marcha militar que termina el juego; sololoy es como los niños decían celuloide, el plástico de las muñecas de antes; y la línea de los tacos es puro México." },
+  blanca: { en: "One of the oldest rondas in Mexico, written down since colonial times and still played in Mexico City schoolyards. A jicote is a big wasp, from the Nahuatl xicotli, so the game carries an indigenous word in every verse.", es: "Una de las rondas más viejas de México, escrita desde la época colonial y que todavía se juega en los patios de la Ciudad de México. Un jicote es una avispa grande, del náhuatl xicotli, así que el juego lleva una palabra indígena en cada estrofa." },
+  arroz: { en: "A round game sung all over Latin America and Spain since at least the 1800s. Every country has its own verses about whom the singer wants to marry; the Mexican one asks for a señorita de la capital.", es: "Una ronda que se canta en toda Latinoamérica y España desde al menos el siglo XIX. Cada país tiene sus estrofas sobre con quién se quiere casar quien canta; la mexicana pide una señorita de la capital." },
+  muneca: { en: "A Spanish children's song from the 1800s that became a standard in Mexican homes and schools. The counting verse, adding by eight, was tacked on by children and is now inseparable from it.", es: "Una canción infantil española del siglo XIX que se volvió clásica en las casas y escuelas de México. La estrofa de los números, sumando de ocho en ocho, la agregaron los niños y ya no se separa de ella." },
+  barquito: { en: "A song from Spain that reached Mexico through school and television. It is built to repeat: when the story ends it starts again, and children ask for one more round.", es: "Una canción de España que llegó a México por la escuela y la televisión. Está hecha para repetirse: cuando termina el cuento vuelve a empezar, y los niños piden otra vuelta." },
+  dedito: { en: "A finger rhyme told in every Spanish-speaking home, older than anyone can trace. Each finger does a job with the egg, from the little one to the thumb, el gordito, who eats it.", es: "Una rima de dedos que se dice en todas las casas de habla hispana, más vieja de lo que nadie puede rastrear. Cada dedo hace algo con el huevo, del meñique al pulgar, el gordito, que se lo come." },
+  sana: { en: "The healing rhyme of the Spanish-speaking world, said over every scraped knee from Mexico to Argentina. Nobody knows where it started. It works because it is always said exactly the same way.", es: "La rima curativa del mundo hispanohablante, dicha sobre cada rodilla raspada de México a Argentina. Nadie sabe dónde empezó. Funciona porque siempre se dice exactamente igual." },
+  aserrin: { en: "A rocking rhyme from Spain, sung in Mexico and across South America on a grown-up's lap. Aserrín is sawdust, the back-and-forth of the words is a saw, and the maderos are the woodcutters of San Juan.", es: "Una rima para mecer que viene de España y se canta en México y toda Sudamérica en el regazo de un adulto. Aserrín es el polvo de la madera, el vaivén de las palabras es un serrucho, y los maderos son los leñadores de San Juan." },
+  llueva: { en: "A rain-calling song from Spain, sung in Mexico for generations. La Virgen de la Cueva is a shrine in Cantabria that most Mexican children have never heard of and sing about anyway.", es: "Una canción para llamar la lluvia que viene de España y se canta en México desde hace generaciones. La Virgen de la Cueva es un santuario de Cantabria del que casi ningún niño mexicano ha oído hablar, y aun así la canta." },
+  mananitas: { en: "The Mexican birthday song, with verses going back to the 1800s and a melody settled by the 1920s. It is sung before the cake, and in the old way at dawn under the birthday person's window, best with a guitar or a mariachi.", es: "La canción de cumpleaños de México, con estrofas del siglo XIX y una melodía fijada hacia los años veinte. Se canta antes del pastel, y a la antigua, al amanecer bajo la ventana del festejado, de preferencia con guitarra o mariachi." },
+  "piñata": { en: "The piñata came to Mexico with the Spanish, who had it from Italy and China, and the friars of Acolman used it to teach: seven points for seven sins, a blindfold for faith, the sweets as the reward. The song is what everyone sings while the blindfolded child swings.", es: "La piñata llegó a México con los españoles, que la traían de Italia y China, y los frailes de Acolman la usaron para enseñar: siete picos por siete pecados, la venda por la fe, los dulces como premio. La canción es lo que todos cantan mientras el niño vendado le pega." },
+};
+const MEMORIA = {
+  pollitos: { es: "Se canta con los dedos como piquitos. Fíjate en acurrucaditos: una palabra chiquita hecha más chiquita, así les hablamos a los pequeños.", en: "Sung with fingers for beaks. Listen for acurrucaditos, a small word made smaller, which is how we talk to little ones." },
+  tortillitas: { es: "El primer juego de muchos bebés mexicanos. La segunda estrofa cambia quién está enojado, para que nadie se quede así.", en: "The first game many Mexican babies play. The second verse swaps who is grumpy, so nobody stays that way." },
+  estrellita: { es: "Una canción puente: la melodía ya está en la cabeza de tu hijo, y el español entra solo.", en: "A bridge song: the melody is already in your child's head, so the Spanish comes in on its own." },
+  rorro: { es: "La que cantaban casi todas las abuelas. Mécete en cada rorro y déjala ir más despacio cada vuelta.", en: "The one almost every grandmother sang. Rock on every rorro and let it get slower each time through." },
+  santaana: { es: "La última línea, pedazo de mi corazón, todavía se dice en voz alta en las casas.", en: "The last line, pedazo de mi corazón, is still said out loud in Mexican homes." },
+  elefante: { es: "Decidan juntos en qué número se rompe la telaraña, y cáiganse riendo.", en: "Decide together which number breaks the web, then everyone falls down laughing." },
+  rana: { es: "El niño canta todos los cucú, cucú. Tú cantas lo demás.", en: "The child sings every cucú, cucú. You sing the rest." },
+  perritos: { es: "Diez dedos arriba, baja uno por estrofa, y deja que el niño grite el número.", en: "Ten fingers up, fold one per verse, and let the child shout the number." },
+  colores: { es: "Para una familia mexicoamericana lleva los dos lugares a la vez.", en: "For a Mexican-American family it carries both places at once." },
+  caballito: { es: "Di el nombre del pueblo de tu familia en mi pueblo.", en: "Say the name of your family's town on mi pueblo." },
+  vibora: { es: "En casa, dos adultos hacen el arco. A quien atrapan en tras, tras, tras escoge melón o sandía.", en: "At home two grown-ups make the arch. Whoever gets caught on tras, tras, tras picks melón or sandía." },
+  naranja: { es: "Abraza a quien tengas al lado en dame un abrazo. Todos se sientan en no le doy.", en: "Hug the person next to you on dame un abrazo. Everyone sits down on no le doy." },
+  blanca: { es: "Un niño es Doña Blanca en medio, la ronda son sus pilares, y el jicotillo trata de romperlos.", en: "One child is Doña Blanca in the middle, the circle are her pillars, and the jicotillo tries to break through." },
+  arroz: { es: "Cántenla y luego hagan arroz con leche juntos: arroz, leche, canela, azúcar.", en: "Sing it, then make arroz con leche together: rice, milk, cinnamon, sugar." },
+  muneca: { es: "Acuna una muñeca mientras cantas. Constipado quiere decir resfriado.", en: "Cradle a doll while you sing. Constipado means a cold, not what it sounds like in English." },
+  barquito: { es: "Mécete como barquito, cuenta las semanas con los dedos y acelera en cada vuelta.", en: "Rock like a boat, count the weeks on your fingers, speed up each round." },
+  dedito: { es: "Toca un dedo por línea, y cosquillas en la palma en se lo comió.", en: "Touch one finger per line, then tickle the palm on se lo comió." },
+  sana: { es: "Soba el golpe en círculos lentos, y un beso en mañana.", en: "Rub the sore spot in slow circles, and a kiss on mañana." },
+  aserrin: { es: "Tómale las dos manos y mézanse adelante y atrás como serruchando.", en: "Hold both hands and rock forward and back like sawing." },
+  llueva: { es: "Baja los dedos como gotas, una palmada grande en chaparrón.", en: "Flutter your fingers down like rain, one big clap on chaparrón." },
+  mananitas: { es: "Las dos primeras estrofas son las que todos cantan. Un niño que se las sabe pertenece a cada cumpleaños.", en: "The first two verses are what everyone sings. A child who knows them belongs at every family birthday." },
+  "piñata": { es: "El turno termina cuando termina la canción. Griten se acabó juntos.", en: "The turn ends when the song ends. Shout se acabó together." },
+};
+
+/* ================= grounded interface: library, song, words, tonight ================= */
+const RULE = '<svg class="rule" viewBox="0 0 600 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 7c40-3 80 2 120-1s80-4 120 1s80 3 120-1s80-3 120 1s60 2 116-1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+function cardHTML(s){
+  const c = catOf(s.cat); const known = KNOWN.has(s.id);
+  return `<a class="card" href="#/song/${s.id}">
+    <span class="glyph c-${c.c}">${IC[c.ic]}</span>
+    ${s.start ? `<span class="sticker">${T(I.start_here)}</span>` : ""}
+    ${known ? `<span class="stampmini">${T(I.know_short)}</span>` : ""}
+    <h3>${esc(s.title)}</h3>
+    <p class="first">${esc(firstLine(s))}</p></a>`;
+}
+function renderLibrary(){
+  const v = $("#view");
+  const byKind = s => KIND === "all" || s.kind === KIND;
+  const groups = (FILTER === "all" ? CATS : CATS.filter(c => c.id === FILTER)).map(c => {
+    const list = SONGS.filter(s => s.cat === c.id && byKind(s)); if (!list.length) return "";
+    return `<section class="group"><h2>${T(c.n)}</h2>${RULE}<div class="cards">${list.map(cardHTML).join("")}</div></section>`;
+  }).join("");
+  const starters = FILTER === "all" && KIND === "all" ? `<section class="group"><h2>${T(I.start_here)}</h2>${RULE}<div class="cards">${SONGS.filter(s => s.start).map(cardHTML).join("")}</div></section>` : "";
+  v.innerHTML = `<div>
+    <div class="hero"><h1>${T(I.hero_h)}</h1><div class="pipo-hero" id="pipoHero"></div></div>
+    ${!TOUR_SEEN ? `<p class="banner"><a href="#/tour/0">${T(I.banner)}</a><button class="x" type="button" aria-label="${T(I.dismiss)}" data-act="dismiss">×</button></p>` : ""}
+    <nav class="filters">
+      <span class="frow">${[["all", I.kind_all], ["song", I.kind_song], ["game", I.kind_game]].map(([k, n]) => `<button type="button" data-k="${k}" aria-pressed="${KIND===k}">${T(n)}</button>`).join("")}</span>
+      <span class="frow">${[["all", I.all]].concat(CATS.map(c => [c.id, c.n])).map(([id, n]) => `<button type="button" data-f="${id}" aria-pressed="${FILTER===id}">${T(n)}</button>`).join("")}</span>
+    </nav>
+    ${starters}${groups}
+  </div>`;
+  killPagePipo(); pagePipo = makePipo($("#pipoHero", v)); pagePipo.set("wave"); setTimeout(()=>{ if (pagePipo) pagePipo.set("idle"); }, 2200);
+  $$("[data-f]", v).forEach(b => b.addEventListener("click", ()=>{ FILTER = b.dataset.f; renderLibrary(); }));
+  $$("[data-k]", v).forEach(b => b.addEventListener("click", ()=>{ KIND = b.dataset.k; renderLibrary(); }));
+  const dis = $('[data-act="dismiss"]', v); if (dis) dis.addEventListener("click", ()=>{ TOUR_SEEN = true; try { localStorage.setItem("cantame-tour-seen","1"); } catch(e){} $(".banner", v).remove(); });
+}
+
+function renderSong(s){
+  const c = catOf(s.cat); const lines = flatLines(s);
+  const idx = SONGS.indexOf(s); const prev = SONGS[(idx - 1 + SONGS.length) % SONGS.length], next = SONGS[(idx + 1) % SONGS.length];
+  let n = 0;
+  const stanzas = s.stanzas.map((st, si) => `<div class="stanza">${st.map(ln => lineHTML(ln, n++)).join("")}</div>`).join("") + (s.open ? `<div class="repeat">${T(I.repeat_more)}</div>` : "");
+  const mem = MEMORIA[s.id], ori = ORIGEN[s.id];
+  $("#view").innerHTML = `<div class="song">
+    <a class="back" href="#/">${IC.back} ${T(I.back)}</a>
+    <div class="song-head"><p class="kindline">${T(c.n)}</p><h1>${esc(s.title)}</h1></div>
+    ${mem ? `<div class="memo"><p class="es">${esc(mem.es)}</p><p class="en">${esc(mem.en)}</p></div>` : ""}
+    <div class="actions">
+      <button class="btn primary lg" type="button" data-act="sing">${IC.singi} ${T(I.sing)}</button>
+      <button class="btn lg" type="button" data-act="hear">${IC.play} <span>${T(I.hear)}</span></button>
+    </div>
+    <div class="lyrics" id="lyrics">${stanzas}</div>
+    <p class="quiet"><button type="button" class="link" data-act="gloss" aria-pressed="${GLOSS}">${T(I.english)}</button> · <button type="button" class="link" data-act="slow" aria-pressed="${SLOW}">${T(I.slow)}</button><span class="voice-note" ${(!VOICE_CHECKED || VOICE) ? "hidden" : ""}> · ${T(SPEECH ? I.no_voice : I.no_speech)}</span></p>
+    ${RULE}
+    <section class="sec"><h2>${T(I.how)}</h2>
+      <ol class="howto">${T(s.how).map(h => `<li>${esc(h)}</li>`).join("")}</ol></section>
+    ${RULE}
+    <section class="sec"><h2>${T(I.words)}</h2>
+      <div class="vocab">${s.vocab.map(w => { const a = artFor(w.es); return `<button class="chip${isKept(w.es) ? " kept" : ""}" type="button" data-w="${esc(w.es)}">${a ? `<span class="ico">${a}</span>` : ""}<span class="tx"><span class="es">${esc(w.es)}</span><span class="en">${esc(w.en)}</span></span></button>`; }).join("")}</div>
+      <div class="keeprow">${toKeep(s).length ? `<button class="btn primary" type="button" data-act="keep">${T(I.keep_btn)}</button>` : `<button class="btn" type="button" data-act="keepagain">${T(I.practice_again)}</button>`}
+        <button class="stamp" type="button" data-act="know" aria-pressed="${KNOWN.has(s.id)}">${T(I.know)}</button></div></section>
+    ${ori ? `${RULE}<section class="sec origin"><h2>${T(I.origin_h)}</h2><p>${esc(T(ori))}</p></section>` : ""}
+    <div class="nextprev">
+      <a href="#/song/${prev.id}">${IC.back} ${esc(prev.title)}</a>
+      <a class="next" href="#/song/${next.id}">${esc(next.title)} <span class="fwd">${IC.back}</span></a>
+    </div>
+  </div>`;
+  document.body.classList.toggle("no-gloss", !GLOSS);
+  const v = $("#view");
+  const hot = i => { $$("#lyrics .ln.hot").forEach(x => x.classList.remove("hot")); if (i != null) { const el = $(`#lyrics .ln[data-i="${i}"]`); if (el) { el.classList.add("hot"); el.scrollIntoView({ block:"nearest", behavior:"smooth" }); } } };
+  const hearBtn = $('[data-act="hear"]', v);
+  const resetBtns = () => { hearBtn.setAttribute("aria-pressed","false"); hearBtn.innerHTML = `${IC.play} <span>${T(I.hear)}</span>`; hot(null); };
+  $$("#lyrics .ln", v).forEach(el => {
+    const go = () => { stopAll(); resetBtns(); const i = +el.dataset.i; hot(i); speak(lines[i].es); };
+    el.addEventListener("click", go);
+    el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+  });
+  hearBtn.addEventListener("click", ()=>{
+    if (hearBtn.getAttribute("aria-pressed") === "true") { stopAll(); resetBtns(); return; }
+    stopAll(); resetBtns(); hearBtn.setAttribute("aria-pressed","true"); hearBtn.innerHTML = `${IC.stopi} <span>${T(I.stop)}</span>`;
+    if (s.melody) playTune(s, hot, resetBtns); else speakLines(lines.map(l => l.es), hot, resetBtns);
+  });
+  $('[data-act="sing"]', v).addEventListener("click", ()=>{ history.replaceState(null, "", `#/song/${s.id}/sing`); openSing(s); });
+  $('[data-act="gloss"]', v).addEventListener("click", e => { setGloss(!GLOSS); e.currentTarget.setAttribute("aria-pressed", GLOSS); });
+  $('[data-act="slow"]', v).addEventListener("click", e => { SLOW = !SLOW; e.currentTarget.setAttribute("aria-pressed", SLOW); });
+  const kb = $('[data-act="keep"]', v); if (kb) kb.addEventListener("click", ()=>{ history.replaceState(null, "", `#/song/${s.id}/keep`); openPractice({ song: s, items: toKeep(s), mode: "keep" }); });
+  const ka = $('[data-act="keepagain"]', v); if (ka) ka.addEventListener("click", ()=>{ history.replaceState(null, "", `#/song/${s.id}/keep`); openPractice({ song: s, items: keepable(s), mode: "keep" }); });
+  $$(".chip", v).forEach(ch => ch.addEventListener("click", ()=>{ stopAll(); resetBtns(); $$(".chip.hot", v).forEach(x => x.classList.remove("hot")); ch.classList.add("hot"); speak(ch.dataset.w); }));
+  $('[data-act="know"]', v).addEventListener("click", e => {
+    const b = e.currentTarget; const on = !KNOWN.has(s.id);
+    if (on) { KNOWN.add(s.id); logEvent("known", { song: s.id }); } else KNOWN.delete(s.id); saveKnown();
+    b.setAttribute("aria-pressed", on); toast(T(on ? I.saved : I.unsaved));
+  });
+}
+
+function renderWords(tab){
+  const v = $("#view"); const kept = keptList();
+  const groups = SONGS.map(s => ({ s, ws: kept.filter(w => w.song === s.id) })).filter(g => g.ws.length);
+  const header = `<div class="wtop"><div class="jar-wrap">${jarSVG(kept.length, TOTAL_KEEPABLE)}</div>
+      <div><h1>${T(I.words_title)}</h1>${kept.length ? `<p class="quiet">${kept.length} · <button type="button" class="link" data-act="gloss" aria-pressed="${GLOSS}">${T(I.english)}</button></p>` : ""}</div>
+      ${kept.length >= 3 ? `<button class="btn" type="button" data-act="review" style="margin-left:auto">${IC.play} ${T(I.review)}</button>` : ""}</div>`;
+  const cards = kept.length ? groups.map(g => `<section class="wgroup"><h2><a href="#/song/${g.s.id}">${esc(g.s.title)}</a></h2>${RULE}
+      <div class="kcards">${g.ws.map(w => { const hit = lineForWord(g.s, w.es); return `<div class="kc"><span class="kart">${artFor(w.es)}</span><span class="ktx"><b class="es">${esc(w.es)}</b><span class="en">${esc(w.en)}</span>${hit ? `<span class="ctx">${esc(hit.line.es)}</span>` : ""}</span><button class="spk" type="button" data-w="${esc(w.es)}" aria-label="${T(I.hear)}">${IC.spk}</button></div>`; }).join("")}</div></section>`).join("")
+    : `<div class="wempty"><p>${T(I.words_empty)}</p><a class="btn primary" href="#/song/pollitos">${T(I.start_with)}</a></div>`;
+  v.innerHTML = `<div>
+    <nav class="filters"><span class="frow"><button type="button" data-t="words" aria-pressed="${tab==="words"}">${T(I.tab_words)}</button><button type="button" data-t="phrases" aria-pressed="${tab==="phrases"}">${T(I.tab_phrases)}</button></span></nav>
+    ${tab === "words" ? header + cards
+      : `<div class="phrases">${PHRASES.map(p => `<div class="ph"><span class="es">${esc(p.es)}</span><button class="spk" type="button" data-w="${esc(p.es)}" aria-label="${T(I.hear)}">${IC.spk}</button><span class="en">${esc(p.en)}</span></div>`).join("")}</div>`}
+  </div>`;
+  document.body.classList.toggle("no-gloss", !GLOSS);
+  $$("[data-t]", v).forEach(b => b.addEventListener("click", ()=>{ location.hash = b.dataset.t === "phrases" ? "#/palabras/frases" : "#/palabras"; }));
+  $$(".spk[data-w]", v).forEach(b => b.addEventListener("click", ()=> speak(b.dataset.w)));
+  const rv = $('[data-act="review"]', v); if (rv) rv.addEventListener("click", openReview);
+  const gl = $('[data-act="gloss"]', v); if (gl) gl.addEventListener("click", ()=> setGloss(!GLOSS));
+}
+
 function renderCoach(){
   const v = $("#view"); const p = coachPlan();
   const whyText = { continue: I.coach_why_continue, next: I.coach_why_next, first: I.coach_why_first }[p.why];
-  v.innerHTML = `<div class="fade">
-    <div class="hero"><div><h1>${T(I.coach_title)}</h1><p>${T(I.coach_p)}</p></div>
-      <div class="stats"><div class="stat"><b>${p.streak}</b>${T(I.coach_streak)}</div><div class="stat"><b>${p.keptWeek}</b>${T(I.coach_kept_week)}</div></div></div>
-    <div class="coach">
-      <section class="cc">
-        <div class="label">${T(I.coach_sing)}</div>
-        <h2><a href="#/song/${p.song.id}">${esc(p.song.title)}</a></h2>
-        <p>${T(whyText).replace("{n}", p.left)}</p>
-        <div class="row"><a class="btn primary" href="#/song/${p.song.id}/sing">${IC.singi} ${T(I.sing)}</a>${p.left ? `<a class="btn" href="#/song/${p.song.id}/keep">${IC.check} ${T(I.keep_btn)} · ${p.left}</a>` : ""}${p.due >= 3 ? `<a class="btn" href="#/palabras/repaso">${IC.play} ${T(I.review)} · ${p.due}</a>` : ""}</div>
-      </section>
-      <section class="cc">
-        <div class="label">${T(I.coach_phrases)}</div>
-        ${p.phrases.length ? `<div class="cphrases">${p.phrases.map(ph => `<div class="ph"><span class="es">${esc(ph.es)}</span><button class="spk" type="button" data-w="${esc(ph.es)}" aria-label="${T(I.hear)}">${IC.spk}</button><span class="en">${esc(ph.en)}</span></div>`).join("")}</div><p class="tip">${T(I.coach_phrases_tip)}</p>`
-          : `<p class="tip">${T(I.coach_phrases_none)}</p>`}
-      </section>
-      <section class="cc">
-        <div class="label">${T(I.coach_notice)}</div>
-        ${p.hard.length ? `<ul class="hard">${p.hard.map(h => `<li><span class="hart">${artFor(h.es)}</span><div><b>${esc(h.es)}</b> <span class="muted">${esc(h.en)}</span><br><span>${T(TIPS[h.group] || TIPS.other)}</span></div></li>`).join("")}</ul>`
-          : `<p>${T(p.keptTotal ? I.coach_notice_good : I.coach_notice_none)}</p>`}
-        ${p.due ? `<p class="tip">${T(I.coach_due).replace("{n}", p.due)}</p>` : ""}
-      </section>
-    </div>
+  v.innerHTML = `<div class="coach1">
+    <div class="hero"><h1>${T(I.coach_title)}</h1><div class="pipo-hero" id="pipoHero"></div></div>
+    <section class="sec"><h2><a href="#/song/${p.song.id}">${esc(p.song.title)}</a></h2>
+      <p>${T(whyText).replace("{n}", p.left)}</p>
+      <div class="row"><a class="btn primary" href="#/song/${p.song.id}/sing">${IC.singi} ${T(I.sing)}</a>${p.left ? `<a class="btn" href="#/song/${p.song.id}/keep">${T(I.keep_btn)}</a>` : ""}${p.due >= 3 ? `<a class="btn" href="#/palabras/repaso">${T(I.review)}</a>` : ""}</div></section>
+    ${p.phrases.length ? `${RULE}<section class="sec"><h2>${T(I.coach_phrases)}</h2><div class="cphrases">${p.phrases.map(ph => `<div class="ph"><span class="es">${esc(ph.es)}</span><button class="spk" type="button" data-w="${esc(ph.es)}" aria-label="${T(I.hear)}">${IC.spk}</button><span class="en">${esc(ph.en)}</span></div>`).join("")}</div></section>` : ""}
+    ${p.hard.length ? `${RULE}<section class="sec"><h2>${T(I.coach_notice)}</h2><ul class="hard">${p.hard.map(h => `<li><span class="hart">${artFor(h.es)}</span><div><b>${esc(h.es)}</b> <span class="muted">${esc(h.en)}</span><br><span>${T(TIPS[h.group] || TIPS.other)}</span></div></li>`).join("")}</ul></section>` : ""}
+    <p class="quiet">${p.streak ? `${p.streak} ${T(p.streak === 1 ? I.coach_streak1 : I.coach_streak)} · ` : ""}${p.keptWeek} ${T(I.coach_kept_week)}${p.due ? ` · ${T(I.coach_due).replace("{n}", p.due)}` : ""}</p>
   </div>`;
+  killPagePipo(); pagePipo = makePipo($("#pipoHero", v)); pagePipo.set(p.streak ? "cheer" : "wave"); setTimeout(()=>{ if (pagePipo) pagePipo.set("idle"); }, 2000);
   $$(".spk[data-w]", v).forEach(b => b.addEventListener("click", ()=> speak(b.dataset.w)));
 }
 
-/* ================= tutorial ================= */
+/* ================= tutorial: five long scenes with Pipo ================= */
 const STEPS = [
- { scene:"welcome", eye:{en:"Welcome",es:"Bienvenidos"},
-   h:{en:"Sing first. The Spanish follows.",es:"Primero cantar. El español viene después."},
-   lede:{en:"Songs and games your family already knows. Here is how it works.",es:"Canciones y juegos que tu familia ya conoce. Así funciona."} },
- { scene:"lang", h:{en:"Choose your language",es:"Elige tu idioma"},
-   lede:{en:"The buttons change. The songs stay in Spanish.",es:"Los botones cambian. Las canciones siguen en español."} },
- { scene:"browse", h:{en:"Find a song",es:"Busca una canción"},
-   lede:{en:"Tap a group. Start here is the easiest.",es:"Toca un grupo. Empieza aquí es lo más fácil."}, tryHash:"#/" },
- { scene:"read", h:{en:"Read the words",es:"Lee la letra"},
-   lede:{en:"Big Spanish, small English. Hide the English when you are ready.",es:"Español grande, inglés chico. Esconde el inglés cuando estés listo."} },
- { scene:"listen", h:{en:"Listen",es:"Escucha"},
-   lede:{en:"Tap a line to hear it. Slow stretches it out.",es:"Toca una línea para oírla. Despacio la alarga."} },
- { scene:"sing", h:{en:"Sing together",es:"Canten juntos"},
-   lede:{en:"Press Play. The words light up and the lines scroll by themselves.",es:"Toca Reproducir. Las palabras se iluminan y las líneas avanzan solas."}, tryHash:"#/song/pollitos/sing" },
- { scene:"play", h:{en:"Play it with your hands",es:"Juégala con las manos"},
-   lede:{en:"Every song has a game. Do the motion while you sing.",es:"Cada canción tiene un juego. Haz el movimiento mientras cantas."} },
- { scene:"words", h:{en:"Keep the words",es:"Guarda las palabras"},
-   lede:{en:"After a song, keep its words: see it, find it, say it. Kept words fill your jar.",es:"Después de la canción, guarda sus palabras: míralo, búscalo, dilo. Las guardadas llenan tu frasco."}, tryHash:"#/song/pollitos/keep" },
- { scene:"track", h:{en:"One song a week",es:"Una canción por semana"},
-   lede:{en:"Same song, same moment, every day. Mark it on day seven.",es:"La misma canción, el mismo momento, todos los días. Márcala al séptimo día."} },
- { scene:"talk", h:{en:"Talk around the song",es:"Habla alrededor de la canción"},
-   lede:{en:"A few phrases go a long way.",es:"Con pocas frases alcanza."}, tryHash:"#/palabras/frases" },
- { scene:"ready", eye:{en:"Ready",es:"Listo"},
-   h:{en:"Start with Los pollitos dicen",es:"Empieza con Los pollitos dicen"},
-   lede:{en:"Short, with a tune, and they will ask for it again.",es:"Corta, con tonada, y la van a pedir otra vez."},
-   cta:{hash:"#/song/pollitos", en:"Open Los pollitos dicen", es:"Abrir Los pollitos dicen"} },
+ { scene:"welcome", eye:{en:"Welcome",es:"Bienvenidos"}, h:{en:"Pipo sings. You sing along.",es:"Pipo canta. Tú cantas con él."},
+   lede:{en:"The songs your family already knows, in Spanish, with a friend who never gets tired of them.",es:"Las canciones que tu familia ya conoce, en español, con un amigo que nunca se cansa de ellas."} },
+ { scene:"find", h:{en:"Pick a song",es:"Escoge una canción"},
+   lede:{en:"Lullabies, animals, rounds, hand games, fiestas. Three are marked to start with.",es:"Arrullos, animales, rondas, juegos de manos, fiestas. Tres están marcadas para empezar."}, tryHash:"#/" },
+ { scene:"sing2", h:{en:"Sing together",es:"Canten juntos"},
+   lede:{en:"Play, and Pipo sings the tune while the words light up. Or drag a finger under the words and read them yourselves.",es:"Reproducir, y Pipo canta la tonada mientras las palabras se iluminan. O arrastra un dedo bajo las palabras y léanlas ustedes."}, tryHash:"#/song/pollitos/sing" },
+ { scene:"play2", h:{en:"Play it with your hands",es:"Juégala con las manos"},
+   lede:{en:"Every song has a game. Pipo shows the motion; you do it with your child.",es:"Cada canción tiene un juego. Pipo enseña el movimiento; tú lo haces con tu hijo."} },
+ { scene:"keep2", h:{en:"Keep the words",es:"Guarda las palabras"},
+   lede:{en:"After a song: see a word, find it, say it. Kept words fill your jar, and Tonight tells you what to sing next.",es:"Después de la canción: mira una palabra, búscala, dila. Las guardadas llenan tu frasco, y Hoy te dice qué cantar después."}, tryHash:"#/song/pollitos/keep" },
+ { scene:"ready", eye:{en:"Ready",es:"Listo"}, h:{en:"Start with Los pollitos dicen",es:"Empieza con Los pollitos dicen"},
+   lede:{en:"Short, with a tune, and they will ask for it again.",es:"Corta, con tonada, y la van a pedir otra vez."}, cta:{hash:"#/song/pollitos", en:"Open Los pollitos dicen", es:"Abrir Los pollitos dicen"} },
 ];
+const SCENES = {
+  welcome: {
+    html: ()=> `<div class="scene sc-welcome"><div class="pipo-host"></div><div class="mini-line">${wordsHTML("Los pollitos dicen")}</div></div>`,
+    start(sc){ const p = makePipo($(".pipo-host", sc)); tourPipos.push(p); const ws = $$(".w", sc);
+      const clear = ()=> ws.forEach(w => w.classList.remove("on"));
+      seq([[0, ()=>{ clear(); p.set("wave"); }], [1900, ()=> p.set("idle")], [3000, ()=>{ p.set("sing"); p.beat(80, performance.now()); }],
+        [3100, ()=>{ clear(); ws[0].classList.add("on"); p.note(450, "o"); }], [3600, ()=>{ clear(); ws[1].classList.add("on"); p.note(700, "o"); }], [4500, ()=>{ clear(); ws[2].classList.add("on"); p.note(800, "i"); }],
+        [5600, ()=>{ clear(); p.set("cheer"); }], [7200, ()=> p.set("idle")]], 9200); }
+  },
+  find: {
+    html: ()=> { const cards = [["pollitos","green","animales",true],["estrellita","blue","arrullos",true],["rorro","blue","arrullos",false],["vibora","rosa","jugar",false]];
+      return `<div class="scene sc-browse"><nav class="filters mini"><span class="frow">${[["all", I.all], ["arrullos", CATS[0].n], ["animales", CATS[1].n], ["jugar", CATS[2].n]].map(([id, n]) => `<button type="button" data-f="${id}" aria-pressed="${id === "all"}">${T(n)}</button>`).join("")}</span></nav>
+        <div class="mini-cards">${cards.map(([id, c, cat, st]) => `<div class="mc" data-c="${cat}">${st ? `<span class="sticker">${T(I.start_here)}</span>` : ""}${esc(songOf(id).title)}</div>`).join("")}</div><div class="pipo-mini"></div></div>`; },
+    start(sc){
+      const hand = addHand(sc); const p = makePipo($(".pipo-mini", sc)); tourPipos.push(p); p.set("listen");
+      const chip = id => $(`[data-f="${id}"]`, sc);
+      const set = id => { $$("[data-f]", sc).forEach(b => b.setAttribute("aria-pressed", b.dataset.f === id)); $$(".mc", sc).forEach(c => c.classList.toggle("dim", id !== "all" && c.dataset.c !== id)); };
+      const look = el => { const r = el.getBoundingClientRect(), s = sc.getBoundingClientRect(); p.lookAt(((r.left + r.width / 2 - s.left) / s.width) * 2 - 1, ((r.top - s.top) / s.height) * 2 - 1); };
+      const cards = $$(".mc", sc);
+      seq([[0, ()=>{ set("all"); p.set("listen"); }], [300, ()=>{ handTo(sc, hand, chip("arrullos")); look(chip("arrullos")); }], [1100, ()=>{ tap(hand, chip("arrullos")); set("arrullos"); }],
+        [2600, ()=>{ handTo(sc, hand, chip("animales")); look(chip("animales")); }], [3400, ()=>{ tap(hand, chip("animales")); set("animales"); }],
+        [4800, ()=>{ handTo(sc, hand, cards[0], 0.5, 0.6); look(cards[0]); }], [5600, ()=>{ tap(hand, cards[0]); cards[0].classList.add("press"); p.set("cheer"); }], [7200, ()=>{ p.set("listen"); p.lookAt(0, 0); set("all"); }]], 8600);
+      $$("[data-f]", sc).forEach(b => b.addEventListener("click", ()=> set(b.dataset.f)));
+    }
+  },
+  sing2: {
+    html: ()=> { const l = songOf("pollitos").stanzas[0];
+      return `<div class="scene sc-sing2"><div class="pipo-host"></div><div class="phone">
+        <div class="preel"><div class="pinner">${l.map((ln, i) => `<div class="pl" data-i="${i}">${wordsHTML(ln.es)}</div>`).join("")}</div><canvas class="glit"></canvas></div>
+        <div class="pplay">${IC.play} ${T(I.play)}</div></div></div>`; },
+    start(sc){
+      const hand = addHand(sc); const p = makePipo($(".pipo-host", sc)); tourPipos.push(p);
+      const lines = songOf("pollitos").stanzas[0]; const pls = $$(".pl", sc), inner = $(".pinner", sc), wrap = $(".preel", sc), play = $(".pplay", sc);
+      const glit = RM ? null : makeGlitter(wrap);
+      const center = i => { pls.forEach((x, k) => x.classList.toggle("cur", k === i)); const y = wrap.clientHeight / 2 - (pls[i].offsetTop + pls[i].offsetHeight / 2); inner.style.transform = `translateY(${Math.round(y)}px)`; };
+      const clear = ()=> $$(".w.on, .w.lit", sc).forEach(w => w.classList.remove("on", "lit"));
+      const steps = [[0, ()=>{ clear(); center(0); play.classList.remove("on"); p.set("idle"); hand.classList.remove("show"); }], [400, ()=> handTo(sc, hand, play)], [1200, ()=>{ tap(hand, play); play.classList.add("on"); hand.classList.remove("show"); p.set("sing"); p.beat(84, performance.now()); }]];
+      let t = 1700; const step = 430;
+      lines.slice(0, 2).forEach((ln, i) => { steps.push([t, ()=> center(i)]); $$(".w", pls[i]).forEach((w, k) => steps.push([t + 150 + k * step, ()=>{ $$(".w.on", sc).forEach(x => x.classList.remove("on")); w.classList.add("on"); p.note(step * 0.9, vowelAt(w.textContent, 0)); }])); t += 150 + $$(".w", pls[i]).length * step + 350; });
+      // then the finger reads the third line
+      steps.push([t, ()=>{ clear(); play.classList.remove("on"); p.set("listen"); center(2); }]);
+      const ws = ()=> $$(".w", pls[2]);
+      steps.push([t + 600, ()=>{ const w0 = ws()[0]; handTo(sc, hand, w0, 0.1, 1.05); }]);
+      for (let k = 0; k <= 12; k++) steps.push([t + 1200 + k * 130, ()=>{ const list = ws(); const frac = k / 12; const first = list[0].getBoundingClientRect(), last = list[list.length - 1].getBoundingClientRect(), s = sc.getBoundingClientRect(), wr = wrap.getBoundingClientRect();
+        const x = first.left + (last.right - first.left) * frac, y = first.bottom - 4; hand.style.transform = `translate(${Math.round(x - s.left - 14)}px, ${Math.round(y - s.top - 2)}px)`; hand.classList.add("show");
+        if (glit) glit.emit(x - wr.left, y - wr.top - 16, 4, 14); p.lookAt(((x - s.left) / s.width) * 2 - 1, 0.3);
+        list.forEach(w => { const r = w.getBoundingClientRect(); if (r.left <= x && !w.classList.contains("lit")) { w.classList.add("lit"); if (glit) glit.emit(r.left - wr.left + r.width / 2, r.top - wr.top, 14, r.width); } }); }]);
+      steps.push([t + 3200, ()=>{ hand.classList.remove("show"); p.set("cheer"); p.lookAt(0, 0); }]);
+      seq(steps, t + 5200);
+      sc._glit = glit;
+    }
+  },
+  play2: {
+    html: ()=> `<div class="scene sc-play2"><div class="pipo-host"></div><div class="patside"><div class="pat" aria-hidden="true">
+        <svg class="hl" viewBox="0 0 60 80"><path d="M14 78c-6-1-10-6-11-12L0 48c-.5-2.5 1.5-4.5 4-4l4 1.5V14a4 4 0 0 1 8 0v22h3V6a4 4 0 0 1 8 0v30h3V10a4 4 0 0 1 8 0v26h3V18a4 4 0 0 1 8 0v36c0 14-9 24-24 24z" fill="#F6D2A8" stroke="#8A5A2B" stroke-width="2.5" stroke-linejoin="round"/></svg>
+        <div class="tortilla"></div>
+        <svg class="hr" viewBox="0 0 60 80"><path d="M14 78c-6-1-10-6-11-12L0 48c-.5-2.5 1.5-4.5 4-4l4 1.5V14a4 4 0 0 1 8 0v22h3V6a4 4 0 0 1 8 0v30h3V10a4 4 0 0 1 8 0v26h3V18a4 4 0 0 1 8 0v36c0 14-9 24-24 24z" fill="#F6D2A8" stroke="#8A5A2B" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+      <div class="syl">${[["Tor","ti","lli","tas","de","man","te","ca"],["pa'","ma","má","que es","tá","con","ten","ta"]].map(line => `<div class="sl">${line.map(s => `<span class="s">${esc(s)}</span>`).join("")}</div>`).join("")}</div></div></div>`,
+    start(sc){
+      const p = makePipo($(".pipo-host", sc)); tourPipos.push(p); const pat = $(".pat", sc); const lines = $$(".sl", sc); const steps = []; let t = 400; const beat = 460;
+      steps.push([0, ()=>{ p.set("pat"); p.beat(60000 / beat, performance.now() + 400); }]);
+      lines.forEach(l => { $$(".s", l).forEach(s => { steps.push([t, ()=>{ $$(".s.on", sc).forEach(x => x.classList.remove("on")); s.classList.add("on"); pat.classList.add("hit"); p.note(300, vowelAt(s.textContent, 0)); }]); steps.push([t + 200, ()=> pat.classList.remove("hit")]); t += beat; }); t += beat * 0.8; });
+      steps.push([t, ()=>{ $$(".s.on", sc).forEach(x => x.classList.remove("on")); p.set("cheer"); }]);
+      seq(steps, t + 1600);
+    }
+  },
+  keep2: {
+    html: ()=> { const w = songOf("pollitos").vocab[1]; const hit = lineForWord(songOf("pollitos"), w.es); const art = artFor(w.es);
+      const opts = [w, ...distractors(songOf("pollitos"), w)];
+      return `<div class="scene sc-keep2"><div class="pipo-host"></div><div class="kstage">
+        <div class="ph1"><div class="bigart">${art}</div><div class="pword">${esc(w.es)}</div><div class="pgl">${esc(w.en)}</div></div>
+        <div class="ph2" hidden><div class="pask">¿Dónde está… <b>${esc(w.es)}</b>?</div><div class="pfind">${opts.map(x => `<button class="pcard" type="button" data-ok="${x === w}">${artFor(x.es)}</button>`).join("")}</div></div>
+        <div class="ph3" hidden><div class="pline">${hit.toks.map((t, k) => k === hit.k ? `<span class="gap"><i class="art">${art}</i></span>` : `<span class="w">${esc(t.t)}</span>`).join(" ")}</div><div class="row" style="justify-content:center;gap:.6rem;margin-top:.6rem"><span class="btn sm">${T(I.not_yet)}</span><span class="btn primary sm said">${IC.check} ${T(I.said_it)}</span></div><div class="jar-mini">${jarSVG(3, 20, true)}</div></div>
+      </div></div>`; },
+    start(sc){
+      const hand = addHand(sc); const p = makePipo($(".pipo-host", sc)); tourPipos.push(p);
+      const ph = n => $(".ph" + n, sc); const show = n => { [1,2,3].forEach(k => ph(k).hidden = k !== n); };
+      const wrong = ()=> $$(".pcard", sc).find(c => c.dataset.ok === "false"), right = ()=> $(".pcard[data-ok=true]", sc), said = ()=> $(".said", sc);
+      seq([[0, ()=>{ show(1); $$(".pcard", sc).forEach(c => c.classList.remove("ok", "no")); p.set("listen"); hand.classList.remove("show"); }], [500, ()=> p.note(500, "a")], [1400, ()=> p.note(500, "a")],
+        [2800, ()=>{ show(2); p.set("think"); }], [3400, ()=> handTo(sc, hand, wrong(), 0.5, 0.6)], [4100, ()=>{ tap(hand, wrong()); wrong().classList.add("no"); p.set("oops"); }],
+        [5200, ()=>{ handTo(sc, hand, right(), 0.5, 0.6); p.set("think"); }], [5900, ()=>{ tap(hand, right()); right().classList.add("ok"); p.set("cheer"); }],
+        [7400, ()=>{ show(3); p.set("listen"); hand.classList.remove("show"); }], [8200, ()=> handTo(sc, hand, said())], [9000, ()=>{ tap(hand, said()); p.set("cheer"); const art = $(".gap .art", sc), jar = $(".jar-mini", sc); if (art && jar) { const f = art.getBoundingClientRect(), j = jar.getBoundingClientRect(); const fly = document.createElement("div"); fly.className = "fly"; fly.innerHTML = art.innerHTML; document.body.appendChild(fly); fly.style.left = (f.left + f.width / 2 - 24) + "px"; fly.style.top = (f.top + f.height / 2 - 24) + "px"; requestAnimationFrame(()=>{ fly.style.transform = `translate(${j.left + j.width / 2 - (f.left + f.width / 2)}px, ${j.top + j.height / 2 - (f.top + f.height / 2)}px) scale(.35)`; fly.style.opacity = "0.2"; }); setTimeout(()=> fly.remove(), 800); } }],
+        [10600, ()=> p.set("dance")]], 12600);
+    }
+  },
+  ready: {
+    html: ()=> `<div class="scene sc-ready"><div class="pipo-host"></div></div>`,
+    start(sc){ const p = makePipo($(".pipo-host", sc)); tourPipos.push(p); seq([[0, ()=> p.set("dance")], [2600, ()=> p.set("cheer")], [4000, ()=> p.set("wave")], [5600, ()=> p.set("idle")]], 7200); }
+  },
+};
+
 
 /* ---- scene helpers ---- */
 const RM = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 let tourTimers = [], tourPipos = [];
 function later(ms, fn){ tourTimers.push(setTimeout(fn, ms)); }
 function seq(steps, loopMs){ const run = ()=>{ steps.forEach(([at, fn]) => later(at, fn)); if (loopMs && !RM) later(loopMs, run); }; run(); }
-function clearTourAnim(){ tourTimers.forEach(clearTimeout); tourTimers = []; tourPipos.forEach(p => p.destroy()); tourPipos = []; }
+function clearTourAnim(){ tourTimers.forEach(clearTimeout); tourTimers = []; tourPipos.forEach(p => p.destroy()); tourPipos = []; const sc = document.querySelector(".tour .scene"); if (sc && sc._glit) { sc._glit.destroy(); sc._glit = null; } }
 const HAND = '<svg viewBox="0 0 40 48" aria-hidden="true"><path d="M13 3.5a3.5 3.5 0 0 1 7 0V24h1.5c0-2.2 1.8-3.5 4-3.5s4 1.3 4 3.5c2.2-.6 4.5.6 4.5 3 2.3-.3 4 1.4 4 3.5V36c0 6.5-5 10.5-11.5 10.5h-4.5c-4.6 0-8.4-2.4-10.6-6.4L5 28.6c-1.1-2 .3-4.1 2.4-4.1 1.2 0 2.3.6 3 1.6L13 29z" fill="#F6D2A8" stroke="#8A5A2B" stroke-width="2" stroke-linejoin="round"/></svg>';
 function addHand(scene){ const h = document.createElement("div"); h.className = "hand"; h.innerHTML = HAND; scene.appendChild(h); return h; }
 function handTo(scene, hand, el, fx, fy){
@@ -2512,177 +2691,6 @@ function tap(hand, el){
 }
 function wordsHTML(text){ return text.split(" ").map(w => `<span class="w">${esc(w)}</span>`).join(" "); }
 function waves(){ return `<span class="waves" aria-hidden="true"><i></i><i></i><i></i></span>`; }
-
-const SCENES = {
-  welcome: {
-    html: ()=> `<div class="scene sc-welcome"><div class="pipo-host"></div></div>`,
-    start(sc){ const p = makePipo($(".pipo-host", sc)); tourPipos.push(p); seq([[0, ()=> p.set("wave")], [2000, ()=> p.set("idle")], [3400, ()=>{ p.set("sing"); p.beat(84, performance.now()); }], [3400, ()=> p.note(400, "a")], [3900, ()=> p.note(400, "o")], [4400, ()=> p.note(600, "i")], [5200, ()=> p.note(500, "a")], [6200, ()=> p.set("cheer")], [7600, ()=> p.set("idle")]], 9000); }
-  },
-
-  lang: {
-    html: ()=> `<div class="scene sc-lang">
-      <div class="mock-hdr"><span class="brand">Cántame</span>
-        <span class="mock-nav"><b data-en="Songs" data-es="Canciones">Songs</b><b data-en="Words" data-es="Palabras">Words</b><b>Tutorial</b></span>
-        <span class="langsw"><button type="button" data-l="en" aria-pressed="true">English</button><button type="button" data-l="es" aria-pressed="false">Español</button></span></div>
-      <div class="mock-h" data-en="Songs your family already knows" data-es="Canciones que tu familia ya conoce">Songs your family already knows</div>
-      <div class="mock-line"><span class="es">Los pollitos dicen, pío, pío, pío</span><span class="stay" data-en="always in Spanish" data-es="siempre en español">always in Spanish</span></div>
-    </div>`,
-    start(sc){
-      const hand = addHand(sc); const en = $('[data-l="en"]', sc), es = $('[data-l="es"]', sc);
-      const set = l => { $$("[data-en]", sc).forEach(el => { el.textContent = el.dataset[l] || el.dataset.en; }); en.setAttribute("aria-pressed", l === "en"); es.setAttribute("aria-pressed", l === "es"); };
-      set("en");
-      seq([[200, ()=>handTo(sc, hand, es)], [1000, ()=>{ tap(hand, es); set("es"); }], [3000, ()=>handTo(sc, hand, en)], [3800, ()=>{ tap(hand, en); set("en"); }]], 5600);
-      [en, es].forEach(b => b.addEventListener("click", ()=> set(b.dataset.l)));
-    }
-  },
-
-  browse: {
-    html: ()=> {
-      const chips = [["all", I.all], ["arrullos", CATS[0].n], ["animales", CATS[1].n], ["jugar", CATS[2].n]];
-      const cards = [["pollitos","green","animales",true],["estrellita","blue","arrullos",true],["rorro","blue","arrullos",false],["vibora","rosa","jugar",false]];
-      return `<div class="scene sc-browse">
-        <div class="filters mini">${chips.map(([id, n]) => `<button type="button" data-f="${id}" aria-pressed="${id === "all"}">${T(n)}</button>`).join("")}</div>
-        <div class="mini-cards">${cards.map(([id, c, cat, st]) => `<div class="mc stripe-${c}" data-c="${cat}">${st ? `<span class="start">${T(I.start_here)}</span>` : ""}${esc(songOf(id).title)}</div>`).join("")}</div></div>`;
-    },
-    start(sc){
-      const hand = addHand(sc); const chip = id => $(`[data-f="${id}"]`, sc);
-      const set = id => { $$("[data-f]", sc).forEach(b => b.setAttribute("aria-pressed", b.dataset.f === id)); $$(".mc", sc).forEach(c => c.classList.toggle("dim", id !== "all" && c.dataset.c !== id)); };
-      set("all");
-      seq([[200, ()=>handTo(sc, hand, chip("arrullos"))], [1000, ()=>{ tap(hand, chip("arrullos")); set("arrullos"); }],
-           [2800, ()=>handTo(sc, hand, chip("animales"))], [3600, ()=>{ tap(hand, chip("animales")); set("animales"); }],
-           [5400, ()=>handTo(sc, hand, chip("all"))], [6200, ()=>{ tap(hand, chip("all")); set("all"); }]], 8000);
-      $$("[data-f]", sc).forEach(b => b.addEventListener("click", ()=> set(b.dataset.f)));
-    }
-  },
-
-  read: {
-    html: ()=> { const p = songOf("pollitos").stanzas[0];
-      return `<div class="scene sc-read">
-        ${p.slice(0, 2).map(l => `<div class="rl"><div class="es">${wordsHTML(l.es)}</div><div class="en">${esc(l.en)}</div></div>`).join("")}
-        <div class="row"><button class="btn sm" type="button" data-eng aria-pressed="true">${T(I.english)}</button></div></div>`; },
-    start(sc){
-      const hand = addHand(sc); const lines = $$(".rl", sc); const btn = $("[data-eng]", sc);
-      const steps = []; let t = 300;
-      const reset = ()=>{ $$(".w.on", sc).forEach(w => w.classList.remove("on")); lines.forEach(l => l.classList.remove("glossed")); sc.classList.remove("hide-en"); btn.setAttribute("aria-pressed", "true"); };
-      steps.push([0, reset]);
-      lines.forEach(l => {
-        $$(".w", l).forEach(w => { steps.push([t, ()=>{ handTo(sc, hand, w, 0.5, 1.05); w.classList.add("on"); }]); t += 520; });
-        steps.push([t, ()=> l.classList.add("glossed")]); t += 700;
-      });
-      steps.push([t + 300, ()=> handTo(sc, hand, btn)]); t += 1100;
-      steps.push([t, ()=>{ tap(hand, btn); sc.classList.add("hide-en"); btn.setAttribute("aria-pressed", "false"); }]); t += 1800;
-      steps.push([t, ()=>{ tap(hand, btn); sc.classList.remove("hide-en"); btn.setAttribute("aria-pressed", "true"); }]); t += 1600;
-      seq(steps, t);
-      btn.addEventListener("click", ()=>{ const on = sc.classList.toggle("hide-en"); btn.setAttribute("aria-pressed", !on); lines.forEach(l => l.classList.add("glossed")); });
-    }
-  },
-
-  listen: {
-    html: ()=> { const l = songOf("pollitos").stanzas[0][0];
-      return `<div class="scene sc-listen">
-        <div class="ll"><span class="es">${wordsHTML(l.es)}</span><button class="spk" type="button" data-w="${esc(l.es)}" aria-label="${T(I.hear)}">${IC.spk}</button>${waves()}</div>
-        <div class="row"><button class="btn sm" type="button" data-slowbtn aria-pressed="false">${T(I.slow)}</button><button class="btn sm" type="button" data-tunebtn>${IC.note} ${T(I.play_tune)}</button></div>
-        <div class="notes" aria-hidden="true"></div></div>`; },
-    start(sc){
-      const hand = addHand(sc); const spk = $(".spk", sc), slow = $("[data-slowbtn]", sc), tune = $("[data-tunebtn]", sc), ws = $(".waves", sc), notes = $(".notes", sc);
-      const words = $$(".w", sc);
-      const say = gap => { ws.classList.remove("on", "slow"); void ws.offsetWidth; ws.classList.add("on"); if (gap > 300) ws.classList.add("slow"); words.forEach((w, i) => { later(i * gap, ()=>{ words.forEach(x => x.classList.remove("on")); w.classList.add("on"); }); }); later(words.length * gap + 200, ()=>{ words.forEach(x => x.classList.remove("on")); ws.classList.remove("on"); }); };
-      const floatNotes = ()=>{ notes.innerHTML = ""; ["♪","♫","♪","♩"].forEach((n, i) => { const e = document.createElement("i"); e.textContent = n; e.style.left = (20 + i * 18) + "%"; e.style.animationDelay = (i * 0.18) + "s"; notes.appendChild(e); }); };
-      seq([[200, ()=>handTo(sc, hand, spk)], [900, ()=>{ tap(hand, spk); say(280); }],
-           [2600, ()=>handTo(sc, hand, slow)], [3300, ()=>{ tap(hand, slow); slow.setAttribute("aria-pressed", "true"); }],
-           [4000, ()=>handTo(sc, hand, spk)], [4700, ()=>{ tap(hand, spk); say(650); }],
-           [7300, ()=>{ slow.setAttribute("aria-pressed", "false"); handTo(sc, hand, tune); }], [8000, ()=>{ tap(hand, tune); floatNotes(); }]], 10400);
-      spk.addEventListener("click", ()=>{ say(slow.getAttribute("aria-pressed") === "true" ? 650 : 280); speak(spk.dataset.w, slow.getAttribute("aria-pressed") === "true"); });
-      slow.addEventListener("click", ()=> slow.setAttribute("aria-pressed", slow.getAttribute("aria-pressed") !== "true"));
-      tune.addEventListener("click", ()=>{ floatNotes(); const s = songOf("pollitos"); playTune({ ...s, stanzas:[[s.stanzas[0][0]]] }); });
-    }
-  },
-
-  sing: {
-    html: ()=> { const l = songOf("pollitos").stanzas[0];
-      return `<div class="scene sc-sing"><div class="phone">
-        <div class="preel"><div class="pinner">${l.map((ln, i) => `<div class="pl" data-i="${i}">${wordsHTML(ln.es)}</div>`).join("")}</div></div>
-        <div class="pplay">${IC.play} ${T(I.play)}</div></div></div>`; },
-    start(sc){
-      const hand = addHand(sc); const lines = songOf("pollitos").stanzas[0]; const pls = $$(".pl", sc), inner = $(".pinner", sc), wrap = $(".preel", sc), play = $(".pplay", sc);
-      const center = i => { pls.forEach((p, k) => { p.classList.toggle("cur", k === i); }); const y = wrap.clientHeight / 2 - (pls[i].offsetTop + pls[i].offsetHeight / 2); inner.style.transform = `translateY(${Math.round(y)}px)`; };
-      const steps = [[0, ()=>{ $$(".w.on", sc).forEach(w => w.classList.remove("on")); center(0); play.classList.remove("on"); }], [300, ()=> handTo(sc, hand, play)], [1000, ()=>{ tap(hand, play); play.classList.add("on"); hand.classList.remove("show"); }]];
-      let t = 1500; const step = 430;
-      lines.forEach((ln, i) => {
-        steps.push([t, ()=> center(i)]);
-        $$(".w", pls[i]).forEach((w, k) => steps.push([t + 150 + k * step, ()=>{ $$(".w.on", sc).forEach(x => x.classList.remove("on")); w.classList.add("on"); }]));
-        t += 150 + $$(".w", pls[i]).length * step + 350;
-      });
-      steps.push([t, ()=>{ $$(".w.on", sc).forEach(x => x.classList.remove("on")); play.classList.remove("on"); }]);
-      seq(steps, t + 1200);
-    }
-  },
-
-  play: {
-    html: ()=> `<div class="scene sc-play">
-      <div class="pat" aria-hidden="true">
-        <svg class="hl" viewBox="0 0 60 80"><path d="M14 78c-6-1-10-6-11-12L0 48c-.5-2.5 1.5-4.5 4-4l4 1.5V14a4 4 0 0 1 8 0v22h3V6a4 4 0 0 1 8 0v30h3V10a4 4 0 0 1 8 0v26h3V18a4 4 0 0 1 8 0v36c0 14-9 24-24 24z" fill="#F6D2A8" stroke="#8A5A2B" stroke-width="2.5" stroke-linejoin="round"/></svg>
-        <div class="tortilla"></div>
-        <svg class="hr" viewBox="0 0 60 80"><path d="M14 78c-6-1-10-6-11-12L0 48c-.5-2.5 1.5-4.5 4-4l4 1.5V14a4 4 0 0 1 8 0v22h3V6a4 4 0 0 1 8 0v30h3V10a4 4 0 0 1 8 0v26h3V18a4 4 0 0 1 8 0v36c0 14-9 24-24 24z" fill="#F6D2A8" stroke="#8A5A2B" stroke-width="2.5" stroke-linejoin="round"/></svg>
-      </div>
-      <div class="syl">${[["Tor","ti","lli","tas","de","man","te","ca"],["pa'","ma","má","que es","tá","con","ten","ta"]].map(line => `<div class="sl">${line.map(s => `<span class="s">${esc(s)}</span>`).join("")}</div>`).join("")}</div>
-      <div class="cap">${esc(songOf("tortillitas").title)}</div></div>`,
-    start(sc){
-      const pat = $(".pat", sc); const lines = $$(".sl", sc); const steps = []; let t = 400; const beat = 460;
-      lines.forEach((l, li) => {
-        $$(".s", l).forEach(s => { steps.push([t, ()=>{ $$(".s.on", sc).forEach(x => x.classList.remove("on")); s.classList.add("on"); pat.classList.add("hit"); }]); steps.push([t + 200, ()=> pat.classList.remove("hit")]); t += beat; });
-        t += beat * 0.8;
-      });
-      steps.push([t, ()=> $$(".s.on", sc).forEach(x => x.classList.remove("on"))]);
-      seq(steps, t + 600);
-    }
-  },
-
-  words: {
-    flip(c, on){ c.classList.add("flipping"); setTimeout(()=>{ c.classList.toggle("flip", on); c.classList.remove("flipping"); }, 140); },
-    html: ()=> `<div class="scene sc-words"><div class="fcards">${[["gallina","hen"],["frío","cold"],["alas","wings"]].map(([a, b]) => `<div class="fcard" data-w="${a}" tabindex="0" role="button"><div class="in"><div class="f">${a}</div><div class="b">${b}</div></div><button class="spk" type="button" aria-label="${T(I.hear)}">${IC.spk}</button>${waves()}</div>`).join("")}</div></div>`,
-    start(sc){
-      const hand = addHand(sc); const cards = $$(".fcard", sc);
-      const spk = i => $(".spk", cards[i]), wave = i => { const w = $(".waves", cards[i]); w.classList.remove("on"); void w.offsetWidth; w.classList.add("on"); later(1400, ()=> w.classList.remove("on")); };
-      const flip = SCENES.words.flip;
-      seq([[0, ()=> cards.forEach(c => c.classList.contains("flip") && flip(c, false))], [300, ()=> handTo(sc, hand, cards[0], 0.5, 0.7)], [1000, ()=>{ tap(hand, cards[0]); flip(cards[0], true); }],
-           [2200, ()=> handTo(sc, hand, spk(0))], [2900, ()=>{ tap(hand, spk(0)); wave(0); }],
-           [4400, ()=> handTo(sc, hand, cards[1], 0.5, 0.7)], [5100, ()=>{ tap(hand, cards[1]); flip(cards[1], true); }],
-           [6400, ()=> handTo(sc, hand, cards[2], 0.5, 0.7)], [7100, ()=>{ tap(hand, cards[2]); flip(cards[2], true); }]], 9200);
-      cards.forEach((c, i) => { c.addEventListener("click", e => { if (e.target.closest(".spk")) { wave(i); speak(c.dataset.w); return; } flip(c, !c.classList.contains("flip")); }); });
-    }
-  },
-
-  track: {
-    html: ()=> `<div class="scene sc-track"><div class="tt">${esc(songOf("pollitos").title)}</div>
-      <div class="week">${T(I.weekdays).map(d => `<div class="day"><b>${d}</b><i>♪</i></div>`).join("")}</div>
-      <button class="btn know" type="button" aria-pressed="false">${IC.check} <span>${T(I.know)}</span></button></div>`,
-    start(sc){
-      const hand = addHand(sc); const days = $$(".day", sc), know = $(".know", sc); const label = $("span", know);
-      const steps = [[0, ()=>{ days.forEach(d => d.className = "day"); know.setAttribute("aria-pressed", "false"); label.textContent = T(I.know); }]];
-      days.forEach((d, i) => steps.push([300 + i * 420, ()=> d.classList.add(i === 6 ? "done" : "on")]));
-      steps.push([3600, ()=> handTo(sc, hand, know)], [4300, ()=>{ tap(hand, know); know.setAttribute("aria-pressed", "true"); label.textContent = T(I.know_on); }]);
-      seq(steps, 7000);
-      know.addEventListener("click", ()=>{ const on = know.getAttribute("aria-pressed") !== "true"; know.setAttribute("aria-pressed", on); label.textContent = T(on ? I.know_on : I.know); });
-    }
-  },
-
-  talk: {
-    html: ()=> { const lines = [["p","¿Cantamos?","Shall we sing?"],["c","¡Sí!","Yes!"],["p","Ahora tú.","Now you."],["c","Pío, pío, pío…","Peep, peep, peep…"],["p","¡Muy bien! Otra vez.","Very good! Again."]];
-      const who = { p: T({en:"You",es:"Tú"}), c: T({en:"Your child",es:"Tu hijo"}) };
-      return `<div class="scene sc-talk"><div class="convo">${lines.map(([w, es, en]) => `<div class="turn ${w}"><small>${who[w]}</small><span class="es">${esc(es)}</span><span class="en">${esc(en)}</span></div>`).join("")}</div></div>`; },
-    start(sc){
-      const turns = $$(".turn", sc); const steps = [[0, ()=> turns.forEach(t => t.classList.remove("on"))]];
-      turns.forEach((t, i) => steps.push([400 + i * 1300, ()=> t.classList.add("on")]));
-      seq(steps, 400 + turns.length * 1300 + 1800);
-    }
-  },
-
-  ready: {
-    html: ()=> `<div class="scene sc-ready"><div class="pipo-host"></div></div>`,
-    start(sc){ const p = makePipo($(".pipo-host", sc)); tourPipos.push(p); seq([[0, ()=> p.set("dance")], [2600, ()=> p.set("cheer")], [4000, ()=> p.set("wave")], [5600, ()=> p.set("idle")]], 7200); }
-  },
-};
 
 let tourState = null;
 function openTour(n){
@@ -2715,7 +2723,7 @@ function drawTour(){
   clearTourAnim(); stopAll();
   const i = tourState.i, st = STEPS[i], o = tourState.el;
   const stepsTotal = STEPS.length - 2;
-  const eyebrow = st.eye ? T(st.eye) : `${T(I.step)} ${i} ${T(I.of)} ${stepsTotal}`;
+  const eyebrow = st.eye ? T(st.eye) : "";
   const sc = SCENES[st.scene];
   o.innerHTML = `<div class="thdr"><div class="in">
       <span class="brand">Cántame <small>${T(I.nav_tour)}</small></span><span class="grow"></span>
@@ -2723,7 +2731,7 @@ function drawTour(){
       <button class="x" type="button" data-act="close" aria-label="${T(I.close)}">×</button></div>
       <div class="bar"><div class="rail"><i style="width:${Math.round((i+1)/STEPS.length*100)}%"></i></div></div></div>
     <div class="tstage"><div class="tcard anim">
-      <span class="eyebrow">${eyebrow}</span>
+      ${eyebrow ? `<span class="eyebrow">${eyebrow}</span>` : ""}
       <h1>${T(st.h)}</h1>
       <p class="lede">${T(st.lede)}</p>
       ${sc ? sc.html() : ""}

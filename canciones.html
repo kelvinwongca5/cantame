@@ -314,28 +314,27 @@
   /* ---------- Pipo ---------- */
   .pipo { display: block; width: 100%; height: 100%; }
   .pipo .pipo-svg { width: 100%; height: 100%; display: block; overflow: visible; }
-  .pipo .p-root, .pipo .p-body, .pipo .p-head, .pipo .p-wing, .pipo .p-beakLo, .pipo .p-beakHi, .pipo .p-tail, .pipo .p-pupil, .pipo .p-zzz, .pipo .p-notes { transform-box: fill-box; will-change: transform; }
-  .pipo .p-root { transform-origin: 50% 90%; }
+  .pipo .p-root, .pipo .p-body, .pipo .p-head, .pipo .p-wing, .pipo .p-beakLo, .pipo .p-beakHi, .pipo .p-tail, .pipo .p-pupil, .pipo .p-eye, .pipo .p-zzz, .pipo .p-notes, .pipo .p-tuft, .pipo .p-lid { transform-box: fill-box; will-change: transform; }
+  .pipo .p-root { transform-origin: 50% 92%; }
   .pipo .p-body { transform-origin: 50% 100%; }
-  .pipo .p-head { transform-origin: 50% 95%; }
-  .pipo .p-wingL { transform-origin: 90% 10%; }
-  .pipo .p-wingR { transform-origin: 10% 10%; }
+  .pipo .p-head { transform-origin: 50% 92%; }
+  .pipo .p-tuft { transform-origin: 50% 100%; }
+  .pipo .p-wingL { transform-origin: 90% 8%; }
+  .pipo .p-wingR { transform-origin: 10% 8%; }
   .pipo .p-beakLo { transform-origin: 50% 0%; }
   .pipo .p-beakHi { transform-origin: 50% 100%; }
-  .pipo .p-tail { transform-origin: 0% 60%; }
-  .pipo .p-pupil { transform-origin: 50% 50%; }
-  .pipo.is-happy .p-pupil, .pipo.is-happy .p-eye circle { opacity: 0; }
+  .pipo .p-tail { transform-origin: 0% 50%; }
+  .pipo .p-pupil, .pipo .p-eye { transform-origin: 50% 50%; }
+  .pipo .p-lid { transform-origin: 50% 50%; }
+  .pipo.is-happy .p-pupil, .pipo.is-happy .p-eye > ellipse, .pipo.is-happy .p-lid { opacity: 0; }
   /* where Pipo lives */
-  .sing .stagewrap { flex: 1; display: flex; min-height: 0; }
-  .sing .pipo-side { flex: none; width: clamp(9rem, 22vw, 15rem); display: flex; align-items: flex-end; justify-content: center; padding: 0 0 1.2rem 1rem; }
-  .sing .pipo-side .pipo { width: 100%; height: auto; aspect-ratio: 200 / 230; }
-  @media (max-width: 640px) { .sing .stagewrap { flex-direction: column; } .sing .pipo-side { width: 100%; height: 7.5rem; padding: 0.2rem 0 0; align-items: center; } .sing .pipo-side .pipo { width: auto; height: 100%; } }
+  .sing .pipo-sing { position: absolute; left: 0.8rem; bottom: 5.4rem; width: clamp(6.5rem, 15vw, 10rem); aspect-ratio: 200 / 230; pointer-events: none; z-index: 4; }
+  @media (max-width: 640px) { .sing .pipo-sing { width: 5.2rem; left: 0.4rem; bottom: 6.6rem; } }
   .pipo-corner { position: fixed; right: 1rem; bottom: 1rem; width: clamp(6rem, 16vw, 9rem); aspect-ratio: 200 / 230; pointer-events: none; z-index: 56; }
   @media (max-width: 640px) { .pipo-corner { width: 5.2rem; right: 0.5rem; bottom: 0.5rem; } }
   .hero .pipo-hero { width: 7.5rem; aspect-ratio: 200 / 230; margin-left: auto; }
   @media (max-width: 640px) { .hero .pipo-hero { width: 5.5rem; margin-left: 0; } }
-  .sc-welcome .pipo, .sc-ready .pipo { width: 12rem; height: auto; aspect-ratio: 200 / 230; margin: 0 auto; }
-  .cc .pipo-coach { width: 6rem; aspect-ratio: 200 / 230; margin-left: auto; }
+  .sc-welcome .pipo-host, .sc-ready .pipo-host { width: 11rem; margin: 0 auto; aspect-ratio: 200 / 230; }
 
   /* ---------- words: the collection ---------- */
   .wtop { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; margin: 0.4rem 0 1.4rem; }
@@ -1543,122 +1542,161 @@ function makeGlitter(host){
 }
 
 
-/* ================= Pipo: the singing chick. An SVG rig with a small state machine. ================= */
+/* ================= Pipo: the singing chick. A soft SVG rig with spring physics and a small state machine. ================= */
+let PIPO_N = 0;
 const PIPO_SVG = `<svg viewBox="0 0 200 230" class="pipo-svg" aria-hidden="true">
-  <ellipse class="p-shadow" cx="100" cy="214" rx="46" ry="8" fill="#4A3318" opacity=".12"/>
+  <defs>
+    <radialGradient id="pb__ID__" cx="45%" cy="35%" r="70%"><stop offset="0" stop-color="#FFE08A"/><stop offset=".55" stop-color="#FFC94A"/><stop offset="1" stop-color="#F0A030"/></radialGradient>
+    <radialGradient id="ph__ID__" cx="42%" cy="38%" r="68%"><stop offset="0" stop-color="#FFE59A"/><stop offset=".6" stop-color="#FFCB4F"/><stop offset="1" stop-color="#F2A632"/></radialGradient>
+    <radialGradient id="pi__ID__" cx="40%" cy="35%" r="65%"><stop offset="0" stop-color="#8A5A2B"/><stop offset="1" stop-color="#4A2E14"/></radialGradient>
+    <clipPath id="peL__ID__"><ellipse cx="76" cy="84" rx="15" ry="18"/></clipPath>
+    <clipPath id="peR__ID__"><ellipse cx="124" cy="84" rx="15" ry="18"/></clipPath>
+  </defs>
+  <ellipse class="p-shadow" cx="100" cy="216" rx="44" ry="7" fill="#6B4423" opacity=".13"/>
   <g class="p-root">
     <g class="p-body">
-      <g class="p-tail"><path d="M148 150c14-10 26-8 30 2c-8 4-16 8-24 12c4-8 2-12-6-14z" fill="#C97C10" stroke="#4A3318" stroke-width="3" stroke-linejoin="round"/><path d="M150 160c12-2 22 2 24 10c-8 0-16 2-22 6c2-6 2-10-2-16z" fill="#E8901A" stroke="#4A3318" stroke-width="3" stroke-linejoin="round"/></g>
-      <path d="M46 150c-2-36 24-62 56-62c34 0 56 26 54 62c-2 28-26 44-54 44c-30 0-54-16-56-44z" fill="#F2A62C" stroke="#4A3318" stroke-width="3.5"/>
-      <path d="M72 166c6-22 22-32 30-32c8 0 22 10 28 32c-6 10-18 16-28 16c-12 0-24-6-30-16z" fill="#F7C15C" stroke="none"/>
-      <g class="p-wing p-wingL"><path d="M56 132c-18 2-28 20-22 40c10-4 20-10 30-22c2-8-2-16-8-18z" fill="#E8901A" stroke="#4A3318" stroke-width="3" stroke-linejoin="round"/></g>
-      <g class="p-wing p-wingR"><path d="M144 132c18 2 28 20 22 40c-10-4-20-10-30-22c-2-8 2-16 8-18z" fill="#E8901A" stroke="#4A3318" stroke-width="3" stroke-linejoin="round"/></g>
-      <g class="p-feet" stroke="#C97C10" stroke-width="5" stroke-linecap="round" fill="none"><path d="M82 192v14M70 206h24M118 192v14M106 206h24"/></g>
+      <g class="p-tail"><path d="M146 158c10-14 24-16 32-8c-8 2-14 8-18 16c-2-6-6-8-14-8z" fill="#F5B33A" stroke="#6B4423" stroke-width="2.5" stroke-linejoin="round"/><path d="M150 166c10-6 22-4 26 4c-8-1-14 1-20 6c0-4-2-8-6-10z" fill="#FFC94A" stroke="#6B4423" stroke-width="2.5" stroke-linejoin="round"/></g>
+      <path d="M50 160c0-30 22-50 50-50s50 20 50 50c0 26-22 42-50 42s-50-16-50-42z" fill="url(#pb__ID__)" stroke="#6B4423" stroke-width="2.8"/>
+      <path d="M72 176c4-22 16-34 28-34s24 12 28 34c-8 10-18 14-28 14s-20-4-28-14z" fill="#FFE9A8" opacity=".9"/>
+      <path d="M64 150q6 10 2 22M136 150q-6 10-2 22" fill="none" stroke="#E7A23A" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+      <g class="p-wing p-wingL"><path d="M54 138c-14 4-20 22-12 38c8-6 16-16 22-30c0-6-4-9-10-8z" fill="#F5B33A" stroke="#6B4423" stroke-width="2.5" stroke-linejoin="round"/></g>
+      <g class="p-wing p-wingR"><path d="M146 138c14 4 20 22 12 38c-8-6-16-16-22-30c0-6 4-9 10-8z" fill="#F5B33A" stroke="#6B4423" stroke-width="2.5" stroke-linejoin="round"/></g>
+      <g class="p-feet" stroke="#E0742A" stroke-width="5" stroke-linecap="round" fill="none"><path d="M84 200v10M74 212l10-2l10 2M116 200v10M106 212l10-2l10 2"/></g>
     </g>
     <g class="p-head">
-      <path class="p-tuft" d="M92 44c-2-10 4-16 10-16c-2 6 0 10 2 12M104 40c2-10 10-14 16-10c-6 2-10 6-12 10" fill="none" stroke="#4A3318" stroke-width="3" stroke-linecap="round"/>
-      <circle cx="100" cy="82" r="46" fill="#F2A62C" stroke="#4A3318" stroke-width="3.5"/>
-      <circle class="p-cheek" cx="66" cy="96" r="7" fill="#F4A7C9" opacity=".8"/><circle class="p-cheek" cx="134" cy="96" r="7" fill="#F4A7C9" opacity=".8"/>
-      <g class="p-eye p-eyeL"><circle cx="80" cy="76" r="11" fill="#fff" stroke="#4A3318" stroke-width="2.5"/><g class="p-pupil"><circle cx="82" cy="78" r="5.5" fill="#4A3318"/><circle cx="84" cy="76" r="1.8" fill="#fff"/></g><rect class="p-lid" x="67" y="63" width="26" height="0" rx="8" fill="#F2A62C"/><path class="p-happy" d="M70 78q10-10 20 0" fill="none" stroke="#4A3318" stroke-width="3" stroke-linecap="round" opacity="0"/></g>
-      <g class="p-eye p-eyeR"><circle cx="120" cy="76" r="11" fill="#fff" stroke="#4A3318" stroke-width="2.5"/><g class="p-pupil"><circle cx="122" cy="78" r="5.5" fill="#4A3318"/><circle cx="124" cy="76" r="1.8" fill="#fff"/></g><rect class="p-lid" x="107" y="63" width="26" height="0" rx="8" fill="#F2A62C"/><path class="p-happy" d="M110 78q10-10 20 0" fill="none" stroke="#4A3318" stroke-width="3" stroke-linecap="round" opacity="0"/></g>
-      <g class="p-brows" fill="none" stroke="#4A3318" stroke-width="3" stroke-linecap="round" opacity="0"><path d="M70 60l16 4M130 60l-16 4"/></g>
+      <g class="p-tuft" fill="none" stroke="#6B4423" stroke-width="2.6" stroke-linecap="round"><path d="M94 32c-4-10 0-18 8-20c-3 5-3 10 0 14"/><path d="M106 30c0-10 8-16 16-14c-6 3-9 8-9 13"/><path d="M100 28c-1-8 3-12 8-13c-3 4-3 8-1 11"/></g>
+      <circle cx="100" cy="84" r="54" fill="url(#ph__ID__)" stroke="#6B4423" stroke-width="2.8"/>
+      <circle class="p-cheek" cx="60" cy="104" r="9" fill="#F7A3BF" opacity=".55"/><circle class="p-cheek" cx="140" cy="104" r="9" fill="#F7A3BF" opacity=".55"/>
+      <g class="p-eye p-eyeL"><ellipse cx="76" cy="84" rx="15" ry="18" fill="#fff" stroke="#6B4423" stroke-width="2.4"/>
+        <g class="p-pupil"><circle cx="78" cy="87" r="10" fill="url(#pi__ID__)"/><circle cx="78" cy="87" r="5.5" fill="#1E1208"/><circle cx="73.5" cy="81" r="3.6" fill="#fff"/><circle cx="82" cy="92" r="1.6" fill="#fff" opacity=".9"/></g>
+        <g clip-path="url(#peL__ID__)"><ellipse class="p-lid" cx="76" cy="84" rx="16" ry="19" fill="url(#ph__ID__)" stroke="#6B4423" stroke-width="2.4" style="transform:translateY(-38px)"/></g>
+        <path class="p-happy" d="M63 88q13-16 26 0" fill="none" stroke="#6B4423" stroke-width="3" stroke-linecap="round" opacity="0"/></g>
+      <g class="p-eye p-eyeR"><ellipse cx="124" cy="84" rx="15" ry="18" fill="#fff" stroke="#6B4423" stroke-width="2.4"/>
+        <g class="p-pupil"><circle cx="122" cy="87" r="10" fill="url(#pi__ID__)"/><circle cx="122" cy="87" r="5.5" fill="#1E1208"/><circle cx="117.5" cy="81" r="3.6" fill="#fff"/><circle cx="126" cy="92" r="1.6" fill="#fff" opacity=".9"/></g>
+        <g clip-path="url(#peR__ID__)"><ellipse class="p-lid" cx="124" cy="84" rx="16" ry="19" fill="url(#ph__ID__)" stroke="#6B4423" stroke-width="2.4" style="transform:translateY(-38px)"/></g>
+        <path class="p-happy" d="M111 88q13-16 26 0" fill="none" stroke="#6B4423" stroke-width="3" stroke-linecap="round" opacity="0"/></g>
+      <g class="p-brows" fill="none" stroke="#6B4423" stroke-width="3" stroke-linecap="round" opacity="0"><path d="M64 62l14 5M136 62l-14 5"/></g>
       <g class="p-mouth">
-        <ellipse class="p-inside" cx="100" cy="104" rx="10" ry="1" fill="#7A2E4E"/>
-        <path class="p-beakHi" d="M84 98c4-8 28-8 32 0c-6 4-26 4-32 0z" fill="#E0742A" stroke="#4A3318" stroke-width="3" stroke-linejoin="round"/>
-        <path class="p-beakLo" d="M86 100c6 3 22 3 28 0c-4 8-24 8-28 0z" fill="#D4601E" stroke="#4A3318" stroke-width="3" stroke-linejoin="round"/>
+        <ellipse class="p-inside" cx="100" cy="112" rx="7" ry="1" fill="#B0466A"/>
+        <path class="p-beakHi" d="M89 108c3-7 19-7 22 0c-4 3-18 3-22 0z" fill="#FFA531" stroke="#6B4423" stroke-width="2.4" stroke-linejoin="round"/>
+        <path class="p-beakLo" d="M91 110c4 2 14 2 18 0c-2 6-16 6-18 0z" fill="#F08A24" stroke="#6B4423" stroke-width="2.4" stroke-linejoin="round"/>
       </g>
-      <g class="p-hat p-sombrero" opacity="0"><path d="M30 46c20-10 120-10 140 0c-10 8-130 8-140 0z" fill="#F7C15C" stroke="#4A3318" stroke-width="3"/><path d="M68 44c0-22 12-32 32-32s32 10 32 32" fill="#F7C15C" stroke="#4A3318" stroke-width="3"/><path d="M70 38q30 8 60 0" fill="none" stroke="#D6337B" stroke-width="4"/></g>
-      <g class="p-hat p-nightcap" opacity="0"><path d="M62 52c4-24 20-40 42-44c22 4 8 26 42 44c-10 6-74 6-84 0z" fill="#9CCBE6" stroke="#4A3318" stroke-width="3" stroke-linejoin="round"/><circle cx="146" cy="52" r="7" fill="#fff" stroke="#4A3318" stroke-width="3"/><path d="M60 52q40 8 84 0" fill="none" stroke="#fff" stroke-width="5"/></g>
-      <g class="p-zzz" opacity="0" fill="#1F6F9E" font-family="Alegreya Sans, sans-serif" font-weight="700"><text x="146" y="60" font-size="16">z</text><text x="160" y="44" font-size="20">z</text><text x="176" y="26" font-size="24">z</text></g>
-      <g class="p-think" opacity="0"><circle cx="156" cy="40" r="4" fill="#fff" stroke="#4A3318" stroke-width="2"/><circle cx="168" cy="26" r="7" fill="#fff" stroke="#4A3318" stroke-width="2"/><circle cx="186" cy="10" r="10" fill="#fff" stroke="#4A3318" stroke-width="2"/><text x="186" y="15" text-anchor="middle" font-size="14" font-weight="700" fill="#D6337B" font-family="Alegreya Sans, sans-serif">?</text></g>
-      <g class="p-notes" opacity="0" fill="none" stroke="#1F6F9E" stroke-width="3" stroke-linecap="round"><path d="M164 60v14a4 4 0 1 1-3-3.8M164 60l8-2v12"/><path d="M178 44v10a3.5 3.5 0 1 1-3-3.4"/></g>
+      <g class="p-hat p-sombrero" opacity="0"><path d="M26 44c22-9 126-9 148 0c-10 7-138 7-148 0z" fill="#F7C15C" stroke="#6B4423" stroke-width="2.5"/><path d="M66 42c0-22 14-32 34-32s34 10 34 32" fill="#F7C15C" stroke="#6B4423" stroke-width="2.5"/><path d="M68 36q32 8 64 0" fill="none" stroke="#D6337B" stroke-width="4"/></g>
+      <g class="p-hat p-nightcap" opacity="0"><path d="M56 50c6-26 22-42 44-46c22 6 6 28 46 46c-12 6-78 6-90 0z" fill="#A9D3EA" stroke="#6B4423" stroke-width="2.5" stroke-linejoin="round"/><circle cx="148" cy="52" r="7" fill="#fff" stroke="#6B4423" stroke-width="2.5"/><path d="M54 50q46 9 92 0" fill="none" stroke="#fff" stroke-width="5"/></g>
+      <g class="p-zzz" opacity="0" fill="#3B86B5" font-family="Alegreya Sans, sans-serif" font-weight="700"><text x="150" y="62" font-size="15">z</text><text x="164" y="46" font-size="19">z</text><text x="180" y="28" font-size="23">z</text></g>
+      <g class="p-think" opacity="0"><circle cx="158" cy="42" r="4" fill="#fff" stroke="#6B4423" stroke-width="2"/><circle cx="170" cy="28" r="7" fill="#fff" stroke="#6B4423" stroke-width="2"/><circle cx="188" cy="12" r="10" fill="#fff" stroke="#6B4423" stroke-width="2"/><text x="188" y="17" text-anchor="middle" font-size="14" font-weight="700" fill="#D6337B" font-family="Alegreya Sans, sans-serif">?</text></g>
+      <g class="p-notes" opacity="0" fill="none" stroke="#3B86B5" stroke-width="3" stroke-linecap="round"><path d="M166 62v14a4 4 0 1 1-3-3.8M166 62l8-2v12"/><path d="M180 46v10a3.5 3.5 0 1 1-3-3.4"/></g>
     </g>
   </g>
 </svg>`;
 
-// state poses: values the loop eases toward
+// poses: what the springs aim for
 const PIPO_POSES = {
-  idle:   { sway: 0,  bounce: 0,  headTilt: 0,   wing: 0,   lid: 0,   mouth: 0,   lean: 0,  happy: 0, brows: 0, hat: null, zzz: 0, think: 0, notes: 0, shiver: 0, breathe: 1 },
-  listen: { sway: 0,  bounce: 0,  headTilt: -9,  wing: 6,   lid: 0,   mouth: 0.05,lean: 4,  happy: 0, brows: 0, zzz: 0, think: 0, notes: 0, shiver: 0, breathe: 1 },
-  sing:   { sway: 1,  bounce: 1,  headTilt: 0,   wing: 22,  lid: 0,   mouth: 0,   lean: 0,  happy: 0, brows: 0, zzz: 0, think: 0, notes: 1, shiver: 0, breathe: 0 },
-  hum:    { sway: 1,  bounce: 0.5,headTilt: 5,   wing: 10,  lid: 0.35,mouth: 0,   lean: 0,  happy: 1, brows: 0, zzz: 0, think: 0, notes: 1, shiver: 0, breathe: 0, cheeks: 1 },
-  cheer:  { sway: 0,  bounce: 2,  headTilt: 0,   wing: 70,  lid: 0,   mouth: 0.7, lean: 0,  happy: 1, brows: 0, zzz: 0, think: 0, notes: 1, shiver: 0, breathe: 0 },
-  pat:    { sway: 0,  bounce: 0.4,headTilt: 6,   wing: 30,  lid: 0,   mouth: 0.2, lean: 6,  happy: 1, brows: 0, zzz: 0, think: 0, notes: 0, shiver: 0, breathe: 0, pat: 1 },
-  shiver: { sway: 0,  bounce: 0,  headTilt: 0,   wing: -18, lid: 0.2, mouth: 0.15,lean: 0,  happy: 0, brows: 1, zzz: 0, think: 0, notes: 0, shiver: 1, breathe: 0 },
-  sleepy: { sway: 0.4,bounce: 0,  headTilt: 12,  wing: -6,  lid: 0.55,mouth: 0,   lean: 0,  happy: 0, brows: 0, hat: "nightcap", zzz: 0, think: 0, notes: 0, shiver: 0, breathe: 1 },
-  sleep:  { sway: 0,  bounce: 0,  headTilt: 18,  wing: -10, lid: 1,   mouth: 0.05,lean: 0,  happy: 0, brows: 0, hat: "nightcap", zzz: 1, think: 0, notes: 0, shiver: 0, breathe: 1.6 },
-  wave:   { sway: 0,  bounce: 0.3,headTilt: -6,  wing: 0,   lid: 0,   mouth: 0.3, lean: 0,  happy: 1, brows: 0, zzz: 0, think: 0, notes: 0, shiver: 0, breathe: 1, wave: 1 },
-  think:  { sway: 0,  bounce: 0,  headTilt: 10,  wing: 4,   lid: 0.15,mouth: 0.1, lean: 0,  happy: 0, brows: 0, zzz: 0, think: 1, notes: 0, shiver: 0, breathe: 1, lookUp: 1 },
-  oops:   { sway: 0,  bounce: 0,  headTilt: 0,   wing: -22, lid: 0.45,mouth: 0,   lean: -6, happy: 0, brows: 0, zzz: 0, think: 0, notes: 0, shiver: 0, breathe: 1, down: 1 },
-  dance:  { sway: 1.6,bounce: 1.4,headTilt: 0,   wing: 50,  lid: 0,   mouth: 0.4, lean: 0,  happy: 1, brows: 0, zzz: 0, think: 0, notes: 1, shiver: 0, breathe: 0, alt: 1 },
+  idle:   { sway: 0,   bounce: 0,   headTilt: 0,  wing: 0,   lid: 0,    mouth: 0,    lean: 0,  happy: 0, brows: 0, zzz: 0, think: 0, notes: 0, shiver: 0, breathe: 1, eye: 1 },
+  listen: { sway: 0,   bounce: 0,   headTilt: -8, wing: 8,   lid: 0,    mouth: 0.08, lean: 5,  happy: 0, brows: 0, zzz: 0, think: 0, notes: 0, shiver: 0, breathe: 1, eye: 1.08 },
+  sing:   { sway: 1,   bounce: 1,   headTilt: 0,  wing: 26,  lid: 0,    mouth: 0,    lean: 0,  happy: 0, brows: 0, zzz: 0, think: 0, notes: 1, shiver: 0, breathe: 0, eye: 1 },
+  hum:    { sway: 1,   bounce: 0.5, headTilt: 6,  wing: 12,  lid: 0.4,  mouth: 0,    lean: 0,  happy: 1, brows: 0, zzz: 0, think: 0, notes: 1, shiver: 0, breathe: 0, eye: 1, cheeks: 1 },
+  cheer:  { sway: 0,   bounce: 2,   headTilt: 0,  wing: 78,  lid: 0,    mouth: 0.75, lean: 0,  happy: 1, brows: 0, zzz: 0, think: 0, notes: 1, shiver: 0, breathe: 0, eye: 1 },
+  pat:    { sway: 0,   bounce: 0.4, headTilt: 6,  wing: 34,  lid: 0,    mouth: 0.2,  lean: 6,  happy: 1, brows: 0, zzz: 0, think: 0, notes: 0, shiver: 0, breathe: 0, eye: 1, pat: 1 },
+  shiver: { sway: 0,   bounce: 0,   headTilt: 0,  wing: -20, lid: 0.25, mouth: 0.15, lean: 0,  happy: 0, brows: 1, zzz: 0, think: 0, notes: 0, shiver: 1, breathe: 0, eye: 0.95 },
+  sleepy: { sway: 0.4, bounce: 0,   headTilt: 12, wing: -6,  lid: 0.6,  mouth: 0,    lean: 0,  happy: 0, brows: 0, zzz: 0, think: 0, notes: 0, shiver: 0, breathe: 1, eye: 1, hat: "nightcap" },
+  sleep:  { sway: 0,   bounce: 0,   headTilt: 18, wing: -10, lid: 1,    mouth: 0.05, lean: 0,  happy: 0, brows: 0, zzz: 1, think: 0, notes: 0, shiver: 0, breathe: 1.6, eye: 1, hat: "nightcap" },
+  wave:   { sway: 0,   bounce: 0.3, headTilt: -7, wing: 0,   lid: 0,    mouth: 0.3,  lean: 0,  happy: 1, brows: 0, zzz: 0, think: 0, notes: 0, shiver: 0, breathe: 1, eye: 1, wave: 1 },
+  think:  { sway: 0,   bounce: 0,   headTilt: 10, wing: 4,   lid: 0.15, mouth: 0.1,  lean: 0,  happy: 0, brows: 0, zzz: 0, think: 1, notes: 0, shiver: 0, breathe: 1, eye: 1, lookUp: 1 },
+  oops:   { sway: 0,   bounce: 0,   headTilt: 0,  wing: -24, lid: 0.45, mouth: 0,    lean: -6, happy: 0, brows: 0, zzz: 0, think: 0, notes: 0, shiver: 0, breathe: 1, eye: 0.95, down: 1 },
+  dance:  { sway: 1.6, bounce: 1.4, headTilt: 0,  wing: 55,  lid: 0,    mouth: 0.4,  lean: 0,  happy: 1, brows: 0, zzz: 0, think: 0, notes: 1, shiver: 0, breathe: 0, eye: 1, alt: 1 },
 };
 const PIPO_VOWEL = { a: 1, e: 0.65, i: 0.4, o: 0.85, u: 0.5 };
 function makePipo(host, opts){
   opts = opts || {};
-  host.classList.add("pipo"); host.innerHTML = PIPO_SVG;
+  const id = "p" + (++PIPO_N);
+  host.classList.add("pipo"); host.innerHTML = PIPO_SVG.replace(/__ID__/g, id);
   const q = sel => host.querySelector(sel);
   const el = { root: q(".p-root"), body: q(".p-body"), head: q(".p-head"), wingL: q(".p-wingL"), wingR: q(".p-wingR"), beakLo: q(".p-beakLo"), beakHi: q(".p-beakHi"), inside: q(".p-inside"),
-    lids: host.querySelectorAll(".p-lid"), happy: host.querySelectorAll(".p-happy"), pupils: host.querySelectorAll(".p-pupil"), brows: q(".p-brows"), cheeks: host.querySelectorAll(".p-cheek"),
-    sombrero: q(".p-sombrero"), nightcap: q(".p-nightcap"), zzz: q(".p-zzz"), think: q(".p-think"), notes: q(".p-notes"), tail: q(".p-tail") };
-  const cur = Object.assign({}, PIPO_POSES.idle); let target = Object.assign({}, PIPO_POSES.idle);
-  let state = "idle", hat = opts.hat || null, bpm = 0, beat0 = 0, mouthOpen = 0, mouthTo = 0, mouthEnd = 0, look = { x: 0, y: 0 }, nextBlink = performance.now() + 1500, blink = 0, raf = null, lastT = performance.now(), waveT = 0;
+    lids: host.querySelectorAll(".p-lid"), happy: host.querySelectorAll(".p-happy"), pupils: host.querySelectorAll(".p-pupil"), eyes: host.querySelectorAll(".p-eye"), brows: q(".p-brows"), cheeks: host.querySelectorAll(".p-cheek"),
+    sombrero: q(".p-sombrero"), nightcap: q(".p-nightcap"), zzz: q(".p-zzz"), think: q(".p-think"), notes: q(".p-notes"), tail: q(".p-tail"), tuft: q(".p-tuft"), shadow: q(".p-shadow") };
+  // springs: each pose value has a position and a velocity, so poses overshoot a little and settle
+  const cur = {}, vel = {}; let target = Object.assign({}, PIPO_POSES.idle);
+  for (const k in target) { cur[k] = typeof target[k] === "number" ? target[k] : 0; vel[k] = 0; }
+  const spring = (k, t, dt, stiff, damp) => { const x = cur[k] || 0; const v = vel[k] || 0; const a = (t - x) * stiff - v * damp; vel[k] = v + a * dt; cur[k] = x + vel[k] * dt; };
+  let state = "idle", hat = opts.hat || null, bpm = 0, beat0 = 0, mouthOpen = 0, mouthTo = 0, mouthEnd = 0, look = { x: 0, y: 0 }, lookCur = { x: 0, y: 0 };
+  let nextBlink = performance.now() + 1200, blink = 0, doubleBlink = false, raf = null, timer = null, alive = true, lastT = performance.now();
+  let lastBounce = 0, squash = 0, squashV = 0, headLag = 0, headLagV = 0, tuftLag = 0, tuftLagV = 0, nextIdle = performance.now() + 2500, idleAct = null, idleUntil = 0;
   const RMQ = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function set(s, keepHat){ if (!PIPO_POSES[s]) s = "idle"; state = s; target = Object.assign({}, PIPO_POSES[s]); if (!keepHat && target.hat !== undefined && target.hat !== null) hat = target.hat; else if (!keepHat && (s === "sleepy" || s === "sleep")) hat = "nightcap"; }
+  function set(s, keepHat){ if (!PIPO_POSES[s]) s = "idle"; state = s; target = Object.assign({}, PIPO_POSES[s]); if (!keepHat && target.hat) hat = target.hat; if (s === "cheer" || s === "dance") { vel.bounce = 6; squashV = -6; } }
   function setHat(h){ hat = h; }
   function beat(b, t0){ bpm = b || 0; beat0 = t0 || performance.now(); }
-  // a note: open the beak for its length with a vowel shape
-  function note(durMs, vowel){ mouthTo = 0.45 + 0.55 * (PIPO_VOWEL[vowel] || 0.7); mouthEnd = performance.now() + Math.max(120, Math.min(durMs * 0.85, 900)); }
+  function note(durMs, vowel){ mouthTo = 0.5 + 0.5 * (PIPO_VOWEL[vowel] || 0.7); mouthEnd = performance.now() + Math.max(120, Math.min(durMs * 0.85, 900)); squashV += 1.2; }
   function lookAt(x, y){ look.x = Math.max(-1, Math.min(1, x)); look.y = Math.max(-1, Math.min(1, y)); }
-  function ease(k, v, r){ cur[k] += ((v == null ? 0 : v) - cur[k]) * r; }
   function tick(){
-    const now = performance.now(); const dt = Math.min(50, now - lastT) / 1000; lastT = now;
-    for (const k in target) if (typeof target[k] === "number") { if (cur[k] == null) cur[k] = 0; ease(k, target[k], 1 - Math.pow(0.001, dt)); }
-    for (const k in cur) if (!(k in target) && typeof cur[k] === "number") ease(k, 0, 1 - Math.pow(0.001, dt));
-    // rhythm
-    const period = bpm ? 60000 / bpm : 1400; const ph = ((now - beat0) / period) % 1; const beatSin = Math.sin(ph * Math.PI * 2);
-    const swayDeg = (cur.sway || 0) * 7 * (bpm ? Math.sin(((now - beat0) / (period * 2)) * Math.PI * 2) : Math.sin(now / 900));
-    const bounce = (cur.bounce || 0) * 9 * Math.max(0, 1 - ph * 2.2) ;
-    const breathe = (cur.breathe || 0) * 1.5 * Math.sin(now / 700);
+    const now = performance.now(); const dt = Math.min(0.05, (now - lastT) / 1000); lastT = now;
+    // idle micro-behaviors: a glance, a head tilt, a tiny hop
+    if (state === "idle" || state === "sleepy" || state === "listen") {
+      if (now > nextIdle) { const r = Math.random(); idleAct = r < 0.4 ? "glance" : r < 0.75 ? "tilt" : "hop"; idleUntil = now + 900 + Math.random() * 900; nextIdle = idleUntil + 2200 + Math.random() * 3500; if (idleAct === "hop") { vel.bounce = 4; squashV = -5; } if (idleAct === "glance") { look.x = (Math.random() - .5) * 1.6; look.y = (Math.random() - .5) * 0.6; } }
+      if (idleAct && now > idleUntil) { if (idleAct === "glance") { look.x = 0; look.y = 0; } idleAct = null; }
+    }
+    const tiltExtra = idleAct === "tilt" ? (Math.sin((now - (idleUntil - 1300)) / 400) * 9) : 0;
+    for (const k in target) if (typeof target[k] === "number") spring(k, target[k], dt, 70, 11);
+    for (const k in cur) if (!(k in target)) spring(k, 0, dt, 70, 11);
+    // rhythm: a hop per beat with weight shifting side to side every two beats
+    const period = bpm ? 60000 / bpm : 1500; const ph = ((now - beat0) / period) % 1; const twoBeat = Math.sin(((now - beat0) / (period * 2)) * Math.PI * 2);
+    const hop = Math.pow(Math.sin(Math.min(ph, 0.6) / 0.6 * Math.PI), 2);
+    const bounce = (cur.bounce || 0) * 9 * hop;
+    const shiftX = (cur.sway || 0) * 6 * twoBeat;
+    const swayDeg = (cur.sway || 0) * 6 * twoBeat + tiltExtra * 0.3;
+    // squash & stretch from vertical motion
+    const vy = (bounce - lastBounce) / Math.max(dt, 0.001); lastBounce = bounce;
+    squashV += (-squash * 90 - squashV * 12) * dt + (vy > 0 ? 0.0009 * vy : -0.0006 * vy); squash += squashV * dt; squash = Math.max(-0.18, Math.min(0.18, squash));
+    const sy = 1 + squash, sx = 1 - squash * 0.7;
+    // head and tuft lag the body (follow-through)
+    headLagV += ((-swayDeg * 0.6 - headLag) * 60 - headLagV * 9) * dt; headLag += headLagV * dt;
+    tuftLagV += ((-headLagV * 0.08 - tuftLag) * 80 - tuftLagV * 8) * dt; tuftLag += tuftLagV * dt;
+    const breathe = (cur.breathe || 0) * 1.4 * Math.sin(now / 750);
     const shiver = cur.shiver > 0.05 ? (Math.random() - .5) * 3 * cur.shiver : 0;
     const down = (cur.down || 0) * 10, lean = cur.lean || 0;
     const alt = cur.alt > 0.05 ? Math.sin(ph * Math.PI * 2) * 25 * cur.alt : 0;
-    const pat = cur.pat > 0.05 ? (ph < 0.5 ? 1 : 0) * 30 * cur.pat : 0;
-    const wave = cur.wave > 0.05 ? (Math.sin(now / 120) * 18 + 50) * cur.wave : 0;
-    // mouth: note-driven when singing, else the pose's mouth
+    const patL = cur.pat > 0.05 ? (ph < 0.5 ? 1 : 0) * 30 * cur.pat : 0, patR = cur.pat > 0.05 ? (ph < 0.5 ? 0 : 1) * 30 * cur.pat : 0;
+    const wave = cur.wave > 0.05 ? (Math.sin(now / 130) * 16 + 52) * cur.wave : 0;
+    // mouth
     if (now > mouthEnd) mouthTo = 0;
     const mBase = Math.max(cur.mouth || 0, mouthTo);
-    mouthOpen += (mBase - mouthOpen) * (mBase > mouthOpen ? 0.55 : 0.25);
-    // blink
-    if (now > nextBlink) { blink = 1; nextBlink = now + 2200 + Math.random() * 2600; }
-    if (blink > 0) blink = Math.max(0, blink - dt * 7);
+    mouthOpen += (mBase - mouthOpen) * (mBase > mouthOpen ? 0.5 : 0.22);
+    // blinks, sometimes double
+    if (now > nextBlink) { blink = 1; if (doubleBlink) { doubleBlink = false; nextBlink = now + 260; } else { doubleBlink = Math.random() < 0.25; nextBlink = now + 2400 + Math.random() * 3000; } }
+    if (blink > 0) blink = Math.max(0, blink - dt * 8);
     const lid = Math.max(cur.lid || 0, Math.sin(Math.min(1, blink) * Math.PI));
-    if (RMQ) { el.root.style.transform = ""; el.head.style.transform = `rotate(${(cur.headTilt || 0)}deg)`; }
+    // eyes follow with a soft lag
+    lookCur.x += (look.x - lookCur.x) * 0.12; lookCur.y += (look.y - lookCur.y) * 0.12;
+    if (RMQ) { el.root.style.transform = ""; el.head.style.transform = `rotate(${(cur.headTilt || 0)}deg)`; el.body.style.transform = ""; }
     else {
-      el.root.style.transform = `translate(${shiver}px, ${-bounce + breathe + down}px) rotate(${swayDeg}deg)`;
+      el.root.style.transform = `translate(${shiftX + shiver}px, ${-bounce + breathe + down}px) rotate(${swayDeg}deg) scale(${sx}, ${sy})`;
       el.body.style.transform = `rotate(${lean * 0.3}deg)`;
-      el.head.style.transform = `translate(0, ${-bounce * 0.4 + down * 0.5}px) rotate(${(cur.headTilt || 0) + swayDeg * 0.5 + lean * 0.4 + (cur.alt ? beatSin * 4 * cur.alt : 0)}deg) scaleY(${1 + Math.abs(beatSin) * 0.03 * (cur.bounce || 0)})`;
+      el.head.style.transform = `translate(0, ${-bounce * 0.25 + down * 0.5}px) rotate(${(cur.headTilt || 0) + headLag + lean * 0.4 + tiltExtra + (cur.alt ? twoBeat * 5 * cur.alt : 0)}deg)`;
+      el.tuft.style.transform = `rotate(${tuftLag * 3 - headLagV * 0.15}deg)`;
     }
     const wingBase = cur.wing || 0;
-    el.wingL.style.transform = `rotate(${-(wingBase + pat + (cur.alt ? alt : 0))}deg)`;
-    el.wingR.style.transform = `rotate(${wingBase + (cur.pat > 0.05 ? (ph < 0.5 ? 0 : 30) * cur.pat : 0) + (cur.alt ? -alt : 0) + wave}deg)`;
-    el.tail.style.transform = `rotate(${beatSin * 6 * (cur.sway || 0) + (cur.shiver || 0) * shiver}deg)`;
-    el.beakLo.style.transform = `rotate(${mouthOpen * 22}deg)`; el.beakHi.style.transform = `rotate(${-mouthOpen * 8}deg)`;
-    el.inside.setAttribute("ry", (mouthOpen * 9).toFixed(2)); el.inside.setAttribute("cy", (104 + mouthOpen * 5).toFixed(2));
-    el.lids.forEach(l => l.setAttribute("height", (lid * 24).toFixed(1)));
-    el.happy.forEach(h => h.setAttribute("opacity", (cur.happy || 0) > 0.5 && lid < 0.3 ? 1 : 0));
-    host.classList.toggle("is-happy", (cur.happy || 0) > 0.5 && lid < 0.3);
-    const px = look.x * 4 + (cur.lookUp ? -2 * cur.lookUp : 0), py = look.y * 3 + (cur.lookUp ? -3 * cur.lookUp : 0) + (cur.down || 0) * 2;
+    el.wingL.style.transform = `rotate(${-(wingBase + patL + (cur.alt ? alt : 0) + (cur.sway ? twoBeat * 6 * cur.sway : 0))}deg)`;
+    el.wingR.style.transform = `rotate(${wingBase + patR + (cur.alt ? -alt : 0) + wave - (cur.sway ? twoBeat * 6 * cur.sway : 0)}deg)`;
+    el.tail.style.transform = `rotate(${-headLag * 0.8 + twoBeat * 5 * (cur.sway || 0)}deg)`;
+    el.beakLo.style.transform = `rotate(${mouthOpen * 20}deg)`; el.beakHi.style.transform = `rotate(${-mouthOpen * 7}deg)`;
+    el.inside.setAttribute("ry", (mouthOpen * 7).toFixed(2)); el.inside.setAttribute("cy", (112 + mouthOpen * 4).toFixed(2));
+    el.lids.forEach(l => l.style.transform = `translateY(${-38 + lid * 38}px)`);
+    const happyOn = (cur.happy || 0) > 0.5 && lid < 0.3;
+    el.happy.forEach(h => h.setAttribute("opacity", happyOn ? 1 : 0));
+    host.classList.toggle("is-happy", happyOn);
+    const px = lookCur.x * 5 + (cur.lookUp ? -2.5 * cur.lookUp : 0), py = lookCur.y * 4 + (cur.lookUp ? -3.5 * cur.lookUp : 0) + (cur.down || 0) * 2.5;
     el.pupils.forEach(p => p.style.transform = `translate(${px}px, ${py}px)`);
-    el.brows.setAttribute("opacity", (cur.brows || 0).toFixed(2));
-    el.cheeks.forEach(c => c.setAttribute("r", (7 + (cur.cheeks || 0) * 3).toFixed(1)));
+    el.eyes.forEach(e => e.style.transform = `scale(${cur.eye || 1})`);
+    el.brows.setAttribute("opacity", Math.max(0, cur.brows || 0).toFixed(2));
+    el.cheeks.forEach(c => c.setAttribute("r", (9 + Math.max(0, cur.cheeks || 0) * 3).toFixed(1)));
     el.sombrero.setAttribute("opacity", hat === "sombrero" ? 1 : 0); el.nightcap.setAttribute("opacity", hat === "nightcap" ? 1 : 0);
-    el.zzz.setAttribute("opacity", (cur.zzz || 0).toFixed(2)); el.zzz.style.transform = `translate(0, ${-((now / 400) % 6)}px)`;
-    el.think.setAttribute("opacity", (cur.think || 0).toFixed(2));
-    el.notes.setAttribute("opacity", ((cur.notes || 0) * (0.5 + 0.5 * Math.abs(beatSin))).toFixed(2)); el.notes.style.transform = `translate(0, ${-((now / 250) % 8)}px)`;
+    el.zzz.setAttribute("opacity", Math.max(0, cur.zzz || 0).toFixed(2)); el.zzz.style.transform = `translate(0, ${-((now / 400) % 6)}px)`;
+    el.think.setAttribute("opacity", Math.max(0, cur.think || 0).toFixed(2));
+    el.notes.setAttribute("opacity", (Math.max(0, cur.notes || 0) * (0.5 + 0.5 * Math.abs(twoBeat))).toFixed(2)); el.notes.style.transform = `translate(0, ${-((now / 250) % 8)}px)`;
+    el.shadow.setAttribute("rx", (44 - bounce * 1.2).toFixed(1)); el.shadow.setAttribute("opacity", (0.13 - bounce * 0.006).toFixed(3));
     schedule();
   }
   // rAF stops in hidden tabs; fall back to a timer so the pose still updates
-  let alive = true, timer = null;
   function schedule(){ if (!alive) return; if (document.hidden) timer = setTimeout(tick, 40); else raf = requestAnimationFrame(tick); }
   schedule();
   return { set, setHat, beat, note, lookAt, get state(){ return state; }, destroy(){ alive = false; cancelAnimationFrame(raf); clearTimeout(timer); host.innerHTML = ""; host.classList.remove("pipo"); } };
@@ -2010,10 +2048,11 @@ function openSing(s){
       <button class="btn sm" type="button" data-act="gloss" aria-pressed="${GLOSS}">${T(I.english)}</button>
       <button class="btn sm" type="button" data-act="slow" aria-pressed="${SLOW}">${T(I.slow)}</button>
       <button class="btn sm" type="button" data-act="close">${T(I.close)}</button></div>
-    <div class="stagewrap"><div class="pipo-side" id="pipoSide"></div><div class="reelwrap" id="reelwrap"><div class="reel" id="reel">${lines.map((l, li) => `<div class="rline${words[li].some(w => artFor(w.t)) ? " has-art" : ""}" data-i="${li}">
+    <div class="reelwrap" id="reelwrap"><div class="reel" id="reel">${lines.map((l, li) => `<div class="rline${words[li].some(w => artFor(w.t)) ? " has-art" : ""}" data-i="${li}">
         ${s.stanzas.length > 1 && l.li === 0 ? `<div class="rcue">${T(I.cue_stanza)} ${l.si + 1}</div>` : ""}
         <div class="rtext">${words[li].map((w, k) => { const a = artFor(w.t); return `<span class="w${a ? " has" : ""}" data-k="${k}">${a ? `<i class="art">${a}</i>` : ""}<span class="t">${esc(w.t)}</span></span>`; }).join(" ")}</div>
-        <div class="rgl">${esc(l.en)}</div></div>`).join("")}</div></div></div>
+        <div class="rgl">${esc(l.en)}</div></div>`).join("")}</div></div>
+    <div class="pipo-sing" id="pipoSide"></div>
     <div class="bar"><i id="singBar"></i></div>
     <div class="ctl">
       <button class="btn" type="button" data-act="prev" aria-label="${T(I.prev)}">${IC.back}</button>

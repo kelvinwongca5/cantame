@@ -655,6 +655,22 @@
   .card .glyph svg { width: 100%; height: 100%; }
   .sticker { position: absolute; top: -0.6rem; left: 0.7rem; background: var(--rosa); color: #fff; font-family: "Alegreya Sans", system-ui, sans-serif; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.15rem 0.55rem; border-radius: 3px; transform: rotate(-3deg); box-shadow: 0 1px 2px rgba(0,0,0,.15); }
   .stampmini { position: absolute; bottom: 0.6rem; right: 0.7rem; font-family: "Alegreya Sans", system-ui, sans-serif; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--green); border: 2px solid var(--green); border-radius: 4px; padding: 0.05rem 0.4rem; transform: rotate(-6deg); opacity: 0.85; }
+  /* Tía Lupe */
+  .tia { display: grid; grid-template-columns: 5.6rem 1fr; gap: 0.9rem; align-items: end; margin: 0.6rem 0 1.2rem; }
+  .tia-pic { width: 5.6rem; aspect-ratio: 200 / 230; } .tia-pic svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .tia-svg .t-head { transform-box: fill-box; transform-origin: 50% 90%; animation: tia-nod 5.2s ease-in-out infinite; }
+  .tia-svg .t-lid { transform-box: fill-box; transform-origin: 50% 0; animation: tia-blink 4.6s ease-in-out infinite; }
+  .tia-svg .t-body { transform-box: fill-box; transform-origin: 50% 100%; animation: tia-breathe 3.4s ease-in-out infinite; }
+  @keyframes tia-nod { 0%, 100% { transform: rotate(0deg); } 30% { transform: rotate(-3deg); } 60% { transform: rotate(2deg); } }
+  @keyframes tia-blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(3.2); } }
+  @keyframes tia-breathe { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.02); } }
+  @media (prefers-reduced-motion: reduce) { .tia-svg .t-head, .tia-svg .t-lid, .tia-svg .t-body { animation: none; } }
+  .tia-bubble { position: relative; background: var(--soft); padding: 0.9rem 1.2rem 1rem; clip-path: polygon(0 4px, 3% 0, 9% 5px, 17% 1px, 26% 6px, 35% 0, 44% 5px, 55% 1px, 63% 6px, 72% 0, 81% 5px, 90% 1px, 100% 4px, 100% calc(100% - 5px), 92% 100%, 83% calc(100% - 4px), 74% 100%, 62% calc(100% - 6px), 51% 100%, 40% calc(100% - 5px), 29% 100%, 18% calc(100% - 4px), 8% 100%, 0 calc(100% - 6px)); transform: rotate(-0.4deg); }
+  .tia-bubble p { margin: 0; max-width: 58ch; } .tia-bubble .es { font-family: "Alegreya", Georgia, serif; font-size: 1.15rem; line-height: 1.35; } .tia-bubble .en { color: var(--muted); font-size: 0.92rem; margin-top: 0.35rem; }
+  .tia-name { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--rosa); margin-bottom: 0.3rem; }
+  .no-gloss .tia-bubble .en, .no-gloss .origin .en { display: none; }
+  .origin .en { color: var(--muted); font-size: 0.92rem; margin-top: 0.5rem; }
+  @media (max-width: 480px) { .tia { grid-template-columns: 4.2rem 1fr; gap: 0.6rem; } .tia-pic { width: 4.2rem; } }
   /* song page */
   .song { max-width: 42rem; }
   .song-head .kindline { margin: 0.4rem 0 0; color: var(--muted); font-size: 0.95rem; }
@@ -850,7 +866,7 @@ const I = {
   tour_back:{en:"Back",es:"Atrás"}, tour_next:{en:"Next",es:"Siguiente"}, tour_start:{en:"Start",es:"Empezar"}, tour_skip:{en:"Skip",es:"Saltar"},
   try_it:{en:"Try it",es:"Pruébalo"},
   saved:{en:"Marked as known",es:"Marcada como conocida"}, unsaved:{en:"Unmarked",es:"Desmarcada"},
-  origin_h:{en:"Where it comes from",es:"De dónde viene"}, know_short:{en:"known",es:"sabida"}, coach_streak1:{en:"day in a row",es:"día seguido"},
+  origin_h:{en:"Tía Lupe tells you where it comes from",es:"Tía Lupe te cuenta de dónde viene"}, know_short:{en:"known",es:"sabida"}, coach_streak1:{en:"day in a row",es:"día seguido"},
   weekdays:{en:["M","T","W","T","F","S","S"],es:["L","M","M","J","V","S","D"]},
 };
 
@@ -2436,6 +2452,91 @@ const MEMORIA = {
   "piñata": { es: "El turno termina cuando termina la canción. Griten se acabó juntos.", en: "The turn ends when the song ends. Shout se acabó together." },
 };
 
+/* ================= Tía Lupe: the hen who introduces each song ================= */
+const TIA_SVG = `<svg viewBox="0 0 200 230" class="tia-svg" aria-hidden="true">
+  <defs>
+    <radialGradient id="tb" cx="45%" cy="35%" r="70%"><stop offset="0" stop-color="#FFFBF0"/><stop offset=".6" stop-color="#F7EBD0"/><stop offset="1" stop-color="#E6CFA4"/></radialGradient>
+    <radialGradient id="ti" cx="40%" cy="35%" r="65%"><stop offset="0" stop-color="#8A5A2B"/><stop offset="1" stop-color="#4A2E14"/></radialGradient>
+  </defs>
+  <ellipse cx="100" cy="218" rx="50" ry="7" fill="#6B4423" opacity=".13"/>
+  <g class="t-body">
+    <path d="M150 150c12-14 26-16 34-8c-8 3-14 9-18 18c-2-6-8-9-16-10z" fill="#9C6A3A" stroke="#6B4423" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M152 160c12-6 24-4 28 4c-8-1-14 1-20 6c0-4-2-8-8-10z" fill="#C2894C" stroke="#6B4423" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M42 156c0-34 24-56 58-56s58 22 58 56c0 26-24 48-58 48s-58-22-58-48z" fill="url(#tb)" stroke="#6B4423" stroke-width="2.8"/>
+    <path d="M40 132c14-14 106-14 120 0c-4 22-14 32-24 40c-8-16-64-16-72 0c-10-8-20-18-24-40z" fill="#D6337B" stroke="#6B4423" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M44 146q56-22 112 0M42 160q58-22 116 0" fill="none" stroke="#F4A7C9" stroke-width="2.5" opacity=".8"/>
+    <g stroke="#D6337B" stroke-width="2.4" stroke-linecap="round"><path d="M36 172l-4 12M42 174l-2 12M48 176l-1 12M164 172l4 12M158 174l2 12M152 176l1 12"/></g>
+    <g stroke="#E0742A" stroke-width="5" stroke-linecap="round" fill="none"><path d="M82 204v10M72 216l10-2l10 2M118 204v10M108 216l10-2l10 2"/></g>
+  </g>
+  <g class="t-head">
+    <path d="M70 46c-2-12 6-18 12-14c2-12 12-16 18-10c4-10 16-10 18 0c8-4 16 2 14 12c-8 8-20 12-32 12s-24-4-30 0z" fill="#C8352E" stroke="#6B4423" stroke-width="2.5" stroke-linejoin="round"/>
+    <circle cx="100" cy="88" r="50" fill="url(#tb)" stroke="#6B4423" stroke-width="2.8"/>
+    <g class="t-flower"><circle cx="134" cy="40" r="9" fill="#F2A62C" stroke="#6B4423" stroke-width="2"/><circle cx="134" cy="40" r="4" fill="#C97C10"/><path d="M126 32l3 4M142 32l-3 4M126 48l3-4M142 48l-3-4" stroke="#F2A62C" stroke-width="3" stroke-linecap="round"/></g>
+    <circle class="t-cheek" cx="62" cy="106" r="9" fill="#F7A3BF" opacity=".5"/><circle class="t-cheek" cx="138" cy="106" r="9" fill="#F7A3BF" opacity=".5"/>
+    <g class="t-eye"><ellipse cx="78" cy="86" rx="13" ry="15" fill="#fff" stroke="#6B4423" stroke-width="2.3"/><circle cx="80" cy="89" r="8.5" fill="url(#ti)"/><circle cx="80" cy="89" r="4.6" fill="#1E1208"/><circle cx="76.5" cy="84" r="3" fill="#fff"/>
+      <path class="t-lid" d="M65 74q13-9 26 0v-8H65z" fill="url(#tb)"/><path d="M68 74q10-6 20 0" fill="none" stroke="#8A5A2B" stroke-width="1.8" stroke-linecap="round" opacity=".8"/></g>
+    <g class="t-eye"><ellipse cx="122" cy="86" rx="13" ry="15" fill="#fff" stroke="#6B4423" stroke-width="2.3"/><circle cx="120" cy="89" r="8.5" fill="url(#ti)"/><circle cx="120" cy="89" r="4.6" fill="#1E1208"/><circle cx="116.5" cy="84" r="3" fill="#fff"/>
+      <path class="t-lid" d="M109 74q13-9 26 0v-8h-26z" fill="url(#tb)"/><path d="M112 74q10-6 20 0" fill="none" stroke="#8A5A2B" stroke-width="1.8" stroke-linecap="round" opacity=".8"/></g>
+    <path d="M88 110c3-7 21-7 24 0c-4 4-20 4-24 0z" fill="#FFA531" stroke="#6B4423" stroke-width="2.4" stroke-linejoin="round"/>
+    <path d="M90 112c4 3 16 3 20 0c-2 5-18 5-20 0z" fill="#F08A24" stroke="#6B4423" stroke-width="2.4" stroke-linejoin="round"/>
+    <path d="M97 120c-5 2-6 8-2 11c3 0 4-4 6-7c2 3 3 7 6 7c4-3 3-9-2-11z" fill="#C8352E" stroke="#6B4423" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M82 114q3 4 7 2M118 114q-3 4-7 2" fill="none" stroke="#8A5A2B" stroke-width="1.8" stroke-linecap="round" opacity=".7"/>
+  </g>
+</svg>`;
+const TIA_NAME = "Tía Lupe";
+const TIA = {
+  pollitos: { intro: { es: "Ésta es la primera que le canto a cada pollito de la familia. Ya verás cómo abre los ojos cuando llegas a acurrucaditos.", en: "This is the first one I sing to every chick in the family. Watch the eyes open when you get to acurrucaditos." },
+    origen: { es: "Nadie sabe quién la escribió, y cada país dice que es suya: aparece en cancioneros de México, Colombia y Chile desde hace más de cien años. Aquí es la primera canción que aprenden casi todos los niños, en el kínder y en la casa. Yo, por supuesto, digo que es de los míos.", en: "Nobody knows who wrote it, and every country says it is theirs: it shows up in songbooks from Mexico, Colombia and Chile going back over a hundred years. Here it is the first song almost every child learns, at kindergarten and at home. I, of course, say it belongs to my own chicks." } },
+  tortillitas: { intro: { es: "Toma las manitas de tu pollito y pálmeaselas como si hicieran tortillas. En la segunda estrofa nadie se queda enojado; eso lo arreglé yo.", en: "Take your chick's little hands and pat them like you're making tortillas. In the second verse nobody stays grumpy; I fixed that myself." },
+    origen: { es: "Viene de la cocina, de cuando las tortillas se hacían a mano en el comal y las abuelas jugaban con el bebé mientras esperaban. Hay versiones en todo México y en el suroeste de Estados Unidos desde hace generaciones. Es el primer juego de casi todos los bebés que conozco.", en: "It comes from the kitchen, from when tortillas were shaped by hand at the comal and grandmothers played with the baby while they waited. There are versions all over Mexico and the Southwest of the United States going back generations. It is the first game of nearly every baby I know." } },
+  estrellita: { intro: { es: "Tu pollito ya se sabe esta tonada en inglés. Cántasela en español y verás que entra solita.", en: "Your chick already knows this tune in English. Sing it in Spanish and watch it slip right in." },
+    origen: { es: "La tonada es francesa, del siglo XVIII; Mozart le hizo variaciones, y en inglés es Twinkle, Twinkle. Hace mucho le pusimos letra en español, y en México es el arrullo que un niño oye en los dos idiomas, a veces la misma noche.", en: "The tune is French, from the 1700s; Mozart wrote variations on it, and in English it is Twinkle, Twinkle. We put Spanish words to it long ago, and in Mexico it is the lullaby a child hears in both languages, sometimes on the same night." } },
+  rorro: { intro: { es: "Ésta me la cantaba mi mamá, y a ella la suya. Mécete en cada rorro y déjala ir más despacio cada vuelta.", en: "My mother sang me this one, and hers sang it to her. Rock on every rorro and let it get slower each time through." },
+    origen: { es: "Es uno de los arrullos más viejos de México, de la época colonial. Rorro es una palabra antigua para el bebé en brazos. Las estrofas de la nevería y el coche se fueron agregando después, conforme el mundo cambiaba alrededor de la cuna.", en: "It is one of the oldest Mexican lullabies, from colonial times. Rorro is an old word for a baby in arms. The verses about the nevería and the coche were added later, as the world changed around the cradle." } },
+  santaana: { intro: { es: "Un arrullo para cuando el pollito no se quiere dormir. Baja la voz en cada estrofa; la última casi no se oye.", en: "A lullaby for when the chick won't settle. Lower your voice on each verse; the last one is almost a whisper." },
+    origen: { es: "Llegó con los españoles y se quedó en todo México, con una tonada distinta casi en cada región. Santa Ana es la abuela de Jesús, por eso a ella le preguntan por el niño que llora. La última línea, pedazo de mi corazón, todavía se dice en voz alta en las casas.", en: "It came with the Spanish and settled all over Mexico, with a different tune in almost every region. Santa Ana is the grandmother of Jesus, which is why she is the one asked about the crying child. The last line, pedazo de mi corazón, is still said out loud in our homes." } },
+  elefante: { intro: { es: "Decidan juntos en qué número se rompe la telaraña. Yo siempre digo que en el cinco, y siempre me caigo primero.", en: "Decide together which number breaks the web. I always say five, and I always fall first." },
+    origen: { es: "Se canta en todo el mundo de habla hispana, seguramente viene de España, y los niños mexicanos la aprendieron en el kínder durante todo el siglo pasado. No tiene final: se agregan elefantes hasta que la telaraña no aguanta.", en: "It is sung all over the Spanish-speaking world, most likely from Spain, and Mexican children learned it in kindergarten all through the last century. It has no ending: you add elephants until the web can't take it." } },
+  rana: { intro: { es: "El pollito canta todos los cucú, cucú y tú lo demás. Con eso ya tienen un dueto.", en: "The chick sings every cucú, cucú and you sing the rest. That's a duet already." },
+    origen: { es: "Es española, cruzó el mar y se volvió favorita en las escuelas de México. Cucú es como canta la rana en español, y cada estrofa agrega a alguien que pasa junto al charco, un juego viejo de nombrar a quien pasa.", en: "It is Spanish, crossed the ocean and became a classroom favorite in Mexico. Cucú is how a frog sings in Spanish, and each verse adds someone walking past the pond, an old game of naming who goes by." } },
+  perritos: { intro: { es: "Diez dedos arriba, baja uno por estrofa, y deja que tu pollito grite el número. Los gritos son parte de la canción.", en: "Ten fingers up, fold one per verse, and let your chick shout the number. The shouting is part of the song." },
+    origen: { es: "La quieren en México y en Argentina desde al menos mediados del siglo pasado, y en cada familia los perritos se van por un motivo distinto y más chistoso. Así aprendieron muchos niños a contar hacia atrás sin darse cuenta.", en: "It has been loved in Mexico and Argentina since at least the middle of the last century, and in every family the puppies leave for a different, sillier reason. That's how many children learned to count backwards without noticing." } },
+  colores: { intro: { es: "Ésta se canta en la iglesia, en las marchas y en la cocina, y en las tres suena igual de bonita. Pinta el aire con las manos.", en: "This one gets sung in church, at marches and in the kitchen, and it sounds just as pretty in all three. Paint the air with your hands." },
+    origen: { es: "Es una canción española muy vieja que las familias mexicanas cantan desde hace siglos. En los años sesenta los campesinos de California, con César Chávez, la hicieron su himno, y todavía se canta a los dos lados de la frontera. Para una familia de aquí y de allá, lleva los dos lugares a la vez.", en: "It is a very old Spanish song that Mexican families have sung for centuries. In the 1960s the farmworkers of California, with César Chávez, made it their anthem, and it is still sung on both sides of the border. For a family from here and there, it carries both places at once." } },
+  caballito: { intro: { es: "Brinca a tu pollito en la rodilla y di el nombre de tu pueblo cuando llegues a mi pueblo. El mío es pequeñito, pero es mío.", en: "Bounce your chick on your knee and say the name of your town when you get to mi pueblo. Mine is tiny, but it's mine." },
+    origen: { es: "Es de España, y México la hizo suya como canción de rodilla. El jinete le pide al caballito que lo lleve al pueblo donde nació, por eso los abuelos la cantan pensando en el suyo.", en: "It is from Spain, and Mexico made it its own as a knee-bounce song. The rider asks the little horse to carry him to the town where he was born, which is why grandparents sing it thinking of theirs." } },
+  vibora: { intro: { es: "En las bodas todos pasamos por debajo del velo con esta canción, y a mí siempre me atrapan en tras, tras, tras. En casa, dos adultos hacen el arco.", en: "At weddings we all run under the veil to this song, and I always get caught on tras, tras, tras. At home two grown-ups make the arch." },
+    origen: { es: "Es una ronda mexicana con raíces en un juego español del siglo XVI, y todavía se juega en cada patio de escuela. En México se volvió el juego de las bodas: los novios se suben a las sillas con el velo como puente, los invitados pasan en fila por debajo, y quien se cae es el que sigue en casarse.", en: "It is a Mexican ronda with roots in a Spanish game from the 1500s, still played in every schoolyard. In Mexico it became the wedding game: the couple stand on chairs holding the veil as a bridge, the guests snake underneath, and whoever falls is next to marry." } },
+  naranja: { intro: { es: "Una ronda con un abrazo a la mitad. Y lo de los tacos al final siempre da risa, aunque uno ya sea grande.", en: "A round with a hug in the middle. And the tacos line at the end always gets a laugh, even from grown-ups." },
+    origen: { es: "Se canta en México desde el siglo XIX. La marcha es la marcha militar que termina el juego, sololoy es como los niños decían celuloide, el plástico de las muñecas de antes, y la línea de los tacos es puro México.", en: "It has been sung in Mexico since the 1800s. The marcha is the military march that ends the game, sololoy is how children said celuloide, the plastic old dolls were made of, and the tacos line is Mexico's own." } },
+  blanca: { intro: { es: "Un pollito es Doña Blanca en medio, los demás son sus pilares, y el jicotillo trata de romperlos. Nunca lo dejen pasar a la primera.", en: "One chick is Doña Blanca in the middle, the others are her pillars, and the jicotillo tries to break through. Never let him in on the first try." },
+    origen: { es: "Es de las rondas más viejas de México, escrita desde la época colonial y todavía viva en los patios de la Ciudad de México. Un jicote es una avispa grande, del náhuatl xicotli, así que el juego lleva una palabra indígena en cada estrofa.", en: "It is one of the oldest rondas in Mexico, written down since colonial times and still alive in Mexico City schoolyards. A jicote is a big wasp, from the Nahuatl xicotli, so the game carries an indigenous word in every verse." } },
+  arroz: { intro: { es: "Cántenla y luego hagan arroz con leche juntos: arroz, leche, canela y azúcar. Así la canción también se come.", en: "Sing it, then make arroz con leche together: rice, milk, cinnamon and sugar. That way the song gets eaten too." },
+    origen: { es: "Se canta en toda Latinoamérica y en España desde al menos el siglo XIX. Cada país tiene sus estrofas sobre con quién se quiere casar quien canta; la mexicana pide una señorita de la capital.", en: "It has been sung all over Latin America and Spain since at least the 1800s. Every country has its own verses about whom the singer wants to marry; the Mexican one asks for a señorita de la capital." } },
+  muneca: { intro: { es: "Acuna una muñeca mientras cantas. Y no te asustes con constipado: quiere decir resfriado, nada más.", en: "Cradle a doll while you sing. And don't worry about constipado: it just means a cold." },
+    origen: { es: "Es española, del siglo XIX, y se volvió clásica en las casas y escuelas de México. La estrofa de los números, sumando de ocho en ocho, la agregaron los niños, y ya nadie la canta sin ella.", en: "It is Spanish, from the 1800s, and became a standard in Mexican homes and schools. The counting verse, adding by eight, was added by children, and now nobody sings it without." } },
+  barquito: { intro: { es: "Cuando termina, vuelve a empezar, y tu pollito va a pedir otra vuelta. Mécete como barquito y acelera cada vez.", en: "When it ends it starts again, and your chick will ask for one more round. Rock like a boat and speed up each time." },
+    origen: { es: "Viene de España y llegó a México por la escuela y la televisión. Está hecha para repetirse: cuando termina el cuento, vuelve a empezar.", en: "It comes from Spain and reached Mexico through school and television. It is built to repeat: when the story ends, it starts again." } },
+  dedito: { intro: { es: "Toca un dedo por línea, del meñique al gordito, y cosquillas en la palma cuando se lo come. Nunca falla.", en: "Touch one finger per line, from the little one to the thumb, and tickle the palm when he eats it. Never fails." },
+    origen: { es: "Se dice en todas las casas donde se habla español, y es más vieja de lo que nadie puede rastrear. Cada dedo hace algo con el huevo, y el pulgar, el gordito, se lo come.", en: "It is said in every home where Spanish is spoken, and it is older than anyone can trace. Each finger does a job with the egg, and the thumb, el gordito, eats it." } },
+  sana: { intro: { es: "Para la rodilla raspada. Soba en círculos lentos, dila igual que siempre, y un beso en mañana.", en: "For the scraped knee. Rub in slow circles, say it the same way every time, and a kiss on mañana." },
+    origen: { es: "Es la rima que cura en todo el mundo de habla hispana, de México a Argentina. Nadie sabe dónde empezó. Funciona porque siempre se dice exactamente igual.", en: "It is the healing rhyme of the whole Spanish-speaking world, from Mexico to Argentina. Nobody knows where it started. It works because it is always said exactly the same way." } },
+  aserrin: { intro: { es: "Tómale las dos manos y mézanse adelante y atrás, como serruchando. Brinca en pan y en dan.", en: "Hold both hands and rock forward and back, like sawing. Bounce on pan and on dan." },
+    origen: { es: "Viene de España y se canta en México y toda Sudamérica en el regazo de un adulto. Aserrín es el polvo de la madera, el vaivén de las palabras es un serrucho, y los maderos son los leñadores de San Juan.", en: "It comes from Spain and is sung in Mexico and across South America on a grown-up's lap. Aserrín is sawdust, the back-and-forth of the words is a saw, and the maderos are the woodcutters of San Juan." } },
+  llueva: { intro: { es: "Para cantar en la ventana cuando llueve. Baja los dedos como gotas y una palmada grande en chaparrón.", en: "For singing at the window when it rains. Flutter your fingers like drops and one big clap on chaparrón." },
+    origen: { es: "Es una canción española para llamar la lluvia, y en México la cantamos desde hace generaciones. La Virgen de la Cueva es un santuario de Cantabria del que casi ningún niño de aquí ha oído hablar, y aun así todos la cantan.", en: "It is a Spanish song for calling the rain, and in Mexico we have sung it for generations. La Virgen de la Cueva is a shrine in Cantabria that almost no child here has heard of, and they all sing it anyway." } },
+  mananitas: { intro: { es: "Con las dos primeras estrofas alcanza para cualquier fiesta. Un pollito que se las sabe ya tiene lugar en todos los cumpleaños de la familia.", en: "The first two verses are enough for any party. A chick who knows them has a place at every family birthday." },
+    origen: { es: "Es la canción de cumpleaños de México, con estrofas del siglo XIX y una melodía que quedó fija hacia los años veinte. Se canta antes del pastel, y a la antigua, al amanecer bajo la ventana del festejado, de preferencia con guitarra o con mariachi.", en: "It is Mexico's birthday song, with verses from the 1800s and a melody settled by the 1920s. It is sung before the cake, and in the old way at dawn under the birthday person's window, best with a guitar or a mariachi." } },
+  "piñata": { intro: { es: "Todos cantan mientras el pollito vendado le pega, y el turno termina cuando termina la canción. Griten se acabó juntos.", en: "Everyone sings while the blindfolded chick swings, and the turn ends when the song ends. Shout se acabó together." },
+    origen: { es: "La piñata llegó con los españoles, que la traían de Italia y de China, y los frailes de Acolman la usaron para enseñar: siete picos por siete pecados, la venda por la fe y los dulces como premio. La canción es lo que todos cantamos mientras tanto.", en: "The piñata came with the Spanish, who had it from Italy and China, and the friars of Acolman used it to teach: seven points for seven sins, the blindfold for faith, the sweets as the reward. The song is what all of us sing in the meantime." } },
+};
+function tiaHTML(text){ return `<div class="tia"><div class="tia-pic">${TIA_SVG}</div><div class="tia-bubble"><span class="tia-name">${TIA_NAME}</span><p class="es">${esc(text.es)}</p><p class="en">${esc(text.en)}</p></div></div>`; }
+const TIA_COACH = {
+  continue: { es: "Van a la mitad de esta. Cántenla completa, y luego guarden una o dos palabras.", en: "You're halfway through this one. Sing it all the way, then keep a word or two." },
+  next: { es: "La anterior ya quedó. Hoy solo canten esta; mañana guardamos palabras.", en: "The last one is done. Tonight just sing this one; tomorrow we keep words." },
+  first: { es: "Empecemos por la que le canto a todos mis pollitos. Hoy solo cántenla.", en: "Let's start with the one I sing to all my chicks. Tonight just sing it." },
+};
+
 /* ================= grounded interface: library, song, words, tonight ================= */
 const RULE = '<svg class="rule" viewBox="0 0 600 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 7c40-3 80 2 120-1s80-4 120 1s80 3 120-1s80-3 120 1s60 2 116-1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
 function cardHTML(s){
@@ -2475,11 +2576,11 @@ function renderSong(s){
   const idx = SONGS.indexOf(s); const prev = SONGS[(idx - 1 + SONGS.length) % SONGS.length], next = SONGS[(idx + 1) % SONGS.length];
   let n = 0;
   const stanzas = s.stanzas.map((st, si) => `<div class="stanza">${st.map(ln => lineHTML(ln, n++)).join("")}</div>`).join("") + (s.open ? `<div class="repeat">${T(I.repeat_more)}</div>` : "");
-  const mem = MEMORIA[s.id], ori = ORIGEN[s.id];
+  const tia = TIA[s.id]; const mem = tia ? tia.intro : MEMORIA[s.id], ori = tia ? tia.origen : ORIGEN[s.id];
   $("#view").innerHTML = `<div class="song">
     <a class="back" href="#/">${IC.back} ${T(I.back)}</a>
     <div class="song-head"><p class="kindline">${T(c.n)}</p><h1>${esc(s.title)}</h1></div>
-    ${mem ? `<div class="memo"><p class="es">${esc(mem.es)}</p><p class="en">${esc(mem.en)}</p></div>` : ""}
+    ${mem ? tiaHTML(mem) : ""}
     <div class="actions">
       <button class="btn primary lg" type="button" data-act="sing">${IC.singi} ${T(I.sing)}</button>
       <button class="btn lg" type="button" data-act="hear">${IC.play} <span>${T(I.hear)}</span></button>
@@ -2494,7 +2595,7 @@ function renderSong(s){
       <div class="vocab">${s.vocab.map(w => { const a = artFor(w.es); return `<button class="chip${isKept(w.es) ? " kept" : ""}" type="button" data-w="${esc(w.es)}">${a ? `<span class="ico">${a}</span>` : ""}<span class="tx"><span class="es">${esc(w.es)}</span><span class="en">${esc(w.en)}</span></span></button>`; }).join("")}</div>
       <div class="keeprow">${toKeep(s).length ? `<button class="btn primary" type="button" data-act="keep">${T(I.keep_btn)}</button>` : `<button class="btn" type="button" data-act="keepagain">${T(I.practice_again)}</button>`}
         <button class="stamp" type="button" data-act="know" aria-pressed="${KNOWN.has(s.id)}">${T(I.know)}</button></div></section>
-    ${ori ? `${RULE}<section class="sec origin"><h2>${T(I.origin_h)}</h2><p>${esc(T(ori))}</p></section>` : ""}
+    ${ori ? `${RULE}<section class="sec origin"><h2>${T(I.origin_h)}</h2><p class="es">${esc(ori.es)}</p><p class="en">${esc(ori.en)}</p></section>` : ""}
     <div class="nextprev">
       <a href="#/song/${prev.id}">${IC.back} ${esc(prev.title)}</a>
       <a class="next" href="#/song/${next.id}">${esc(next.title)} <span class="fwd">${IC.back}</span></a>
@@ -2554,8 +2655,8 @@ function renderCoach(){
   const whyText = { continue: I.coach_why_continue, next: I.coach_why_next, first: I.coach_why_first }[p.why];
   v.innerHTML = `<div class="coach1">
     <div class="hero"><h1>${T(I.coach_title)}</h1><div class="pipo-hero" id="pipoHero"></div></div>
+    ${tiaHTML(TIA_COACH[p.why] || TIA_COACH.first)}
     <section class="sec"><h2><a href="#/song/${p.song.id}">${esc(p.song.title)}</a></h2>
-      <p>${T(whyText).replace("{n}", p.left)}</p>
       <div class="row"><a class="btn primary" href="#/song/${p.song.id}/sing">${IC.singi} ${T(I.sing)}</a>${p.left ? `<a class="btn" href="#/song/${p.song.id}/keep">${T(I.keep_btn)}</a>` : ""}${p.due >= 3 ? `<a class="btn" href="#/palabras/repaso">${T(I.review)}</a>` : ""}</div></section>
     ${p.phrases.length ? `${RULE}<section class="sec"><h2>${T(I.coach_phrases)}</h2><div class="cphrases">${p.phrases.map(ph => `<div class="ph"><span class="es">${esc(ph.es)}</span><button class="spk" type="button" data-w="${esc(ph.es)}" aria-label="${T(I.hear)}">${IC.spk}</button><span class="en">${esc(ph.en)}</span></div>`).join("")}</div></section>` : ""}
     ${p.hard.length ? `${RULE}<section class="sec"><h2>${T(I.coach_notice)}</h2><ul class="hard">${p.hard.map(h => `<li><span class="hart">${artFor(h.es)}</span><div><b>${esc(h.es)}</b> <span class="muted">${esc(h.en)}</span><br><span>${T(TIPS[h.group] || TIPS.other)}</span></div></li>`).join("")}</ul></section>` : ""}

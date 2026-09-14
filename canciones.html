@@ -108,7 +108,7 @@
   .stripe-morado { border-left-color: var(--morado) !important; }
 
   /* ---------- library ---------- */
-  .hero { display: grid; grid-template-columns: 1fr auto; gap: 1rem 2rem; align-items: end; margin: 0.6rem 0 1.2rem; }
+  .hero { display: grid; grid-template-columns: 1fr auto auto; gap: 1rem 2rem; align-items: end; margin: 0.6rem 0 1.2rem; }
   .hero h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-style: italic; }
   .hero p { margin: 0.4rem 0 0; color: var(--ink-2); max-width: 46ch; font-size: 1.05rem; }
   .hero .stat { text-align: right; color: var(--muted); font-size: 0.95rem; }
@@ -233,7 +233,7 @@
   .sing .w .art svg { width: 100%; height: 100%; display: block; }
   .sing .rline.cur .w .art { opacity: 1; }
   .sing .rline.cur .w.on .art, .sing .rline.cur .w.lit .art { transform: translateX(-50%) scale(1.28) translateY(-3px); }
-  .sing .rline.has-art .rtext { padding-top: 1.1em; }
+  .sing .rline.has-art .rtext { padding-top: 0.5em; line-height: 2.2; }
   .sing .reelwrap { touch-action: none; }
   .sing .glitter { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
   .sing.pointing .reelwrap { cursor: none; }
@@ -311,6 +311,32 @@
   .hard li { display: flex; gap: 0.7rem; align-items: flex-start; }
   .hard .hart { width: 2.6rem; height: 2.6rem; flex: none; } .hard .hart svg { width: 100%; height: 100%; display: block; }
   .hard b { font-family: "Alegreya", Georgia, serif; font-size: 1.2rem; font-weight: 500; } .hard .muted { color: var(--muted); font-size: 0.9rem; }
+  /* ---------- Pipo ---------- */
+  .pipo { display: block; width: 100%; height: 100%; }
+  .pipo .pipo-svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .pipo .p-root, .pipo .p-body, .pipo .p-head, .pipo .p-wing, .pipo .p-beakLo, .pipo .p-beakHi, .pipo .p-tail, .pipo .p-pupil, .pipo .p-zzz, .pipo .p-notes { transform-box: fill-box; will-change: transform; }
+  .pipo .p-root { transform-origin: 50% 90%; }
+  .pipo .p-body { transform-origin: 50% 100%; }
+  .pipo .p-head { transform-origin: 50% 95%; }
+  .pipo .p-wingL { transform-origin: 90% 10%; }
+  .pipo .p-wingR { transform-origin: 10% 10%; }
+  .pipo .p-beakLo { transform-origin: 50% 0%; }
+  .pipo .p-beakHi { transform-origin: 50% 100%; }
+  .pipo .p-tail { transform-origin: 0% 60%; }
+  .pipo .p-pupil { transform-origin: 50% 50%; }
+  .pipo.is-happy .p-pupil, .pipo.is-happy .p-eye circle { opacity: 0; }
+  /* where Pipo lives */
+  .sing .stagewrap { flex: 1; display: flex; min-height: 0; }
+  .sing .pipo-side { flex: none; width: clamp(9rem, 22vw, 15rem); display: flex; align-items: flex-end; justify-content: center; padding: 0 0 1.2rem 1rem; }
+  .sing .pipo-side .pipo { width: 100%; height: auto; aspect-ratio: 200 / 230; }
+  @media (max-width: 640px) { .sing .stagewrap { flex-direction: column; } .sing .pipo-side { width: 100%; height: 7.5rem; padding: 0.2rem 0 0; align-items: center; } .sing .pipo-side .pipo { width: auto; height: 100%; } }
+  .pipo-corner { position: fixed; right: 1rem; bottom: 1rem; width: clamp(6rem, 16vw, 9rem); aspect-ratio: 200 / 230; pointer-events: none; z-index: 56; }
+  @media (max-width: 640px) { .pipo-corner { width: 5.2rem; right: 0.5rem; bottom: 0.5rem; } }
+  .hero .pipo-hero { width: 7.5rem; aspect-ratio: 200 / 230; margin-left: auto; }
+  @media (max-width: 640px) { .hero .pipo-hero { width: 5.5rem; margin-left: 0; } }
+  .sc-welcome .pipo, .sc-ready .pipo { width: 12rem; height: auto; aspect-ratio: 200 / 230; margin: 0 auto; }
+  .cc .pipo-coach { width: 6rem; aspect-ratio: 200 / 230; margin-left: auto; }
+
   /* ---------- words: the collection ---------- */
   .wtop { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; margin: 0.4rem 0 1.4rem; }
   .wtop h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); font-style: italic; }
@@ -459,7 +485,7 @@
 
   /* welcome / ready */
   .sc-welcome, .sc-ready { background: transparent; box-shadow: none; padding: 0; max-width: 22rem; margin-top: 0.4rem; }
-  .sc-welcome svg, .sc-ready svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .sc-welcome .pipo-host, .sc-ready .pipo-host { width: 11rem; margin: 0 auto; aspect-ratio: 200 / 230; }
   .flag { animation: sway 3.2s ease-in-out infinite; }
   @keyframes sway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
   .chick-bob { animation: bob 1.6s ease-in-out infinite; transform-origin: 50% 100%; }
@@ -1517,6 +1543,130 @@ function makeGlitter(host){
 }
 
 
+/* ================= Pipo: the singing chick. An SVG rig with a small state machine. ================= */
+const PIPO_SVG = `<svg viewBox="0 0 200 230" class="pipo-svg" aria-hidden="true">
+  <ellipse class="p-shadow" cx="100" cy="214" rx="46" ry="8" fill="#4A3318" opacity=".12"/>
+  <g class="p-root">
+    <g class="p-body">
+      <g class="p-tail"><path d="M148 150c14-10 26-8 30 2c-8 4-16 8-24 12c4-8 2-12-6-14z" fill="#C97C10" stroke="#4A3318" stroke-width="3" stroke-linejoin="round"/><path d="M150 160c12-2 22 2 24 10c-8 0-16 2-22 6c2-6 2-10-2-16z" fill="#E8901A" stroke="#4A3318" stroke-width="3" stroke-linejoin="round"/></g>
+      <path d="M46 150c-2-36 24-62 56-62c34 0 56 26 54 62c-2 28-26 44-54 44c-30 0-54-16-56-44z" fill="#F2A62C" stroke="#4A3318" stroke-width="3.5"/>
+      <path d="M72 166c6-22 22-32 30-32c8 0 22 10 28 32c-6 10-18 16-28 16c-12 0-24-6-30-16z" fill="#F7C15C" stroke="none"/>
+      <g class="p-wing p-wingL"><path d="M56 132c-18 2-28 20-22 40c10-4 20-10 30-22c2-8-2-16-8-18z" fill="#E8901A" stroke="#4A3318" stroke-width="3" stroke-linejoin="round"/></g>
+      <g class="p-wing p-wingR"><path d="M144 132c18 2 28 20 22 40c-10-4-20-10-30-22c-2-8 2-16 8-18z" fill="#E8901A" stroke="#4A3318" stroke-width="3" stroke-linejoin="round"/></g>
+      <g class="p-feet" stroke="#C97C10" stroke-width="5" stroke-linecap="round" fill="none"><path d="M82 192v14M70 206h24M118 192v14M106 206h24"/></g>
+    </g>
+    <g class="p-head">
+      <path class="p-tuft" d="M92 44c-2-10 4-16 10-16c-2 6 0 10 2 12M104 40c2-10 10-14 16-10c-6 2-10 6-12 10" fill="none" stroke="#4A3318" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="100" cy="82" r="46" fill="#F2A62C" stroke="#4A3318" stroke-width="3.5"/>
+      <circle class="p-cheek" cx="66" cy="96" r="7" fill="#F4A7C9" opacity=".8"/><circle class="p-cheek" cx="134" cy="96" r="7" fill="#F4A7C9" opacity=".8"/>
+      <g class="p-eye p-eyeL"><circle cx="80" cy="76" r="11" fill="#fff" stroke="#4A3318" stroke-width="2.5"/><g class="p-pupil"><circle cx="82" cy="78" r="5.5" fill="#4A3318"/><circle cx="84" cy="76" r="1.8" fill="#fff"/></g><rect class="p-lid" x="67" y="63" width="26" height="0" rx="8" fill="#F2A62C"/><path class="p-happy" d="M70 78q10-10 20 0" fill="none" stroke="#4A3318" stroke-width="3" stroke-linecap="round" opacity="0"/></g>
+      <g class="p-eye p-eyeR"><circle cx="120" cy="76" r="11" fill="#fff" stroke="#4A3318" stroke-width="2.5"/><g class="p-pupil"><circle cx="122" cy="78" r="5.5" fill="#4A3318"/><circle cx="124" cy="76" r="1.8" fill="#fff"/></g><rect class="p-lid" x="107" y="63" width="26" height="0" rx="8" fill="#F2A62C"/><path class="p-happy" d="M110 78q10-10 20 0" fill="none" stroke="#4A3318" stroke-width="3" stroke-linecap="round" opacity="0"/></g>
+      <g class="p-brows" fill="none" stroke="#4A3318" stroke-width="3" stroke-linecap="round" opacity="0"><path d="M70 60l16 4M130 60l-16 4"/></g>
+      <g class="p-mouth">
+        <ellipse class="p-inside" cx="100" cy="104" rx="10" ry="1" fill="#7A2E4E"/>
+        <path class="p-beakHi" d="M84 98c4-8 28-8 32 0c-6 4-26 4-32 0z" fill="#E0742A" stroke="#4A3318" stroke-width="3" stroke-linejoin="round"/>
+        <path class="p-beakLo" d="M86 100c6 3 22 3 28 0c-4 8-24 8-28 0z" fill="#D4601E" stroke="#4A3318" stroke-width="3" stroke-linejoin="round"/>
+      </g>
+      <g class="p-hat p-sombrero" opacity="0"><path d="M30 46c20-10 120-10 140 0c-10 8-130 8-140 0z" fill="#F7C15C" stroke="#4A3318" stroke-width="3"/><path d="M68 44c0-22 12-32 32-32s32 10 32 32" fill="#F7C15C" stroke="#4A3318" stroke-width="3"/><path d="M70 38q30 8 60 0" fill="none" stroke="#D6337B" stroke-width="4"/></g>
+      <g class="p-hat p-nightcap" opacity="0"><path d="M62 52c4-24 20-40 42-44c22 4 8 26 42 44c-10 6-74 6-84 0z" fill="#9CCBE6" stroke="#4A3318" stroke-width="3" stroke-linejoin="round"/><circle cx="146" cy="52" r="7" fill="#fff" stroke="#4A3318" stroke-width="3"/><path d="M60 52q40 8 84 0" fill="none" stroke="#fff" stroke-width="5"/></g>
+      <g class="p-zzz" opacity="0" fill="#1F6F9E" font-family="Alegreya Sans, sans-serif" font-weight="700"><text x="146" y="60" font-size="16">z</text><text x="160" y="44" font-size="20">z</text><text x="176" y="26" font-size="24">z</text></g>
+      <g class="p-think" opacity="0"><circle cx="156" cy="40" r="4" fill="#fff" stroke="#4A3318" stroke-width="2"/><circle cx="168" cy="26" r="7" fill="#fff" stroke="#4A3318" stroke-width="2"/><circle cx="186" cy="10" r="10" fill="#fff" stroke="#4A3318" stroke-width="2"/><text x="186" y="15" text-anchor="middle" font-size="14" font-weight="700" fill="#D6337B" font-family="Alegreya Sans, sans-serif">?</text></g>
+      <g class="p-notes" opacity="0" fill="none" stroke="#1F6F9E" stroke-width="3" stroke-linecap="round"><path d="M164 60v14a4 4 0 1 1-3-3.8M164 60l8-2v12"/><path d="M178 44v10a3.5 3.5 0 1 1-3-3.4"/></g>
+    </g>
+  </g>
+</svg>`;
+
+// state poses: values the loop eases toward
+const PIPO_POSES = {
+  idle:   { sway: 0,  bounce: 0,  headTilt: 0,   wing: 0,   lid: 0,   mouth: 0,   lean: 0,  happy: 0, brows: 0, hat: null, zzz: 0, think: 0, notes: 0, shiver: 0, breathe: 1 },
+  listen: { sway: 0,  bounce: 0,  headTilt: -9,  wing: 6,   lid: 0,   mouth: 0.05,lean: 4,  happy: 0, brows: 0, zzz: 0, think: 0, notes: 0, shiver: 0, breathe: 1 },
+  sing:   { sway: 1,  bounce: 1,  headTilt: 0,   wing: 22,  lid: 0,   mouth: 0,   lean: 0,  happy: 0, brows: 0, zzz: 0, think: 0, notes: 1, shiver: 0, breathe: 0 },
+  hum:    { sway: 1,  bounce: 0.5,headTilt: 5,   wing: 10,  lid: 0.35,mouth: 0,   lean: 0,  happy: 1, brows: 0, zzz: 0, think: 0, notes: 1, shiver: 0, breathe: 0, cheeks: 1 },
+  cheer:  { sway: 0,  bounce: 2,  headTilt: 0,   wing: 70,  lid: 0,   mouth: 0.7, lean: 0,  happy: 1, brows: 0, zzz: 0, think: 0, notes: 1, shiver: 0, breathe: 0 },
+  pat:    { sway: 0,  bounce: 0.4,headTilt: 6,   wing: 30,  lid: 0,   mouth: 0.2, lean: 6,  happy: 1, brows: 0, zzz: 0, think: 0, notes: 0, shiver: 0, breathe: 0, pat: 1 },
+  shiver: { sway: 0,  bounce: 0,  headTilt: 0,   wing: -18, lid: 0.2, mouth: 0.15,lean: 0,  happy: 0, brows: 1, zzz: 0, think: 0, notes: 0, shiver: 1, breathe: 0 },
+  sleepy: { sway: 0.4,bounce: 0,  headTilt: 12,  wing: -6,  lid: 0.55,mouth: 0,   lean: 0,  happy: 0, brows: 0, hat: "nightcap", zzz: 0, think: 0, notes: 0, shiver: 0, breathe: 1 },
+  sleep:  { sway: 0,  bounce: 0,  headTilt: 18,  wing: -10, lid: 1,   mouth: 0.05,lean: 0,  happy: 0, brows: 0, hat: "nightcap", zzz: 1, think: 0, notes: 0, shiver: 0, breathe: 1.6 },
+  wave:   { sway: 0,  bounce: 0.3,headTilt: -6,  wing: 0,   lid: 0,   mouth: 0.3, lean: 0,  happy: 1, brows: 0, zzz: 0, think: 0, notes: 0, shiver: 0, breathe: 1, wave: 1 },
+  think:  { sway: 0,  bounce: 0,  headTilt: 10,  wing: 4,   lid: 0.15,mouth: 0.1, lean: 0,  happy: 0, brows: 0, zzz: 0, think: 1, notes: 0, shiver: 0, breathe: 1, lookUp: 1 },
+  oops:   { sway: 0,  bounce: 0,  headTilt: 0,   wing: -22, lid: 0.45,mouth: 0,   lean: -6, happy: 0, brows: 0, zzz: 0, think: 0, notes: 0, shiver: 0, breathe: 1, down: 1 },
+  dance:  { sway: 1.6,bounce: 1.4,headTilt: 0,   wing: 50,  lid: 0,   mouth: 0.4, lean: 0,  happy: 1, brows: 0, zzz: 0, think: 0, notes: 1, shiver: 0, breathe: 0, alt: 1 },
+};
+const PIPO_VOWEL = { a: 1, e: 0.65, i: 0.4, o: 0.85, u: 0.5 };
+function makePipo(host, opts){
+  opts = opts || {};
+  host.classList.add("pipo"); host.innerHTML = PIPO_SVG;
+  const q = sel => host.querySelector(sel);
+  const el = { root: q(".p-root"), body: q(".p-body"), head: q(".p-head"), wingL: q(".p-wingL"), wingR: q(".p-wingR"), beakLo: q(".p-beakLo"), beakHi: q(".p-beakHi"), inside: q(".p-inside"),
+    lids: host.querySelectorAll(".p-lid"), happy: host.querySelectorAll(".p-happy"), pupils: host.querySelectorAll(".p-pupil"), brows: q(".p-brows"), cheeks: host.querySelectorAll(".p-cheek"),
+    sombrero: q(".p-sombrero"), nightcap: q(".p-nightcap"), zzz: q(".p-zzz"), think: q(".p-think"), notes: q(".p-notes"), tail: q(".p-tail") };
+  const cur = Object.assign({}, PIPO_POSES.idle); let target = Object.assign({}, PIPO_POSES.idle);
+  let state = "idle", hat = opts.hat || null, bpm = 0, beat0 = 0, mouthOpen = 0, mouthTo = 0, mouthEnd = 0, look = { x: 0, y: 0 }, nextBlink = performance.now() + 1500, blink = 0, raf = null, lastT = performance.now(), waveT = 0;
+  const RMQ = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function set(s, keepHat){ if (!PIPO_POSES[s]) s = "idle"; state = s; target = Object.assign({}, PIPO_POSES[s]); if (!keepHat && target.hat !== undefined && target.hat !== null) hat = target.hat; else if (!keepHat && (s === "sleepy" || s === "sleep")) hat = "nightcap"; }
+  function setHat(h){ hat = h; }
+  function beat(b, t0){ bpm = b || 0; beat0 = t0 || performance.now(); }
+  // a note: open the beak for its length with a vowel shape
+  function note(durMs, vowel){ mouthTo = 0.45 + 0.55 * (PIPO_VOWEL[vowel] || 0.7); mouthEnd = performance.now() + Math.max(120, Math.min(durMs * 0.85, 900)); }
+  function lookAt(x, y){ look.x = Math.max(-1, Math.min(1, x)); look.y = Math.max(-1, Math.min(1, y)); }
+  function ease(k, v, r){ cur[k] += ((v == null ? 0 : v) - cur[k]) * r; }
+  function tick(){
+    const now = performance.now(); const dt = Math.min(50, now - lastT) / 1000; lastT = now;
+    for (const k in target) if (typeof target[k] === "number") { if (cur[k] == null) cur[k] = 0; ease(k, target[k], 1 - Math.pow(0.001, dt)); }
+    for (const k in cur) if (!(k in target) && typeof cur[k] === "number") ease(k, 0, 1 - Math.pow(0.001, dt));
+    // rhythm
+    const period = bpm ? 60000 / bpm : 1400; const ph = ((now - beat0) / period) % 1; const beatSin = Math.sin(ph * Math.PI * 2);
+    const swayDeg = (cur.sway || 0) * 7 * (bpm ? Math.sin(((now - beat0) / (period * 2)) * Math.PI * 2) : Math.sin(now / 900));
+    const bounce = (cur.bounce || 0) * 9 * Math.max(0, 1 - ph * 2.2) ;
+    const breathe = (cur.breathe || 0) * 1.5 * Math.sin(now / 700);
+    const shiver = cur.shiver > 0.05 ? (Math.random() - .5) * 3 * cur.shiver : 0;
+    const down = (cur.down || 0) * 10, lean = cur.lean || 0;
+    const alt = cur.alt > 0.05 ? Math.sin(ph * Math.PI * 2) * 25 * cur.alt : 0;
+    const pat = cur.pat > 0.05 ? (ph < 0.5 ? 1 : 0) * 30 * cur.pat : 0;
+    const wave = cur.wave > 0.05 ? (Math.sin(now / 120) * 18 + 50) * cur.wave : 0;
+    // mouth: note-driven when singing, else the pose's mouth
+    if (now > mouthEnd) mouthTo = 0;
+    const mBase = Math.max(cur.mouth || 0, mouthTo);
+    mouthOpen += (mBase - mouthOpen) * (mBase > mouthOpen ? 0.55 : 0.25);
+    // blink
+    if (now > nextBlink) { blink = 1; nextBlink = now + 2200 + Math.random() * 2600; }
+    if (blink > 0) blink = Math.max(0, blink - dt * 7);
+    const lid = Math.max(cur.lid || 0, Math.sin(Math.min(1, blink) * Math.PI));
+    if (RMQ) { el.root.style.transform = ""; el.head.style.transform = `rotate(${(cur.headTilt || 0)}deg)`; }
+    else {
+      el.root.style.transform = `translate(${shiver}px, ${-bounce + breathe + down}px) rotate(${swayDeg}deg)`;
+      el.body.style.transform = `rotate(${lean * 0.3}deg)`;
+      el.head.style.transform = `translate(0, ${-bounce * 0.4 + down * 0.5}px) rotate(${(cur.headTilt || 0) + swayDeg * 0.5 + lean * 0.4 + (cur.alt ? beatSin * 4 * cur.alt : 0)}deg) scaleY(${1 + Math.abs(beatSin) * 0.03 * (cur.bounce || 0)})`;
+    }
+    const wingBase = cur.wing || 0;
+    el.wingL.style.transform = `rotate(${-(wingBase + pat + (cur.alt ? alt : 0))}deg)`;
+    el.wingR.style.transform = `rotate(${wingBase + (cur.pat > 0.05 ? (ph < 0.5 ? 0 : 30) * cur.pat : 0) + (cur.alt ? -alt : 0) + wave}deg)`;
+    el.tail.style.transform = `rotate(${beatSin * 6 * (cur.sway || 0) + (cur.shiver || 0) * shiver}deg)`;
+    el.beakLo.style.transform = `rotate(${mouthOpen * 22}deg)`; el.beakHi.style.transform = `rotate(${-mouthOpen * 8}deg)`;
+    el.inside.setAttribute("ry", (mouthOpen * 9).toFixed(2)); el.inside.setAttribute("cy", (104 + mouthOpen * 5).toFixed(2));
+    el.lids.forEach(l => l.setAttribute("height", (lid * 24).toFixed(1)));
+    el.happy.forEach(h => h.setAttribute("opacity", (cur.happy || 0) > 0.5 && lid < 0.3 ? 1 : 0));
+    host.classList.toggle("is-happy", (cur.happy || 0) > 0.5 && lid < 0.3);
+    const px = look.x * 4 + (cur.lookUp ? -2 * cur.lookUp : 0), py = look.y * 3 + (cur.lookUp ? -3 * cur.lookUp : 0) + (cur.down || 0) * 2;
+    el.pupils.forEach(p => p.style.transform = `translate(${px}px, ${py}px)`);
+    el.brows.setAttribute("opacity", (cur.brows || 0).toFixed(2));
+    el.cheeks.forEach(c => c.setAttribute("r", (7 + (cur.cheeks || 0) * 3).toFixed(1)));
+    el.sombrero.setAttribute("opacity", hat === "sombrero" ? 1 : 0); el.nightcap.setAttribute("opacity", hat === "nightcap" ? 1 : 0);
+    el.zzz.setAttribute("opacity", (cur.zzz || 0).toFixed(2)); el.zzz.style.transform = `translate(0, ${-((now / 400) % 6)}px)`;
+    el.think.setAttribute("opacity", (cur.think || 0).toFixed(2));
+    el.notes.setAttribute("opacity", ((cur.notes || 0) * (0.5 + 0.5 * Math.abs(beatSin))).toFixed(2)); el.notes.style.transform = `translate(0, ${-((now / 250) % 8)}px)`;
+    schedule();
+  }
+  // rAF stops in hidden tabs; fall back to a timer so the pose still updates
+  let alive = true, timer = null;
+  function schedule(){ if (!alive) return; if (document.hidden) timer = setTimeout(tick, 40); else raf = requestAnimationFrame(tick); }
+  schedule();
+  return { set, setHat, beat, note, lookAt, get state(){ return state; }, destroy(){ alive = false; cancelAnimationFrame(raf); clearTimeout(timer); host.innerHTML = ""; host.classList.remove("pipo"); } };
+}
+// vowel of the k-th syllable of a word (for the beak shape)
+function vowelAt(word, k){ const vs = String(word).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").match(/[aeiou]+/g) || ["a"]; const v = vs[Math.min(k, vs.length - 1)] || "a"; return v[0]; }
+const hatForSong = s => s.cat === "fiestas" ? "sombrero" : s.cat === "arrullos" ? "nightcap" : null;
+
 /* ================= state ================= */
 let LANG = "en";
 try { const s = localStorage.getItem("cantame-lang"); if (s === "es" || s === "en") LANG = s; } catch(e){}
@@ -1619,6 +1769,7 @@ function playTune(song, onLine, onEnd, from, opts){
   const m = MELODIES[song.melody]; if (!m) return;
   const c = audio(); if (c.state === "suspended") c.resume();
   const beat = 60/(m.bpm * (SLOW ? 0.7 : 1)); let t = c.currentTime + 0.15; const token = {}; tuneToken = token; // Slow also slows the tune
+  if (opts.onStart) opts.onStart(m.bpm * (SLOW ? 0.7 : 1), performance.now() + 150);
   const bus = c.createGain(); bus.gain.value = 1; bus.connect(master); tuneBus = bus;
   const at = (when, fn) => tuneTimers.push(setTimeout(()=>{ if (tuneToken === token) fn(); }, Math.max(0, (when - c.currentTime)*1000)));
   let flat = 0;
@@ -1632,7 +1783,7 @@ function playTune(song, onLine, onEnd, from, opts){
       const durMs = ml.d.reduce((a, b) => a + b, 0) * beat * 1000;
       const starts = []; let acc = 0; ml.d.forEach(d => { starts.push(Math.round(acc * beat * 1000)); acc += d; });
       at(t, ()=>{ if (onLine) onLine(fi, durMs, starts); });
-      ml.n.forEach((deg, k) => { const f = m.base * Math.pow(2, semi(deg)/12) * 0.5; const d = ml.d[k]*beat; if (!(opts.mute && opts.mute.has(k))) hum(f, t, d*0.95, bus); t += d; });
+      ml.n.forEach((deg, k) => { const f = m.base * Math.pow(2, semi(deg)/12) * 0.5; const d = ml.d[k]*beat; if (!(opts.mute && opts.mute.has(k))) hum(f, t, d*0.95, bus); if (opts.onNote) { const ms = d * 1000; at(t, ()=> opts.onNote(fi, k, ms, ml.n.length)); } t += d; });
     });
     if ((!from || flat > from) && opts.only == null) t += beat*0.8;
   });
@@ -1641,7 +1792,10 @@ function playTune(song, onLine, onEnd, from, opts){
 function stopAll(){ stopSpeech(); stopTune(); }
 
 /* ================= routing ================= */
+let pagePipo = null;
+function killPagePipo(){ if (pagePipo) { pagePipo.destroy(); pagePipo = null; } }
 function route(){
+  killPagePipo();
   let h = location.hash.replace(/^#\/?/, "");
   try { h = decodeURIComponent(h); } catch(e){} // ids like "piñata" arrive percent-encoded
   const parts = h.split("/").filter(Boolean);
@@ -1710,6 +1864,7 @@ function renderLibrary(){
     <div class="hero">
       <div><h1>${T(I.hero_h)}</h1><p>${T(I.hero_p)}</p></div>
       <div class="stats"><div class="stat"><b>${KNOWN.size}</b>${T(I.stat)}</div><div class="stat"><b>${keptList().length}</b>${T(I.stat_words)}</div></div>
+      <div class="pipo-hero" id="pipoHero"></div>
     </div>
     ${!TOUR_SEEN ? `<div class="banner" id="tourBanner"><div class="pic">${PIC.picado}</div><p>${T(I.banner)}</p><a class="btn primary sm" href="#/tour/0">${T(I.take_tour)}</a><button class="x" type="button" aria-label="${T(I.dismiss)}" data-act="dismiss">×</button></div>` : ""}
     <div class="kinds" role="group">
@@ -1721,6 +1876,7 @@ function renderLibrary(){
     </div>
     ${starters}${groups}
   </div>`;
+  killPagePipo(); pagePipo = makePipo($("#pipoHero", v)); pagePipo.set("wave"); setTimeout(()=>{ if (pagePipo) pagePipo.set("idle"); }, 2200);
   $$(".filters button", v).forEach(b => b.addEventListener("click", ()=>{ FILTER = b.dataset.f; renderLibrary(); }));
   $$(".kinds button", v).forEach(b => b.addEventListener("click", ()=>{ KIND = b.dataset.k; renderLibrary(); }));
   const dis = $('[data-act="dismiss"]', v); if (dis) dis.addEventListener("click", ()=>{ TOUR_SEEN = true; try { localStorage.setItem("cantame-tour-seen","1"); } catch(e){} $("#tourBanner").remove(); });
@@ -1854,10 +2010,10 @@ function openSing(s){
       <button class="btn sm" type="button" data-act="gloss" aria-pressed="${GLOSS}">${T(I.english)}</button>
       <button class="btn sm" type="button" data-act="slow" aria-pressed="${SLOW}">${T(I.slow)}</button>
       <button class="btn sm" type="button" data-act="close">${T(I.close)}</button></div>
-    <div class="reelwrap" id="reelwrap"><div class="reel" id="reel">${lines.map((l, li) => `<div class="rline${words[li].some(w => artFor(w.t)) ? " has-art" : ""}" data-i="${li}">
+    <div class="stagewrap"><div class="pipo-side" id="pipoSide"></div><div class="reelwrap" id="reelwrap"><div class="reel" id="reel">${lines.map((l, li) => `<div class="rline${words[li].some(w => artFor(w.t)) ? " has-art" : ""}" data-i="${li}">
         ${s.stanzas.length > 1 && l.li === 0 ? `<div class="rcue">${T(I.cue_stanza)} ${l.si + 1}</div>` : ""}
         <div class="rtext">${words[li].map((w, k) => { const a = artFor(w.t); return `<span class="w${a ? " has" : ""}" data-k="${k}">${a ? `<i class="art">${a}</i>` : ""}<span class="t">${esc(w.t)}</span></span>`; }).join(" ")}</div>
-        <div class="rgl">${esc(l.en)}</div></div>`).join("")}</div></div>
+        <div class="rgl">${esc(l.en)}</div></div>`).join("")}</div></div></div>
     <div class="bar"><i id="singBar"></i></div>
     <div class="ctl">
       <button class="btn" type="button" data-act="prev" aria-label="${T(I.prev)}">${IC.back}</button>
@@ -1868,6 +2024,10 @@ function openSing(s){
   document.body.appendChild(o); document.body.style.overflow = "hidden";
   const wrap = $("#reelwrap", o), reel = $("#reel", o), rlines = $$(".rline", o), bar = $("#singBar", o);
   const glitter = RM ? null : makeGlitter(wrap);
+  const pipo = makePipo($("#pipoSide", o), { hat: hatForSong(s) }); if (s.cat === "arrullos") pipo.set("sleepy", true);
+  const singState_ = s.id === "tortillitas" ? "pat" : s.cat === "fiestas" || s.id === "vibora" ? "dance" : "sing";
+  const restState = s.cat === "arrullos" ? "sleepy" : "idle";
+  let lineStarts = null, lineIdx = null;
   const wordPos = w => { const r = w.getBoundingClientRect(), b = wrap.getBoundingClientRect(); return { x: r.left - b.left + r.width / 2, y: r.top - b.top + 4, w: r.width }; };
   const playBtn = $('[data-act="play"]', o); const hasTune = !!s.melody;
 
@@ -1892,18 +2052,20 @@ function openSing(s){
     playBtn.setAttribute("aria-pressed", !!mode);
     o.classList.toggle("playing", !!mode);
   };
-  const stop = () => { stopAll(); clearFb(); mode = null; clearWord(); setButtons(); };
+  const stop = () => { stopAll(); clearFb(); mode = null; clearWord(); setButtons(); pipo.set(restState, true); };
+  const finish = () => { pipo.set("cheer", true); setTimeout(()=>{ if (!mode) pipo.set(restState, true); }, 1800); };
   const playVoice = from => {
-    stop(); mode = "voice"; setButtons();
+    stop(); mode = "voice"; setButtons(); pipo.set(singState_, true); pipo.beat(SLOW ? 60 : 84, performance.now());
     const idx = lines.slice(from).map((_, k) => from + k);
     speakLines(idx.map(k => lines[k].es),
       k => { show(from + k); if (!boundarySeen) fbTimers.push(setTimeout(()=>{ if (!boundarySeen) tickWords(from + k, words[from + k].length * (SLOW ? 640 : 340)); }, 250)); },
-      () => { if (mode === "voice") { mode = null; clearWord(); setButtons(); logEvent("sing", { song: s.id }); } },
-      (k, ci) => { const li = from + k; if (li !== i) return; if (!boundarySeen) { boundarySeen = true; clearFb(); } const ws = words[li]; let wi = 0; for (let q = 0; q < ws.length; q++) if (ws[q].at <= ci) wi = q; setWord(li, wi); });
+      () => { if (mode === "voice") { mode = null; clearWord(); setButtons(); logEvent("sing", { song: s.id }); finish(); } },
+      (k, ci) => { const li = from + k; if (li !== i) return; if (!boundarySeen) { boundarySeen = true; clearFb(); } const ws = words[li]; let wi = 0; for (let q = 0; q < ws.length; q++) if (ws[q].at <= ci) wi = q; setWord(li, wi); pipo.note(SLOW ? 480 : 260, vowelAt(ws[wi].t, 0)); });
   };
   const playTuneFrom = from => {
-    stop(); mode = "tune"; setButtons();
-    playTune(s, (fi, durMs, starts) => { if (fi < from) return; show(fi); tickToNotes(fi, starts); }, () => { if (mode === "tune") { mode = null; clearWord(); setButtons(); logEvent("sing", { song: s.id }); } }, from);
+    stop(); mode = "tune"; setButtons(); pipo.set(singState_, true);
+    playTune(s, (fi, durMs, starts) => { if (fi < from) return; lineStarts = starts; lineIdx = wordNoteIndex(words[fi], starts.length); show(fi); tickToNotes(fi, starts); }, () => { if (mode === "tune") { mode = null; clearWord(); setButtons(); logEvent("sing", { song: s.id }); finish(); } }, from,
+      { onStart: (bpm, t0) => pipo.beat(bpm, t0), onNote: (fi, k, ms, N) => { if (!lineIdx) return; let wi = 0; for (let q = 0; q < lineIdx.length; q++) if (lineIdx[q] <= k) wi = q; const w = words[fi][wi]; pipo.note(ms, vowelAt(w ? w.t : "a", k - lineIdx[wi])); } });
   };
   const jump = n => { const wasMode = mode; if (wasMode === "voice") playVoice(Math.max(0, Math.min(lines.length - 1, n))); else if (wasMode === "tune") playTuneFrom(Math.max(0, Math.min(lines.length - 1, n))); else show(n); };
   const next = () => { if (i < lines.length - 1) jump(i + 1); };
@@ -1915,12 +2077,13 @@ function openSing(s){
   const fingerAt = e => {
     const b = wrap.getBoundingClientRect(); const x = e.clientX - b.left, y = e.clientY - b.top;
     if (glitter) glitter.emit(x, y - 22, 6, 18);
+    pipo.lookAt((x / b.width) * 2 - 1, (y / b.height) * 2 - 1); if (!mode && pipo.state !== "listen") pipo.set("listen", true);
     const el = document.elementFromPoint(e.clientX, e.clientY); const w = el && el.closest(".rline.cur .w");
     if (w && !w.classList.contains("lit")) { w.classList.add("lit"); if (glitter) { const p = wordPos(w); glitter.emit(p.x, p.y, 18, p.w); } }
   };
   wrap.addEventListener("pointerdown", e => { if (e.button > 0) return; pointing = true; o.classList.add("pointing"); fingerAt(e); });
   wrap.addEventListener("pointermove", e => { if (pointing) fingerAt(e); });
-  const endPoint = () => { pointing = false; o.classList.remove("pointing"); };
+  const endPoint = () => { pointing = false; o.classList.remove("pointing"); if (!mode) { pipo.lookAt(0, 0); pipo.set(restState, true); } };
   wrap.addEventListener("pointerup", endPoint); wrap.addEventListener("pointercancel", endPoint); wrap.addEventListener("pointerleave", endPoint);
   $('[data-act="next"]', o).addEventListener("click", next);
   $('[data-act="prev"]', o).addEventListener("click", prev);
@@ -1938,14 +2101,14 @@ function openSing(s){
   document.addEventListener("keydown", key);
   const onResize = () => center();
   window.addEventListener("resize", onResize);
-  singState = { el:o, key, song:s, onResize, stop, glitter };
+  singState = { el:o, key, song:s, onResize, stop, glitter, pipo };
   show(0); setTimeout(center, 120); setTimeout(center, 600);
   playBtn.focus();
   if (!$("#view").children.length) renderSong(s);
 }
 function closeSing(updateHash){
   if (!singState) return;
-  singState.stop(); if (singState.glitter) singState.glitter.destroy();
+  singState.stop(); if (singState.glitter) singState.glitter.destroy(); if (singState.pipo) singState.pipo.destroy();
   document.removeEventListener("keydown", singState.key);
   window.removeEventListener("resize", singState.onResize);
   singState.el.remove(); document.body.style.overflow = "";
@@ -2008,11 +2171,12 @@ function openPractice({ song, items, mode }){
   if (!items.length) return;
   const o = document.createElement("div"); o.className = "practice"; o.setAttribute("role", "dialog"); o.setAttribute("aria-modal", "true");
   document.body.appendChild(o); document.body.style.overflow = "hidden";
+  const corner = document.createElement("div"); corner.className = "pipo-corner"; document.body.appendChild(corner); const pipo = makePipo(corner);
   let idx = 0, step = mode === "review" ? 1 : 0, keptNow = 0, leftNow = 0, findTries = 0; const results = [];
   const glit = RM ? null : null;
   const key = e => { if (e.key === "Escape") closePractice(true); };
   document.addEventListener("keydown", key);
-  practiceState = { el: o, key, song, mode };
+  practiceState = { el: o, key, song, mode, corner, pipo };
   const stepNames = [I.step_show, I.step_find, I.step_say];
   const draw = () => {
     stopAll();
@@ -2046,12 +2210,13 @@ function openPractice({ song, items, mode }){
     $('[data-act="close"]', o).addEventListener("click", ()=> closePractice(true));
     $$('[data-act="hear"]', o).forEach(b => b.addEventListener("click", ()=> speak(w.es)));
     const nx = $('[data-act="next"]', o); if (nx) nx.addEventListener("click", ()=>{ step = 1; draw(); });
-    if (step === 0) setTimeout(()=> speak(w.es), 350);
+    pipo.set(step === 0 ? "listen" : step === 1 ? "think" : "listen", true);
+    if (step === 0) { setTimeout(()=> speak(w.es), 350); setTimeout(()=> pipo.note(400, vowelAt(w.es, 0)), 400); }
     if (step === 1) {
       findTries = 0; setTimeout(()=> speak("¿Dónde está? " + w.es), 400);
       $$(".pcard", o).forEach(c => c.addEventListener("click", ()=>{
-        if (c.dataset.ok === "true") { c.classList.add("ok"); $$(".pcard", o).forEach(x => x.disabled = true); speak(w.es); setTimeout(()=>{ step = 2; draw(); }, 900); }
-        else { c.classList.remove("no"); void c.offsetWidth; c.classList.add("no"); findTries++; if (findTries === 1) logEvent(mode === "review" ? "review_miss" : "miss", { song: s.id, word: wkey(w.es) }); if (mode === "review" && findTries === 1) miss(w, false); }
+        if (c.dataset.ok === "true") { c.classList.add("ok"); $$(".pcard", o).forEach(x => x.disabled = true); speak(w.es); pipo.set("cheer", true); setTimeout(()=>{ step = 2; draw(); }, 900); }
+        else { c.classList.remove("no"); void c.offsetWidth; c.classList.add("no"); findTries++; pipo.set("oops", true); setTimeout(()=>{ if (step === 1) pipo.set("think", true); }, 900); if (findTries === 1) logEvent(mode === "review" ? "review_miss" : "miss", { song: s.id, word: wkey(w.es) }); if (mode === "review" && findTries === 1) miss(w, false); }
       }));
     }
     if (step === 2) {
@@ -2060,7 +2225,7 @@ function openPractice({ song, items, mode }){
         if (!(s.melody && humGap(s, hit.li, hit.k, hit.toks))) { const txt = hit.toks.map((t, k) => k === hit.k ? "…" : t.t).join(" "); speak(txt); }
       });
       $('[data-act="said"]', o).addEventListener("click", ()=>{ said(w, s); });
-      $('[data-act="notyet"]', o).addEventListener("click", ()=>{ logEvent(mode === "review" ? "review_miss" : "miss", { song: s.id, word: wkey(w.es) }); miss(w, true); leftNow++; results.push({ w, kept: false }); idx++; step = mode === "review" ? 1 : 0; draw(); });
+      $('[data-act="notyet"]', o).addEventListener("click", ()=>{ pipo.set("oops", true); logEvent(mode === "review" ? "review_miss" : "miss", { song: s.id, word: wkey(w.es) }); miss(w, true); leftNow++; results.push({ w, kept: false }); idx++; step = mode === "review" ? 1 : 0; draw(); });
     }
   };
   const said = (w, s) => {
@@ -2068,7 +2233,7 @@ function openPractice({ song, items, mode }){
     if (!was) keepWord(w, s); else { const r = WORDS[wkey(w.es)]; r.lastReview = Date.now(); r.misses = 0; saveWords(); }
     logEvent(mode === "review" ? "review" : "keep", { song: s.id, word: wkey(w.es) });
     keptNow++; results.push({ w, kept: true });
-    flyToJar(o, artFor(w.es)); toast(T(I.kept_toast) + " " + w.es);
+    flyToJar(o, artFor(w.es)); toast(T(I.kept_toast) + " " + w.es); pipo.set("cheer", true);
     setTimeout(()=>{ idx++; step = mode === "review" ? 1 : 0; draw(); }, 900);
   };
   const miss = (w, final) => {
@@ -2077,7 +2242,7 @@ function openPractice({ song, items, mode }){
     if (r.misses >= 2) { unkeepWord(w.es); toast(T(I.unkept_toast) + w.es); }
   };
   const drawEnd = () => {
-    const left = mode === "review" ? 0 : toKeep(song).length;
+    const left = mode === "review" ? 0 : toKeep(song).length; pipo.set(keptNow ? "dance" : "wave", true);
     o.innerHTML = `<div class="ptop"><span class="title">${esc(song ? song.title : T(I.review))}</span><span class="grow"></span><button class="btn sm" type="button" data-act="close">${T(I.close)}</button></div>
       <div class="pstage anim pend"><div class="jar-big">${jarSVG(keptList().length, TOTAL_KEEPABLE)}</div>
         <h1>${T(I.done_title)}</h1>
@@ -2093,7 +2258,7 @@ function openPractice({ song, items, mode }){
 function closePractice(updateHash){
   if (!practiceState) return;
   stopAll(); document.removeEventListener("keydown", practiceState.key);
-  practiceState.el.remove(); document.body.style.overflow = "";
+  practiceState.el.remove(); document.body.style.overflow = ""; if (practiceState.pipo) practiceState.pipo.destroy(); if (practiceState.corner) practiceState.corner.remove();
   const st = practiceState; practiceState = null;
   if (updateHash) { if (st.song) { history.replaceState(null, "", `#/song/${st.song.id}`); renderSong(st.song); } else { history.replaceState(null, "", "#/palabras"); renderWords("words"); } }
 }
@@ -2278,10 +2443,10 @@ const STEPS = [
 
 /* ---- scene helpers ---- */
 const RM = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-let tourTimers = [];
+let tourTimers = [], tourPipos = [];
 function later(ms, fn){ tourTimers.push(setTimeout(fn, ms)); }
 function seq(steps, loopMs){ const run = ()=>{ steps.forEach(([at, fn]) => later(at, fn)); if (loopMs && !RM) later(loopMs, run); }; run(); }
-function clearTourAnim(){ tourTimers.forEach(clearTimeout); tourTimers = []; }
+function clearTourAnim(){ tourTimers.forEach(clearTimeout); tourTimers = []; tourPipos.forEach(p => p.destroy()); tourPipos = []; }
 const HAND = '<svg viewBox="0 0 40 48" aria-hidden="true"><path d="M13 3.5a3.5 3.5 0 0 1 7 0V24h1.5c0-2.2 1.8-3.5 4-3.5s4 1.3 4 3.5c2.2-.6 4.5.6 4.5 3 2.3-.3 4 1.4 4 3.5V36c0 6.5-5 10.5-11.5 10.5h-4.5c-4.6 0-8.4-2.4-10.6-6.4L5 28.6c-1.1-2 .3-4.1 2.4-4.1 1.2 0 2.3.6 3 1.6L13 29z" fill="#F6D2A8" stroke="#8A5A2B" stroke-width="2" stroke-linejoin="round"/></svg>';
 function addHand(scene){ const h = document.createElement("div"); h.className = "hand"; h.innerHTML = HAND; scene.appendChild(h); return h; }
 function handTo(scene, hand, el, fx, fy){
@@ -2298,13 +2463,8 @@ function waves(){ return `<span class="waves" aria-hidden="true"><i></i><i></i><
 
 const SCENES = {
   welcome: {
-    html: ()=> `<div class="scene sc-welcome" aria-hidden="true"><svg viewBox="0 0 320 120">
-      <path d="M0 18 Q160 34 320 18" fill="none" stroke="#8A7C64" stroke-width="2"/>
-      ${[["#F2A62C",18,20,'<circle cx="19" cy="14" r="5" fill="#FBF3E2"/><path d="M11 24h16" stroke="#FBF3E2" stroke-width="2.5"/>'],["#D6337B",74,25,'<path d="M19 6l4 6h-8zM19 22l-4-6h8z" fill="#FBF3E2"/>'],["#1F6F9E",130,28,'<path d="M8 14h22M19 3v22" stroke="#FBF3E2" stroke-width="2.5"/>'],["#4C9A5A",186,28,'<circle cx="12" cy="9" r="3" fill="#FBF3E2"/><circle cx="26" cy="9" r="3" fill="#FBF3E2"/><circle cx="19" cy="19" r="3.5" fill="#FBF3E2"/>'],["#F2A62C",242,25,'<circle cx="19" cy="14" r="5" fill="#FBF3E2"/><path d="M11 24h16" stroke="#FBF3E2" stroke-width="2.5"/>']].map(([c,x,y,cut],i)=>`<g class="flag" style="animation-delay:${i*-0.7}s;transform-origin:${x+19}px ${y}px"><g transform="translate(${x},${y})"><path d="M0 0h38v28l-4 4-5-4-5 4-5-4-5 4-5-4-5 4-4-4z" fill="${c}"/>${cut}</g></g>`).join("")}
-      <g class="chick-bob"><ellipse cx="160" cy="98" rx="22" ry="16" fill="#F2A62C"/><circle cx="144" cy="82" r="13" fill="#F2A62C"/><circle cx="140" cy="79" r="2" fill="#2A2418"/><path d="M129 84l-7 2 7 3z" fill="#D6337B"/><path d="M152 114v-4M168 114v-4" stroke="#C97C10" stroke-width="3" stroke-linecap="round"/></g>
-      <g class="note-float"><text x="120" y="70" font-size="18" fill="#1F6F9E">♪</text></g><g class="note-float" style="animation-delay:-1.2s"><text x="196" y="66" font-size="16" fill="#D6337B">♫</text></g>
-    </svg></div>`,
-    start(){}
+    html: ()=> `<div class="scene sc-welcome"><div class="pipo-host"></div></div>`,
+    start(sc){ const p = makePipo($(".pipo-host", sc)); tourPipos.push(p); seq([[0, ()=> p.set("wave")], [2000, ()=> p.set("idle")], [3400, ()=>{ p.set("sing"); p.beat(84, performance.now()); }], [3400, ()=> p.note(400, "a")], [3900, ()=> p.note(400, "o")], [4400, ()=> p.note(600, "i")], [5200, ()=> p.note(500, "a")], [6200, ()=> p.set("cheer")], [7600, ()=> p.set("idle")]], 9000); }
   },
 
   lang: {
@@ -2467,9 +2627,8 @@ const SCENES = {
   },
 
   ready: {
-    html: ()=> `<div class="scene sc-ready" aria-hidden="true"><svg viewBox="0 0 200 120"><g class="chick-bob"><ellipse cx="110" cy="84" rx="40" ry="30" fill="#F2A62C"/><circle cx="80" cy="56" r="24" fill="#F2A62C"/><circle cx="73" cy="51" r="3.5" fill="#2A2418"/><path d="M52 58l-12 4 12 4z" fill="#D6337B"/><path d="M108 66c12-8 26-5 34 6" fill="none" stroke="#C97C10" stroke-width="3.5" stroke-linecap="round"/><path d="M96 112v6M124 112v6" stroke="#C97C10" stroke-width="4" stroke-linecap="round"/></g>
-      <g class="note-float"><text x="150" y="40" font-size="20" fill="#1F6F9E">♪</text></g><g class="note-float" style="animation-delay:-1.1s"><text x="30" y="34" font-size="18" fill="#D6337B">♫</text></g></svg></div>`,
-    start(){}
+    html: ()=> `<div class="scene sc-ready"><div class="pipo-host"></div></div>`,
+    start(sc){ const p = makePipo($(".pipo-host", sc)); tourPipos.push(p); seq([[0, ()=> p.set("dance")], [2600, ()=> p.set("cheer")], [4000, ()=> p.set("wave")], [5600, ()=> p.set("idle")]], 7200); }
   },
 };
 

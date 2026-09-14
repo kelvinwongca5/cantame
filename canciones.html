@@ -328,8 +328,19 @@
   .pipo .p-lid { transform-origin: 50% 50%; }
   .pipo.is-happy .p-pupil, .pipo.is-happy .p-eye > ellipse, .pipo.is-happy .p-lid { opacity: 0; }
   /* where Pipo lives */
-  .sing .pipo-sing { position: absolute; left: 0.8rem; bottom: 5.4rem; width: clamp(6.5rem, 15vw, 10rem); aspect-ratio: 200 / 230; pointer-events: none; z-index: 4; }
-  @media (max-width: 640px) { .sing .pipo-sing { width: 5.2rem; left: 0.4rem; bottom: 6.6rem; } }
+  /* the sing-along stage: Pipo big beside the words */
+  .sing .stagewrap { flex: 1; display: flex; min-height: 0; }
+  .sing .pipo-stage { flex: 0 0 clamp(15rem, 36vw, 26rem); display: flex; align-items: center; justify-content: center; padding: 0.5rem 0 1rem 1.2rem; }
+  .sing .pipo-stage .pipo { width: 100%; height: auto; aspect-ratio: 200 / 230; max-height: 100%; }
+  .sing .reelwrap { flex: 1; }
+  .sing:not(.nopipo) .rtext { font-size: clamp(1.8rem, 5vw, 3.6rem); }
+  .sing.nopipo .pipo-stage { display: none; }
+  @media (max-width: 640px) {
+    .sing .stagewrap { flex-direction: column; }
+    .sing .pipo-stage { flex: 0 0 32vh; padding: 0.2rem 0 0; }
+    .sing .pipo-stage .pipo { width: auto; height: 100%; }
+    .sing:not(.nopipo) .rtext { font-size: clamp(1.6rem, 7vw, 2.4rem); }
+  }
   .pipo-corner { position: fixed; right: 1rem; bottom: 1rem; width: clamp(6rem, 16vw, 9rem); aspect-ratio: 200 / 230; pointer-events: none; z-index: 56; }
   @media (max-width: 640px) { .pipo-corner { width: 5.2rem; right: 0.5rem; bottom: 0.5rem; } }
   .hero .pipo-hero { width: 7.5rem; aspect-ratio: 200 / 230; margin-left: auto; }
@@ -1714,6 +1725,7 @@ let SLOW = false;
 let KNOWN = new Set();
 try { KNOWN = new Set(JSON.parse(localStorage.getItem("cantame-known") || "[]")); } catch(e){}
 let FILTER = "all", KIND = "all";
+let PIPO_ON = true; try { PIPO_ON = localStorage.getItem("cantame-pipo") !== "off"; } catch(e){}
 let TOUR_SEEN = false;
 try { TOUR_SEEN = localStorage.getItem("cantame-tour-seen") === "1"; } catch(e){}
 
@@ -2041,18 +2053,18 @@ function openSing(s){
   const words = lines.map(l => wordsWithOffsets(l.es));
   let i = 0, mode = null; // mode: null | "voice" | "tune"
   let fbTimers = [], boundarySeen = false;
-  const o = document.createElement("div"); o.className = "sing" + (GLOSS ? "" : " no-gl"); o.setAttribute("role","dialog"); o.setAttribute("aria-modal","true");
+  const o = document.createElement("div"); o.className = "sing" + (GLOSS ? "" : " no-gl") + (PIPO_ON ? "" : " nopipo"); o.setAttribute("role","dialog"); o.setAttribute("aria-modal","true");
   o.innerHTML = `<div class="top">
       <span class="title">${esc(s.title)}</span><span class="grow"></span>
       <span class="count"><span id="singN">1</span> / ${lines.length}</span>
       <button class="btn sm" type="button" data-act="gloss" aria-pressed="${GLOSS}">${T(I.english)}</button>
       <button class="btn sm" type="button" data-act="slow" aria-pressed="${SLOW}">${T(I.slow)}</button>
+      <button class="btn sm" type="button" data-act="pipo" aria-pressed="${PIPO_ON}">Pipo</button>
       <button class="btn sm" type="button" data-act="close">${T(I.close)}</button></div>
-    <div class="reelwrap" id="reelwrap"><div class="reel" id="reel">${lines.map((l, li) => `<div class="rline${words[li].some(w => artFor(w.t)) ? " has-art" : ""}" data-i="${li}">
+    <div class="stagewrap"><div class="pipo-stage" id="pipoSide"></div><div class="reelwrap" id="reelwrap"><div class="reel" id="reel">${lines.map((l, li) => `<div class="rline${words[li].some(w => artFor(w.t)) ? " has-art" : ""}" data-i="${li}">
         ${s.stanzas.length > 1 && l.li === 0 ? `<div class="rcue">${T(I.cue_stanza)} ${l.si + 1}</div>` : ""}
         <div class="rtext">${words[li].map((w, k) => { const a = artFor(w.t); return `<span class="w${a ? " has" : ""}" data-k="${k}">${a ? `<i class="art">${a}</i>` : ""}<span class="t">${esc(w.t)}</span></span>`; }).join(" ")}</div>
-        <div class="rgl">${esc(l.en)}</div></div>`).join("")}</div></div>
-    <div class="pipo-sing" id="pipoSide"></div>
+        <div class="rgl">${esc(l.en)}</div></div>`).join("")}</div></div></div>
     <div class="bar"><i id="singBar"></i></div>
     <div class="ctl">
       <button class="btn" type="button" data-act="prev" aria-label="${T(I.prev)}">${IC.back}</button>
@@ -2129,6 +2141,7 @@ function openSing(s){
   const playFrom = n => hasTune ? playTuneFrom(n) : playVoice(n);
   playBtn.addEventListener("click", ()=> mode ? stop() : playFrom(i));
   $('[data-act="close"]', o).addEventListener("click", ()=> closeSing(true));
+  $('[data-act="pipo"]', o).addEventListener("click", e => { PIPO_ON = !PIPO_ON; try { localStorage.setItem("cantame-pipo", PIPO_ON ? "on" : "off"); } catch(err){} e.currentTarget.setAttribute("aria-pressed", PIPO_ON); o.classList.toggle("nopipo", !PIPO_ON); setTimeout(center, 60); });
   $('[data-act="gloss"]', o).addEventListener("click", e => { setGloss(!GLOSS); e.currentTarget.setAttribute("aria-pressed", GLOSS); o.classList.toggle("no-gl", !GLOSS); center(); });
   $('[data-act="slow"]', o).addEventListener("click", e => { SLOW = !SLOW; e.currentTarget.setAttribute("aria-pressed", SLOW); $$('[data-act="slow"]').forEach(b => b.setAttribute("aria-pressed", SLOW)); if (mode === "voice") playVoice(i); else if (mode === "tune") playTuneFrom(i); });
   const key = e => {

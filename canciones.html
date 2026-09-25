@@ -1213,19 +1213,19 @@ const DEG = { do:0, re:2, mi:4, fa:5, sol:7, la:9, si:11 };
 // "do" = tonic; "#"/"b" raise or lower a semitone; each "'" is an octave up, each "," an octave down
 function semi(name){ const m = /^(do|re|mi|fa|sol|la|si)(#|b)?('*|,*)$/.exec(name); if (!m) return 0; return DEG[m[1]] + (m[2] === "#" ? 1 : m[2] === "b" ? -1 : 0) + 12 * ((m[3].match(/'/g) || []).length - (m[3].match(/,/g) || []).length); }
 const MELODIES = {
-  pollitos: { bpm: 78, base: 293.66, lines: [
+  pollitos: { bpm: 78, bar: 2, base: 293.66, lines: [
     { n:["do","re","mi","fa","sol","sol"], d:[.5,.5,.5,.5,1,1] },
     { n:["la","la","la","la","sol","sol"], d:[.5,.5,.5,.5,1,1] },
     { n:["fa","fa","fa","fa","mi","mi"], d:[.5,.5,.5,.5,1,1] },
     { n:["re","re","re","re","do","do"], d:[.5,.5,.5,.5,1,1] } ] },
-  estrellita: { bpm: 86, base: 293.66, lines: [
+  estrellita: { bpm: 86, bar: 4, base: 293.66, lines: [
     { n:["do","do","sol","sol","la","la","sol"], d:[1,1,1,1,1,1,2] },
     { n:["fa","fa","mi","mi","re","re","do"], d:[1,1,1,1,1,1,2] },
     { n:["sol","sol","fa","fa","mi","mi","re"], d:[1,1,1,1,1,1,2] },
     { n:["sol","sol","fa","fa","mi","mi","re"], d:[1,1,1,1,1,1,2] },
     { n:["do","do","sol","sol","la","la","sol"], d:[1,1,1,1,1,1,2] },
     { n:["fa","fa","mi","mi","re","re","do"], d:[1,1,1,1,1,1,2] } ] },
-  "mananitas": { bpm: 84, base: 293.66, lines: [
+  "mananitas": { bpm: 84, bar: 3, base: 293.66, lines: [
     { n:["sol,", "sol,", "do", "do", "si,", "do", "re", "si,"], d:[0.5, 0.5, 1.5, 0.5, 0.5, 0.5, 1.5, 0.5] },
     { n:["do", "re", "mi", "do", "re", "mi", "fa"], d:[0.5, 0.5, 1.5, 0.5, 0.5, 0.5, 2.0] },
     { n:["fa", "fa", "mi", "re", "do", "si,", "re", "do"], d:[0.5, 0.5, 1.5, 0.5, 0.5, 0.5, 1.0, 0.5] },
@@ -1240,7 +1240,7 @@ const MELODIES = {
     { n:["do", "mi", "re", "do", "si,", "do", "re", "re"], d:[0.5, 1.5, 0.5, 0.5, 0.5, 1.5, 0.5, 1.0] },
     { n:["sol,", "sol,", "do", "re", "re", "do", "re", "re"], d:[0.5, 0.5, 1.5, 0.5, 0.5, 0.5, 1.5, 1.5] },
     { n:["mi", "fa", "mi", "mi", "re", "re", "si,", "do", "do"], d:[0.5, 1.5, 0.5, 0.5, 0.5, 1.0, 1.0, 1.0, 2.0] } ], map:[[0, 1, 2, 3], [4, 5, 6, 7], [10, 11, 12, 13], [0, 8, 2, 9]] },
-  "rorro": { bpm: 76, base: 293.66, lines: [
+  "rorro": { bpm: 76, bar: 2, base: 293.66, lines: [
     { n:["do", "re", "mi", "fa", "sol", "sol"], d:[0.5, 0.5, 0.5, 0.5, 1.0, 1.0] },
     { n:["la", "sol", "fa", "mi", "re"], d:[0.5, 0.5, 0.5, 0.5, 2.0] },
     { n:["sol", "la", "sol", "fa", "mi", "do"], d:[0.5, 0.5, 0.5, 0.5, 1.0, 1.0] },
@@ -1249,21 +1249,21 @@ const MELODIES = {
     { n:["re", "mi", "re", "do", "sol", "sol"], d:[0.5, 0.5, 0.5, 0.5, 1.0, 1.0] },
     { n:["re", "mi", "re", "do", "do", "do"], d:[0.5, 0.5, 0.5, 0.5, 1.0, 1.0] },
     { n:["re", "mi", "re", "do", "sol"], d:[0.5, 0.5, 0.5, 0.5, 2.0] } ], map:[[0, 1, 2, 3], [0, 4, 2, 5], [0, 4, 2, 6]] },
-  "santaana": { bpm: 80, base: 293.66, lines: [
+  "santaana": { bpm: 80, bar: 2, base: 293.66, lines: [
     { n:["do", "do", "do", "mi", "sol", "sol"], d:[0.75, 0.25, 0.5, 0.5, 1.0, 1.0] },
     { n:["la", "si", "do'", "la", "sol", "sol"], d:[0.75, 0.25, 0.5, 0.5, 1.0, 1.0] },
     { n:["mi", "sol", "la", "fa", "mi", "sol"], d:[0.75, 0.25, 0.5, 0.5, 1.0, 1.0] },
     { n:["re", "fa", "mi", "re", "do", "do"], d:[0.75, 0.25, 0.5, 0.5, 1.0, 1.0] },
     { n:["la", "si", "do'", "la", "sol"], d:[0.75, 0.25, 0.5, 0.5, 2.0] },
     { n:["re", "fa", "mi", "re", "do"], d:[0.75, 0.25, 0.5, 0.5, 2.0] } ], map:[[0, 1, 2, 3], [0, 4, 2, 5], [0, 4, 2, 5]] },
-  "caballito": { bpm: 96, base: 293.66, lines: [
+  "caballito": { bpm: 96, bar: 4, base: 293.66, lines: [
     { n:["sol", "sol", "sol", "sol", "sol", "mi"], d:[0.5, 0.5, 0.5, 0.5, 1.0, 1.0] },
     { n:["do'", "do'", "si", "la", "si"], d:[0.5, 0.5, 0.5, 0.5, 2.0] },
     { n:["fa", "fa", "fa", "fa", "fa", "re"], d:[0.5, 0.5, 0.5, 0.5, 1.0, 1.0] },
     { n:["si", "si", "la", "sol", "do'"], d:[0.5, 0.5, 0.5, 0.5, 2.0] },
     { n:["do'", "do'", "si", "la", "si", "si"], d:[0.5, 0.5, 0.5, 0.5, 1.0, 1.0] },
     { n:["si", "si", "la", "sol", "do'", "do'"], d:[0.5, 0.5, 0.5, 0.5, 1.0, 1.0] } ], map:[[0, 1, 2, 3], [0, 4, 2, 5], [0, 4, 2, 5]] },
-  "colores": { bpm: 100, base: 293.66, lines: [
+  "colores": { bpm: 100, bar: 3, base: 293.66, lines: [
     { n:["la", "fa", "fa", "mi", "mi", "fa", "sol", "sol"], d:[2.5, 0.5, 0.5, 1.5, 0.5, 0.5, 0.5, 0.5] },
     { n:["sol", "sol", "fa", "mi", "sol", "sol", "sol", "sol", "fa", "mi", "sol", "fa"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 2.0] },
     { n:["fa", "mi", "mi", "re", "fa", "sol", "la", "la"], d:[2.5, 0.5, 0.5, 1.5, 0.5, 0.5, 0.5, 0.5] },
@@ -1273,28 +1273,28 @@ const MELODIES = {
     { n:["fa", "sol", "la", "la", "la", "la", "si", "la", "la", "sol"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] },
     { n:["sol", "sol", "la", "sol", "sol", "fa", "sol", "sol", "sol", "fa", "mi"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 2.0] },
     { n:["sol", "sol", "la", "sol", "sol", "fa", "sol", "la", "la", "sol", "do'"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 3.0] } ], map:[[0, 1, 2, 3, 4, 5, 6, 8], [0, 1, 2, 3, 4, 5, 6, 8]] },
-  "elefante": { bpm: 100, base: 293.66, lines: [
+  "elefante": { bpm: 100, bar: 4, base: 293.66, lines: [
     { n:["sol", "sol", "fa", "mi", "mi", "sol", "sol", "sol", "fa", "mi", "mi"], d:[1, 0.5, 0.5, 1, 1, 0.5, 0.5, 0.5, 0.5, 1, 1] },
     { n:["sol", "sol", "sol", "la", "sol", "fa", "mi", "fa", "mi", "re"], d:[1, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1.5, 0.5, 2] },
     { n:["fa", "fa", "mi", "re", "re", "fa", "fa", "mi", "re", "re"], d:[1, 0.5, 0.5, 1, 1, 1, 0.5, 0.5, 1, 1] },
     { n:["sol", "sol", "sol", "la", "sol", "fa", "mi", "re", "mi", "re", "do"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1.5, 0.5, 2] } ], map:[[0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3]] },
-  "rana": { bpm: 116, base: 293.66, lines: [
+  "rana": { bpm: 116, bar: 3, base: 293.66, lines: [
     { n:["sol", "do'", "sol", "do'", "mi", "fa", "mi", "re", "mi", "do"], d:[0.5, 1, 0.5, 1, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] },
     { n:["sol", "do'", "sol", "do'", "mi", "fa", "mi", "re", "do"], d:[0.5, 1, 0.5, 1, 0.5, 0.5, 0.5, 0.5, 1] },
     { n:["sol", "do'", "sol", "do'", "mi", "fa", "mi", "re", "do"], d:[0.5, 1, 0.5, 1, 0.5, 0.5, 0.5, 0.5, 1.5] } ], map:[[0, 0, 0, 0], [0, 0, 0, 0], [0, 1, 2]] },
-  "perritos": { bpm: 96, base: 293.66, lines: [
+  "perritos": { bpm: 96, bar: 4, base: 293.66, lines: [
     { n:["sol", "sol", "sol", "do'", "si", "la", "sol", "mi"], d:[0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 0.5, 1] },
     { n:["mi", "fa", "sol", "fa", "mi", "re", "sol", "sol"], d:[0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 0.5, 1] },
     { n:["mi", "fa", "sol", "fa", "mi", "re", "do", "do"], d:[0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 0.5, 1] },
     { n:["sol", "sol", "sol", "do'", "si", "la", "sol", "mi"], d:[0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 0.5, 1] },
     { n:["mi", "fa", "sol", "fa", "mi", "re", "sol"], d:[0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 1.5] },
     { n:["mi", "fa", "sol", "fa", "mi", "re", "do"], d:[0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 1.5] } ], map:[[0, 0, 1, 2], [0, 1, 2], [0, 1, 2], [0, 1, 5], [3, 1, 2], [0, 1, 2], [0, 1, 5], [3, 1, 5], [3, 4, 2], [0, 1, 2]] },
-  "muneca": { bpm: 100, base: 293.66, lines: [
+  "muneca": { bpm: 100, bar: 2, base: 293.66, lines: [
     { n:["sol", "sol", "sol", "la", "sol", "mi"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5] },
     { n:["do", "mi", "sol", "la", "sol"], d:[0.5, 0.5, 1, 1, 2] },
     { n:["fa", "fa", "fa", "sol", "fa", "mi"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5] },
     { n:["re", "mi", "fa", "re", "do"], d:[0.5, 0.5, 1, 1, 2] } ], map:[[0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 2, 3]] },
-  "barquito": { bpm: 100, base: 293.66, lines: [
+  "barquito": { bpm: 100, bar: 4, base: 293.66, lines: [
     { n:["sol,", "do", "do", "re", "re", "mi"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 1] },
     { n:["mi", "mi", "re", "fa", "mi", "re", "mi", "do"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5] },
     { n:["do", "fa", "fa", "fa", "fa", "do", "mi", "mi", "mi", "mi"], d:[0.5, 1, 1, 1, 0.5, 0.5, 1, 1, 1, 0.5] },
@@ -1303,7 +1303,7 @@ const MELODIES = {
     { n:["do", "mi", "mi", "mi", "mi"], d:[0.5, 1, 1, 1, 0.5] },
     { n:["do", "re", "re", "re", "re", "re", "re", "re"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] },
     { n:["fa", "mi", "re", "do"], d:[0.5, 0.5, 0.5, 3] } ], map:[[0, 1, 0, 1, 2, 3], [0, 1, 0, 1, 2, 3], [4, 5, 6, 7]] },
-  "vibora": { bpm: 104, base: 293.66, lines: [
+  "vibora": { bpm: 104, bar: 2, base: 293.66, lines: [
     { n:["sol,", "sol,", "do", "sol,", "sol,", "do", "sol,", "sol,"], d:[0.5, 0.5, 0.5, 0.25, 0.25, 0.5, 0.25, 0.25] },
     { n:["do", "re", "mi", "do", "re", "mi"], d:[0.5, 0.5, 1, 0.5, 0.5, 1] },
     { n:["do", "do", "re", "re", "sol,", "sol,", "do"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1] },
@@ -1326,7 +1326,7 @@ const MELODIES = {
     { n:["mi", "mi", "mi", "mi", "mi", "mi", "mi", "mi", "mi"], d:[0.5, 1, 1, 1.5, 0.5, 1, 1, 0.5, 1.5] },
     { n:["mi", "mi", "mi", "mi", "mi", "mi", "mi", "mi", "mi", "mi"], d:[0.5, 1, 1, 0.5, 1.5, 0.5, 1, 1, 0.5, 0.5] },
     { n:["mi", "mi", "mi", "mi", "mi", "mi", "mi", "mi"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] } ], map:[[0, 1, 2, 3, 4, 5], [6, 7, 8, 9], [10, 11, 12, 13], [14, 15, 16, 17, 18], [19, 20, 21]] },
-  "naranja": { bpm: 96, base: 293.66, lines: [
+  "naranja": { bpm: 96, bar: 3, base: 293.66, lines: [
     { n:["sol,", "do", "mi", "sol", "sol"], d:[0.5, 0.5, 0.5, 1, 0.5] },
     { n:["la", "sol", "mi", "do", "do"], d:[0.5, 0.5, 0.5, 1, 0.5] },
     { n:["mi", "re", "do", "re", "re"], d:[0.5, 0.5, 0.5, 1, 0.5] },
@@ -1334,7 +1334,7 @@ const MELODIES = {
     { n:["fa", "mi", "re", "do"], d:[0.5, 0.5, 0.5, 1.5] },
     { n:["la", "sol", "mi", "do"], d:[0.5, 0.5, 0.5, 1.5] },
     { n:["fa", "mi", "re", "do"], d:[0.5, 0.5, 0.5, 3] } ], map:[[0, 1, 2, 3], [0, 1, 2, 4], [0, 1, 2, 4], [0, 5, 2, 6]] },
-  "arroz": { bpm: 92, base: 293.66, lines: [
+  "arroz": { bpm: 92, bar: 2, base: 293.66, lines: [
     { n:["sol,", "do", "mi", "do", "do"], d:[0.5, 1.5, 0.5, 1, 0.5] },
     { n:["sol,", "do", "do", "mi", "re"], d:[0.5, 1, 0.5, 0.5, 1.5] },
     { n:["mi", "fa", "mi", "re", "do", "si,", "si,"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5] },
@@ -1343,19 +1343,19 @@ const MELODIES = {
     { n:["sol,", "do", "mi", "do"], d:[0.5, 1.5, 0.5, 1.5] },
     { n:["sol,", "do", "mi", "re"], d:[0.5, 1.5, 0.5, 1.5] },
     { n:["sol,", "la,", "si,", "do"], d:[0.5, 1, 1, 1.5] } ], map:[[0, 1, 2, 3], [0, 1, 2, 3], [4, 1, 1, 3], [5, 6, 2, 7]] },
-  "blanca": { bpm: 92, base: 293.66, lines: [
+  "blanca": { bpm: 92, bar: 3, base: 293.66, lines: [
     { n:["mi,", "fa,", "sol,", "do", "mi,", "fa,", "sol,", "do"], d:[0.5, 0.5, 1, 1, 0.5, 0.5, 1, 1] },
     { n:["mi,", "fa,", "sol,", "do", "si,", "do", "re", "la,"], d:[0.5, 0.5, 1, 1, 0.5, 0.5, 1, 2] },
     { n:["fa", "mi", "re", "do", "si,", "la,", "sol,"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1] },
     { n:["sol,", "sol,", "la,", "sol,", "la,", "si,", "re", "do"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1, 1] },
     { n:["fa", "mi", "re", "do", "si,", "la,", "sol,", "sol,"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] } ], map:[[0, 1, 2, 3], [0, 1, 4, 3]] },
-  "pi\u00f1ata": { bpm: 96, base: 293.66, lines: [
+  "pi\u00f1ata": { bpm: 96, bar: 4, base: 293.66, lines: [
     { n:["sol", "sol", "sol", "mi", "la", "la"], d:[0.5, 0.5, 0.5, 0.5, 1, 1] },
     { n:["si", "si", "si", "sol", "do'", "do'"], d:[0.5, 0.5, 0.5, 0.5, 1, 1] },
     { n:["si", "si", "si", "sol", "do'"], d:[0.5, 0.5, 0.5, 0.5, 2] },
     { n:["sol", "sol", "sol", "mi", "la"], d:[0.5, 0.5, 0.5, 0.5, 2] },
     { n:["si", "si", "si", "sol", "do'", "do'", "do'"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 2] } ], map:[[0, 1, 0, 1], [0, 2, 3, 4]] },
-  "llueva": { bpm: 92, base: 293.66, lines: [
+  "llueva": { bpm: 92, bar: 2, base: 293.66, lines: [
     { n:["mi", "sol", "sol", "la", "sol", "sol"], d:[0.5, 1, 0.5, 0.5, 1, 0.5] },
     { n:["mi", "sol", "sol", "sol", "la", "sol", "sol"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5] },
     { n:["mi", "sol", "sol", "sol", "la", "sol", "sol"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5] },
@@ -1364,12 +1364,12 @@ const MELODIES = {
     { n:["mi", "sol", "la", "sol", "mi", "sol"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 1.5] },
     { n:["mi", "sol", "la", "sol", "mi", "sol", "sol"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1.5] },
     { n:["mi", "sol", "la", "sol", "mi", "sol", "sol", "sol", "fa", "mi", "re", "do"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1] } ], map:[[0, 1, 2, 3], [4, 5, 6, 7]] },
-  "tortillitas": { bpm: 84, base: 293.66, lines: [
+  "tortillitas": { bpm: 84, bar: 4, base: 293.66, lines: [
     { n:["fa", "sol", "sol", "sol", "mi", "la", "sol", "mi"], d:[0.5, 0.5, 0.25, 0.25, 0.5, 0.5, 1, 0.5] },
     { n:["mi", "fa", "sol", "sol", "mi", "la", "sol", "mi"], d:[0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 1, 0.5] },
     { n:["fa", "sol", "sol", "sol", "mi", "la", "sol"], d:[0.5, 0.5, 0.25, 0.25, 0.5, 0.5, 1.5] },
     { n:["mi", "fa", "sol", "sol", "mi", "la", "sol"], d:[0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 1.5] } ], map:[[0, 1, 0, 1], [0, 1, 2, 3]] },
-  "aserrin": { bpm: 88, base: 293.66, lines: [
+  "aserrin": { bpm: 88, bar: 2, base: 293.66, lines: [
     { n:["sol", "sol", "do'", "sol", "sol", "mi"], d:[0.5, 0.5, 1, 0.5, 0.5, 1] },
     { n:["sol", "sol", "la", "sol", "la", "si", "do'"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1] },
     { n:["sol", "sol", "la", "sol", "la", "si", "do'", "do'"], d:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5] } ], map:[[0, 1, 0, 2, 1, 1]] },
@@ -2019,7 +2019,13 @@ function playTune(song, onLine, onEnd, from, opts){
       const lineBus = opts.lineGain ? (()=>{ const g = c.createGain(); g.gain.value = opts.lineGain(fi); g.connect(bus); return g; })() : bus;
       ml.n.forEach((deg, k) => { const f = m.base * Math.pow(2, semi(deg)/12) * 0.5; const d = ml.d[k]*beat; if (!(opts.mute && opts.mute.has(k))) hum(f, t, d*0.95, lineBus); if (opts.onNote) { const ms = d * 1000; at(t, ()=> opts.onNote(fi, k, ms, ml.n.length)); } t += d; });
     });
-    if ((!from || flat > from) && opts.only == null) t += beat*0.8;
+    // rest before the next verse: only what it takes to reach the next bar line, so the next verse starts on a downbeat
+    if ((!from || flat > from) && opts.only == null) {
+      const bar = m.bar || 4;
+      const stBeats = st.reduce((acc, ln, li) => { const mi = m.map && m.map[si] ? m.map[si][li] : li % m.lines.length; return acc + m.lines[mi == null ? li % m.lines.length : mi].d.reduce((x, y) => x + y, 0); }, 0);
+      const rem = Math.round((stBeats % bar) * 1000) / 1000; const pad = rem < 0.001 ? 0 : bar - rem;
+      t += pad * beat;
+    }
   });
   at(t+0.1, ()=>{ tuneToken = null; tuneBus = null; if (onEnd) onEnd(); });
 }

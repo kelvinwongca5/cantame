@@ -756,6 +756,37 @@
   .sc-keep2 .pline { font-size: 1.5rem; } .sc-keep2 .jar-mini { display: block; margin: 0.5rem auto 0; width: 2rem; }
   @media (max-width: 560px) { .sc-sing2, .sc-play2, .sc-keep2 { flex-direction: column; } .sc-browse { padding-right: 1.2rem; padding-bottom: 5rem; } }
 
+  /* ---------- el cuento ---------- */
+  .cuento { position: fixed; inset: 0; background: var(--ground); z-index: 58; display: flex; flex-direction: column; }
+  .cuento .ctop { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1.1rem; }
+  .cuento .ctop .title { font-family: "Alegreya", Georgia, serif; font-style: italic; font-size: 1.15rem; color: var(--marigold-deep); }
+  .cuento .ctop .count { color: var(--muted); font-weight: 700; font-variant-numeric: lining-nums tabular-nums; }
+  .cuento .cstage { flex: 1; overflow-y: auto; padding: 0.6rem 1.2rem 1rem; display: flex; align-items: center; justify-content: center; }
+  .ccard { width: 100%; max-width: 40rem; display: grid; grid-template-columns: 6.5rem 1fr; gap: 1.1rem; align-items: start; margin: auto 0; }
+  .ccard .tia-pic { width: 6.5rem; text-align: center; } .ccard .tia-host { width: 6.5rem; aspect-ratio: 200 / 230; } .ccard .tia-host svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .ccard .tia-name { display: block; margin-top: 0.2rem; }
+  .cbody { background: var(--soft); padding: 1.2rem 1.4rem 1.3rem; position: relative; clip-path: polygon(0 4px, 3% 0, 9% 5px, 17% 1px, 26% 6px, 35% 0, 44% 5px, 55% 1px, 63% 6px, 72% 0, 81% 5px, 90% 1px, 100% 4px, 100% calc(100% - 5px), 92% 100%, 83% calc(100% - 4px), 74% 100%, 62% calc(100% - 6px), 51% 100%, 40% calc(100% - 5px), 29% 100%, 18% calc(100% - 4px), 8% 100%, 0 calc(100% - 6px)); }
+  .cbody .ces { font-family: "Alegreya", Georgia, serif; font-size: 1.25rem; line-height: 1.4; margin: 0; }
+  .cbody .ces.big { font-size: clamp(1.5rem, 4vw, 2rem); line-height: 1.25; text-wrap: balance; }
+  .cbody .cen { color: var(--muted); font-size: 0.95rem; margin: 0.5rem 0 0; line-height: 1.4; }
+  .no-gloss .cbody .cen { display: none; }
+  .cbig { width: 9rem; height: 9rem; margin: 0 auto 0.8rem; } .cbig svg { width: 100%; height: 100%; display: block; } .cbig .a, .cbig .a * { animation-play-state: running; }
+  .cbig .pipo-host { width: 9rem; aspect-ratio: 200 / 230; margin: 0 auto; }
+  .cmed { width: 4.5rem; height: 4.5rem; float: right; margin: 0 0 0.4rem 0.8rem; } .cmed svg { width: 100%; height: 100%; display: block; }
+  .clabel { font-family: "Alegreya", Georgia, serif; font-style: italic; font-size: 1.3rem; margin: 0 0 0.6rem; color: var(--marigold-deep); }
+  .clist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.8rem; }
+  .clist li { display: flex; flex-direction: column; padding-left: 1rem; border-left: 3px solid var(--marigold); }
+  .clist li .ces { font-size: 1.12rem; } .clist li .cen { margin-top: 0.2rem; }
+  .clist.ask li { border-left-color: var(--rosa); position: relative; padding-right: 2.4rem; }
+  .clist.ask .spk { position: absolute; right: 0; top: 0; background: none; border: 0; color: var(--muted); padding: 0.2rem; } .clist.ask .spk svg { width: 1.3rem; height: 1.3rem; display: block; }
+  .ctip { margin: 0.9rem 0 0; color: var(--muted); font-size: 0.9rem; }
+  .cread { margin-top: 0.8rem; }
+  .cdots { display: flex; gap: 6px; justify-content: center; padding: 0.4rem; } .cdots i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); } .cdots i.on { background: var(--marigold); transform: scale(1.4); } .cdots i.past { background: var(--marigold); opacity: 0.45; }
+  .cuento .cfoot { display: flex; justify-content: space-between; gap: 0.6rem; padding: 0.4rem 1.2rem 1.2rem; max-width: 40rem; width: 100%; margin: 0 auto; }
+  @media (max-width: 560px) { .ccard { grid-template-columns: 1fr; } .ccard .tia-pic { display: flex; align-items: center; gap: 0.6rem; width: auto; } .ccard .tia-host { width: 3.6rem; } .ccard .tia-name { margin: 0; } }
+  .song .cuento-btn { display: inline-flex; align-items: center; gap: 0.45rem; }
+  .song .cuento-btn .ico { width: 1.6rem; height: 1.6rem; } .song .cuento-btn .ico svg { width: 100%; height: 100%; overflow: visible; }
+
   /* toast */
   .toast { position: fixed; left: 50%; bottom: 1.4rem; transform: translateX(-50%); background: var(--ink); color: var(--ground); padding: 0.55rem 1.1rem; border-radius: 999px; font-weight: 700; font-size: 0.95rem; z-index: 90; opacity: 0; transition: opacity 200ms; pointer-events: none; }
   .toast.on { opacity: 1; }
@@ -878,6 +909,8 @@ const I = {
   tour_back:{en:"Back",es:"Atrás"}, tour_next:{en:"Next",es:"Siguiente"}, tour_start:{en:"Start",es:"Empezar"}, tour_skip:{en:"Skip",es:"Saltar"},
   try_it:{en:"Try it",es:"Pruébalo"},
   saved:{en:"Marked as known",es:"Marcada como conocida"}, unsaved:{en:"Unmarked",es:"Desmarcada"},
+  cuento_btn:{en:"The story",es:"El cuento"}, cuento_sabias:{en:"Did you know?",es:"¿Sabías que…?"}, cuento_pregunta:{en:"Ask your pollito",es:"Pregúntale a tu pollito"},
+  cuento_pregunta_tip:{en:"Ask out loud, wait, and let any answer count.",es:"Pregunta en voz alta, espera, y cualquier respuesta vale."}, cuento_read:{en:"Read it to me",es:"Léemelo"},
   origin_h:{en:"Tía Lupe tells you where it comes from",es:"Tía Lupe te cuenta de dónde viene"}, know_short:{en:"known",es:"sabida"}, coach_streak1:{en:"day in a row",es:"día seguido"},
   weekdays:{en:["M","T","W","T","F","S","S"],es:["L","M","M","J","V","S","D"]},
 };
@@ -2002,8 +2035,8 @@ function route(){
   const parts = h.split("/").filter(Boolean);
   stopAll();
   closeSing();
-  closePractice();
-  if (parts[0] === "song" && songOf(parts[1])) { const sg = songOf(parts[1]); renderSong(sg); if (parts[2] === "sing") openSing(sg); if (parts[2] === "keep") openPractice({ song: sg, items: toKeep(sg).length ? toKeep(sg) : keepable(sg), mode: "keep" }); }
+  closePractice(); closeCuento();
+  if (parts[0] === "song" && songOf(parts[1])) { const sg = songOf(parts[1]); renderSong(sg); if (parts[2] === "cuento") openCuento(sg); else if (!parts[2] && CUENTOS[sg.id] && !CUENTO_SEEN[sg.id]) openCuento(sg); if (parts[2] === "sing") openSing(sg); if (parts[2] === "keep") openPractice({ song: sg, items: toKeep(sg).length ? toKeep(sg) : keepable(sg), mode: "keep" }); }
   else if (parts[0] === "palabras" || parts[0] === "words") { renderWords(parts[1] === "frases" ? "phrases" : "words"); if (parts[1] === "repaso") openReview(); }
   else if (parts[0] === "hoy" || parts[0] === "tonight") renderCoach();
   else if (parts[0] === "tour") { if (!$("#view").children.length) renderLibrary(); openTour(parseInt(parts[1] || "0", 10) || 0); return; }
@@ -2617,7 +2650,7 @@ function renderSong(s){
   const idx = SONGS.indexOf(s); const prev = SONGS[(idx - 1 + SONGS.length) % SONGS.length], next = SONGS[(idx + 1) % SONGS.length];
   let n = 0;
   const stanzas = s.stanzas.map((st, si) => `<div class="stanza">${st.map(ln => lineHTML(ln, n++)).join("")}</div>`).join("") + (s.open ? `<div class="repeat">${T(I.repeat_more)}</div>` : "");
-  const tia = TIA[s.id]; const mem = tia ? tia.intro : MEMORIA[s.id], ori = tia ? tia.origen : ORIGEN[s.id];
+  const tia = TIA[s.id]; const mem = tia ? tia.intro : MEMORIA[s.id]; const cst = CUENTOS[s.id] && CUENTOS[s.id].pages.find(p => p.kind === "story"); const ori = cst ? { es: cst.es, en: cst.en } : (tia ? tia.origen : ORIGEN[s.id]);
   $("#view").innerHTML = `<div class="song">
     <a class="back" href="#/">${IC.back} ${T(I.back)}</a>
     <div class="song-head"><p class="kindline">${T(c.n)}</p><h1>${esc(s.title)}</h1></div>
@@ -2625,6 +2658,7 @@ function renderSong(s){
     <div class="actions">
       <button class="btn primary lg" type="button" data-act="sing">${IC.singi} ${T(I.sing)}</button>
       <button class="btn lg" type="button" data-act="hear">${IC.play} <span>${T(I.hear)}</span></button>
+      ${CUENTOS[s.id] ? `<button class="btn lg cuento-btn" type="button" data-act="cuento"><span class="ico">${TIA_SVG}</span> ${T(I.cuento_btn)}</button>` : ""}
     </div>
     <div class="lyrics" id="lyrics">${stanzas}</div>
     <p class="quiet"><button type="button" class="link" data-act="gloss" aria-pressed="${GLOSS}">${T(I.english)}</button> · <button type="button" class="link" data-act="slow" aria-pressed="${SLOW}">${T(I.slow)}</button><span class="voice-note" ${(!VOICE_CHECKED || VOICE) ? "hidden" : ""}> · ${T(SPEECH ? I.no_voice : I.no_speech)}</span></p>
@@ -2658,6 +2692,7 @@ function renderSong(s){
     if (s.melody) playTune(s, hot, resetBtns); else speakLines(lines.map(l => l.es), hot, resetBtns);
   });
   $('[data-act="sing"]', v).addEventListener("click", ()=>{ history.replaceState(null, "", `#/song/${s.id}/sing`); openSing(s); });
+  const cb = $('[data-act="cuento"]', v); if (cb) cb.addEventListener("click", ()=>{ history.replaceState(null, "", `#/song/${s.id}/cuento`); openCuento(s); });
   $('[data-act="gloss"]', v).addEventListener("click", e => { setGloss(!GLOSS); e.currentTarget.setAttribute("aria-pressed", GLOSS); });
   $('[data-act="slow"]', v).addEventListener("click", e => { SLOW = !SLOW; e.currentTarget.setAttribute("aria-pressed", SLOW); });
   const kb = $('[data-act="keep"]', v); if (kb) kb.addEventListener("click", ()=>{ history.replaceState(null, "", `#/song/${s.id}/keep`); openPractice({ song: s, items: toKeep(s), mode: "keep" }); });
@@ -2705,6 +2740,217 @@ function renderCoach(){
   </div>`;
   killPagePipo(); pagePipo = makePipo($("#pipoHero", v)); pagePipo.set(p.streak ? "cheer" : "wave"); setTimeout(()=>{ if (pagePipo) pagePipo.set("idle"); }, 2000);
   $$(".spk[data-w]", v).forEach(b => b.addEventListener("click", ()=> speak(b.dataset.w)));
+}
+
+/* ================= Los cuentos: Tía Lupe tells where each song comes from (from verified sources) ================= */
+const Q = (es, en) => ({ es, en });
+const CUENTOS = {
+pollitos: { art: "chick", pages: [
+  { kind: "hook", es: "¿Sabes quién escribió esta canción? Un maestro de escuela, en un pueblito de Chile, hace más de cien años.", en: "Do you know who wrote this song? A schoolteacher, in a little town in Chile, more than a hundred years ago." },
+  { kind: "story", es: "Se llamaba Ismael Parraguez y enseñaba a niños pequeños. En 1907 publicó un libro de poemas para sus alumnos, y ahí estaba 'Los pollitos'. La canción viajó tan lejos, a México, a Puerto Rico, a todas partes, que la gente olvidó su nombre y cada país empezó a decir que era suya. Hoy los pollitos cantan en todo el mundo de habla hispana.", en: "His name was Ismael Parraguez and he taught small children. In 1907 he published a book of poems for his pupils, and 'Los pollitos' was in it. The song traveled so far, to Mexico, to Puerto Rico, everywhere, that people forgot his name and every country started claiming it. Today the chicks sing all over the Spanish-speaking world." },
+  { kind: "sabias", items: [Q("En español los pollitos dicen pío, pío. En inglés dicen peep. Cada idioma oye a los pollitos un poquito distinto.", "In Spanish chicks say pío, pío. In English they say peep. Every language hears chicks a little differently."), Q("Una gallina de verdad mete a sus pollitos debajo de las alas para darles calor, tal como dice la canción.", "A real hen tucks her chicks under her wings to keep them warm, just like the song says."), Q("Pichidegua, el pueblo del maestro, todavía enseña la casa donde vivía.", "Pichidegua, the teacher's town, still points out the house where he lived.")] },
+  { kind: "pregunta", items: [Q("¿Qué comen los pollitos en la canción? ¿Maíz o helado?", "What do the chicks eat in the song? Corn or ice cream?"), Q("¿Dónde se esconden los pollitos cuando tienen frío?", "Where do the chicks hide when they are cold?")] },
+  { kind: "go", es: "Ahora sí. Piquitos con los dedos, y a cantar.", en: "Now then. Little beaks with your fingers, and let's sing." } ] },
+
+tortillitas: { art: "tortilla", pages: [
+  { kind: "hook", es: "Esta canción se hace con las manos. Palma, palma, palma, como quien hace tortillas.", en: "This song is made with your hands. Pat, pat, pat, like someone making tortillas." },
+  { kind: "story", es: "En España, hace más de cien años, las abuelas jugaban 'tortitas, tortitas' con las manitas de los bebés; alguien lo escribió en un libro en 1882. Cuando la rima llegó a México, las tortitas se volvieron tortillitas, porque aquí la tortilla se hace en el comal, palmeando la masa hasta que queda redonda. Comal es una palabra náhuatl, comalli, y la gente ya cocinaba en comales de barro hace más de dos mil años.", en: "In Spain, more than a hundred years ago, grandmothers played 'tortitas, tortitas' with babies' hands; someone wrote it in a book in 1882. When the rhyme reached Mexico the tortitas became tortillitas, because here the tortilla is made on the comal, patting the dough until it is round. Comal is a Nahuatl word, comalli, and people were already cooking on clay comales more than two thousand years ago." },
+  { kind: "sabias", items: [Q("Manteca aquí es la grasa del cerdo. En Argentina la misma palabra quiere decir mantequilla.", "Manteca here is lard. In Argentina the same word means butter."), Q("En Guatemala, las que hacen tortillas palmean tan rápido que suena como música.", "In Guatemala, tortilla makers pat so fast it sounds like music."), Q("En un arrullo viejo de Veracruz, la mamá le dice al bebé: duérmete, que tengo que echar las tortillas.", "In an old lullaby from Veracruz, the mother tells the baby: go to sleep, I have to make the tortillas.")] },
+  { kind: "pregunta", items: [Q("¿Cómo hacemos una tortilla con las manos? ¡Enséñame!", "How do we make a tortilla with our hands? Show me!"), Q("¿Para quién son las tortillitas de manteca, para mamá o para papá?", "Who are the tortillitas de manteca for, mamá or papá?")] },
+  { kind: "go", es: "Toma las manitas de tu pollito. Palma, palma.", en: "Take your pollito's hands. Pat, pat." } ] },
+
+estrellita: { art: "star", pages: [
+  { kind: "hook", es: "Esta tonada tiene casi trescientos años, y tú ya te la sabes.", en: "This tune is almost three hundred years old, and you already know it." },
+  { kind: "story", es: "Nació en Francia como una cancioncita de mamás, allá por 1740. Un joven llamado Mozart la quiso tanto que escribió doce maneras distintas de tocarla en el piano. Después, en Inglaterra, una poeta llamada Jane Taylor le puso un poema sobre una estrella, y de ahí vino Twinkle, Twinkle. Alguien, no sabemos quién, la tradujo al español, y así llegó Estrellita a las cunas de México.", en: "It was born in France as a little mothers' song, around 1740. A young man named Mozart loved it so much he wrote twelve different ways to play it on the piano. Later, in England, a poet named Jane Taylor gave it a poem about a star, and that became Twinkle, Twinkle. Someone, we don't know who, put it into Spanish, and that is how Estrellita reached the cradles of Mexico." },
+  { kind: "sabias", items: [Q("La misma tonada sirve para cantar el abecedario. Pruébalo.", "The same tune works for singing the alphabet. Try it."), Q("También es un villancico: Campanita del lugar.", "It is also a Christmas carol: Campanita del lugar."), Q("Hay otra Estrellita mexicana, de Manuel M. Ponce, pero es una canción para grandes y no se parece en nada.", "There is another Mexican Estrellita, by Manuel M. Ponce, but it is a grown-up song and sounds nothing like this.")] },
+  { kind: "pregunta", items: [Q("¿De qué color brillan las estrellas? ¿Contamos algunas esta noche?", "What color do the stars shine? Shall we count some tonight?"), Q("La estrellita es como un diamante. ¿Qué más brilla así?", "The little star is like a diamond. What else shines like that?")] },
+  { kind: "go", es: "Manos abiertas sobre la cabeza, como estrellas.", en: "Hands open above your head, like stars." } ] },
+
+rorro: { art: "sleep", pages: [
+  { kind: "hook", es: "Rorro no es una palabra de verdad. Es el sonido que hacemos para dormir a un bebé: ro, ro, ro.", en: "Rorro isn't a real word. It's the sound we make to put a baby to sleep: ro, ro, ro." },
+  { kind: "story", es: "Ya en 1611 un diccionario español decía que las nanas cantaban 'a la ro, ro' para dormir a los niños. La canción cruzó el mar con las primeras familias españolas y se quedó en México. En 1870, en Cholula, una bisabuela la cantaba; un músico llamado Vicente Mendoza la escribió en 1951 y dijo que era el arrullo más cantado de todo el país. Y en Nochebuena, muchas familias se la cantan al Niño Dios mientras lo mecen en una cobija.", en: "Already in 1611 a Spanish dictionary said nannies sang 'a la ro, ro' to put children to sleep. The song crossed the sea with the first Spanish families and stayed in Mexico. In 1870, in Cholula, a great-grandmother was singing it; a musician named Vicente Mendoza wrote it down in 1951 and called it the most widely sung lullaby in the whole country. And on Christmas Eve, many families sing it to the Baby Jesus while they rock him in a blanket." },
+  { kind: "sabias", items: [Q("En una versión vieja de Veracruz, la mamá le pide al bebé que se duerma rápido porque tiene que moler el maíz.", "In an old Veracruz version, the mother asks the baby to hurry to sleep because she has to grind the corn."), Q("En Querétaro dicen 'a la rurru' en vez de 'a la rorro'.", "In Querétaro they say 'a la rurru' instead of 'a la rorro'."), Q("Las estrofas de la nevería y del coche se agregaron después, cuando ya había neverías y coches.", "The verses about the ice-cream shop and the car were added later, once there were ice-cream shops and cars.")] },
+  { kind: "pregunta", items: [Q("¿Cómo se mece a un bebé? Hazlo con tu muñeco mientras cantamos ro, ro, ro.", "How do you rock a baby? Do it with your doll while we sing ro, ro, ro."), Q("¿A quién le cantan esta canción en Navidad?", "Who is this song sung to at Christmas?")] },
+  { kind: "go", es: "Despacito. Mécete en cada rorro.", en: "Slowly now. Rock on every rorro." } ] },
+
+santaana: { art: "apple", pages: [
+  { kind: "hook", es: "Santa Ana es la abuelita de Jesús. Así que esta canción es como preguntarle a una abuela: ¿por qué llora el niño?", en: "Santa Ana is Jesus's grandmother. So this song is like asking a grandma: why is the baby crying?" },
+  { kind: "story", es: "Y ella contesta: por una manzana que se le perdió. La canción ya se cantaba en Andalucía cuando la escribieron en un libro en 1882, casi con las mismas palabras de hoy. En Cholula, Puebla, una señora la cantaba en 1860, y la llamaba 'abuela de Dios'. Hoy se canta de Chile a California, y en México también dentro de las pastorelas, cuando los pastores arrullan al Niño.", en: "And she answers: over an apple he lost. The song was already sung in Andalusia when it was written in a book in 1882, almost with today's words. In Cholula, Puebla, a woman was singing it in 1860 and called her 'grandmother of God'. Today it is sung from Chile to California, and in Mexico inside the pastorelas too, when the shepherds lull the Baby to sleep." },
+  { kind: "sabias", items: [Q("Si el niño llora por una manzana, le dan dos. En algunas casas van a la huerta a cortarlas.", "If the baby cries for one apple, he gets two. In some homes they go to the orchard to pick them."), Q("La última parte, pedazo de mi corazón, es un pedacito de otro arrullo que las familias le pegaron a este.", "The last part, pedazo de mi corazón, is a piece of another lullaby that families joined onto this one."), Q("En Cuba el niño no quiere otra manzana: quiere la suya.", "In Cuba the child doesn't want another apple: he wants his own.")] },
+  { kind: "pregunta", items: [Q("¿Por qué llora el niño en la canción? ¿Qué perdió?", "Why is the child crying in the song? What did he lose?"), Q("Si pierdes una manzana y te dan dos, ¿con quién compartes la otra?", "If you lost one apple and got two, who would you share the other with?")] },
+  { kind: "go", es: "Baja la voz en cada estrofa. La última, casi en secreto.", en: "Lower your voice each verse. The last one, almost a secret." } ] },
+
+elefante: { art: "elephant", pages: [
+  { kind: "hook", es: "Esta canción no tiene final. Después de diez elefantes puedes cantar once, doce, cien.", en: "This song has no ending. After ten elephants you can sing eleven, twelve, a hundred." },
+  { kind: "story", es: "Nadie sabe dónde nació. Se canta en francés, en italiano, en inglés, en sueco, y en español desde España hasta Puerto Rico. Puede que empezara en Francia, donde un libro de 1842 ya tenía un elefante columpiándose en una telaraña. En España los niños la cantan en los viajes largos de autobús, para que el camino se haga corto. Y en México muchos dicen 'se columpiaba' en vez de 'se balanceaba'.", en: "Nobody knows where it was born. It is sung in French, Italian, English, Swedish, and in Spanish from Spain to Puerto Rico. It may have started in France, where an 1842 book already had an elephant swinging on a spider's web. In Spain children sing it on long bus rides to make the trip shorter. And in Mexico many say 'se columpiaba' instead of 'se balanceaba'." },
+  { kind: "sabias", items: [Q("En la versión francesa la telaraña se rompe y todos los elefantes se caen.", "In the French version the web breaks and all the elephants fall down."), Q("En la nuestra, la telaraña aguanta siempre. Ustedes deciden cuándo se rompe.", "In ours, the web always holds. You decide when it breaks."), Q("Una escritora mexicana, Judy Goldman, la convirtió en un libro con dibujos.", "A Mexican writer, Judy Goldman, turned it into a picture book.")] },
+  { kind: "pregunta", items: [Q("¿Cuántos elefantes caben en una telaraña? Cuéntalos con los dedos.", "How many elephants fit on a spider's web? Count them on your fingers."), Q("¿Qué pensaba la araña cuando llegó el segundo elefante?", "What was the spider thinking when the second elephant arrived?")] },
+  { kind: "go", es: "Balancéense de lado a lado. Y cuando se rompa, ¡al suelo!", en: "Sway side to side. And when it breaks, down you go!" } ] },
+
+rana: { art: "frog", pages: [
+  { kind: "hook", es: "Cucú no es lo que dice la rana. Es lo que dice el pájaro cucú. Pero a la rana de esta canción le tocó cantarlo.", en: "Cucú isn't what a frog says. It's what the cuckoo bird says. But the frog in this song got to sing it." },
+  { kind: "story", es: "Es una canción española de brincar la cuerda, y cruzó el mar hasta las escuelas de México. Cada estrofa es alguien que pasa junto al charco: un caballero con sombrero, una señora con vestido largo, un marinero que vende romero. En 1951, un músico mexicano escribió una versión de niños chiquitos que la cantaban dando vueltas después de la lluvia, y en esa la rana decía 'sun y sun'.", en: "It is a Spanish jump-rope song, and it crossed the sea to the schools of Mexico. Each verse is someone walking past the pond: a gentleman with a hat, a lady in a long gown, a sailor selling rosemary. In 1951 a Mexican musician wrote down a version that small children sang spinning in circles after the rain, and in that one the frog said 'sun y sun'." },
+  { kind: "sabias", items: [Q("El romero es una planta que huele muy rico. Los marineros lo vendían en los puertos.", "Rosemary is a plant that smells wonderful. Sailors sold it in the ports."), Q("El niño canta todos los cucú, cucú, y el grande canta lo demás. Así es un dueto.", "The child sings every cucú, cucú, and the grown-up sings the rest. That makes it a duet."), Q("Las ranas de verdad no dicen cucú. Escucha una alguna noche de lluvia.", "Real frogs don't say cucú. Listen for one on a rainy night.")] },
+  { kind: "pregunta", items: [Q("¿Quiénes pasan junto al charco en la canción?", "Who walks past the pond in the song?"), Q("¿Cómo canta una rana de verdad? Hazlo.", "How does a real frog sing? Do it.")] },
+  { kind: "go", es: "Tú los cucú. Yo lo demás.", en: "You do the cucú. I'll do the rest." } ] },
+
+perritos: { art: "puppy", pages: [
+  { kind: "hook", es: "Diez perritos, y en cada estrofa se va uno. ¿Puedes adivinar por qué se va cada perrito?", en: "Ten puppies, and in every verse one leaves. Can you guess why each puppy goes?" },
+  { kind: "story", es: "Esta canción viene de muy lejos: de una canción para contar de Estados Unidos, de 1868. En español la cantaron primero en Chile, en 1916, y de ahí se fue a México y a Argentina. Cada familia inventa un motivo distinto y más chistoso para cada perrito. En una versión mexicana vieja, al final la perra tiene diez perritos nuevos y todo vuelve a empezar.", en: "This song comes from far away: from a counting song in the United States, from 1868. In Spanish it was sung first in Chile, in 1916, and from there it went to Mexico and Argentina. Every family invents a different, sillier reason for each puppy to leave. In one old Mexican version, at the end the mother dog has ten new puppies and it all starts again." },
+  { kind: "sabias", items: [Q("Diez dedos arriba, y baja uno por estrofa. Así aprendieron a contar hacia atrás muchos niños.", "Ten fingers up, fold one per verse. That's how many children learned to count backwards."), Q("Un payaso famoso de México, Cepillín, la grabó en 1970.", "A famous Mexican clown, Cepillín, recorded it in 1970."), Q("Nieve rima con nueve, y por eso el primer perrito se pierde en la nieve.", "Nieve rhymes with nueve, and that's why the first puppy gets lost in the snow.")] },
+  { kind: "pregunta", items: [Q("Si tuvieras diez perritos, ¿cómo se llamarían?", "If you had ten puppies, what would their names be?"), Q("¿Adónde se fue el perrito que se subió al cohete?", "Where did the puppy who climbed on the rocket go?")] },
+  { kind: "go", es: "Diez dedos arriba. Grita los números.", en: "Ten fingers up. Shout the numbers." } ] },
+
+colores: { art: "colors", pages: [
+  { kind: "hook", es: "Esta canción se canta en la iglesia, en la cocina, y en las marchas. Y en las tres suena igual de bonita.", en: "This song is sung in church, in the kitchen, and at marches. And it sounds just as pretty in all three." },
+  { kind: "story", es: "Nadie sabe quién la escribió; es una canción vieja de España. En los años cincuenta, un grupo de la iglesia llamado Cursillos la hizo su canción, y así llegó a Estados Unidos. En 1966, los campesinos de California, muchos de ellos mexicanos, caminaron desde Delano hasta Sacramento con César Chávez para pedir un trato justo, y al final de la marcha cantaron De colores. Desde entonces es su himno. Joan Baez la grabó en 1974.", en: "Nobody knows who wrote it; it is an old song from Spain. In the 1950s a church group called Cursillos made it their song, and that's how it reached the United States. In 1966 the farmworkers of California, many of them Mexican, walked from Delano to Sacramento with César Chávez to ask for fair treatment, and at the end of the march they sang De colores. It has been their anthem ever since. Joan Baez recorded it in 1974." },
+  { kind: "sabias", items: [Q("La segunda estrofa es un corral: el gallo, la gallina y los pollitos, cada uno con su sonido.", "The second verse is a barnyard: the rooster, the hen and the chicks, each with its own sound."), Q("Para una familia de aquí y de allá, esta canción lleva los dos lugares a la vez.", "For a family from here and there, this song carries both places at once."), Q("Sí se puede, el grito de los campesinos, sigue vivo en todas partes.", "Sí se puede, the farmworkers' cry, is still alive everywhere.")] },
+  { kind: "pregunta", items: [Q("¿Qué colores ves en la primavera?", "What colors do you see in spring?"), Q("¿Cómo canta el gallo? ¿Y la gallina? ¿Y los pollitos?", "How does the rooster sing? And the hen? And the chicks?")] },
+  { kind: "go", es: "Pinta el aire con las manos. Grande.", en: "Paint the air with your hands. Big." } ] },
+
+caballito: { art: "horse", pages: [
+  { kind: "hook", es: "El caballito de esta canción lleva a la gente de vuelta al pueblo donde nació. ¿Cuál es el pueblo de tu familia?", en: "The little horse in this song carries people back to the town where they were born. Which is your family's town?" },
+  { kind: "story", es: "Es una canción de España que México hizo suya. Allá, en Asturias, las niñas la cantaban brincando la cuerda con lo de 'tengo, tengo, tengo, tres ovejas'. Aquí, en 1951, un músico la escribió como ronda: los niños giran en círculo cantándola. Los abuelos la cantan pensando en su propio pueblo, por eso cuando llegues a 'mi pueblo' puedes decir el nombre del tuyo.", en: "It is a Spanish song that Mexico made its own. Over there, in Asturias, girls sang it jumping rope with the 'tengo, tengo, tengo, tres ovejas' part. Here, in 1951, a musician wrote it down as a ronda: children spin in a circle singing it. Grandparents sing it thinking of their own town, so when you reach 'mi pueblo' you can say the name of yours." },
+  { kind: "sabias", items: [Q("Una oveja da leche, otra da lana, y la otra da de comer toda la semana.", "One sheep gives milk, another gives wool, and the other keeps the family fed all week."), Q("La lana de las ovejas se hila para hacer cobijas y suéteres.", "Sheep's wool is spun to make blankets and sweaters."), Q("Mucha gente cree que es chilena. No hay pruebas de eso.", "Many people think it's Chilean. There's no evidence for that.")] },
+  { kind: "pregunta", items: [Q("¿Cómo se llama el pueblo donde nació tu abuela o tu abuelo?", "What is the town where your grandma or grandpa was born called?"), Q("¿Qué nos dan las ovejas?", "What do sheep give us?")] },
+  { kind: "go", es: "Y en 'mi pueblo', di el nombre del tuyo.", en: "And on 'mi pueblo', say the name of yours." } ] },
+
+vibora: { art: "snake", pages: [
+  { kind: "hook", es: "En las bodas, todos corren en fila por debajo de un velo. Y a alguien siempre lo atrapan.", en: "At weddings, everyone runs in a line under a veil. And someone always gets caught." },
+  { kind: "story", es: "El juego del arco es viejísimo: en España ya se jugaba hace cuatrocientos años, y un libro de 1626 lo describe. La canción viajó a México y aquí creció: le pusieron la mexicana que vende fruta, y palabras de aquí. Matatena viene del náhuatl y quiere decir el juego de las piedritas; jicote también es náhuatl. Hoy es la canción de las bodas mexicanas: los novios se suben a las sillas con el velo como puente, y los invitados pasan por debajo.", en: "The arch game is very old: it was played in Spain four hundred years ago, and a book from 1626 describes it. The song traveled to Mexico and grew here: it gained the Mexican woman selling fruit, and words from here. Matatena comes from Nahuatl and means the game of jacks; jicote is Nahuatl too. Today it is the song of Mexican weddings: the couple stand on chairs holding the veil as a bridge, and the guests run underneath." },
+  { kind: "sabias", items: [Q("A quien atrapan en tras, tras, tras le preguntan en secreto: ¿melón o sandía?", "Whoever gets caught on tras, tras, tras is asked in secret: melón or sandía?"), Q("Chabacano es como decimos en México al albaricoque. Es una palabra nuestra.", "Chabacano is what we call the apricot in Mexico. It's our word."), Q("Verbena es una planta y también una fiesta de noche.", "Verbena is a plant and also a night fair.")] },
+  { kind: "pregunta", items: [Q("¿Melón o sandía? ¿Cuál te gusta más?", "Melón or sandía? Which do you like more?"), Q("¿Qué fruta vende la mexicana de la canción?", "What fruit does the Mexican woman in the song sell?")] },
+  { kind: "go", es: "Dos personas hacen el arco. Los demás, en fila.", en: "Two people make the arch. Everyone else, in a line." } ] },
+
+naranja: { art: "orange", pages: [
+  { kind: "hook", es: "Esta ronda tiene un abrazo a la mitad. Y al final, tacos.", en: "This round has a hug in the middle. And at the end, tacos." },
+  { kind: "story", es: "La grabación más vieja que conocemos la hizo una señora llamada Manuela Longoria en Brownsville, Texas, en 1939, para un coleccionista de canciones. La que está en medio de la ronda es un muchacho que se va al ejército: por eso dice 'toca la marcha' y se despide. Sololoy es como los niños decían celuloide, el plástico de las muñecas de antes, que llegaron a México como en 1920. Y lo de los tacos es puro México.", en: "The oldest recording we know was made by a woman named Manuela Longoria in Brownsville, Texas, in 1939, for a song collector. The one in the middle of the circle is a young man leaving for the army: that's why it says 'play the march' and says goodbye. Sololoy is how children said celluloid, the plastic old dolls were made of, which reached Mexico around 1920. And the tacos part is pure Mexico." },
+  { kind: "sabias", items: [Q("En 'dame un abrazo', abraza a quien tengas al lado.", "On 'dame un abrazo', hug the person next to you."), Q("En 'no le doy', todos se sientan rapidito.", "On 'no le doy', everyone sits down fast."), Q("Brownsville está en la frontera. La canción se cantaba a los dos lados.", "Brownsville is on the border. The song was sung on both sides.")] },
+  { kind: "pregunta", items: [Q("¿Qué fruta es dulce y cuál está partida en la canción?", "Which fruit is sweet and which is cut in half in the song?"), Q("¿Qué comerías en tu casita de sololoy?", "What would you eat in your little celluloid house?")] },
+  { kind: "go", es: "Tómense de las manos. Y el abrazo no se olvida.", en: "Hold hands. And don't forget the hug." } ] },
+
+blanca: { art: "wasp", pages: [
+  { kind: "hook", es: "Hace cuatrocientos años, en Sevilla, las niñas cantaban casi esta misma canción. Pero la señora se llamaba doña Sancha.", en: "Four hundred years ago, in Seville, girls sang almost this same song. But the lady was called doña Sancha." },
+  { kind: "story", es: "Un escritor la describió en 1626: una niña en medio, cubierta de oro y plata, y un hombre que la persigue. En España el juego se perdió, pero en México se quedó y doña Sancha se volvió doña Blanca. Aquí le pusimos el jicotillo: una avispa grande cuyo nombre, xicohtli, es náhuatl, y un fraile ya lo escribió en 1576 diciendo que su piquete hincha. Los pilares son las manos de los niños, y el jicotillo zumba alrededor buscando uno de papel.", en: "A writer described it in 1626: a girl in the middle, covered in gold and silver, and a man chasing her. In Spain the game was lost, but in Mexico it stayed and doña Sancha became doña Blanca. Here we added the jicotillo: a big wasp whose name, xicohtli, is Nahuatl, and a friar already wrote it down in 1576 saying its sting makes you swell. The pillars are the children's hands, and the jicotillo buzzes around looking for one made of paper." },
+  { kind: "sabias", items: [Q("El jicotillo pregunta de qué es cada pilar: ¿de oro? ¿de plata? ¿de vidrio? Cuando uno es de papel, lo rompe.", "The jicotillo asks what each pillar is made of: gold? silver? glass? When one is paper, he breaks through."), Q("Es una de las rondas más viejas de México. Todavía se juega en los patios de la Ciudad de México.", "It is one of the oldest rondas in Mexico. It is still played in Mexico City schoolyards."), Q("Un jicote de verdad es peludo y zumba fuerte.", "A real jicote is fuzzy and buzzes loud.")] },
+  { kind: "pregunta", items: [Q("¿De qué es tu pilar hoy: de oro, de plata, de vidrio o de papel?", "What is your pillar made of today: gold, silver, glass or paper?"), Q("¿Cómo zumba un jicote? Hazlo.", "How does a jicote buzz? Do it.")] },
+  { kind: "go", es: "Uno es doña Blanca. Los demás, pilares. Y tú, el jicotillo.", en: "One is doña Blanca. The rest, pillars. And you, the jicotillo." } ] },
+
+arroz: { art: "ricepudding", pages: [
+  { kind: "hook", es: "Esta canción también es un postre. Y el postre es más viejo que la canción.", en: "This song is also a dessert. And the dessert is older than the song." },
+  { kind: "story", es: "El arroz y el azúcar llegaron a España con los árabes, y hace casi ochocientos años ya había recetas de arroz cocido en leche con miel. Los españoles lo trajeron a América, y en México le ponemos canela, a veces pasas y cáscara de naranja. La ronda se canta en todo el mundo hispano: uno en medio del círculo escoge con quién se quiere casar, y en cada país quiere a alguien distinto. En México, a una señorita de la capital.", en: "Rice and sugar came to Spain with the Arabs, and almost eight hundred years ago there were already recipes for rice cooked in milk with honey. The Spanish brought it to the Americas, and in Mexico we add cinnamon, sometimes raisins and orange peel. The round is sung all over the Spanish-speaking world: the one in the middle chooses whom to marry, and in every country they want someone different. In Mexico, a young lady from the capital." },
+  { kind: "sabias", items: [Q("En Asturias, España, queman el azúcar de encima con un fierro caliente para que cruja.", "In Asturias, Spain, they burn the sugar on top with a hot iron so it crackles."), Q("Con esta sí, con esta no: así se escoge pareja, señalando.", "Con esta sí, con esta no: that's how a partner is chosen, by pointing."), Q("Canten la canción y luego hagan el postre. Así la canción también se come.", "Sing the song, then make the dessert. That way the song gets eaten too.")] },
+  { kind: "pregunta", items: [Q("¿Qué le pondrías a tu arroz con leche: canela, pasas o cáscara de naranja?", "What would you put in your rice pudding: cinnamon, raisins or orange peel?"), Q("¿Con quién te casarías, y qué tendría que saber hacer?", "Who would you marry, and what would they have to know how to do?")] },
+  { kind: "go", es: "Ronda tomados de las manos. Uno en medio.", en: "A circle holding hands. One in the middle." } ] },
+
+muneca: { art: "doll", pages: [
+  { kind: "hook", es: "Esta muñeca tiene más de cien años. En 1921 alguien la escribió en un libro en Murcia, España.", en: "This doll is more than a hundred years old. In 1921 someone wrote her down in a book in Murcia, Spain." },
+  { kind: "story", es: "Ya entonces iba vestida de azul, con su canesú, que es una palabra francesa para la parte de arriba de la blusa, donde van las mangas. Muchos sitios dicen que la escribió una escritora llamada Montserrat del Amo, pero ella nació en 1927, seis años después del libro; lo que hizo fue un cuento con la canción. Se canta en México, Argentina, Chile, Puerto Rico y en toda Latinoamérica, y en México la grabó el payaso Cepillín.", en: "Even then she wore blue, with her canesú, a French word for the top of a blouse, where the sleeves attach. Many sites say a writer named Montserrat del Amo wrote it, but she was born in 1927, six years after the book; what she made was a storybook with the song. It is sung in Mexico, Argentina, Chile, Puerto Rico and all over Latin America, and in Mexico the clown Cepillín recorded it." },
+  { kind: "sabias", items: [Q("Constipado en España quiere decir resfriado. La muñeca se enfermó de gripa, nada más.", "Constipado in Spain means having a cold. The doll just caught a cold, nothing else."), Q("La canción enseña a sumar de ocho en ocho, hasta treinta y dos.", "The song teaches adding by eight, up to thirty-two."), Q("Jarabe con tenedor: por eso la muñeca no se cura. Es una broma.", "Syrup with a fork: that's why the doll doesn't get better. It's a joke.")] },
+  { kind: "pregunta", items: [Q("¿Por qué se enfermó la muñeca? ¿Qué le pondrías para abrigarla?", "Why did the doll get sick? What would you put on her to keep her warm?"), Q("Dos y dos son cuatro, cuatro y dos son… ¿cuántos?", "Two and two are four, four and two are… how many?")] },
+  { kind: "go", es: "Acuna a tu muñeco mientras cantas.", en: "Cradle your doll while you sing." } ] },
+
+barquito: { art: "boat", pages: [
+  { kind: "hook", es: "Cuando esta canción termina, vuelve a empezar. Puede durar todo un viaje en coche.", en: "When this song ends, it starts again. It can last a whole car ride." },
+  { kind: "story", es: "Viene de una canción francesa de marineros, y su tonada se cantó por primera vez en un teatro de París en 1852. La versión francesa es un poco terrible: los marineros tienen hambre y quieren comerse al grumete, pero unos pececitos lo salvan. En español nos quedamos con la parte bonita: un barquito muy chiquito, las semanas que pasan, y el final que vuelve al principio. En 2012 el grupo CantaJuego la hizo famosa otra vez.", en: "It comes from a French sailors' song, and its tune was first sung on a Paris stage in 1852. The French version is a little scary: the sailors are hungry and want to eat the cabin boy, but some little fish save him. In Spanish we kept the nice part: a tiny little boat, the weeks going by, and the ending that goes back to the beginning. In 2012 the group CantaJuego made it famous again." },
+  { kind: "sabias", items: [Q("En una versión de España, los marineros se comen sus botas con salsa roja y nueces.", "In a Spanish version, the sailors eat their boots with red sauce and walnuts."), Q("Chiquitito es chiquito hecho más chiquito todavía.", "Chiquitito is chiquito made even smaller."), Q("Hay versiones en alemán y en griego, con el mismo barquito.", "There are versions in German and Greek, with the same little boat.")] },
+  { kind: "pregunta", items: [Q("¿Cuántas semanas pasaron antes de que el barquito navegara? Contémoslas.", "How many weeks went by before the little boat sailed? Let's count them."), Q("Si tú fueras el barquito, ¿adónde navegarías?", "If you were the little boat, where would you sail?")] },
+  { kind: "go", es: "Mécete como barquito. Y cada vuelta, más rápido.", en: "Rock like a boat. And each round, faster." } ] },
+
+dedito: { art: "egg", pages: [
+  { kind: "hook", es: "Tu pulgar es el gordito. No compró el huevo, no lo cocinó, no le echó sal. Pero se lo comió.", en: "Your thumb is the gordito. He didn't buy the egg, didn't cook it, didn't salt it. But he ate it." },
+  { kind: "story", es: "Es un juego de dedos, de los primeros que oye un bebé, porque se hace en su propia mano. En 1895 un maestro de Asturias, en España, escribió a los niños diciéndolo en asturiano: 'esti topó un güevu'. Y no somos los únicos: en Inglaterra juegan casi lo mismo con cerditos en los dedos de los pies, y en Venecia también con un huevo. Cada familia lo dice un poco distinto: a veces el huevo se compra, a veces se encuentra, a veces se fríe.", en: "It is a finger game, one of the first a baby hears, because it happens on their own hand. In 1895 a teacher in Asturias, Spain, wrote down children saying it in Asturian: 'esti topó un güevu'. And we're not the only ones: in England they play almost the same with little pigs on the toes, and in Venice with an egg too. Every family says it a little differently: sometimes the egg is bought, sometimes found, sometimes fried." },
+  { kind: "sabias", items: [Q("Empieza en el meñique y termina en el pulgar, el gordito.", "It starts at the little finger and ends at the thumb, the gordito."), Q("Al final van las cosquillas, subiendo por el brazo.", "At the end come the tickles, climbing up the arm."), Q("También se puede jugar en los dedos de los pies.", "You can play it on the toes too.")] },
+  { kind: "pregunta", items: [Q("¿Cuál de tus deditos se comió el huevito? ¿Y cuál lo cocinó?", "Which of your fingers ate the egg? And which one cooked it?"), Q("¿Qué más podría comprar tu dedito en el mercado?", "What else could your little finger buy at the market?")] },
+  { kind: "go", es: "Toma la manita. Un dedo por línea.", en: "Take the little hand. One finger per line." } ] },
+
+sana: { art: "bandage", pages: [
+  { kind: "hook", es: "Esto no es una canción. Es una medicina que se dice en voz alta.", en: "This isn't a song. It's a medicine you say out loud." },
+  { kind: "story", es: "Viene de España, donde ya la decían hace más de cien años; en 1850 una revista contaba cómo las nanas consolaban así a los niños que se caían. En España dicen 'culito de rana'; en México y en Sudamérica, 'colita'; en Chile, 'potito'. Un estudioso de Salamanca dice que es de las palabras que curan, de las que se pasan de boca en boca. Funciona porque alguien te soba el golpe y te promete que mañana estará mejor.", en: "It comes from Spain, where it was already said more than a hundred years ago; in 1850 a magazine described how nannies comforted children who fell this way. In Spain they say 'culito de rana'; in Mexico and South America, 'colita'; in Chile, 'potito'. A scholar from Salamanca calls it one of the healing words, the kind passed from mouth to mouth. It works because someone rubs the bump and promises it will be better tomorrow." },
+  { kind: "sabias", items: [Q("Las ranas solo tienen cola cuando son renacuajos. Después se les cae.", "Frogs only have a tail when they're tadpoles. Then it falls off."), Q("Rana está ahí porque rima con sana. Y porque las ranas dan risa.", "Rana is there because it rhymes with sana. And because frogs are funny."), Q("En Salamanca le agregan: y el día que te cases, ya no tienes nada.", "In Salamanca they add: and the day you marry, it's all gone.")] },
+  { kind: "pregunta", items: [Q("¿Dónde está la colita de la rana? ¿Los renacuajos tienen cola?", "Where is the frog's little tail? Do tadpoles have tails?"), Q("¿Qué le dirías a un amigo que se cayó para que se sienta mejor?", "What would you say to a friend who fell, to make them feel better?")] },
+  { kind: "go", es: "Soba el golpe en círculos. Y un beso en mañana.", en: "Rub the bump in circles. And a kiss on mañana." } ] },
+
+aserrin: { art: "bread", pages: [
+  { kind: "hook", es: "Aserrín, aserrán es el ruido de un serrucho. Cuando te meces en las piernas de alguien, tú eres el serrucho.", en: "Aserrín, aserrán is the noise of a saw. When you rock on someone's lap, you are the saw." },
+  { kind: "story", es: "La rima es de España, y ya estaba en un libro de 1882: los maderos de San Juan, los del rey asierran bien, los de la reina también. Un juego parecido se jugaba desde 1605. En México cambió: los maderos piden pan y no les dan, piden queso y les dan hueso, y se les atora en el pescuezo, que es el momento de las cosquillas en el cuello. Un poeta de Colombia, José Asunción Silva, escribió un poema famoso sobre su abuela meciéndolo con esta rima.", en: "The rhyme is from Spain, and was already in a book in 1882: the woodcutters of San Juan, the king's saw well, the queen's do too. A similar game was played as far back as 1605. In Mexico it changed: the maderos ask for bread and get none, ask for cheese and get a bone, and it sticks in their neck, which is the moment for tickles on the neck. A poet from Colombia, José Asunción Silva, wrote a famous poem about his grandmother rocking him to this rhyme." },
+  { kind: "sabias", items: [Q("Aserrín es el polvito que queda cuando cortas madera.", "Aserrín is the dust left over when you cut wood."), Q("En cada país termina distinto: en Costa Rica es un arrullo.", "In every country it ends differently: in Costa Rica it's a lullaby."), Q("En una versión mexicana dicen riquirrán en vez de aserrán.", "In one Mexican version they say riquirrán instead of aserrán.")] },
+  { kind: "pregunta", items: [Q("¿Qué sonido hace un serrucho? ¿Puedes ser el serrucho con tu cuerpo?", "What sound does a saw make? Can you be the saw with your body?"), Q("¿Qué pidieron los maderos y qué les dieron?", "What did the maderos ask for, and what were they given?")] },
+  { kind: "go", es: "Tómale las dos manos. Adelante y atrás.", en: "Hold both hands. Forward and back." } ] },
+
+llueva: { art: "rain", pages: [
+  { kind: "hook", es: "Esta canción se canta para llamar a la lluvia. Con la cara mirando al cielo.", en: "This song is sung to call the rain. With your face turned up to the sky." },
+  { kind: "story", es: "Viene de España. La Virgen de la Cueva es una imagen chiquita, más pequeña que tu mano, guardada dentro de una cueva de verdad; varios pueblos dicen que la canción nació en su cueva, y en uno de ellos, Altura, cuentan que en 1726, después de una gran sequía, la sacaron en procesión y llovió una semana entera. En México, hace muchos años, los niños la cantaban en verano dando vueltas en círculo, con la cara hacia arriba, imitando a los grandes que rezaban por lluvia.", en: "It comes from Spain. The Virgen de la Cueva is a tiny image, smaller than your hand, kept inside a real cave; several towns say the song was born in their cave, and in one of them, Altura, they tell that in 1726, after a great drought, they carried her out in procession and it rained for a whole week. In Mexico, many years ago, children sang it in summer spinning in circles with their faces turned up, copying the grown-ups who prayed for rain." },
+  { kind: "sabias", items: [Q("Chaparrón es un aguacero fuerte que llega de repente.", "A chaparrón is a heavy downpour that comes all at once."), Q("En Guatemala piden que llueva azúcar y turrón.", "In Guatemala they ask for a rain of sugar and nougat."), Q("En Argentina, en la cueva no está la Virgen sino una vieja, o una bruja.", "In Argentina, it's not the Virgin in the cave but an old woman, or a witch.")] },
+  { kind: "pregunta", items: [Q("¿Qué le pedimos a la Virgen de la Cueva en la canción?", "What do we ask the Virgen de la Cueva for in the song?"), Q("¿Te gusta mojarte cuando llueve?", "Do you like getting wet when it rains?")] },
+  { kind: "go", es: "Dedos como gotas. Y una palmada grande en chaparrón.", en: "Fingers like raindrops. And one big clap on chaparrón." } ] },
+
+mananitas: { art: "cake", pages: [
+  { kind: "hook", es: "Esta canción es para despertar a alguien. Antes, la gente venía con músicos a tu ventana, muy temprano, el día de tu santo.", en: "This song is for waking someone up. People used to come with musicians to your window, very early, on your saint's day." },
+  { kind: "story", es: "Viene de las canciones de la madrugada que se cantaban en España y en la Nueva España desde hace siglos. Entre 1880 y 1917, en la Ciudad de México, un impresor llamado Vanegas Arroyo vendía hojitas con la letra, ya con el rey David. Cuando llegó la radio, como en 1921, la versión se fijó, y un músico llamado Alfonso Esparza Oteo hizo el arreglo que todos conocemos. Pedro Infante la cantó en una película en 1948, y desde 1955, cada 11 de diciembre a medianoche, todo México se la canta a la Virgen de Guadalupe.", en: "It comes from the dawn songs sung in Spain and in New Spain for centuries. Between 1880 and 1917, in Mexico City, a printer named Vanegas Arroyo sold little sheets with the words, already with King David in them. When radio arrived, around 1921, the version settled, and a musician named Alfonso Esparza Oteo made the arrangement we all know. Pedro Infante sang it in a film in 1948, and since 1955, every December 11 at midnight, all of Mexico sings it to the Virgin of Guadalupe." },
+  { kind: "sabias", items: [Q("Donde dice 'mi bien', se pone el nombre del festejado. Así la canción es de una sola persona cada vez.", "Where it says 'mi bien', you put the birthday person's name. That way the song belongs to one person each time."), Q("Antes, el día del santo era más importante que el cumpleaños.", "The saint's day used to matter more than the birthday."), Q("Con guitarra o con mariachi, pero mejor con las dos primeras estrofas bien sabidas.", "With guitar or mariachi, but best with the first two verses known by heart.")] },
+  { kind: "pregunta", items: [Q("¿A quién le cantamos Las mañanitas, y cuándo?", "Who do we sing Las mañanitas to, and when?"), Q("¿Qué pasa en la mañana según la canción? ¿Qué animales cantan?", "What happens in the morning according to the song? Which animals sing?")] },
+  { kind: "go", es: "Aprende las dos primeras estrofas. Con eso ya perteneces a todos los cumpleaños.", en: "Learn the first two verses. With those you belong at every birthday." } ] },
+
+"piñata": { art: "pinata", pages: [
+  { kind: "hook", es: "Esta canción es un reloj. Te da una, dos, tres, y se acabó tu tiempo.", en: "This song is a clock. It gives you one, two, three, and your time is up." },
+  { kind: "story", es: "La piñata llegó a México con los españoles, que la traían de Italia, donde pignatta quiere decir olla de barro. Los frailes de Acolman, cerca de la Ciudad de México, pidieron permiso al Papa en 1586 para hacer las misas de diciembre que se volvieron las posadas, y usaron la piñata para enseñar: siete picos por siete cosas malas, la venda por la fe, el palo por la fuerza para vencerlas, y la fruta de adentro como premio. En 1915, en Orizaba, los niños ya cantaban 'dale, dale, dale, no pierdas el tino'.", en: "The piñata came to Mexico with the Spanish, who had it from Italy, where pignatta means clay pot. The friars of Acolman, near Mexico City, asked the Pope's permission in 1586 for the December masses that became the posadas, and used the piñata to teach: seven points for seven bad things, the blindfold for faith, the stick for the strength to beat them, and the fruit inside as the prize. By 1915, in Orizaba, children were already singing 'dale, dale, dale, no pierdas el tino'." },
+  { kind: "sabias", items: [Q("Las primeras piñatas eran ollas de barro llenas de tejocotes, caña y jícama, no de dulces.", "The first piñatas were clay pots filled with tejocotes, sugar cane and jícama, not candy."), Q("Antes de los españoles, los mexicas ya rompían ollas decoradas en diciembre.", "Before the Spanish, the Mexica were already breaking decorated pots in December."), Q("Acolman se llama la cuna de la piñata, y en 2025 la declararon patrimonio.", "Acolman calls itself the cradle of the piñata, and in 2025 it was declared heritage.")] },
+  { kind: "pregunta", items: [Q("¿Cuántos golpes te da la canción antes de que se acabe tu tiempo?", "How many swings does the song give you before your time is up?"), Q("¿Cuántos picos tiene la piñata de estrella? ¿Qué había adentro de las de antes?", "How many points does the star piñata have? What was inside the old ones?")] },
+  { kind: "go", es: "Todos cantan. El del palo le pega al ritmo.", en: "Everyone sings. The one with the stick swings on the beat." } ] },
+};
+
+/* ================= El cuento: Tía Lupe tells where the song comes from, before the first sing ================= */
+// CUENTOS[sid] = { art, pages: [ { kind:"hook"|"story"|"sabias"|"pregunta"|"go", es, en, art?, items:[{es,en}] } ] }
+let CUENTO_SEEN = {};
+try { CUENTO_SEEN = JSON.parse(localStorage.getItem("cantame-cuento") || "{}") || {}; } catch(e){}
+let cuentoState = null;
+function openCuento(s){
+  const c = CUENTOS[s.id]; if (!c) return false;
+  closeCuento(); stopAll();
+  const o = document.createElement("div"); o.className = "cuento"; o.setAttribute("role", "dialog"); o.setAttribute("aria-modal", "true");
+  document.body.appendChild(o); document.body.style.overflow = "hidden";
+  let i = 0; const pages = c.pages;
+  const key = e => { if (e.key === "Escape") done(false); else if (e.key === "ArrowRight") next(); else if (e.key === "ArrowLeft") prev(); };
+  document.addEventListener("keydown", key);
+  cuentoState = { el: o, key, song: s };
+  const mark = () => { CUENTO_SEEN[s.id] = Date.now(); try { localStorage.setItem("cantame-cuento", JSON.stringify(CUENTO_SEEN)); } catch(e){} };
+  const done = sing => { mark(); closeCuento(); if (sing) { history.replaceState(null, "", `#/song/${s.id}/sing`); openSing(s); } else { history.replaceState(null, "", `#/song/${s.id}`); } };
+  const killPipo = () => { if (cuentoState && cuentoState.pipo) { cuentoState.pipo.destroy(); cuentoState.pipo = null; } };
+  const draw = () => {
+    const p = pages[i]; const artKey = p.art || c.art; const art = artKey && ART[artKey] ? ART[artKey] : "";
+    let body = "";
+    if (p.kind === "hook") body = `${art ? `<div class="cbig">${art}</div>` : ""}<p class="ces big">${esc(p.es)}</p><p class="cen">${esc(p.en)}</p>`;
+    else if (p.kind === "story") body = `${art ? `<div class="cmed">${art}</div>` : ""}<p class="ces">${esc(p.es)}</p><p class="cen">${esc(p.en)}</p>`;
+    else if (p.kind === "sabias") body = `<h2 class="clabel">${T(I.cuento_sabias)}</h2><ul class="clist">${p.items.map(it => `<li><span class="ces">${esc(it.es)}</span><span class="cen">${esc(it.en)}</span></li>`).join("")}</ul>`;
+    else if (p.kind === "pregunta") body = `<h2 class="clabel">${T(I.cuento_pregunta)}</h2><ul class="clist ask">${p.items.map(it => `<li><span class="ces">${esc(it.es)}</span><button class="spk" type="button" data-w="${esc(it.es)}" aria-label="${T(I.hear)}">${IC.spk}</button><span class="cen">${esc(it.en)}</span></li>`).join("")}</ul><p class="ctip">${T(I.cuento_pregunta_tip)}</p>`;
+    else if (p.kind === "go") body = `<div class="cbig"><div class="pipo-host" id="cuentoPipo"></div></div><p class="ces big">${esc(p.es)}</p><p class="cen">${esc(p.en)}</p><div class="row" style="justify-content:center;margin-top:1rem"><button class="btn primary lg" type="button" data-act="sing">${IC.singi} ${T(I.sing)}</button></div>`;
+    o.innerHTML = `<div class="ctop"><span class="title">${esc(s.title)}</span><span class="grow"></span><span class="count">${i + 1} / ${pages.length}</span><button class="btn sm" type="button" data-act="close">${T(I.close)}</button></div>
+      <div class="cstage"><div class="ccard anim">
+        <div class="tia-pic"><div class="tia-host">${TIA_SVG}</div><span class="tia-name">${TIA_NAME}</span></div>
+        <div class="cbody">${body}</div></div></div>
+      <div class="cdots">${pages.map((_, k) => `<i class="${k === i ? "on" : k < i ? "past" : ""}"></i>`).join("")}</div>
+      <div class="cfoot"><button class="btn ghost" type="button" data-act="prev" ${i === 0 ? "disabled" : ""}>${IC.back} ${T(I.prev)}</button>
+        ${i < pages.length - 1 ? `<button class="btn primary" type="button" data-act="next">${T(I.next)} →</button>` : `<button class="btn" type="button" data-act="close">${T(I.close)}</button>`}</div>`;
+    $$('[data-act="close"]', o).forEach(b => b.addEventListener("click", ()=> done(false)));
+    const nx = $('[data-act="next"]', o); if (nx) nx.addEventListener("click", next);
+    $('[data-act="prev"]', o).addEventListener("click", prev);
+    const sg = $('[data-act="sing"]', o); if (sg) sg.addEventListener("click", ()=> done(true));
+    $$(".spk[data-w]", o).forEach(b => b.addEventListener("click", ()=> speak(b.dataset.w)));
+    const ph = $("#cuentoPipo", o); if (ph) { const pp = makePipo(ph); cuentoState.pipo = pp; pp.set("wave"); setTimeout(()=>{ if (cuentoState && cuentoState.pipo === pp) pp.set("dance"); }, 1500); }
+    if (p.kind === "hook" || p.kind === "story") { const sp = document.createElement("button"); sp.className = "btn sm cread"; sp.type = "button"; sp.innerHTML = `${IC.spk} ${T(I.cuento_read)}`; sp.addEventListener("click", ()=> speak(p.es)); $(".cbody", o).appendChild(sp); }
+    $(".cstage", o).scrollTop = 0;
+  };
+  const next = () => { killPipo(); if (i < pages.length - 1) { i++; draw(); } else done(false); };
+  const prev = () => { killPipo(); if (i > 0) { i--; draw(); } };
+  draw();
+  return true;
+}
+function closeCuento(){
+  if (!cuentoState) return;
+  stopAll(); document.removeEventListener("keydown", cuentoState.key);
+  if (cuentoState.pipo) cuentoState.pipo.destroy();
+  cuentoState.el.remove(); document.body.style.overflow = ""; cuentoState = null;
 }
 
 /* ================= tutorial: five long scenes with Pipo ================= */

@@ -787,6 +787,32 @@
   .song .cuento-btn { display: inline-flex; align-items: center; gap: 0.45rem; }
   .song .cuento-btn .ico { width: 1.6rem; height: 1.6rem; } .song .cuento-btn .ico svg { width: 100%; height: 100%; overflow: visible; }
 
+  /* ---------- vocabulary, second pass ---------- */
+  .gesto { display: flex; align-items: center; gap: 0.7rem; text-align: left; background: var(--card); border: 1px solid var(--line); border-radius: 4px 12px 5px 10px; padding: 0.6rem 0.9rem; max-width: 26rem; margin: 0.2rem auto 0.4rem; }
+  .gesto .gico { flex: none; width: 2rem; height: 2rem; color: var(--marigold-deep); } .gesto .gico svg { width: 100%; height: 100%; }
+  .gesto b { display: block; font-family: "Alegreya", Georgia, serif; font-weight: 500; font-size: 1.1rem; line-height: 1.25; } .gesto small { color: var(--muted); font-size: 0.85rem; }
+  .no-gloss .gesto small { display: none; }
+  .pscript { margin: 0.2rem 0 0.6rem; color: var(--muted); font-size: 0.9rem; max-width: 34rem; } .pscript b { color: var(--rosa); font-weight: 700; }
+  .pcard.hint { animation: hintpulse 0.9s ease-in-out 3; border-color: var(--green); }
+  @keyframes hintpulse { 50% { transform: scale(1.06); box-shadow: 0 0 0 5px var(--green-soft); } }
+  .pend .hunt { text-align: left; background: var(--soft); padding: 0.9rem 1.1rem; margin-top: 0.8rem; max-width: 28rem; clip-path: polygon(0 4px, 3% 0, 9% 5px, 17% 1px, 26% 6px, 35% 0, 44% 5px, 55% 1px, 63% 6px, 72% 0, 81% 5px, 90% 1px, 100% 4px, 100% calc(100% - 5px), 92% 100%, 83% calc(100% - 4px), 74% 100%, 62% calc(100% - 6px), 51% 100%, 40% calc(100% - 5px), 29% 100%, 18% calc(100% - 4px), 8% 100%, 0 calc(100% - 6px)); }
+  .pend .hunt h2 { font-size: 1.15rem; font-style: italic; margin: 0 0 0.2rem; } .pend .hunt p { margin: 0 0 0.6rem; color: var(--ink-2); font-size: 0.95rem; }
+  .pend .hunt ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .pend .hunt li { display: flex; align-items: center; gap: 0.6rem; } .pend .hunt .hart { width: 2.2rem; height: 2.2rem; flex: none; } .pend .hunt .hart svg { width: 100%; height: 100%; }
+  .pend .hunt b { font-family: "Alegreya", Georgia, serif; font-weight: 500; font-size: 1.15rem; } .pend .hunt i { color: var(--muted); font-size: 0.9rem; }
+  /* kept cards: the hunting tally */
+  .kc { grid-template-columns: 3.2rem 1fr auto; }
+  .kc .ktally { display: flex; gap: 0.25rem; align-items: center; margin-top: 0.3rem; }
+  .kc .ktally button { background: none; border: 1px solid var(--line); border-radius: 999px; padding: 0.1rem 0.5rem; font-size: 0.78rem; color: var(--muted); display: inline-flex; align-items: center; gap: 0.25rem; }
+  .kc .ktally button:hover { border-color: var(--marigold); color: var(--ink); } .kc .ktally button b { color: var(--marigold-deep); }
+  .kc .due { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--rosa); margin-left: 0.4rem; }
+  .kc .lvl { display: inline-flex; gap: 2px; margin-left: 0.4rem; vertical-align: middle; } .kc .lvl i { width: 6px; height: 6px; border-radius: 50%; background: var(--line); } .kc .lvl i.on { background: var(--marigold); }
+  .wsub { color: var(--muted); font-size: 0.92rem; margin: 0.2rem 0 0; }
+  .coach1 .hunt { background: var(--soft); padding: 0.8rem 1rem; margin-top: 0.4rem; }
+  .coach1 .hunt ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .coach1 .hunt li { display: flex; align-items: center; gap: 0.6rem; } .coach1 .hunt .hart { width: 2.2rem; height: 2.2rem; flex: none; } .coach1 .hunt .hart svg { width: 100%; height: 100%; }
+  .coach1 .hunt b { font-family: "Alegreya", Georgia, serif; font-weight: 500; font-size: 1.15rem; } .coach1 .hunt i { color: var(--muted); font-size: 0.9rem; }
+
   /* toast */
   .toast { position: fixed; left: 50%; bottom: 1.4rem; transform: translateX(-50%); background: var(--ink); color: var(--ground); padding: 0.55rem 1.1rem; border-radius: 999px; font-weight: 700; font-size: 0.95rem; z-index: 90; opacity: 0; transition: opacity 200ms; pointer-events: none; }
   .toast.on { opacity: 1; }
@@ -900,6 +926,19 @@ const I = {
   coach_notice:{en:"Worth another try",es:"Vale la pena otro intento"},
   coach_notice_good:{en:"No word needed more than one try this week. Keep going.",es:"Ninguna palabra necesitó más de un intento esta semana. Sigan así."},
   coach_notice_none:{en:"Nothing yet. After a few sessions this card will show the words that needed more than one try, with a tip for each.",es:"Todavía nada. Después de unas sesiones, aquí saldrán las palabras que necesitaron más de un intento, con un consejo para cada una."},
+  prompt_see2:{en:"Say it together twice, and do the gesture each time.",es:"Díganla juntos dos veces, y hagan el gesto cada vez."},
+  did_it:{en:"We did it",es:"Ya lo hicimos"},
+  prompt_find2:{en:"Ask, and let the child tap. A wrong tap shows the right one; try again.",es:"Pregunta y deja que el niño toque. Si se equivoca, aparece la correcta; otra vez."},
+  prompt_say2:{en:"Hum the line and stop at the gap. The child says the word. You decide.",es:"Tararea la línea y para en el hueco. El niño dice la palabra. Tú decides."},
+  script_label:{en:"If the answer comes in English:",es:"Si contesta en inglés:"},
+  script_como:{en:"“¿Cómo se dice en español?” … then wait. Say it yourself only after they try.",es:"“¿Cómo se dice en español?” … y espera. Dila tú solo después de que lo intente."},
+  read_frame:{en:"Read the sentence",es:"Leer la frase"}, reviewed_toast:{en:"Still kept:",es:"Sigue guardada:"},
+  done_reviewed:{en:"reviewed",es:"repasadas"}, done_tomorrow:{en:"Tomorrow, {n} more from this song.",es:"Mañana, {n} más de esta canción."}, done_all:{en:"Come back tomorrow and the words will be waiting for a review.",es:"Vuelve mañana y las palabras estarán esperando su repaso."},
+  hunt_title:{en:"Word hunt for today",es:"Caza de palabras de hoy"}, hunt_p:{en:"Listen for these at home. Tap the ear when your child hears one, the mouth when they say it.",es:"Búsquenlas en casa. Toca la oreja cuando tu hijo la oiga, la boca cuando la diga."},
+  hunt_heard:{en:"heard",es:"la oyó"}, hunt_used:{en:"said",es:"la dijo"}, hunt_heard_toast:{en:"Heard:",es:"La oyó:"}, hunt_used_toast:{en:"Said:",es:"La dijo:"},
+  due_label:{en:"review",es:"repaso"}, review_due_n:{en:"{n} ready to review",es:"{n} para repasar"}, keep_today:{en:"Keep the words · {n} today",es:"Guardar palabras · {n} hoy"},
+  words_sub:{en:"Kept words come back for review after 1, 3, 7, 14 and 30 days. Dots show how many reviews a word has passed.",es:"Las palabras guardadas vuelven a repaso al día, a los 3, 7, 14 y 30 días. Los puntos muestran cuántos repasos ha pasado."},
+  coach_hunt:{en:"Word hunt",es:"Caza de palabras"},
   coach_due:{en:"{n} words are ready for a review",es:"{n} palabras esperan un repaso"},
   tab_words:{en:"My words",es:"Mis palabras"}, tab_phrases:{en:"Phrases for grown-ups",es:"Frases para los grandes"},
   words_hint:{en:"Every key word from every song. Tap a card to flip it, or the speaker to hear it. Words you have heard in a song you know are marked.",es:"Todas las palabras clave de todas las canciones. Toca una tarjeta para voltearla, o la bocina para oírla."},
@@ -2042,7 +2081,7 @@ function route(){
   stopAll();
   closeSing();
   closePractice(); closeCuento();
-  if (parts[0] === "song" && songOf(parts[1])) { const sg = songOf(parts[1]); renderSong(sg); if (parts[2] === "cuento") openCuento(sg); else if (!parts[2] && CUENTOS[sg.id] && !CUENTO_SEEN[sg.id]) openCuento(sg); if (parts[2] === "sing") openSing(sg); if (parts[2] === "keep") openPractice({ song: sg, items: toKeep(sg).length ? toKeep(sg) : keepable(sg), mode: "keep" }); }
+  if (parts[0] === "song" && songOf(parts[1])) { const sg = songOf(parts[1]); renderSong(sg); if (parts[2] === "cuento") openCuento(sg); else if (!parts[2] && CUENTOS[sg.id] && !CUENTO_SEEN[sg.id]) openCuento(sg); if (parts[2] === "sing") openSing(sg); if (parts[2] === "keep") openPractice({ song: sg, items: toKeep(sg).length ? sessionWords(sg) : keepable(sg).slice(0, SESSION_WORDS), mode: "keep" }); }
   else if (parts[0] === "palabras" || parts[0] === "words") { renderWords(parts[1] === "frases" ? "phrases" : "words"); if (parts[1] === "repaso") openReview(); }
   else if (parts[0] === "hoy" || parts[0] === "tonight") renderCoach();
   else if (parts[0] === "tour") { if (!$("#view").children.length) renderLibrary(); openTour(parseInt(parts[1] || "0", 10) || 0); return; }
@@ -2249,8 +2288,6 @@ const keepable = s => s.vocab.filter(w => artFor(w.es));            // only word
 const toKeep = s => keepable(s).filter(w => !isKept(w.es));
 const keptList = () => Object.values(WORDS).filter(w => w.kept);
 const TOTAL_KEEPABLE = (()=>{ const seen = new Set(); SONGS.forEach(s => keepable(s).forEach(w => seen.add(wkey(w.es)))); return seen.size; })();
-function keepWord(w, song){ const k = wkey(w.es); WORDS[k] = { es: w.es, en: w.en, song: song.id, kept: Date.now(), lastReview: Date.now(), misses: 0 }; saveWords(); }
-function unkeepWord(es){ delete WORDS[wkey(es)]; saveWords(); }
 
 // the lyric line that carries a word, and which token it is
 function lineForWord(song, es){
@@ -2287,88 +2324,219 @@ function humGap(song, li, k, toks){
   return true;
 }
 
+/* ================= vocabulary, second pass: gestures, spaced sessions, scheduled review, word hunting =================
+   Built on what the evidence says works at 5 to 8: two or three words per session; picture + spoken word + a gesture the
+   child performs; cued retrieval spaced two or three items apart with instant corrective feedback; sessions on
+   consecutive days with a review schedule of 1, 3, 7, 14, 30 days; production in a second context (a sentence frame,
+   not only the song line); and a tally for noticing and using words in daily life. */
+const REVIEW_DAYS = [1, 3, 7, 14, 30];
+const SESSION_WORDS = 3;
+const artKeyOf = es => { const a = artFor(es); if (!a) return null; return Object.keys(ART).find(k => ART[k] === a) || null; };
+// a gesture the child performs while saying the word; by drawing, with a fallback by kind of word
+const GESTOS = {
+  chick: { es: "Haz un piquito con los dedos y ábrelo: pío, pío.", en: "Make a little beak with your fingers and open it: pío, pío." },
+  hen: { es: "Codos afuera, aletea y cacarea.", en: "Elbows out, flap, and cluck." },
+  rooster: { es: "Estira el cuello y canta quiquiriquí.", en: "Stretch your neck and crow quiquiriquí." },
+  bird: { es: "Brazos como alas, vuela por el cuarto.", en: "Arms like wings, fly around the room." },
+  frog: { es: "Agáchate y salta como rana.", en: "Crouch and hop like a frog." },
+  elephant: { es: "Un brazo como trompa, balancéalo.", en: "One arm as a trunk, swing it." },
+  spider: { es: "Camina con los dedos por tu brazo.", en: "Walk your fingers up your arm." },
+  puppy: { es: "Manos como patitas y ladra: guau.", en: "Hands like paws and bark: guau." },
+  horse: { es: "Galopa en tu lugar, palmeando las piernas.", en: "Gallop in place, patting your legs." },
+  sheep: { es: "Di beee y hazte bolita de lana.", en: "Say beee and curl up like a ball of wool." },
+  snake: { es: "Ondula el brazo como víbora: sss.", en: "Wave your arm like a snake: sss." },
+  wasp: { es: "Zumba y vuela con un dedo: bzzz.", en: "Buzz and fly with one finger: bzzz." },
+  sun: { es: "Brazos en círculo grande sobre la cabeza.", en: "Arms in a big circle over your head." },
+  moon: { es: "Haz una C con el brazo y bosteza.", en: "Make a C with your arm and yawn." },
+  star: { es: "Abre y cierra las manos arriba: brilla.", en: "Open and close your hands up high: twinkle." },
+  sky: { es: "Señala arriba y mira.", en: "Point up and look." },
+  sea: { es: "Haz olas con las dos manos.", en: "Make waves with both hands." },
+  boat: { es: "Mécete de lado a lado.", en: "Rock side to side." },
+  rain: { es: "Baja los dedos como gotas.", en: "Flutter your fingers down like drops." },
+  cloud: { es: "Haz una nube suave con las manos.", en: "Shape a soft cloud with your hands." },
+  rainbow: { es: "Dibuja un arco grande en el aire.", en: "Draw a big arch in the air." },
+  colors: { es: "Pinta el aire con brochazos.", en: "Paint the air with brushstrokes." },
+  snow: { es: "Tiembla y abrázate.", en: "Shiver and hug yourself." },
+  tortilla: { es: "Palma, palma, como haciendo tortillas.", en: "Pat, pat, like making tortillas." },
+  corn: { es: "Pela un elote de mentiras y muérdelo.", en: "Peel a pretend corn cob and bite it." },
+  apple: { es: "Muerde una manzana: crunch.", en: "Bite an apple: crunch." },
+  egg: { es: "Rompe un huevito en la palma.", en: "Crack a little egg into your palm." },
+  bread: { es: "Parte el pan y cómelo.", en: "Break the bread and eat it." },
+  cheese: { es: "Huele el queso y di mmm.", en: "Smell the cheese and say mmm." },
+  milk: { es: "Bebe de un vaso de mentiras.", en: "Drink from a pretend glass." },
+  ricepudding: { es: "Revuelve la olla y prueba.", en: "Stir the pot and taste." },
+  tacos: { es: "Dobla la tortilla y muerde.", en: "Fold the tortilla and bite." },
+  icecream: { es: "Lame un helado de mentiras.", en: "Lick a pretend ice cream." },
+  mom: { es: "Señala a mamá o manda un beso.", en: "Point at mamá or blow a kiss." },
+  dad: { es: "Señala a papá o manda un beso.", en: "Point at papá or blow a kiss." },
+  child: { es: "Señálate a ti mismo.", en: "Point at yourself." },
+  doll: { es: "Acuna una muñeca en los brazos.", en: "Cradle a doll in your arms." },
+  heart: { es: "Manos sobre el corazón, tum tum.", en: "Hands on your heart, tum tum." },
+  hug: { es: "Abraza a quien tengas al lado.", en: "Hug the person next to you." },
+  cry: { es: "Frótate los ojos: buaa.", en: "Rub your eyes: buaa." },
+  sleep: { es: "Manos bajo la mejilla y cierra los ojos.", en: "Hands under your cheek and close your eyes." },
+  wake: { es: "Estírate y abre los ojos grandes.", en: "Stretch and open your eyes wide." },
+  happy: { es: "Sonrisa grande y brazos arriba.", en: "Big smile and arms up." },
+  angry: { es: "Ceño fruncido y brazos cruzados.", en: "Frown and cross your arms." },
+  cold: { es: "Abrázate y tiembla: brrr.", en: "Hug yourself and shiver: brrr." },
+  hungry: { es: "Sóbate la panza.", en: "Rub your tummy." },
+  wings: { es: "Aletea con los brazos.", en: "Flap your arms." },
+  snuggle: { es: "Hazte bolita y acurrúcate.", en: "Curl up small and snuggle." },
+  car: { es: "Maneja un volante: brum.", en: "Steer a wheel: brum." },
+  house: { es: "Haz un techo con las manos.", en: "Make a roof with your hands." },
+  door: { es: "Toca la puerta y ábrela.", en: "Knock on the door and open it." },
+  bed: { es: "Acuéstate y tápate.", en: "Lie down and pull up the covers." },
+  town: { es: "Señala lejos, hacia tu pueblo.", en: "Point far away, toward your town." },
+  bell: { es: "Toca una campanita: tilín.", en: "Ring a little bell: tilín." },
+  finger: { es: "Muestra un dedito.", en: "Show one little finger." },
+  thumb: { es: "Pulgar arriba, el gordito.", en: "Thumb up, the chubby one." },
+  jump: { es: "Da un brinco.", en: "Give a jump." },
+  walk: { es: "Camina en tu lugar.", en: "Walk in place." },
+  sing: { es: "Canta la la la con las manos abiertas.", en: "Sing la la la with open hands." },
+  play: { es: "Aplaude y gira.", en: "Clap and spin." },
+  eat: { es: "Lleva la cuchara a la boca: ñam.", en: "Spoon to mouth: ñam." },
+  pinata: { es: "Pégale a la piñata con los ojos cerrados.", en: "Hit the piñata with your eyes closed." },
+  cake: { es: "Sopla las velitas.", en: "Blow out the candles." },
+  water: { es: "Bebe agua de las manos.", en: "Drink water from your hands." },
+  candy: { es: "Desenvuelve un dulce y sonríe.", en: "Unwrap a candy and smile." },
+};
+const GESTO_GROUP = {
+  animal: { es: "Haz el sonido y el movimiento del animal.", en: "Make the animal's sound and movement." },
+  food: { es: "Haz como que lo comes: ñam.", en: "Pretend to eat it: ñam." },
+  nature: { es: "Señálalo afuera o en la ventana.", en: "Point at it outside or in the window." },
+  person: { es: "Señala a la persona.", en: "Point at the person." },
+  feeling: { es: "Hazlo con la cara y el cuerpo.", en: "Show it with your face and body." },
+  action: { es: "Haz la acción mientras lo dices.", en: "Do the action while you say it." },
+  number: { es: "Cuéntalo con los dedos.", en: "Count it on your fingers." },
+  object: { es: "Dibújalo en el aire.", en: "Draw it in the air." },
+  other: { es: "Di la palabra y da una palmada.", en: "Say the word and clap once." },
+};
+function gestoFor(es){ const k = artKeyOf(es); if (k && GESTOS[k]) return GESTOS[k]; return GESTO_GROUP[groupOf(es)] || GESTO_GROUP.other; }
+// a second context for production: a sentence frame with the word as a gap
+function frameFor(es, en){
+  const rec = { es, en }; const ph = phraseFor(rec, 1); const w = bare(es);
+  const re = new RegExp("\\b" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\b", "i");
+  if (!re.test(ph.es)) return null;
+  return { es: ph.es, en: ph.en, gapEs: ph.es.replace(re, "___"), word: w };
+}
+// ---- state ----
+function markMet(w, song){ const k = wkey(w.es); if (!WORDS[k]) WORDS[k] = { es: w.es, en: w.en, song: song.id, met: Date.now(), level: 0, misses: 0, heard: 0, used: 0 }; else if (!WORDS[k].met) WORDS[k].met = Date.now(); saveWords(); }
+function keepWord(w, song){ const k = wkey(w.es); const r = WORDS[k] || { es: w.es, en: w.en, song: song.id, heard: 0, used: 0 }; r.kept = Date.now(); r.lastReview = Date.now(); r.level = 0; r.misses = 0; r.met = r.met || Date.now(); WORDS[k] = r; saveWords(); }
+function unkeepWord(es){ const r = WORDS[wkey(es)]; if (r) { delete r.kept; r.level = 0; r.misses = 0; saveWords(); } }
+const isMet = es => !!(WORDS[wkey(es)] && WORDS[wkey(es)].met);
+function dueList(now){ now = now || Date.now(); return keptList().filter(r => now - (r.lastReview || r.kept) >= REVIEW_DAYS[Math.min(r.level || 0, REVIEW_DAYS.length - 1)] * DAY).sort((a, b) => (a.lastReview || 0) - (b.lastReview || 0)); }
+function nextDue(r){ return (r.lastReview || r.kept) + REVIEW_DAYS[Math.min(r.level || 0, REVIEW_DAYS.length - 1)] * DAY; }
+// today's words for a song: met-but-not-kept first, then new, up to SESSION_WORDS
+function sessionWords(song){ const left = toKeep(song); const met = left.filter(w => isMet(w.es)), fresh = left.filter(w => !isMet(w.es)); return met.concat(fresh).slice(0, SESSION_WORDS); }
+// interleaved plan: see A, see B, find A, see C, find B, say A, find C, say B, say C  (each word's touches sit two or three items apart)
+function planKeep(words){
+  const [A, B, C] = words;
+  if (words.length === 1) return [["see", A], ["find", A], ["say", A]];
+  if (words.length === 2) return [["see", A], ["see", B], ["find", A], ["find", B], ["say", A], ["say", B]];
+  return [["see", A], ["see", B], ["find", A], ["see", C], ["find", B], ["say", A], ["find", C], ["say", B], ["say", C]];
+}
+function planReview(words){ const out = []; words.forEach((w, i) => { out.push(["find", w]); if (i >= 1) out.push(["say", words[i - 1]]); }); if (words.length) out.push(["say", words[words.length - 1]]); return out; }
+
 let practiceState = null;
 function openPractice({ song, items, mode }){
   closePractice(); stopAll();
   if (!items.length) return;
+  const plan = mode === "review" ? planReview(items) : planKeep(items);
   const o = document.createElement("div"); o.className = "practice"; o.setAttribute("role", "dialog"); o.setAttribute("aria-modal", "true");
   document.body.appendChild(o); document.body.style.overflow = "hidden";
   const corner = document.createElement("div"); corner.className = "pipo-corner"; document.body.appendChild(corner); const pipo = makePipo(corner);
-  let idx = 0, step = mode === "review" ? 1 : 0, keptNow = 0, leftNow = 0, findTries = 0; const results = [];
-  const glit = RM ? null : null;
+  let idx = 0, keptNow = 0, leftNow = 0, findTries = 0; const said = new Set(), missed = new Set();
   const key = e => { if (e.key === "Escape") closePractice(true); };
   document.addEventListener("keydown", key);
   practiceState = { el: o, key, song, mode, corner, pipo };
-  const stepNames = [I.step_show, I.step_find, I.step_say];
+  const songFor = w => w.songObj || song;
   const draw = () => {
     stopAll();
-    if (idx >= items.length) return drawEnd();
-    const w = items[idx]; const art = artFor(w.es); const s = w.songObj || song;
+    if (idx >= plan.length) return drawEnd();
+    const [step, w] = plan[idx]; const art = artFor(w.es); const s = songFor(w); const rec = WORDS[wkey(w.es)] || {};
     const head = `<div class="ptop"><span class="title">${esc(s.title)}</span><span class="grow"></span>
-        <span class="count">${idx + 1} / ${items.length}</span><span class="jar-mini" id="jarMini">${jarSVG(keptList().length, TOTAL_KEEPABLE, true)}</span>
-        <button class="btn sm" type="button" data-act="close">${T(I.close)}</button></div>
-      <div class="psteps">${[0,1,2].filter(n => mode !== "review" || n > 0).map(n => `<span class="${n === step ? "on" : n < step ? "done" : ""}">${T(stepNames[n])}</span>`).join("")}</div>`;
+        <span class="count">${idx + 1} / ${plan.length}</span><span class="jar-mini" id="jarMini">${jarSVG(keptList().length, TOTAL_KEEPABLE, true)}</span>
+        <button class="btn sm" type="button" data-act="close">${T(I.close)}</button></div>`;
     let body = "";
-    if (step === 0) {
+    if (step === "see") {
+      const g = gestoFor(w.es);
       body = `<div class="pstage anim"><div class="bigart on">${art}</div><div class="pword">${esc(w.es)}</div><div class="pgl" ${GLOSS ? "" : "hidden"}>${esc(w.en)}</div>
+        <div class="gesto"><span class="gico">${IC.hand}</span><span><b>${esc(g.es)}</b><small>${esc(g.en)}</small></span></div>
         <button class="btn" type="button" data-act="hear">${IC.spk} ${T(I.hear)}</button>
-        <p class="pprompt">${T(I.prompt_show)}</p>
-        <div class="row" style="justify-content:center"><button class="btn primary lg" type="button" data-act="next">${T(I.next)} →</button></div></div>`;
-    } else if (step === 1) {
+        <p class="pprompt">${T(I.prompt_see2)}</p>
+        <div class="row" style="justify-content:center"><button class="btn primary lg" type="button" data-act="next">${T(I.did_it)} →</button></div></div>`;
+    } else if (step === "find") {
       const opts = [w, ...distractors(s, w)].sort(() => Math.random() - .5);
       body = `<div class="pstage anim"><div class="pask"><span>¿Dónde está…</span> <b>${esc(w.es)}</b>?<button class="spk" type="button" data-act="hear" aria-label="${T(I.hear)}">${IC.spk}</button></div>
         <div class="pfind">${opts.map(x => `<button class="pcard" type="button" data-w="${esc(x.es)}" data-ok="${x === w}">${artFor(x.es)}</button>`).join("")}</div>
-        <p class="pprompt">${T(I.prompt_find)}</p></div>`;
+        <p class="pprompt">${T(I.prompt_find2)}</p></div>`;
     } else {
-      const hit = lineForWord(s, w.es);
-      const lineHTML = hit ? `<div class="pline">${hit.toks.map((t, k) => k === hit.k ? `<span class="gap"><i class="art">${art}</i></span>` : `<span class="w">${esc(t.t)}</span>`).join(" ")}</div><div class="pgl" ${GLOSS ? "" : "hidden"}>${esc(hit.line.en)}</div>`
+      // production: the song line the first time, a sentence frame once the word has been kept before (a second context)
+      const hit = lineForWord(s, w.es); const fr = (rec.level || 0) >= 1 ? frameFor(w.es, w.en) : null;
+      const cueHTML = fr ? `<div class="pline">${fr.gapEs.split(" ").map(t => t === "___" ? `<span class="gap"><i class="art">${art}</i></span>` : `<span class="w">${esc(t)}</span>`).join(" ")}</div><div class="pgl" ${GLOSS ? "" : "hidden"}>${esc(fr.en)}</div>`
+        : hit ? `<div class="pline">${hit.toks.map((t, k) => k === hit.k ? `<span class="gap"><i class="art">${art}</i></span>` : `<span class="w">${esc(t.t)}</span>`).join(" ")}</div><div class="pgl" ${GLOSS ? "" : "hidden"}>${esc(hit.line.en)}</div>`
         : `<div class="pline"><span class="gap big"><i class="art">${art}</i></span></div><div class="pgl">${T(I.say_alone)}</div>`;
-      body = `<div class="pstage anim">${lineHTML}
-        <div class="row" style="justify-content:center;margin-top:.9rem">${hit ? `<button class="btn" type="button" data-act="hum">${s.melody ? IC.note + " " + T(I.hum_line) : IC.spk + " " + T(I.read_line)}</button>` : `<button class="btn" type="button" data-act="hear">${IC.spk} ${T(I.hear)}</button>`}</div>
-        <p class="pprompt">${T(I.prompt_say)}</p>
+      const cueBtn = fr ? `<button class="btn" type="button" data-act="frame">${IC.spk} ${T(I.read_frame)}</button>` : hit ? `<button class="btn" type="button" data-act="hum">${s.melody ? IC.note + " " + T(I.hum_line) : IC.spk + " " + T(I.read_line)}</button>` : `<button class="btn" type="button" data-act="hear">${IC.spk} ${T(I.hear)}</button>`;
+      body = `<div class="pstage anim">${cueHTML}
+        <div class="row" style="justify-content:center;margin-top:.9rem">${cueBtn}</div>
+        <p class="pprompt">${T(I.prompt_say2)}</p>
+        <p class="pscript"><b>${T(I.script_label)}</b> ${esc(T(I.script_como))}</p>
         <div class="row" style="justify-content:center;gap:.8rem"><button class="btn lg" type="button" data-act="notyet">${T(I.not_yet)}</button><button class="btn primary lg" type="button" data-act="said">${IC.check} ${T(I.said_it)}</button></div></div>`;
     }
     o.innerHTML = head + body;
     $('[data-act="close"]', o).addEventListener("click", ()=> closePractice(true));
     $$('[data-act="hear"]', o).forEach(b => b.addEventListener("click", ()=> speak(w.es)));
-    const nx = $('[data-act="next"]', o); if (nx) nx.addEventListener("click", ()=>{ step = 1; draw(); });
-    pipo.set(step === 0 ? "listen" : step === 1 ? "think" : "listen", true);
-    if (step === 0) { setTimeout(()=> speak(w.es), 350); setTimeout(()=> pipo.note(400, vowelAt(w.es, 0)), 400); }
-    if (step === 1) {
+    pipo.set(step === "see" ? "listen" : step === "find" ? "think" : "listen", true);
+    if (step === "see") {
+      markMet(w, s); logEvent("see", { song: s.id, word: wkey(w.es) });
+      setTimeout(()=> speak(w.es), 350); setTimeout(()=> pipo.note(400, vowelAt(w.es, 0)), 400);
+      $('[data-act="next"]', o).addEventListener("click", ()=>{ idx++; draw(); });
+    }
+    if (step === "find") {
       findTries = 0; setTimeout(()=> speak("¿Dónde está? " + w.es), 400);
       $$(".pcard", o).forEach(c => c.addEventListener("click", ()=>{
-        if (c.dataset.ok === "true") { c.classList.add("ok"); $$(".pcard", o).forEach(x => x.disabled = true); speak(w.es); pipo.set("cheer", true); setTimeout(()=>{ step = 2; draw(); }, 900); }
-        else { c.classList.remove("no"); void c.offsetWidth; c.classList.add("no"); findTries++; pipo.set("oops", true); setTimeout(()=>{ if (step === 1) pipo.set("think", true); }, 900); if (findTries === 1) logEvent(mode === "review" ? "review_miss" : "miss", { song: s.id, word: wkey(w.es) }); if (mode === "review" && findTries === 1) miss(w, false); }
+        if (c.dataset.ok === "true") { c.classList.add("ok"); $$(".pcard", o).forEach(x => x.disabled = true); speak(w.es); pipo.set("cheer", true); setTimeout(()=>{ idx++; draw(); }, 900); }
+        else {
+          // instant corrective feedback: shake, say the word again, and show which one it is
+          c.classList.remove("no"); void c.offsetWidth; c.classList.add("no"); c.disabled = true; findTries++; pipo.set("oops", true);
+          speak(w.es); const right = $('.pcard[data-ok="true"]', o); right.classList.add("hint");
+          setTimeout(()=>{ pipo.set("think", true); }, 900);
+          if (findTries === 1) { missed.add(wkey(w.es)); logEvent(mode === "review" ? "review_miss" : "miss", { song: s.id, word: wkey(w.es) }); if (mode === "review") miss(w); }
+        }
       }));
     }
-    if (step === 2) {
-      const hit = lineForWord(s, w.es);
-      const hum = $('[data-act="hum"]', o); if (hum) hum.addEventListener("click", ()=>{
-        if (!(s.melody && humGap(s, hit.li, hit.k, hit.toks))) { const txt = hit.toks.map((t, k) => k === hit.k ? "…" : t.t).join(" "); speak(txt); }
-      });
-      $('[data-act="said"]', o).addEventListener("click", ()=>{ said(w, s); });
-      $('[data-act="notyet"]', o).addEventListener("click", ()=>{ pipo.set("oops", true); logEvent(mode === "review" ? "review_miss" : "miss", { song: s.id, word: wkey(w.es) }); miss(w, true); leftNow++; results.push({ w, kept: false }); idx++; step = mode === "review" ? 1 : 0; draw(); });
+    if (step === "say") {
+      const hit = lineForWord(s, w.es); const fr = (rec.level || 0) >= 1 ? frameFor(w.es, w.en) : null;
+      const hum = $('[data-act="hum"]', o); if (hum) hum.addEventListener("click", ()=>{ if (!(s.melody && humGap(s, hit.li, hit.k, hit.toks))) speak(hit.toks.map((t, k) => k === hit.k ? "…" : t.t).join(" ")); });
+      const fb = $('[data-act="frame"]', o); if (fb) fb.addEventListener("click", ()=> speak(fr.gapEs.replace("___", "…")));
+      $('[data-act="said"]', o).addEventListener("click", ()=> onSaid(w, s));
+      $('[data-act="notyet"]', o).addEventListener("click", ()=>{ pipo.set("oops", true); logEvent(mode === "review" ? "review_miss" : "miss", { song: s.id, word: wkey(w.es) }); miss(w); leftNow++; idx++; draw(); });
     }
   };
-  const said = (w, s) => {
-    const was = isKept(w.es);
-    if (!was) keepWord(w, s); else { const r = WORDS[wkey(w.es)]; r.lastReview = Date.now(); r.misses = 0; saveWords(); }
-    logEvent(mode === "review" ? "review" : "keep", { song: s.id, word: wkey(w.es) });
-    keptNow++; results.push({ w, kept: true });
-    flyToJar(o, artFor(w.es)); toast(T(I.kept_toast) + " " + w.es); pipo.set("cheer", true);
-    setTimeout(()=>{ idx++; step = mode === "review" ? 1 : 0; draw(); }, 900);
+  const onSaid = (w, s) => {
+    const k = wkey(w.es); const was = isKept(w.es);
+    if (!was) keepWord(w, s);
+    else { const r = WORDS[k]; r.lastReview = Date.now(); if (!missed.has(k)) r.level = Math.min((r.level || 0) + 1, REVIEW_DAYS.length - 1); r.misses = 0; saveWords(); }
+    logEvent(mode === "review" ? "review" : "keep", { song: s.id, word: k });
+    keptNow++; said.add(k);
+    flyToJar(o, artFor(w.es)); toast((was ? T(I.reviewed_toast) : T(I.kept_toast)) + " " + w.es); pipo.set("cheer", true);
+    setTimeout(()=>{ idx++; draw(); }, 900);
   };
-  const miss = (w, final) => {
+  const miss = w => {
     const r = WORDS[wkey(w.es)]; if (!r || !r.kept) return;
-    r.misses = (r.misses || 0) + 1; saveWords();
+    r.misses = (r.misses || 0) + 1; r.level = 0; r.lastReview = Date.now(); saveWords();
     if (r.misses >= 2) { unkeepWord(w.es); toast(T(I.unkept_toast) + w.es); }
   };
   const drawEnd = () => {
-    const left = mode === "review" ? 0 : toKeep(song).length; pipo.set(keptNow ? "dance" : "wave", true);
+    pipo.set(keptNow ? "dance" : "wave", true);
+    const hunt = items.filter(w => said.has(wkey(w.es))).slice(0, 3);
+    const left = song ? toKeep(song).length : 0;
     o.innerHTML = `<div class="ptop"><span class="title">${esc(song ? song.title : T(I.review))}</span><span class="grow"></span><button class="btn sm" type="button" data-act="close">${T(I.close)}</button></div>
       <div class="pstage anim pend"><div class="jar-big">${jarSVG(keptList().length, TOTAL_KEEPABLE)}</div>
         <h1>${T(I.done_title)}</h1>
-        <p class="lede"><b>${keptNow}</b> ${T(I.done_kept)}${leftNow ? ` · <b>${leftNow}</b> ${T(I.done_left)}` : ""}</p>
+        <p class="lede"><b>${keptNow}</b> ${T(mode === "review" ? I.done_reviewed : I.done_kept)}${leftNow ? ` · <b>${leftNow}</b> ${T(I.done_left)}` : ""}</p>
+        ${hunt.length ? `<div class="hunt"><h2>${T(I.hunt_title)}</h2><p>${T(I.hunt_p)}</p><ul>${hunt.map(w => { const f = frameFor(w.es, w.en); return `<li><span class="hart">${artFor(w.es)}</span><span><b>${esc(w.es)}</b>${f ? `<br><i>${esc(f.es)}</i>` : ""}</span></li>`; }).join("")}</ul></div>` : ""}
+        <p class="quiet">${song && left ? T(I.done_tomorrow).replace("{n}", Math.min(left, SESSION_WORDS)) : T(I.done_all)}</p>
         <div class="row" style="justify-content:center;gap:.7rem;margin-top:1rem">
           ${song ? `<button class="btn" type="button" data-act="close">${T(I.back_song)}</button>` : ""}
           <a class="btn primary" href="#/palabras" data-act="words">${T(I.see_words)}</a></div></div>`;
@@ -2385,10 +2553,14 @@ function closePractice(updateHash){
   if (updateHash) { if (st.song) { history.replaceState(null, "", `#/song/${st.song.id}`); renderSong(st.song); } else { history.replaceState(null, "", "#/palabras"); renderWords("words"); } }
 }
 function openReview(){
-  const list = keptList().sort((a, b) => (a.lastReview || 0) - (b.lastReview || 0)).slice(0, 5).map(r => ({ es: r.es, en: r.en, songObj: songOf(r.song) || SONGS[0] }));
-  if (list.length < 3) { toast(T(I.review_none)); return; }
+  let list = dueList(); if (list.length < 1) list = keptList().sort((a, b) => (a.lastReview || 0) - (b.lastReview || 0));
+  list = list.slice(0, 5).map(r => ({ es: r.es, en: r.en, songObj: songOf(r.song) || SONGS[0] }));
+  if (list.length < 1) { toast(T(I.review_none)); return; }
   openPractice({ song: null, items: list, mode: "review" });
 }
+// word hunting: the parent taps when the child heard or used a kept word at home
+function huntTap(es, kind){ const r = WORDS[wkey(es)]; if (!r) return; r[kind] = (r[kind] || 0) + 1; saveWords(); logEvent("hunt", { word: wkey(es), kind }); toast(T(kind === "used" ? I.hunt_used_toast : I.hunt_heard_toast) + " " + es); }
+
 // the word jar
 function jarSVG(n, total, mini){
   const ratio = Math.max(0, Math.min(1, total ? n / total : 0)); const fillH = 34 * ratio; const y = 50 - fillH;
@@ -2478,9 +2650,10 @@ function coachPlan(){
   // words that needed more than one try this week
   const missed = {}; recent.filter(e => e.type === "miss" || e.type === "review_miss").forEach(e => { missed[e.word] = (missed[e.word] || 0) + 1; });
   const hard = Object.entries(missed).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([w]) => { const s = SONGS.find(x => x.vocab.some(v => wkey(v.es) === w)); const v = s && s.vocab.find(v => wkey(v.es) === w); return v ? { es: v.es, en: v.en, group: groupOf(v.es) } : null; }).filter(Boolean);
-  const due = kept.filter(w => now - (w.lastReview || w.kept) > 3 * DAY).length;
+  const due = dueList(now).length;
+  const hunt = kept.slice(0, 3).map(w => ({ es: w.es, en: w.en, frame: frameFor(w.es, w.en) }));
   const phrases = kept.slice(0, 3).map((w, i) => phraseFor(w, i));
-  return { song, why, left: toKeep(song).length, keptWeek: keptWeek.length, keptTotal: kept.length, hard, due, phrases, streak: streakDays(), sangWeek: new Set(recent.filter(e => e.type === "sing").map(e => e.song)).size };
+  return { song, why, hunt, left: toKeep(song).length, keptWeek: keptWeek.length, keptTotal: kept.length, hard, due, phrases, streak: streakDays(), sangWeek: new Set(recent.filter(e => e.type === "sing").map(e => e.song)).size };
 }
 /* ================= where each song comes from, and a line for the house ================= */
 const ORIGEN = {
@@ -2674,7 +2847,7 @@ function renderSong(s){
     ${RULE}
     <section class="sec"><h2>${T(I.words)}</h2>
       <div class="vocab">${s.vocab.map(w => { const a = artFor(w.es); return `<button class="chip${isKept(w.es) ? " kept" : ""}" type="button" data-w="${esc(w.es)}">${a ? `<span class="ico">${a}</span>` : ""}<span class="tx"><span class="es">${esc(w.es)}</span><span class="en">${esc(w.en)}</span></span></button>`; }).join("")}</div>
-      <div class="keeprow">${toKeep(s).length ? `<button class="btn primary" type="button" data-act="keep">${T(I.keep_btn)}</button>` : `<button class="btn" type="button" data-act="keepagain">${T(I.practice_again)}</button>`}
+      <div class="keeprow">${toKeep(s).length ? `<button class="btn primary" type="button" data-act="keep">${T(I.keep_today).replace("{n}", sessionWords(s).length)}</button>` : `<button class="btn" type="button" data-act="keepagain">${T(I.practice_again)}</button>`}
         <button class="stamp" type="button" data-act="know" aria-pressed="${KNOWN.has(s.id)}">${T(I.know)}</button></div></section>
     ${ori ? `${RULE}<section class="sec origin"><h2>${T(I.origin_h)}</h2><p class="es">${esc(ori.es)}</p><p class="en">${esc(ori.en)}</p></section>` : ""}
     <div class="nextprev">
@@ -2701,8 +2874,8 @@ function renderSong(s){
   const cb = $('[data-act="cuento"]', v); if (cb) cb.addEventListener("click", ()=>{ history.replaceState(null, "", `#/song/${s.id}/cuento`); openCuento(s); });
   $('[data-act="gloss"]', v).addEventListener("click", e => { setGloss(!GLOSS); e.currentTarget.setAttribute("aria-pressed", GLOSS); });
   $('[data-act="slow"]', v).addEventListener("click", e => { SLOW = !SLOW; e.currentTarget.setAttribute("aria-pressed", SLOW); });
-  const kb = $('[data-act="keep"]', v); if (kb) kb.addEventListener("click", ()=>{ history.replaceState(null, "", `#/song/${s.id}/keep`); openPractice({ song: s, items: toKeep(s), mode: "keep" }); });
-  const ka = $('[data-act="keepagain"]', v); if (ka) ka.addEventListener("click", ()=>{ history.replaceState(null, "", `#/song/${s.id}/keep`); openPractice({ song: s, items: keepable(s), mode: "keep" }); });
+  const kb = $('[data-act="keep"]', v); if (kb) kb.addEventListener("click", ()=>{ history.replaceState(null, "", `#/song/${s.id}/keep`); openPractice({ song: s, items: sessionWords(s), mode: "keep" }); });
+  const ka = $('[data-act="keepagain"]', v); if (ka) ka.addEventListener("click", ()=>{ history.replaceState(null, "", `#/song/${s.id}/keep`); openPractice({ song: s, items: keepable(s).slice(0, SESSION_WORDS), mode: "keep" }); });
   $$(".chip", v).forEach(ch => ch.addEventListener("click", ()=>{ stopAll(); resetBtns(); $$(".chip.hot", v).forEach(x => x.classList.remove("hot")); ch.classList.add("hot"); speak(ch.dataset.w); }));
   $('[data-act="know"]', v).addEventListener("click", e => {
     const b = e.currentTarget; const on = !KNOWN.has(s.id);
@@ -2716,9 +2889,10 @@ function renderWords(tab){
   const groups = SONGS.map(s => ({ s, ws: kept.filter(w => w.song === s.id) })).filter(g => g.ws.length);
   const header = `<div class="wtop"><div class="jar-wrap">${jarSVG(kept.length, TOTAL_KEEPABLE)}</div>
       <div><h1>${T(I.words_title)}</h1>${kept.length ? `<p class="quiet">${kept.length} · <button type="button" class="link" data-act="gloss" aria-pressed="${GLOSS}">${T(I.english)}</button></p>` : ""}</div>
-      ${kept.length >= 3 ? `<button class="btn" type="button" data-act="review" style="margin-left:auto">${IC.play} ${T(I.review)}</button>` : ""}</div>`;
+      ${kept.length >= 1 ? `<button class="btn${dueList().length ? " primary" : ""}" type="button" data-act="review" style="margin-left:auto">${IC.play} ${dueList().length ? T(I.review_due_n).replace("{n}", dueList().length) : T(I.review)}</button>` : ""}</div>
+      ${kept.length ? `<p class="wsub">${T(I.words_sub)}</p>` : ""}`;
   const cards = kept.length ? groups.map(g => `<section class="wgroup"><h2><a href="#/song/${g.s.id}">${esc(g.s.title)}</a></h2>${RULE}
-      <div class="kcards">${g.ws.map(w => { const hit = lineForWord(g.s, w.es); return `<div class="kc"><span class="kart">${artFor(w.es)}</span><span class="ktx"><b class="es">${esc(w.es)}</b><span class="en">${esc(w.en)}</span>${hit ? `<span class="ctx">${esc(hit.line.es)}</span>` : ""}</span><button class="spk" type="button" data-w="${esc(w.es)}" aria-label="${T(I.hear)}">${IC.spk}</button></div>`; }).join("")}</div></section>`).join("")
+      <div class="kcards">${g.ws.map(w => { const hit = lineForWord(g.s, w.es); const isDue = Date.now() >= nextDue(w); return `<div class="kc"><span class="kart">${artFor(w.es)}</span><span class="ktx"><b class="es">${esc(w.es)}<span class="lvl">${[0,1,2,3,4].map(k => `<i class="${k < (w.level || 0) ? "on" : ""}"></i>`).join("")}</span>${isDue ? `<span class="due">${T(I.due_label)}</span>` : ""}</b><span class="en">${esc(w.en)}</span>${hit ? `<span class="ctx">${esc(hit.line.es)}</span>` : ""}<span class="ktally"><button type="button" data-hunt="heard" data-w="${esc(w.es)}">👂 <b>${w.heard || 0}</b> ${T(I.hunt_heard)}</button><button type="button" data-hunt="used" data-w="${esc(w.es)}">👄 <b>${w.used || 0}</b> ${T(I.hunt_used)}</button></span></span><button class="spk" type="button" data-w="${esc(w.es)}" aria-label="${T(I.hear)}">${IC.spk}</button></div>`; }).join("")}</div></section>`).join("")
     : `<div class="wempty"><p>${T(I.words_empty)}</p><a class="btn primary" href="#/song/pollitos">${T(I.start_with)}</a></div>`;
   v.innerHTML = `<div>
     <nav class="filters"><span class="frow"><button type="button" data-t="words" aria-pressed="${tab==="words"}">${T(I.tab_words)}</button><button type="button" data-t="phrases" aria-pressed="${tab==="phrases"}">${T(I.tab_phrases)}</button></span></nav>
@@ -2729,6 +2903,7 @@ function renderWords(tab){
   $$("[data-t]", v).forEach(b => b.addEventListener("click", ()=>{ location.hash = b.dataset.t === "phrases" ? "#/palabras/frases" : "#/palabras"; }));
   $$(".spk[data-w]", v).forEach(b => b.addEventListener("click", ()=> speak(b.dataset.w)));
   const rv = $('[data-act="review"]', v); if (rv) rv.addEventListener("click", openReview);
+  $$("[data-hunt]", v).forEach(b => b.addEventListener("click", ()=>{ huntTap(b.dataset.w, b.dataset.hunt); const r = WORDS[wkey(b.dataset.w)]; $("b", b).textContent = r[b.dataset.hunt] || 0; }));
   const gl = $('[data-act="gloss"]', v); if (gl) gl.addEventListener("click", ()=> setGloss(!GLOSS));
 }
 
@@ -2739,9 +2914,10 @@ function renderCoach(){
     <div class="hero"><h1>${T(I.coach_title)}</h1><div class="pipo-hero" id="pipoHero"></div></div>
     ${tiaHTML(TIA_COACH[p.why] || TIA_COACH.first)}
     <section class="sec"><h2><a href="#/song/${p.song.id}">${esc(p.song.title)}</a></h2>
-      <div class="row"><a class="btn primary" href="#/song/${p.song.id}/sing">${IC.singi} ${T(I.sing)}</a>${p.left ? `<a class="btn" href="#/song/${p.song.id}/keep">${T(I.keep_btn)}</a>` : ""}${p.due >= 3 ? `<a class="btn" href="#/palabras/repaso">${T(I.review)}</a>` : ""}</div></section>
+      <div class="row"><a class="btn primary" href="#/song/${p.song.id}/sing">${IC.singi} ${T(I.sing)}</a>${p.left ? `<a class="btn" href="#/song/${p.song.id}/keep">${T(I.keep_today).replace("{n}", sessionWords(p.song).length)}</a>` : ""}${p.due >= 1 ? `<a class="btn" href="#/palabras/repaso">${T(I.review_due_n).replace("{n}", p.due)}</a>` : ""}</div></section>
     ${p.phrases.length ? `${RULE}<section class="sec"><h2>${T(I.coach_phrases)}</h2><div class="cphrases">${p.phrases.map(ph => `<div class="ph"><span class="es">${esc(ph.es)}</span><button class="spk" type="button" data-w="${esc(ph.es)}" aria-label="${T(I.hear)}">${IC.spk}</button><span class="en">${esc(ph.en)}</span></div>`).join("")}</div></section>` : ""}
     ${p.hard.length ? `${RULE}<section class="sec"><h2>${T(I.coach_notice)}</h2><ul class="hard">${p.hard.map(h => `<li><span class="hart">${artFor(h.es)}</span><div><b>${esc(h.es)}</b> <span class="muted">${esc(h.en)}</span><br><span>${T(TIPS[h.group] || TIPS.other)}</span></div></li>`).join("")}</ul></section>` : ""}
+    ${p.hunt.length ? `${RULE}<section class="sec"><h2>${T(I.coach_hunt)}</h2><div class="hunt"><p>${T(I.hunt_p)}</p><ul>${p.hunt.map(w => `<li><span class="hart">${artFor(w.es)}</span><span><b>${esc(w.es)}</b>${w.frame ? `<br><i>${esc(w.frame.es)}</i>` : ""}</span></li>`).join("")}</ul></div></section>` : ""}
     <p class="quiet">${p.streak ? `${p.streak} ${T(p.streak === 1 ? I.coach_streak1 : I.coach_streak)} · ` : ""}${p.keptWeek} ${T(I.coach_kept_week)}${p.due ? ` · ${T(I.coach_due).replace("{n}", p.due)}` : ""}</p>
   </div>`;
   killPagePipo(); pagePipo = makePipo($("#pipoHero", v)); pagePipo.set(p.streak ? "cheer" : "wave"); setTimeout(()=>{ if (pagePipo) pagePipo.set("idle"); }, 2000);
